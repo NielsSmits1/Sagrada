@@ -1,6 +1,7 @@
 package View;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import controller.GameController;
 import javafx.event.EventHandler;
@@ -47,6 +48,7 @@ public class RootPane extends BorderPane{
 	private BorderPane bottom;
 	private MyScene scene;
 	private GameController controller;
+	private Random r;
 //	private Menubar menu;
 	
 	///*
@@ -58,6 +60,7 @@ public class RootPane extends BorderPane{
 //		scene = s;
 //		this.menu = menu;
 		controller = new GameController(this);
+		r = new Random();
 		setBoard();
 		addDice();
 		finish();
@@ -90,12 +93,12 @@ public class RootPane extends BorderPane{
 		///**
 	
 	private void addDice() {
-		dice1 = new DicePane(this,getDiceArray().get(25));
-		dice2 = new DicePane(this,getDiceArray().get(19));
-		dice3 = new DicePane(this,getDiceArray().get(60));
-		dice4 = new DicePane(this,getDiceArray().get(70));
-		dice5 = new DicePane(this,getDiceArray().get(71));
-		dice6 = new DicePane(this,getDiceArray().get(80));
+		dice1 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice2 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice3 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice4 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice5 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice6 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
 		dices = new HBox(dice1,dice2,dice3,dice4,dice5,dice6);
 		dices.setSpacing(20);
 		

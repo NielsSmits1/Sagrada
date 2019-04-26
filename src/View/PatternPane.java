@@ -25,11 +25,34 @@ public class PatternPane extends StackPane{
 			@Override
 			public void handle(MouseEvent event) {
 				if(getSelected() != null) {
-//					System.out.println("" + dice);
-					dice = getSelected();
-					dice.setMouseTransparent(true);
-					getChildren().add(dice);
-					deleteSelected();
+					if(template.getValue() != 0) {
+						if(template.getValue() == getSelected().getValue()) {
+							dice = getSelected();
+							dice.setMouseTransparent(true);
+							getChildren().add(dice);
+							deleteSelected();
+							return;
+						}
+						return;
+					}
+					
+					if(template.getColor().equals("WHITE")) {
+						dice = getSelected();
+						dice.setMouseTransparent(true);
+						getChildren().add(dice);
+						deleteSelected();
+						return;
+					}else {
+						if(template.getColor().equals(getSelected().getColor())) {
+							dice = getSelected();
+							dice.setMouseTransparent(true);
+							getChildren().add(dice);
+							deleteSelected();
+							return;
+						}
+					}
+					
+					
 				}
 //				getClicked();
 				
