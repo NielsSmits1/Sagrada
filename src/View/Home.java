@@ -35,23 +35,19 @@ public class Home extends BorderPane{
 	private Color rightbackground = Color.SLATEGRAY;
 	private Color centerbackground = Color.CORNFLOWERBLUE;
 	
-	//private HBox menuBar;
-	private Menubar menu;
-	private MenubarModel model;
+
+
 	private PlayerController player;
 	private Scene main;
-	private MenubarController controller;
+
 	public Home(PlayerController player, Scene scene) {
 		super();
-		menu = new Menubar();
-		model = new MenubarModel();
-		controller = new MenubarController(model, menu);
 		makeCenterPane();
 		makeRightBorderPane();
 		this.player = player;
 		main = scene;
 		
-		centerPane.getChildren().add(menu);
+		
 	}
 	private void makeRightBorderPane() {
 		rightPane = new VBox();
