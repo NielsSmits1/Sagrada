@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import controller.BoardController;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -169,6 +170,28 @@ public class BoardPane extends Pane{
 		rootPane.deleteSelected();
 		
 	}
+	
+//	public boolean getNearDice(PatternPane p) {
+//		int patternRow = field.getRowIndex(p);
+//		int patternColumn = field.getColumnIndex(p);
+//		PatternPane downPane = (PatternPane) getSideDie(patternRow+1,patternColumn);
+//		PatternPane upPane = (PatternPane) getSideDie(patternRow-1,patternColumn);
+//		PatternPane leftPane = (PatternPane) getSideDie(patternRow,patternColumn-1);
+//		PatternPane rightPane = (PatternPane) getSideDie(patternRow,patternColumn+1);
+//		if(p.getDiceColor().equals(downPane.getDiceColor()) || p.getDiceColor().equals(upPane.getDiceColor()) || p.getDiceColor().equals(leftPane.getDiceColor()) || p.getDiceColor().equals(rightPane.getDiceColor())){
+//			return false;
+//		}
+//		return true;
+//	}
+//	
+//	private Node getSideDie(int col, int row) {
+//	    for (Node node : field.getChildren()) {
+//	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+//	            return node;
+//	        }
+//	    }
+//	    return null;
+//	}
 }
 
 	

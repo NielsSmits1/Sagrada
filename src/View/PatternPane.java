@@ -99,5 +99,13 @@ public class PatternPane extends StackPane{
 		boardPane.deleteSelected();
 	}
 	
+	public String getDiceColor() {
+		return dice.getColor();
+	}
+	
+//	public boolean getNearDice() {
+//		return boardPane.getNearDice(this);
+//	}
+	
 	
 }
