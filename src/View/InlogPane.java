@@ -59,14 +59,14 @@ public class InlogPane extends BorderPane {
 
 		// Login Button
 		loginButton = new Button("Inloggen");
-		loginButton.setOnAction(e -> handleLogin());
+//		loginButton.setOnAction(e -> handleLogin());
 		loginButton.setTextAlignment(TextAlignment.CENTER);
 		loginButton.setPrefHeight(50);
 		loginButton.setPrefWidth(100);
 
 		// Register Button
 		registerButton = new Button("Register");
-		registerButton.setOnAction(e -> handleRegister());
+//		registerButton.setOnAction(e -> handleRegister());
 		registerButton.setTextAlignment(TextAlignment.CENTER);
 		registerButton.setPrefHeight(50);
 		registerButton.setPrefWidth(100);
@@ -97,44 +97,103 @@ public class InlogPane extends BorderPane {
 		setCenter(layout);
 		setTop(textAlignment);
 	}
-
-	private void handleRegister() {
-		player = new PlayerController(usernameField.getText(), passwordField.getText());
-		if (!player.hasRows() && player.validateAccountRequirement()) {
-			player.newUser();
-			System.out.println("Register accepted");
-			giveSuccessfulBox();
-		} else {
-			System.out.println("Register failed");
-			giveErrorBox();
-		}
-	}
-
-	private void handleLogin() {
-		player = new PlayerController(usernameField.getText(), passwordField.getText());
-		if (player.hasRows() && !(usernameField.getText().equals("")) && !(passwordField.getText().equals(""))) {
-			// sends the user to the game screen
-			System.out.println("Login accepted");
-			main.setRoot(new Home(player, main));
-		} else {
-			System.out.println("Login failed");
-			giveErrorBox();
-
-		}
-	}
-
-	private void giveErrorBox() {
-		usernameField.setBorder(
-				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-		passwordField.setBorder(
-				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-	}
 	
-	private void giveSuccessfulBox() {
-		usernameField.setBorder(
-				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-		passwordField.setBorder(
-				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+	
+	
+// getter for LoginButton.
+	public Button getLoginButton() {
+		return loginButton;
 	}
+
+//getter for RegisterButton
+	public Button getRegisterButton() {
+		return registerButton;
+	}
+
+	//getter for VBox but is probably not necessary
+	public VBox getLayout() {
+		return layout;
+	}
+
+	//getter for UsernameField.
+	public TextArea getUsernameField() {
+		return usernameField;
+	}
+
+	//getter for PasswordField 
+	public TextArea getPasswordField() {
+		return passwordField;
+	}
+
+	//getter for HBox ButtonAlignment but is probably not necessary
+	public HBox getButtonAlignment() {
+		return buttonAlignment;
+	}
+
+	//getter Scene.
+	public Scene getMain() {
+		return main;
+	}
+
+	//getter PlayerController.
+	public PlayerController getPlayer() {
+		return player;
+	}
+
+	//getter for label GameTitle
+	public Label getGameTitle() {
+		return gameTitle;
+	}
+
+	//getter for Borderpane textaligment.
+	public BorderPane getTextAlignment() {
+		return textAlignment;
+	}
+
+	// setter for Player
+	public void setPlayer(PlayerController player) {
+		this.player = player;
+	}
+
+
+
+//	private void handleRegister() {
+//		player = new PlayerController(usernameField.getText(), passwordField.getText());
+//		if (!player.hasRows() && player.validateAccountRequirement()) {
+//			player.newUser();
+//			System.out.println("Register accepted");
+//			giveSuccessfulBox();
+//		} else {
+//			System.out.println("Register failed");
+//			giveErrorBox();
+//		}
+//	}
+
+//	private void handleLogin() {
+//		player = new PlayerController(usernameField.getText(), passwordField.getText());
+//		if (player.hasRows() && !(usernameField.getText().equals("")) && !(passwordField.getText().equals(""))) {
+//			// sends the user to the game screen
+//			System.out.println("Login accepted");
+//			main.setRoot(new Home(player, main));
+//		} else {
+//			System.out.println("Login failed");
+//			giveErrorBox();
+//
+//		}
+//	}
+
+//	private void giveErrorBox() {
+//		usernameField.setBorder(
+//				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+//		passwordField.setBorder(
+//				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+//	}
+	
+//	private void giveSuccessfulBox() {
+//		usernameField.setBorder(
+//				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+//		passwordField.setBorder(
+//				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+//	}
 
 }

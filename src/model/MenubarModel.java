@@ -1,6 +1,7 @@
 package model;
 
 import View.InlogPane;
+import View.Menubar;
 import View.MyScene;
 import javafx.application.Platform;
 
@@ -9,7 +10,7 @@ public class MenubarModel {
 	private MyScene scene;
 	
 
-	public MenubarModel() {
+	public MenubarModel(Menubar menu) {
 
 	}
 
