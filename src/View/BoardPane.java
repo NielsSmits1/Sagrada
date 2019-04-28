@@ -171,22 +171,46 @@ public class BoardPane extends Pane{
 		
 	}
 	
-//	public boolean getNearDice(PatternPane p) {
+//	public boolean getNearDice(PatternPane p, DicePane s) {
 //		int patternRow = field.getRowIndex(p);
 //		int patternColumn = field.getColumnIndex(p);
+//		System.out.println("" + patternRow + " " + patternColumn);
+//	
+//		
 //		PatternPane downPane = (PatternPane) getSideDie(patternRow+1,patternColumn);
 //		PatternPane upPane = (PatternPane) getSideDie(patternRow-1,patternColumn);
 //		PatternPane leftPane = (PatternPane) getSideDie(patternRow,patternColumn-1);
 //		PatternPane rightPane = (PatternPane) getSideDie(patternRow,patternColumn+1);
-//		if(p.getDiceColor().equals(downPane.getDiceColor()) || p.getDiceColor().equals(upPane.getDiceColor()) || p.getDiceColor().equals(leftPane.getDiceColor()) || p.getDiceColor().equals(rightPane.getDiceColor())){
-//			return false;
-//		}
+//			
+//			if(downPane.getDice() == null && upPane.getDice() == null && leftPane.getDice() == null && rightPane.getDice() == null) {
+//				return true;
+//			}
+//			if(downPane.getDice() != null) {
+//				if(s.getColor().equals(downPane.getDiceColor())){
+//					return false;
+//				}
+//			}
+//			if(upPane.getDice() != null) {
+//				if(s.getColor().equals(upPane.getDiceColor())){
+//					return false;
+//				}
+//			}
+//			if(leftPane.getDice() != null) {
+//				if(s.getColor().equals(leftPane.getDiceColor())){
+//					return false;
+//				}
+//			}
+//			if(rightPane.getDice() != null) {
+//				if(s.getColor().equals(downPane.getDiceColor())){
+//					return false;
+//				}
+//			}
 //		return true;
 //	}
-//	
+	
 //	private Node getSideDie(int col, int row) {
 //	    for (Node node : field.getChildren()) {
-//	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+//	        if (field.getColumnIndex(node) == col && field.getRowIndex(node) == row) {
 //	            return node;
 //	        }
 //	    }
