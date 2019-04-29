@@ -2,6 +2,7 @@ package model;
 
 import View.Home;
 import View.InlogPane;
+import View.MyScene;
 import controller.PlayerController;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -12,9 +13,14 @@ import javafx.scene.paint.Color;
 public class InlogModel {
 	
 	private InlogPane inlog;
+	private MySceneModel sceneModel;
+	private MyScene scene;
+	
+	private Home home;
 	
 	public InlogModel(InlogPane inlog) {
 		this.inlog = inlog;
+		sceneModel = new MySceneModel(scene);
 	}
 	
 	
@@ -33,11 +39,14 @@ public class InlogModel {
 	}
 	
 	public void handleLogin() {
+		
+		home = new Home(inlog.getPlayer(), inlog.getMain());
+		
 		inlog.setPlayer(new PlayerController(inlog.getUsernameField().getText(), inlog.getPasswordField().getText())); 
 		if (inlog.getPlayer().hasRows() && !(inlog.getUsernameField().getText().equals("")) && !(inlog.getPasswordField().getText().equals(""))) {
 			// sends the user to the game screen
 			System.out.println("Login accepted");
-			inlog.getMain().setRoot(new Home(inlog.getPlayer(), inlog.getMain()));
+			inlog.getMain().setRoot(sceneModel.createscene(home));
 		} else {
 			System.out.println("Login failed");
 			giveErrorBox();

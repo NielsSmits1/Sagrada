@@ -9,11 +9,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.InlogModel;
 import model.MenubarModel;
+import model.MySceneModel;
 
 public class MyScene extends Scene {
 
 	private RootPane game;
-	private VBox vbox;
 	private Home home;
 	private PlayerController player;
 	private MenubarController menuController;
@@ -23,6 +23,8 @@ public class MyScene extends Scene {
 	private InlogController inlogcon;
 	private InlogModel inlogmodel;
 	private InlogPane inlogPane;
+	
+	private MySceneModel sceneModel;
 
 	public MyScene() {
 		super(new Pane(), 500, 500);
@@ -32,7 +34,7 @@ public class MyScene extends Scene {
 		inlogcon = new InlogController(inlogmodel, inlogPane);
 		
 		
-		
+		sceneModel = new MySceneModel(this);
 		
 
 		game = new RootPane();
@@ -43,7 +45,7 @@ public class MyScene extends Scene {
 		menuModel = new MenubarModel(menu);
 		menuController = new MenubarController(menuModel, menu);
 
-		setRoot(new VBox(menu, new VBox(inlogPane)));
+		setRoot(new VBox(sceneModel.createscene(inlogPane)));
 	}
 
 }

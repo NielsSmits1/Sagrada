@@ -8,10 +8,10 @@ import javafx.application.Platform;
 public class MenubarModel {
 
 	private MyScene scene;
-	
+	private Menubar menu;
 
 	public MenubarModel(Menubar menu) {
-
+		this.menu = menu;
 	}
 
 	public void Exit() {
