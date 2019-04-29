@@ -93,12 +93,12 @@ public class RootPane extends BorderPane{
 		///**
 	
 	private void addDice() {
-		dice1 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
-		dice2 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
-		dice3 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
-		dice4 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
-		dice5 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
-		dice6 = new DicePane(this,getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice1 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice2 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice3 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice4 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice5 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size())-1));
+		dice6 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size())-1));
 		dices = new HBox(dice1,dice2,dice3,dice4,dice5,dice6);
 		dices.setSpacing(20);
 		
