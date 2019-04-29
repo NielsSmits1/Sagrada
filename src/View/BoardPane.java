@@ -35,7 +35,7 @@ public class BoardPane extends Pane{
 	public BoardPane(RootPane rp, int pattern) {
 //		setPrefSize(s.getWidth()/4, s.getHeight() - 200);
 		setPatternId(pattern);
-		controller = new BoardController(this);
+		controller = new BoardController();
 		rootPane = rp;
 		setShape();
 		setGrid();

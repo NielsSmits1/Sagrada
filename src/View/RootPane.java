@@ -59,7 +59,7 @@ public class RootPane extends BorderPane{
 	public RootPane() {
 //		scene = s;
 //		this.menu = menu;
-		controller = new GameController(this);
+		controller = new GameController();
 		r = new Random();
 		setBoard();
 		addDice();
