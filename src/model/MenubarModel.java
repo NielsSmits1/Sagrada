@@ -2,9 +2,11 @@ package model;
 
 import View.InlogPane;
 import View.MyScene;
+import controller.MenubarController;
 import javafx.application.Platform;
 
 public class MenubarModel {
+	private MenubarController controller;
 
 	private MyScene scene;
 	
