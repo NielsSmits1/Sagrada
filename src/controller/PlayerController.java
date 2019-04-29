@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.Player;
 
 public class PlayerController {
@@ -58,6 +60,9 @@ public class PlayerController {
 			return false;
 		}
 	}
+	public Player getPlayer() {
+		return this.player;
+	}
 	
 	public boolean usernameExist() {
 		if(player.checkUsername().isEmpty()) {
@@ -65,6 +70,23 @@ public class PlayerController {
 		}else {
 			return true;
 		}
+	}
+	public boolean isInGame(String username, PlayerController self) {
+		String u;
+		this.player = new Player(username);
+		for(ArrayList<Object> a: self.getPlayer().checkPlayerInGame()) {
+			u = (String) a.get(0);
+			if(u.equals(username)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void challenge(String u, PlayerController self) {
+		this.player = new Player(username);
+		player.challenge();
+		
 	}
 
 }

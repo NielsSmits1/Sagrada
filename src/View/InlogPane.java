@@ -38,9 +38,9 @@ public class InlogPane extends BorderPane {
 
 	public InlogPane(MyScene myScene) {
 		main = myScene;
-		this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
-				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-				new BackgroundSize(0, 0, false, false, false, true))));
+		//this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
+				//BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+				//new BackgroundSize(0, 0, false, false, false, true))));
 	
 
 		// Username textArea
@@ -116,6 +116,7 @@ public class InlogPane extends BorderPane {
 			// sends the user to the game screen
 			System.out.println("Login accepted");
 			main.setRoot(new Home(player, main));
+			
 		} else {
 			System.out.println("Login failed");
 			giveErrorBox();

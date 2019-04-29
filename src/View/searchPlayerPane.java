@@ -15,10 +15,10 @@ public class searchPlayerPane extends VBox  {
 	private Label user = new Label();
 	private Button search = new Button("Zoeken");
 	private PlayerController pc;
-	public searchPlayerPane(){
+	private PlayerController self;
+	public searchPlayerPane(PlayerController player){
+		self = player;
 		search.setOnAction(E -> search());
-		//search.setMinSize(80, (500/3)-120);
-		//search.setMaxSize(80, (500/3)-120);
 		search.setPrefSize(80, (500/3)-120);
 		search.setStyle("-fx-background-color: DARKGRAY; ");
 		search.setStyle("-fx-border-color: BLACK; -fx-border-width: 1px;");
@@ -56,13 +56,21 @@ public class searchPlayerPane extends VBox  {
 		 */
 		
 	}
-	private void challengePlayer(String username) {
-		//if(pc.checkalsjealineengamesitmetdesespeler(guery))
-		//select username from player where game_idgame = (select game_idgame from player where username = 'bram')
-		// check of je in een game sit met die player 
-		// so wel foutmelding
-		// so niet ninsert new game uitdaging bl bl bl
+	private void challengePlayer(String u) {
+		if(pc.isInGame(u, self)) {
+			//user.setText(username);
+			//error.setText("Zit al in een game");
+			//this.getChildren().remove(challenge);
+			//this.getChildren().add(error);
+		}
+		else {
+			/*self.challenge(u){
+				// moet hij weer gegeven woirden in challenger box/pane
+			}*/
+			
+		}
 	}
+	
 
 	
 }

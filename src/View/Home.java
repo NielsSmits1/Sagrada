@@ -20,7 +20,7 @@ public class Home extends BorderPane{
 	private Pane centerPane;
 	private Pane rightTopPane;
 	private Pane rightCenterPane;
-	private searchPlayerPane searchPlayer;
+
 
 	private Pane textbox;
 	private HBox total_textarea;
@@ -39,14 +39,18 @@ public class Home extends BorderPane{
 	private Menubar menu;
 	private PlayerController player;
 	private Scene main;
+	private searchPlayerPane searchPlayer;
+	
 	
 	public Home(PlayerController player, Scene scene) {
 		super();
 		menu = new Menubar();
+		this.player = player;
 		makeCenterPane();
 		makeRightBorderPane();
-		this.player = player;
+		
 		main = scene;
+		
 		
 		centerPane.getChildren().add(menu);
 	}
@@ -54,8 +58,8 @@ public class Home extends BorderPane{
 		rightPane = new VBox();
 		rightTopPane = new Pane();
 		rightCenterPane = new Pane();
-		searchPlayer = new searchPlayerPane();
-
+		searchPlayer = new searchPlayerPane(player);
+		//System.out.println(player.getPlayer().getPassword());
 		
 		
 		//this is the text area and button where you can search players
