@@ -2,6 +2,9 @@ package View;
 
 
 
+import java.util.ArrayList;
+
+import controller.ChallengesController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -10,38 +13,46 @@ import javafx.scene.layout.VBox;
 
 public class ChallengesPane extends ScrollPane {
 	
-	private ChallengesPlayerLine playerLine;
+	private ArrayList<ChallengesPlayerLinePane> playerLine;
 	private VBox playerColumn = new VBox();
-//	private HBox playerLine = new HBox();
-//	private Label playerName = new Label();
-//	private Button accept = new Button("Accepteer");
-//	private Button decline = new Button("Weiger");
+	private ChallengesController cc;
 
 	
 	public ChallengesPane() {
+		cc = new ChallengesController();
+		playerLine = new ArrayList<ChallengesPlayerLinePane>();
 		
-		this.setHbarPolicy(getHbarPolicy().AS_NEEDED); // Set NEVER when done
-		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 
-		addChallengesLine();
-		addChallengesLine();
-		
+		getChallengedPlayerName();
 	
-	
-//		playerLine.setPrefSize(300,30);
-//		playerName.setText("playername");
-//		playerName.setPrefSize(100, 30);
-//		accept.setPrefSize(100, 30);
-//		decline.setPrefSize(100, 30);
-//		playerLine.getChildren().setAll(playerName,accept,decline);
 		
-//		this.setContent(playerLine2);
+		
+		addChallengesLine("Please");
+		addChallengesLine("Send");
+		addChallengesLine("Help");
+		addChallengesLine("ASAP");
+	
+
+		
+		
+		
 		playerColumn.getChildren().setAll(playerLine);
 		this.setContent(playerColumn);
+		this.setHbarPolicy(getHbarPolicy().NEVER);
+		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 	}
 	
-	public void addChallengesLine() {
-		playerLine = new ChallengesPlayerLine();
+	public void addChallengesLine(String name) {
+		
+		playerLine.add(new ChallengesPlayerLinePane(name));
+		
+		
+	}
+	
+	public void getChallengedPlayerName() {
+		cc.checkChallengedPlayer();
+		
+		
 		
 	}
 

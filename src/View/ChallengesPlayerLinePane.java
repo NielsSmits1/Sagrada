@@ -6,16 +6,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-public class ChallengesPlayerLine extends HBox {
-	private Label playerName = new Label();
-	private Button accept = new Button("Accepteer");
-	private Button decline= new Button("Weiger");
+public class ChallengesPlayerLinePane extends HBox {
+	private Label playerName;
+	private Button accept;
+	private Button decline;
 	private ChallengesController cc = new ChallengesController(); 
 
-	public ChallengesPlayerLine() {
-
+	public ChallengesPlayerLinePane(String name) {
+		playerName = new Label();
+		accept = new Button("Accepteer");
+		decline= new Button("Weiger");
+		
 		this.setPrefSize(300, 30);
-		playerName.setText("playername");
+		playerName.setText(name);
 		playerName.setPrefSize(100, 30);
 		accept.setPrefSize(100, 30);
 		decline.setPrefSize(100, 30);

@@ -8,6 +8,7 @@ public class ChallengesController {
 
 	
 	public ChallengesController() {
+		challenge = new Challenge();
 		
 		
 		
@@ -21,6 +22,12 @@ public class ChallengesController {
 
 	public void declineChallenge() {
 		challenge.changePlayerStatusToDeclined();
+	}
+	
+	public void checkChallengedPlayer() {
+		challenge.GetPlayerWithChallengedStatus();
+		
+		System.out.println(challenge.GetPlayerWithChallengedStatus());
 	}
 
 }
