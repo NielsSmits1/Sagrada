@@ -36,6 +36,7 @@ public class BoardPane extends Pane{
 //		setPrefSize(s.getWidth()/4, s.getHeight() - 200);
 		setPatternId(pattern);
 		controller = new BoardController();
+		controller.setPatternId(patternid);
 		rootPane = rp;
 		setShape();
 		setGrid();
@@ -227,52 +228,9 @@ public class BoardPane extends Pane{
 		}else {
 			return false;
 		}
-		
-		
-//		int patternRow = field.getRowIndex(p);
-//		int patternColumn = field.getColumnIndex(p);
-//		System.out.println("" + patternRow + " " + patternColumn);
-	
-//		
-//		PatternPane downPane = (PatternPane) getSideDie(patternRow+1,patternColumn);
-//		PatternPane upPane = (PatternPane) getSideDie(patternRow-1,patternColumn);
-//		PatternPane leftPane = (PatternPane) getSideDie(patternRow,patternColumn-1);
-//		PatternPane rightPane = (PatternPane) getSideDie(patternRow,patternColumn+1);
-//			
-//			if(downPane.getDice() == null && upPane.getDice() == null && leftPane.getDice() == null && rightPane.getDice() == null) {
-//				return true;
-//			}
-//			if(downPane.getDice() != null) {
-//				if(s.getColor().equals(downPane.getDiceColor())){
-//					return false;
-//				}
-//			}
-//			if(upPane.getDice() != null) {
-//				if(s.getColor().equals(upPane.getDiceColor())){
-//					return false;
-//				}
-//			}
-//			if(leftPane.getDice() != null) {
-//				if(s.getColor().equals(leftPane.getDiceColor())){
-//					return false;
-//				}
-//			}
-//			if(rightPane.getDice() != null) {
-//				if(s.getColor().equals(downPane.getDiceColor())){
-//					return false;
-//				}
-//			}
-//		return true;
+
 	}
-	
-	private Node getSideDie(int col, int row) {
-	    for (Node node : field.getChildren()) {
-	        if (field.getColumnIndex(node) == col && field.getRowIndex(node) == row) {
-	            return node;
-	        }
-	    }
-	    return null;
-	}
+
 }
 
 	
