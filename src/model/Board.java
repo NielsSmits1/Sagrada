@@ -14,9 +14,10 @@ public class Board {
 
 
 	//	private BoardController controller;
-	public Board() {
+	public Board(int number) {
 //		controller = c;
 		patternfield = new ArrayList<>();
+		setPatternId(number);
 		p = getSelect();
 		setPatternField();
 	}

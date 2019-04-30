@@ -12,7 +12,7 @@ public class BoardController {
 //	private BoardPane b;
 	public BoardController() {
 //		b = bp;
-//		field = new Board(this);
+		setPatternId(1);
 	}
 	///*
 		//Asks for the ArrayList of spaces.
@@ -29,7 +29,6 @@ public class BoardController {
 	}
 	
 	public void setPatternId(int id) {
-		field = new Board();
-		field.setPatternId(id);
+		field = new Board(id);
 	}
 }
