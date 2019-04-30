@@ -27,7 +27,7 @@ public class Home extends Pane{
 		home = new HomeController(self);
 		main = scene;
 		
-		challenges.setPrefSize(150, 400);
+		challenges.setPrefSize(300, 400);
 		challenges.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 		this.getChildren().add(challenges);
 		challenges.setLayoutX(150);
