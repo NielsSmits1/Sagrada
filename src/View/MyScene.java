@@ -7,7 +7,7 @@ public class MyScene extends Scene {
     //private RootPane game;
 
     public MyScene() {
-        super(new Pane(), 500, 500);
+        super(new Pane());
         launcher = new InlogPane(this);
         setRoot(launcher);
 

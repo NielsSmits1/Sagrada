@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -113,12 +114,8 @@ public class InlogPane extends BorderPane {
 	private void handleLogin() {
 		player = new PlayerController(usernameField.getText(), passwordField.getText());
 		if (player.hasRows() && !(usernameField.getText().equals("")) && !(passwordField.getText().equals(""))) {
-			// sends the user to the game screen
-			System.out.println("Login accepted");
 			main.setRoot(new Home(player, main));
-			
 		} else {
-			System.out.println("Login failed");
 			giveErrorBox();
 
 		}

@@ -1,5 +1,6 @@
 package View;
 
+import controller.HomeController;
 import controller.MenubarController;
 import controller.PlayerController;
 import javafx.scene.Scene;
@@ -13,10 +14,31 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import model.MenubarModel;
 
-public class Home extends BorderPane{
-	private VBox rightPane;
+public class Home extends Pane{
+	private ChallengerPane challenger;
+	private ChallengesPane challenges = new ChallengesPane();
+	private SearchPlayerPane search;
+	private Menubar menu;
+	private HomeController home;
+	private Scene main;
+	
+	public Home(PlayerController self, Scene scene) {
+		home = new HomeController(self);
+		main = scene;
+		
+		challenges.setPrefSize(150, 400);
+		challenges.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+		this.getChildren().add(challenges);
+		challenges.setLayoutX(150);
+		challenges.setLayoutY(300);
+		//this.setWidth(800);
+		//challenger.setPrefSize(150, 400);
+		
+		//this.getChildren().add(challenger);
+	}
+	
+	/*private VBox rightPane;
 	private Pane centerPane;
 	private Pane rightTopPane;
 	private Pane rightCenterPane;
@@ -190,6 +212,6 @@ public class Home extends BorderPane{
 		
 		setCenter(centerPane);
 
-	}
+	}*/
 
 }

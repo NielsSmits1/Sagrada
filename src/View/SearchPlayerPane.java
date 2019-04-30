@@ -9,14 +9,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-public class searchPlayerPane extends VBox  {
+public class SearchPlayerPane extends VBox  {
 	private TextField online = new TextField();
 	private Button challenge = new Button("Uitdagen");
 	private Label user = new Label();
 	private Button search = new Button("Zoeken");
 	private PlayerController pc;
 	private PlayerController self;
-	public searchPlayerPane(PlayerController player){
+	public SearchPlayerPane(PlayerController player){
 		self = player;
 		search.setOnAction(E -> search());
 		search.setPrefSize(80, (500/3)-120);
