@@ -32,7 +32,7 @@ public class InlogPane extends BorderPane {
 	private TextArea usernameField;
 	private TextArea passwordField;
 	private HBox buttonAlignment;
-	private Scene main;
+	private MyScene main;
 	private PlayerController player;
 	private Label gameTitle;
 	private BorderPane textAlignment;
@@ -101,7 +101,7 @@ public class InlogPane extends BorderPane {
 
 	private void handleRegister() {
 		player = new PlayerController(usernameField.getText(), passwordField.getText());
-		if (!player.hasRows() && player.validateAccountRequirement()) {
+		if (!player.hasRows() && player.validateAccountRequirement(usernameField.getText() ,passwordField.getText())) {
 			player.newUser();
 			System.out.println("Register accepted");
 			giveSuccessfulBox();

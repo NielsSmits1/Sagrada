@@ -4,7 +4,6 @@ import javafx.scene.layout.Pane;
 
 public class MyScene extends Scene {
     private InlogPane launcher;
-    //private RootPane game;
 
     public MyScene() {
         super(new Pane());

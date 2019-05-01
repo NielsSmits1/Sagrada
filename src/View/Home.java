@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 //import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -14,28 +16,86 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class Home extends Pane{
-	private ChallengerPane challenger;
+	private ChallengerPane challenger = new ChallengerPane();
 	private ChallengesPane challenges = new ChallengesPane();
 	private SearchPlayerPane search;
-	private Menubar menu;
+	private Menubar menu = new Menubar();
 	private HomeController home;
-	private Scene main;
+	private MyScene main;
+	Label lb;
+	HBox box;
+	VBox boxie;
+	Font f = new Font(20);
+	int x = 250;
 	
-	public Home(PlayerController self, Scene scene) {
+	public Home(PlayerController self, MyScene scene) {
+		this.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
 		home = new HomeController(self);
 		main = scene;
+		search = new SearchPlayerPane(home);
 		
-		challenges.setPrefSize(150, 400);
-		challenges.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
-		this.getChildren().add(challenges);
-		challenges.setLayoutX(150);
-		challenges.setLayoutY(300);
-		//this.setWidth(800);
-		//challenger.setPrefSize(150, 400);
+		setPanes("Uw uitdagingen",challenges);
 		
-		//this.getChildren().add(challenger);
+		x += 400;
+		
+		setPanes("Wie u heeft uitgedaagt", challenger);
+		
+		x += 400;
+		
+		setPanes("Zoek een speler", search);
+		
+		setLogout();
+		
+		this.getChildren().add(menu);
+	}
+	
+	private void setLogout() {
+		box = new HBox();
+		lb = new Label("Welkom " + home.getUsername());
+		lb.setFont(f);
+		Button loggout = new Button("Uitloggen");
+		loggout.setLayoutX(30);
+		loggout.setOnAction(E -> logOut());
+		box.getChildren().addAll(lb, loggout);
+		box.setLayoutY(30);
+		box.setPrefWidth(500);
+		this.getChildren().add(box);
+	}
+
+	private void logOut() {
+		main.setRoot(new InlogPane(main));
+	}
+
+	private void setPanes(String text, SearchPlayerPane scr) {
+		lb = new Label(text);
+		boxie = new VBox();
+		scr.setPrefSize(250, 400);
+		
+		boxie.setLayoutX(x);
+		boxie.setLayoutY(200);
+		boxie.setPrefSize(250, 500);
+		lb.setFont(f);
+		
+		boxie.getChildren().addAll(lb,scr);
+		this.getChildren().add(boxie);
+		
+	}
+
+	private void setPanes(String text, ScrollPane scr) {
+		Label lb = new Label(text);
+		boxie = new VBox();
+		scr.setPrefSize(250, 400);
+		
+		boxie.setLayoutX(x);
+		boxie.setLayoutY(200);
+		boxie.setPrefSize(250, 500);
+		lb.setFont(f);
+		
+		boxie.getChildren().addAll(lb,scr);
+		this.getChildren().add(boxie);
 	}
 	
 	/*private VBox rightPane;

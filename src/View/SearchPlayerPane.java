@@ -1,45 +1,50 @@
 package View;
 
-import controller.PlayerController;
+import controller.HomeController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class SearchPlayerPane extends VBox  {
 	private TextField online = new TextField();
 	private Button challenge = new Button("Uitdagen");
 	private Label user = new Label();
 	private Button search = new Button("Zoeken");
-	private PlayerController pc;
-	private PlayerController self;
-	public SearchPlayerPane(PlayerController player){
-		self = player;
+	private Button stats = new Button("Statistieken");
+	private Alert alert = new Alert(AlertType.ERROR);
+	
+
+	private HomeController hc;
+	public SearchPlayerPane(HomeController home){
+		hc = home;
 		search.setOnAction(E -> search());
-		search.setPrefSize(80, (500/3)-120);
-		search.setStyle("-fx-background-color: DARKGRAY; ");
-		search.setStyle("-fx-border-color: BLACK; -fx-border-width: 1px;");
-		search.setStyle("-fx-font-size: 14; ");
-		
-		online.setMaxSize(80, 120);
-		online.setStyle("-fx-border-color: BLACK; -fx-border-width: 1px;");
-		
+		online.setFont(Font.font(14));
+		online.setMaxWidth(120);
+
 		this.getChildren().setAll(online,search);
+	}
+	
+	private void alert(String message) {
+		alert.setHeaderText(message);
+		alert.showAndWait();
 	}
 	private void search() {
 		String username = online.getText();
 		if(!username.equals("")) {
-			pc = new PlayerController(username);
-			if(pc.usernameExist()) {
-				user.setText(username);
-				challenge.setOnAction(E -> challengePlayer(username));
-				this.getChildren().addAll(user, challenge);
+			if(hc.usernameExist(username)) {
+				showPlayer(username);
+				
+				
 			}else {
-				// foutmelding
-				System.out.println("foutje");
+				alert("Niemand gevonden met deze gebruikersnaam");
 			}
 		}
 		
@@ -56,8 +61,36 @@ public class SearchPlayerPane extends VBox  {
 		 */
 		
 	}
+	private void showPlayer(String username) {
+		VBox boxie = new VBox();
+		boxie.setLayoutY(30);
+		boxie.setMinWidth(300);
+		user.setFont(Font.font(20));
+		user.setText(username);
+		stats.setOnAction(E-> showPlayerStats(username));
+		challenge.setOnAction(E -> challengePlayer(username));
+		boxie.getChildren().addAll(user,stats, challenge);
+		
+		this.getChildren().add(boxie);
+		
+	}
+
+	private Object showPlayerStats(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private void challengePlayer(String u) {
-		if(pc.isInGame(u, self)) {
+		/*
+		 * ik bouw eerst de juiste instantie homecontroller
+		 * hey controllertje
+		 *  kijk is even of ik in een spel met die andere
+		 *  hey klopt
+		 *  of niet
+		 *  doe ietsa anders
+		 *  
+		 */
+		/*if(pc.isInGame(u, self)) {
 			//user.setText(username);
 			//error.setText("Zit al in een game");
 			//this.getChildren().remove(challenge);
@@ -66,9 +99,9 @@ public class SearchPlayerPane extends VBox  {
 		else {
 			/*self.challenge(u){
 				// moet hij weer gegeven woirden in challenger box/pane
-			}*/
+			}
 			
-		}
+		}*/
 	}
 	
 
