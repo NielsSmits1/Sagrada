@@ -22,15 +22,6 @@ public class ChallengerPane extends ScrollPane{
 		
 		setChallenges();
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		playerColumn.getChildren().setAll(playerLine);
 		this.setContent(playerColumn);
 		this.setHbarPolicy(getHbarPolicy().NEVER);

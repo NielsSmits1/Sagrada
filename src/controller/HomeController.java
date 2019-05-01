@@ -51,5 +51,9 @@ public class HomeController {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
+	
+	public Player getSelf() {
+		return this.self;
+	}
 
 }

@@ -5,14 +5,21 @@ import java.util.ArrayList;
 import Database.db;
 
 public class Challenge {
-	private Player player;
-	private Player player2;
+	private Player self;
+	private Player challenger;
 	private int gameId;
 	private String playerStatus;
 	private db database = new db();
 
 	public Challenge() {
-		// TODO Auto-generated constructor stub
+		
+	}
+	public Challenge(Player self) {
+		this.self = self;
+	}
+	public Challenge(Player self, Player challenger) {
+		this.self = self;
+		this.challenger = challenger;
 	}
 
 	public void changePlayerStatusToAccepted() {
@@ -27,14 +34,14 @@ public class Challenge {
 
 	}
 
-	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus(String inlogName) {
-		return database.Select("select username from player where game_idgame in (select game_idgame from player where username = '" + inlogName +"') AND playstatus_playstatus = 'Uitdager'"); //Change "Johan" To self.username 
+	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus() {
+		return database.Select("select username from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"') AND playstatus_playstatus = 'Uitdager'"); //Change "Johan" To self.username 
 		
 	}	
 		//  returns :niels
 		//	         teun
-	public ArrayList<ArrayList<Object>> GetPlayerWithChallengeeStatus(String inlogName) {
-		return database.Select("select * from player where game_idgame in (select game_idgame from player where username = '" + inlogName +"') AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
+	public ArrayList<ArrayList<Object>> GetPlayerWithChallengeeStatus() {
+		return database.Select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"') AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
 		
 		// returns :johan
 		// 			teun
