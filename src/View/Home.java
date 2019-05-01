@@ -19,8 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Home extends Pane{
-	private ChallengerPane challenger = new ChallengerPane();
-	private ChallengesPane challenges = new ChallengesPane();
+	private ChallengerPane challenger;
+	private ChallengesPane challenges;
 	private SearchPlayerPane search;
 	private Menubar menu = new Menubar();
 	private HomeController home;
@@ -36,6 +36,8 @@ public class Home extends Pane{
 		home = new HomeController(self);
 		main = scene;
 		search = new SearchPlayerPane(home);
+		challenges = new ChallengesPane(home);
+		challenger = new ChallengerPane(home);
 		
 		setPanes("Uw uitdagingen",challenges);
 		
@@ -52,6 +54,7 @@ public class Home extends Pane{
 		this.getChildren().add(menu);
 	}
 	
+
 	private void setLogout() {
 		box = new HBox();
 		lb = new Label("Welkom " + home.getUsername());
@@ -91,7 +94,7 @@ public class Home extends Pane{
 		
 		boxie.setLayoutX(x);
 		boxie.setLayoutY(200);
-		boxie.setPrefSize(250, 500);
+		boxie.setPrefSize(300, 500);
 		lb.setFont(f);
 		
 		boxie.getChildren().addAll(lb,scr);

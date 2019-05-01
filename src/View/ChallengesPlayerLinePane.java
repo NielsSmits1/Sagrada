@@ -10,7 +10,7 @@ public class ChallengesPlayerLinePane extends HBox {
 	private Label playerName;
 	private Button accept;
 	private Button decline;
-	private ChallengesController cc = new ChallengesController(); 
+//	private ChallengesController cc = new ChallengesController(); 
 
 	public ChallengesPlayerLinePane(String name) {
 		playerName = new Label();
@@ -23,8 +23,8 @@ public class ChallengesPlayerLinePane extends HBox {
 		accept.setPrefSize(100, 30);
 		decline.setPrefSize(100, 30);
 		this.getChildren().setAll(playerName, accept, decline);
-		accept.setOnAction(e -> cc.acceptChallenge());
-		decline.setOnAction(e -> cc.declineChallenge());
+//		accept.setOnAction(e -> cc.acceptChallenge());
+//		decline.setOnAction(e -> cc.declineChallenge());
 
 	
 	}

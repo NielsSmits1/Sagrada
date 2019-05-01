@@ -27,13 +27,18 @@ public class Challenge {
 
 	}
 
-	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus() {
-		return database.Select("select username from player where game_idgame = (select game_idgame from player where username ='" + "Johan" + "' AND playstatus_playstatus = 'Uitdager') "); //Change "Johan" To self.username 
+	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus(String inlogName) {
+		return database.Select("select username from player where game_idgame in (select game_idgame from player where username = '" + inlogName +"') AND playstatus_playstatus = 'Uitdager'"); //Change "Johan" To self.username 
 		
-		
+	}	
 		//  returns :niels
 		//	         teun
-	
+	public ArrayList<ArrayList<Object>> GetPlayerWithChallengeeStatus(String inlogName) {
+		return database.Select("select * from player where game_idgame in (select game_idgame from player where username = '" + inlogName +"') AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
+		
+		// returns :johan
+		// 			teun
+		//			niels
 	}
 
 }
