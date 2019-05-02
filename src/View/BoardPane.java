@@ -182,10 +182,10 @@ public class BoardPane extends Pane{
 		boolean down;
 		boolean left;
 		boolean right;
-		if(p.getNumber()-1 >= 0 && board.get(p.getNumber()-1) != null) {
+		if(p.getNumber()-1 >= 0 && board.get(p.getNumber()-1) != null && p.getNumber()-1 != 3 && p.getNumber()-1 != 7 && p.getNumber()-1 != 11 && p.getNumber()-1 != 15) {
 			upPane = board.get(p.getNumber()-1);
 		}
-		if(p.getNumber()+1 <= 19 && board.get(p.getNumber()+1) != null) {
+		if(p.getNumber()+1 <= 19 && board.get(p.getNumber()+1) != null && p.getNumber()+1 != 4 && p.getNumber()+1 != 8 && p.getNumber()+1 != 12 && p.getNumber()+1 != 16) {
 			downPane = board.get(p.getNumber()+1);
 			
 		}
