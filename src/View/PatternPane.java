@@ -65,6 +65,13 @@ public class PatternPane extends StackPane{
 		
 	}
 	
+	public PatternPane(DicePane d, int i) {
+		template = d;
+		number = i;
+		
+		getChildren().add(template);
+	}
+	
 	///*
 		//Sets the color of template.
 		///**

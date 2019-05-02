@@ -56,12 +56,12 @@ public class RootPane extends BorderPane{
 		//This constructor also adds some boards, dices and all of the diverse cards to the screen.
 		///**
 	
-	public RootPane() {
+	public RootPane(int number) {
 //		scene = s;
 //		this.menu = menu;
 		controller = new GameController();
 		r = new Random();
-		setBoard();
+		setBoard(number);
 		addDice();
 		finish();
 	}
@@ -70,11 +70,12 @@ public class RootPane extends BorderPane{
 		//Sets all boards.
 		///**
 	
-	private void setBoard() {
+	private void setBoard(int number) {
 		///*
 		//The the number in the constructor from BoardPane stands for the number of the windowpattern in the DB.
 		///**
-		player1 = new BoardPane(this,5);
+//		player1 = new BoardPane(this,5);
+		setBoard1(number);
 
 		player2 = new BoardPane(this,7);
 
@@ -188,5 +189,9 @@ public class RootPane extends BorderPane{
 		///**
 	public DicePane getSelected() {
 		return selected;
+	}
+	
+	public void setBoard1(int number) {
+		player1 = new BoardPane(this, number);
 	}
 }
