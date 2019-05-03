@@ -22,8 +22,8 @@ public class MySceneModel {
 	
 	public Pane createscene(Pane pane) {
 		menu = new Menubar();
-		menumodel = new MenubarModel(menu);
-		mencon = new MenubarController(menumodel, menu);
+//		menumodel = new MenubarModel(menu);
+//		mencon = new MenubarController(menumodel, menu);
 		
 		this.pane = pane;
 		pane = new VBox(menu, new VBox(pane));
