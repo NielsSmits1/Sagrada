@@ -60,14 +60,14 @@ public class InlogPane extends BorderPane {
 
 		// Login Button
 		loginButton = new Button("Inloggen");
-//		loginButton.setOnAction(e -> handleLogin());
+		loginButton.setOnAction(e -> handleLogin());
 		loginButton.setTextAlignment(TextAlignment.CENTER);
 		loginButton.setPrefHeight(50);
 		loginButton.setPrefWidth(100);
 
 		// Register Button
 		registerButton = new Button("Register");
-//		registerButton.setOnAction(e -> handleRegister());
+		registerButton.setOnAction(e -> handleRegister());
 		registerButton.setTextAlignment(TextAlignment.CENTER);
 		registerButton.setPrefHeight(50);
 		registerButton.setPrefWidth(100);
@@ -206,18 +206,18 @@ public class InlogPane extends BorderPane {
 //		}
 //	}
 
-//	private void giveErrorBox() {
-//		usernameField.setBorder(
-//				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-//		passwordField.setBorder(
-//				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-//	}
+	private void giveErrorBox() {
+		usernameField.setBorder(
+				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+		passwordField.setBorder(
+				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+	}
 	
-//	private void giveSuccessfulBox() {
-//		usernameField.setBorder(
-//				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-//		passwordField.setBorder(
-//				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-//	}
+	private void giveSuccessfulBox() {
+		usernameField.setBorder(
+				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+		passwordField.setBorder(
+				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+	}
 
 }
