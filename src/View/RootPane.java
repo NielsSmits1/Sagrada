@@ -49,6 +49,7 @@ public class RootPane extends BorderPane{
 	private MyScene scene;
 	private GameController controller;
 	private Random r;
+	private ArrayList<Dice> diceArray;
 //	private Menubar menu;
 	
 	///*
@@ -60,6 +61,7 @@ public class RootPane extends BorderPane{
 //		scene = s;
 //		this.menu = menu;
 		controller = new GameController();
+		diceArray = getDiceArray();
 		r = new Random();
 		setBoard(number);
 		addDice();
@@ -94,14 +96,19 @@ public class RootPane extends BorderPane{
 		///**
 	
 	private void addDice() {
-		dice1 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size()-1)), this);
-		dice2 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size()-1)), this);
-		dice3 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size()-1)), this);
-		dice4 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size()-1)), this);
-		dice5 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size()-1)), this);
-		dice6 = new DicePane(getDiceArray().get(r.nextInt(getDiceArray().size()-1)), this);
-		dices = new HBox(dice1,dice2,dice3,dice4,dice5,dice6);
+		dices = new HBox();
 		dices.setSpacing(20);
+		for(int i = 0;i<7;i++) {
+			int number = diceArray.get(r.nextInt(diceArray.size()-1)).getDieNumber();
+			dices.getChildren().add(new DicePane(diceArray.get(number), this));
+			for(int c = 0;c<diceArray.size();c++) {
+				if(diceArray.get(c).getDieNumber() == number) {
+					diceArray.remove(c);
+				}
+			}
+		}
+		
+		
 		
 	}
 	
