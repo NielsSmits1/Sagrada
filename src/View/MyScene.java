@@ -1,14 +1,14 @@
 package View;
 
 
-import controller.InlogController;
+//import controller.InlogController;
 import controller.MenubarController;
 import controller.PlayerController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import model.InlogModel;
+//import model.InlogModel;
 import model.MenubarModel;
 import model.MySceneModel;
 //BRAM_03_05_19
