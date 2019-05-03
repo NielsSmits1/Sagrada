@@ -15,8 +15,6 @@ public class Main extends Application {
 	     stage.setFullScreen(true);
 	     stage.setTitle("Sagrada login and register");
 	     stage.show();
-	     
-//test
 	}
 
 }

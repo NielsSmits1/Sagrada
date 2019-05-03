@@ -10,14 +10,12 @@ public class Game {
 	private db database = new db();
 	private ArrayList<ArrayList<Object>> p;
 	private ArrayList<Dice> diceArray;
-	private GameController controller;
 	
-	public Game(GameController controller) {
+	public Game() {
 		diceArray = new ArrayList<>();
 		database = new db();
 		p = getSelect();
 		setDiceArray();
-		this.controller = controller;
 	}
 	
 	public ArrayList<ArrayList<Object>> getSelect() {
@@ -49,7 +47,6 @@ public class Game {
 				diceArray.get(i).setDieColor("WHITE");
 				break;
 			}
-			System.out.println("" + diceArray.get(i).getDieNumber() + " " + diceArray.get(i).getDieColor() + " " + diceArray.get(i).getEyes());
 		}
 	}
 	
