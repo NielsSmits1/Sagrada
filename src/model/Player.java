@@ -24,6 +24,10 @@ public class Player {
     public ArrayList<ArrayList<Object>> checkUsername(){
     	return database.Select("Select * from account where username = '" + username +"'");
     }
+    //selects and returns arraylist of usernames.
+    public ArrayList<ArrayList<Object>> checkPlayerInGame(){
+    	return database.Select("select username from player where game_idgame = (select game_idgame from player where username ='" + username + "') ");
+   }
 
     //adds new user to the database.
     public void addUser() {
@@ -35,6 +39,20 @@ public class Player {
 	}
 	public String getUsername() {
 		return username;
+	}
+
+	public void challenge() {
+		/*
+		 *eerst bouw nieuw game
+		 *dan bouw spelers jezelf
+		 *dan bouw speler ander
+		 *update game zet jezelf als startspeler 
+		 * database.CUD("");
+		 */
+		
+	}
+	public void buildNewGame() {
+		database.CUD("insert into game ()");
 	}
 
 
