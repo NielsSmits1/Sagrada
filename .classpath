@@ -6,14 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="C:/Users/gEBRUIKER/Desktop/prog4_blok_4/mysql-connector-java-5.1.47/mysql-connector-java-5.1.47-bin.jar">
-=======
 	<classpathentry kind="lib" path="C:/Users/NGAPA/Documents/INF/Blok4/mysql-connector-java-5.1.47-bin.jar">
->>>>>>> b20d638515742cc0c59513f8220df137538de073
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
