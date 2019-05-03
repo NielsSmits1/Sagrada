@@ -26,6 +26,9 @@ public class Menubar extends MenuBar {
 		filter = new MenuItem("Filter");
 		stats = new MenuItem("Statistieken");
 		
+		//menu.getExit().setOnAction(e -> model.Exit());
+		//menu.getLogout().setOnAction(e -> model.logout());
+		
 		options.getItems().addAll(logout, exit, filter, stats);
 		this.getMenus().add(options);
 		

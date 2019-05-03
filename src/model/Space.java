@@ -1,9 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
-import Database.db;
-
 public class Space {
 	private int xPos;
 	private int yPos;
