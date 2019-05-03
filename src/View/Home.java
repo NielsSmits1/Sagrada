@@ -1,11 +1,14 @@
 package View;
 
+import controller.HomeController;
 import controller.MenubarController;
 import controller.PlayerController;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 //import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -13,14 +16,96 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import model.MenubarModel;
+import javafx.scene.text.Font;
 
-public class Home extends BorderPane{
-	private VBox rightPane;
+public class Home extends Pane{
+	private ChallengerPane challenger;
+	private ChallengesPane challenges;
+	private SearchPlayerPane search;
+	private Menubar menu = new Menubar();
+	private HomeController home;
+	private MyScene main;
+	Label lb;
+	HBox box;
+	VBox boxie;
+	Font f = new Font(20);
+	int x = 250;
+	
+	public Home(PlayerController self, MyScene scene) {
+		this.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
+		home = new HomeController(self);
+		main = scene;
+		search = new SearchPlayerPane(home);
+		challenges = new ChallengesPane(home);
+		challenger = new ChallengerPane(home);
+		
+		setPanes("Uw uitdagingen",challenges);
+		
+		x += 400;
+		
+		setPanes("Wie u heeft uitgedaagt", challenger);
+		
+		x += 400;
+		
+		setPanes("Zoek een speler", search);
+		
+		setLogout();
+		
+		this.getChildren().add(menu);
+	}
+	
+
+	private void setLogout() {
+		box = new HBox();
+		lb = new Label("Welkom " + home.getUsername());
+		lb.setFont(f);
+		Button loggout = new Button("Uitloggen");
+		loggout.setLayoutX(30);
+		loggout.setOnAction(E -> logOut());
+		box.getChildren().addAll(lb, loggout);
+		box.setLayoutY(30);
+		box.setPrefWidth(500);
+		this.getChildren().add(box);
+	}
+
+	private void logOut() {
+		main.setRoot(new InlogPane(main));
+	}
+
+	private void setPanes(String text, SearchPlayerPane scr) {
+		lb = new Label(text);
+		boxie = new VBox();
+		scr.setPrefSize(250, 400);
+		
+		boxie.setLayoutX(x);
+		boxie.setLayoutY(200);
+		boxie.setPrefSize(250, 500);
+		lb.setFont(f);
+		
+		boxie.getChildren().addAll(lb,scr);
+		this.getChildren().add(boxie);
+		
+	}
+
+	private void setPanes(String text, ScrollPane scr) {
+		Label lb = new Label(text);
+		boxie = new VBox();
+		scr.setPrefSize(250, 400);
+		
+		boxie.setLayoutX(x);
+		boxie.setLayoutY(200);
+		boxie.setPrefSize(300, 500);
+		lb.setFont(f);
+		
+		boxie.getChildren().addAll(lb,scr);
+		this.getChildren().add(boxie);
+	}
+	
+	/*private VBox rightPane;
 	private Pane centerPane;
 	private Pane rightTopPane;
 	private Pane rightCenterPane;
-	private searchPlayerPane searchPlayer;
+
 
 	private Pane textbox;
 	private HBox total_textarea;
@@ -39,14 +124,18 @@ public class Home extends BorderPane{
 	private Menubar menu;
 	private PlayerController player;
 	private Scene main;
+	private searchPlayerPane searchPlayer;
+	
 	
 	public Home(PlayerController player, Scene scene) {
 		super();
 		menu = new Menubar();
+		this.player = player;
 		makeCenterPane();
 		makeRightBorderPane();
-		this.player = player;
+		
 		main = scene;
+		
 		
 		centerPane.getChildren().add(menu);
 	}
@@ -54,8 +143,8 @@ public class Home extends BorderPane{
 		rightPane = new VBox();
 		rightTopPane = new Pane();
 		rightCenterPane = new Pane();
-		searchPlayer = new searchPlayerPane();
-
+		searchPlayer = new searchPlayerPane(player);
+		//System.out.println(player.getPlayer().getPassword());
 		
 		
 		//this is the text area and button where you can search players
@@ -186,6 +275,6 @@ public class Home extends BorderPane{
 		
 		setCenter(centerPane);
 
-	}
+	}*/
 
 }

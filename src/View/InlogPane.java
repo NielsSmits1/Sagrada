@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -31,16 +32,16 @@ public class InlogPane extends BorderPane {
 	private TextArea usernameField;
 	private TextArea passwordField;
 	private HBox buttonAlignment;
-	private Scene main;
+	private MyScene main;
 	private PlayerController player;
 	private Label gameTitle;
 	private BorderPane textAlignment;
 
 	public InlogPane(MyScene myScene) {
 		main = myScene;
-		this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
-				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-				new BackgroundSize(0, 0, false, false, false, true))));
+		//this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
+				//BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+				//new BackgroundSize(0, 0, false, false, false, true))));
 	
 
 		// Username textArea
@@ -100,7 +101,7 @@ public class InlogPane extends BorderPane {
 
 	private void handleRegister() {
 		player = new PlayerController(usernameField.getText(), passwordField.getText());
-		if (!player.hasRows() && player.validateAccountRequirement()) {
+		if (!player.hasRows() && player.validateAccountRequirement(usernameField.getText() ,passwordField.getText())) {
 			player.newUser();
 			System.out.println("Register accepted");
 			giveSuccessfulBox();
@@ -113,11 +114,8 @@ public class InlogPane extends BorderPane {
 	private void handleLogin() {
 		player = new PlayerController(usernameField.getText(), passwordField.getText());
 		if (player.hasRows() && !(usernameField.getText().equals("")) && !(passwordField.getText().equals(""))) {
-			// sends the user to the game screen
-			System.out.println("Login accepted");
 			main.setRoot(new Home(player, main));
 		} else {
-			System.out.println("Login failed");
 			giveErrorBox();
 
 		}
