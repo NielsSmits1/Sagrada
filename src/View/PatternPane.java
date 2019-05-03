@@ -9,13 +9,15 @@ public class PatternPane extends StackPane{
 	private DicePane template;
 	private DicePane dice;
 	private BoardPane boardPane;
+	private int number;
 	
 	///*
 		//BoardPane is required to get and delete the selected DicePane from RootPane. The required DicePane will become the template
 		///**
-	public PatternPane(BoardPane p, DicePane d) {
+	public PatternPane(BoardPane p, DicePane d, int i) {
 		template = d;
 		boardPane = p;
+		number = i;
 		///*
 		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
 		//Dice will be 'pasted' on the template.
@@ -25,11 +27,34 @@ public class PatternPane extends StackPane{
 			@Override
 			public void handle(MouseEvent event) {
 				if(getSelected() != null) {
-//					System.out.println("" + dice);
-					dice = getSelected();
-					dice.setMouseTransparent(true);
-					getChildren().add(dice);
-					deleteSelected();
+					if(template.getValue() != 0 && getNearDice(getSelected())) {
+						if(template.getValue() == getSelected().getValue()) {
+							dice = getSelected();
+							dice.setMouseTransparent(true);
+							getChildren().add(dice);
+							deleteSelected();
+							return;
+						}
+						return;
+					}
+					
+					if(template.getColor().equals("WHITE") && getNearDice(getSelected())) {
+						dice = getSelected();
+						dice.setMouseTransparent(true);
+						getChildren().add(dice);
+						deleteSelected();
+						return;
+					}else {
+						if(template.getColor().equals(getSelected().getColor()) && getNearDice(getSelected())) {
+							dice = getSelected();
+							dice.setMouseTransparent(true);
+							getChildren().add(dice);
+							deleteSelected();
+							return;
+						}
+					}
+					
+					
 				}
 //				getClicked();
 				
@@ -38,6 +63,13 @@ public class PatternPane extends StackPane{
 		});
 		getChildren().add(template);
 		
+	}
+	
+	public PatternPane(DicePane d, int i) {
+		template = d;
+		number = i;
+		
+		getChildren().add(template);
 	}
 	
 	///*
@@ -74,6 +106,33 @@ public class PatternPane extends StackPane{
 	
 	public void deleteSelected() {
 		boardPane.deleteSelected();
+	}
+	
+	public String getDiceColor() {
+		return dice.getColor();
+	}
+	
+	public int getNumber() {
+		return number;
+	}
+	
+	public String getColor() {
+		return dice.getColor();
+	}
+
+	public DicePane getDice() {
+		return dice;
+	}
+	
+	public int getEyes() {
+		if(dice != null) {
+			return dice.getValue();
+		}
+		return 0;
+	}
+	
+	public boolean getNearDice(DicePane p) {
+		return boardPane.getNearDice(this, p);
 	}
 	
 	

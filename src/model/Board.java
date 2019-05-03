@@ -10,10 +10,14 @@ public class Board {
 	private ArrayList<Space> patternfield;
 	private db database = new db();
 	private ArrayList<ArrayList<Object>> p;
-	private BoardController controller;
-	public Board(BoardController c) {
-		controller = c;
+	private int patternId;
+
+
+	//	private BoardController controller;
+	public Board(int number) {
+//		controller = c;
 		patternfield = new ArrayList<>();
+		setPatternId(number);
 		p = getSelect();
 		setPatternField();
 	}
@@ -73,6 +77,10 @@ public class Board {
 	}
 	
 	public int getPatternId() {
-		return controller.getPatternId();
+		return patternId;
+	}
+	
+	public void setPatternId(int patternId) {
+		this.patternId = patternId;
 	}
 }

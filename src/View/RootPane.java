@@ -1,6 +1,7 @@
 package View;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import controller.GameController;
 import javafx.event.EventHandler;
@@ -47,6 +48,8 @@ public class RootPane extends BorderPane{
 	private BorderPane bottom;
 	private MyScene scene;
 	private GameController controller;
+	private Random r;
+	private ArrayList<Dice> diceArray;
 //	private Menubar menu;
 	
 	///*
@@ -54,11 +57,13 @@ public class RootPane extends BorderPane{
 		//This constructor also adds some boards, dices and all of the diverse cards to the screen.
 		///**
 	
-	public RootPane() {
+	public RootPane(int number) {
 //		scene = s;
 //		this.menu = menu;
-		controller = new GameController(this);
-		setBoard();
+		controller = new GameController();
+		diceArray = getDiceArray();
+		r = new Random();
+		setBoard(number);
 		addDice();
 		finish();
 	}
@@ -67,11 +72,12 @@ public class RootPane extends BorderPane{
 		//Sets all boards.
 		///**
 	
-	private void setBoard() {
+	private void setBoard(int number) {
 		///*
 		//The the number in the constructor from BoardPane stands for the number of the windowpattern in the DB.
 		///**
-		player1 = new BoardPane(this,5);
+//		player1 = new BoardPane(this,5);
+		setBoard1(number);
 
 		player2 = new BoardPane(this,7);
 
@@ -90,14 +96,19 @@ public class RootPane extends BorderPane{
 		///**
 	
 	private void addDice() {
-		dice1 = new DicePane(this,getDiceArray().get(25));
-		dice2 = new DicePane(this,getDiceArray().get(19));
-		dice3 = new DicePane(this,getDiceArray().get(60));
-		dice4 = new DicePane(this,getDiceArray().get(70));
-		dice5 = new DicePane(this,getDiceArray().get(71));
-		dice6 = new DicePane(this,getDiceArray().get(80));
-		dices = new HBox(dice1,dice2,dice3,dice4,dice5,dice6);
+		dices = new HBox();
 		dices.setSpacing(20);
+		for(int i = 0;i<7;i++) {
+			int number = diceArray.get(r.nextInt(diceArray.size()-1)).getDieNumber();
+			dices.getChildren().add(new DicePane(diceArray.get(number), this));
+			for(int c = 0;c<diceArray.size();c++) {
+				if(diceArray.get(c).getDieNumber() == number) {
+					diceArray.remove(c);
+				}
+			}
+		}
+		
+		
 		
 	}
 	
@@ -185,5 +196,9 @@ public class RootPane extends BorderPane{
 		///**
 	public DicePane getSelected() {
 		return selected;
+	}
+	
+	public void setBoard1(int number) {
+		player1 = new BoardPane(this, number);
 	}
 }

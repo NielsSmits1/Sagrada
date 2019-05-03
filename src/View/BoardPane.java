@@ -2,8 +2,10 @@ package View;
 
 import java.util.ArrayList;
 
+
 import controller.BoardController;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -33,7 +35,8 @@ public class BoardPane extends Pane{
 	public BoardPane(RootPane rp, int pattern) {
 //		setPrefSize(s.getWidth()/4, s.getHeight() - 200);
 		setPatternId(pattern);
-		controller = new BoardController(this);
+		controller = new BoardController();
+		controller.setPatternId(patternid);
 		rootPane = rp;
 		setShape();
 		setGrid();
@@ -130,7 +133,7 @@ public class BoardPane extends Pane{
 		board = new ArrayList<>();
 		for(int c = 1;c<=5;c++) {
 			for(int i = 0; i<4;i++) {
-					board.add(new PatternPane(this,new DicePane(getPatternField().get(counter).getEyes(), getPatternField().get(counter).getColor())));
+					board.add(new PatternPane(this,new DicePane(getPatternField().get(counter).getEyes(), getPatternField().get(counter).getColor()), counter));
 					field.add(board.get(board.size()-1), getPatternField().get(counter).getXPos(), getPatternField().get(counter).getYPos());
 					counter++;
 				}
@@ -169,6 +172,65 @@ public class BoardPane extends Pane{
 		rootPane.deleteSelected();
 		
 	}
+	
+	public boolean getNearDice(PatternPane p, DicePane s) {
+		PatternPane upPane = null;
+		PatternPane downPane = null;
+		PatternPane leftPane = null;
+		PatternPane rightPane = null;
+		boolean up;
+		boolean down;
+		boolean left;
+		boolean right;
+		if(p.getNumber()-1 >= 0 && board.get(p.getNumber()-1) != null && p.getNumber()-1 != 3 && p.getNumber()-1 != 7 && p.getNumber()-1 != 11 && p.getNumber()-1 != 15) {
+			upPane = board.get(p.getNumber()-1);
+		}
+		if(p.getNumber()+1 <= 19 && board.get(p.getNumber()+1) != null && p.getNumber()+1 != 4 && p.getNumber()+1 != 8 && p.getNumber()+1 != 12 && p.getNumber()+1 != 16) {
+			downPane = board.get(p.getNumber()+1);
+			
+		}
+		if(p.getNumber()-4 >= 0 && board.get(p.getNumber()-4) != null) {
+			leftPane = board.get(p.getNumber()-4);
+			
+		}
+		if(p.getNumber()+4 <= 19 && board.get(p.getNumber()+4) != null) {
+			rightPane = board.get(p.getNumber()+4);
+			
+		}
+		
+		if(upPane != null && upPane.getDice() != null && (upPane.getColor().equals(s.getColor()) || upPane.getEyes() == s.getValue())) {
+			return false;
+		}else {
+			up = true;
+			
+		}
+		if(downPane != null && downPane.getDice() != null && (downPane.getColor().equals(s.getColor()) || downPane.getEyes() == s.getValue())) {
+			return false;
+		}else {
+			down = true;
+			
+		}
+		if(leftPane != null && leftPane.getDice() != null && (leftPane.getColor().equals(s.getColor()) || leftPane.getEyes() == s.getValue())) {
+			return false;
+		}else {
+			left = true;
+			
+		}
+		if(rightPane != null && rightPane.getDice() != null && (rightPane.getColor().equals(s.getColor()) || rightPane.getEyes() == s.getValue())) {
+			return false;
+		}else {
+			right = true;
+			
+		}
+		
+		if(up == true && down == true && left == true && right == true) {
+			return true;
+		}else {
+			return false;
+		}
+
+	}
+
 }
 
 	

@@ -1,3 +1,4 @@
+package controller;
 import View.MyScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,8 +15,6 @@ public class Main extends Application {
 	     stage.setFullScreen(true);
 	     stage.setTitle("Sagrada login and register");
 	     stage.show();
-	     
-	     System.out.println("haai");
 	}
 
 }

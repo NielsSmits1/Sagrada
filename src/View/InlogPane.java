@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -31,16 +32,16 @@ public class InlogPane extends BorderPane {
 	private TextArea usernameField;
 	private TextArea passwordField;
 	private HBox buttonAlignment;
-	private Scene main;
+	private MyScene main;
 	private PlayerController player;
 	private Label gameTitle;
 	private BorderPane textAlignment;
 
 	public InlogPane(MyScene myScene) {
 		main = myScene;
-		this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
-				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-				new BackgroundSize(0, 0, false, false, false, true))));
+		//this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
+				//BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+				//new BackgroundSize(0, 0, false, false, false, true))));
 	
 
 		// Username textArea
@@ -105,16 +106,39 @@ public class InlogPane extends BorderPane {
 		return loginButton;
 	}
 
+//BRAM_03_05_19
 //getter for RegisterButton
-	public Button getRegisterButton() {
-		return registerButton;
+	// public Button getRegisterButton() {
+	// 	return registerButton;
+	// }
+
+	// //getter for VBox but is probably not necessary
+	// public VBox getLayout() {
+	// 	return layout;
+//BRAM
+
+	private void handleRegister() {
+		player = new PlayerController(usernameField.getText(), passwordField.getText());
+		if (!player.hasRows() && player.validateAccountRequirement(usernameField.getText() ,passwordField.getText())) {
+			player.newUser();
+			System.out.println("Register accepted");
+			giveSuccessfulBox();
+		} else {
+			System.out.println("Register failed");
+			giveErrorBox();
+		}
 	}
 
-	//getter for VBox but is probably not necessary
-	public VBox getLayout() {
-		return layout;
-	}
+	private void handleLogin() {
+		player = new PlayerController(usernameField.getText(), passwordField.getText());
+		if (player.hasRows() && !(usernameField.getText().equals("")) && !(passwordField.getText().equals(""))) {
+			main.setRoot(new Home(player, main));
+		} else {
+			giveErrorBox();
 
+		}
+
+	}
 	//getter for UsernameField.
 	public TextArea getUsernameField() {
 		return usernameField;
