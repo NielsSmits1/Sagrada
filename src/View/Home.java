@@ -120,6 +120,8 @@ public class Home extends Pane{
 	private Color rightbackground = Color.SLATEGRAY;
 	private Color centerbackground = Color.CORNFLOWERBLUE;
 	
+
+	==BRAM_03_05_19
 	//private HBox menuBar;
 	private Menubar menu;
 	private PlayerController player;
@@ -131,13 +133,16 @@ public class Home extends Pane{
 		super();
 		menu = new Menubar();
 		this.player = player;
+
 		makeCenterPane();
 		makeRightBorderPane();
 		
 		main = scene;
 		
 		
+
 		centerPane.getChildren().add(menu);
+	==BRAM
 	}
 	private void makeRightBorderPane() {
 		rightPane = new VBox();
