@@ -1,6 +1,7 @@
 package model;
 
 import View.InlogPane;
+import View.Menubar;
 import View.MyScene;
 import controller.MenubarController;
 import javafx.application.Platform;
@@ -9,6 +10,7 @@ public class MenubarModel {
 	private MenubarController controller;
 
 	private MyScene scene;
+
 	
 	/*
 	 * view mag NOOIT direct communceren met t model
