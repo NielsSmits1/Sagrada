@@ -98,14 +98,13 @@ public class RootPane extends BorderPane{
 	private void addDice() {
 		dices = new HBox();
 		dices.setSpacing(20);
+		int number = 0;
 		for(int i = 0;i<7;i++) {
-			int number = diceArray.get(r.nextInt(diceArray.size()-1)).getDieNumber();
+			number = r.nextInt(diceArray.size());
+			System.out.println("" + (diceArray.size()) + " " + number);
 			dices.getChildren().add(new DicePane(diceArray.get(number), this));
-			for(int c = 0;c<diceArray.size();c++) {
-				if(diceArray.get(c).getDieNumber() == number) {
-					diceArray.remove(c);
-				}
-			}
+			diceArray.remove(number);
+				
 		}
 		
 		
