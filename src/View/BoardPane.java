@@ -26,6 +26,7 @@ public class BoardPane extends Pane{
 	private BoardController controller;
 	private int patternid;
 	private RootPane rootPane;
+	private boolean transparent;
 //	private Board b;
 	
 	
@@ -34,6 +35,7 @@ public class BoardPane extends Pane{
 		///**
 	public BoardPane(RootPane rp, int pattern) {
 //		setPrefSize(s.getWidth()/4, s.getHeight() - 200);
+		transparent = false;
 		setPatternId(pattern);
 		controller = new BoardController();
 		controller.setPatternId(patternid);
@@ -229,6 +231,11 @@ public class BoardPane extends Pane{
 			return false;
 		}
 
+	}
+	
+	public void switchTransparent() {
+		transparent = !transparent;
+		setMouseTransparent(transparent);
 	}
 
 }
