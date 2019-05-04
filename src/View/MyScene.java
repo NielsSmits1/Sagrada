@@ -65,7 +65,7 @@ public class MyScene extends Scene {
 //      game = new RootPane();
         pattern = new PatterncardSelect(this);
         
-        setRoot(pattern);
+        setRoot(launcher);
 
     }
 
