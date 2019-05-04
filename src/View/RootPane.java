@@ -1,11 +1,15 @@
 package View;
 
 import java.util.ArrayList;
+
 import java.util.Random;
+
+
 
 import controller.GameController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -50,6 +54,8 @@ public class RootPane extends BorderPane{
 	private GameController controller;
 	private Random r;
 	private ArrayList<Dice> diceArray;
+	private Button endTurn;
+	private Button refreshDice;
 //	private Menubar menu;
 	
 	///*
@@ -60,6 +66,12 @@ public class RootPane extends BorderPane{
 	public RootPane(int number) {
 //		scene = s;
 //		this.menu = menu;
+		endTurn = new Button("End Turn");
+		endTurn.setOnAction(e -> handle());
+		refreshDice = new Button("Refresh");
+		refreshDice.setOnAction(e -> refresh());
+		dices = new HBox();
+		dices.setSpacing(20);
 		controller = new GameController();
 		diceArray = getDiceArray();
 		r = new Random();
@@ -80,12 +92,13 @@ public class RootPane extends BorderPane{
 		setBoard1(number);
 
 		player2 = new BoardPane(this,7);
+		player2.switchTransparent();
 
 		player3 = new BoardPane(this,12);
-
+		player3.switchTransparent();
 		player4 = new BoardPane(this,3);
-
-		boards = new HBox(player1, player2, player3, player4);
+		player4.switchTransparent();
+		boards = new HBox(player1, player2, player3, player4, endTurn, refreshDice);
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 50));
 	}
@@ -96,8 +109,7 @@ public class RootPane extends BorderPane{
 		///**
 	
 	private void addDice() {
-		dices = new HBox();
-		dices.setSpacing(20);
+		
 		int number = 0;
 		for(int i = 0;i<7;i++) {
 			number = r.nextInt(diceArray.size());
@@ -199,5 +211,36 @@ public class RootPane extends BorderPane{
 	
 	public void setBoard1(int number) {
 		player1 = new BoardPane(this, number);
+	}
+	
+	private void handle() {
+		if(player1.isMouseTransparent() == false) {
+			player1.switchTransparent();
+			player2.switchTransparent();
+			return;
+		}
+		if(player2.isMouseTransparent() == false) {
+			player2.switchTransparent();
+			player3.switchTransparent();
+			return;
+		}
+		if(player3.isMouseTransparent() == false) {
+			player3.switchTransparent();
+			player4.switchTransparent();
+			return;
+		}
+		if(player4.isMouseTransparent() == false) {
+			player4.switchTransparent();
+			player1.switchTransparent();
+			return;
+		}
+	}
+	
+	private void refresh() {
+		if(dices.getChildren().isEmpty()) {
+			addDice();
+		}else {
+			
+		}
 	}
 }
