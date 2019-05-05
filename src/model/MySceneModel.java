@@ -21,7 +21,7 @@ public class MySceneModel {
 	}
 	
 	public Pane createscene(Pane pane) {
-		menu = new Menubar();
+		
 //		menumodel = new MenubarModel(menu);
 //		mencon = new MenubarController(menumodel, menu);
 		

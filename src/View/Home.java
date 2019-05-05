@@ -41,6 +41,7 @@ public class Home extends Pane{
 		challenger = new ChallengerPane(home);
 		menu = new Menubar(scene, self);
 		
+		
 		setPanes("Uw uitdagingen",challenges);
 		
 		x += 400;
@@ -150,7 +151,7 @@ public class Home extends Pane{
 		
 
 		centerPane.getChildren().add(menu);
-	==BRAM
+	
 	}
 	private void makeRightBorderPane() {
 		rightPane = new VBox();
@@ -287,7 +288,8 @@ public class Home extends Pane{
 
 		
 		setCenter(centerPane);
-
+    == BRAM
 	}*/
+	
 
 }
