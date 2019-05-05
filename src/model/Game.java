@@ -56,4 +56,5 @@ public class Game {
 	public ArrayList<Dice> getDiceArray(){
 		return diceArray;
 	}
+	
 }
