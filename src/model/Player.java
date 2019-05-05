@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import Database.db;
 
 public class Player {
+	private int idplayer;
 	private String username;
 	private String password;
 	private db database = new db();
+	private Board board;
 
 	public Player(String u, String p) {
 		this.username = u;
@@ -53,6 +55,46 @@ public class Player {
 	}
 	public void buildNewGame() {
 		database.CUD("insert into game ()");
+	}
+
+	public int getTimesWon() {
+		int amount = 0;
+		for(ArrayList<Object> a: database.Select("select username from games_won")) {
+			if(a.get(0).equals(this.username)) {
+				amount +=1;
+			}
+		}
+		return amount;
+	}
+
+	public int getTimesLost() {
+		int amount = 0;
+		for(ArrayList<Object> a: database.Select("select username from games_won")) {
+			if(!a.get(0).equals(this.username)) {
+				amount +=1;
+			}
+		}
+		return amount;
+	}
+
+	public String getHighScore() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getMostPlacedDiceColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getMostPlacedDiceEyes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getAmountOfUniquePlayers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
