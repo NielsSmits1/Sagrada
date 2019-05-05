@@ -10,6 +10,8 @@ public class Game {
 	private db database = new db();
 	private ArrayList<ArrayList<Object>> p;
 	private ArrayList<Dice> diceArray;
+	private Player[] players;
+	private int gameId;
 	
 	public Game() {
 		diceArray = new ArrayList<>();

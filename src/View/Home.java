@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 //import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
@@ -38,6 +39,7 @@ public class Home extends Pane{
 		search = new SearchPlayerPane(home);
 		challenges = new ChallengesPane(home);
 		challenger = new ChallengerPane(home);
+		menu = new Menubar(scene, self);
 		
 		
 		setPanes("Uw uitdagingen",challenges);
@@ -55,6 +57,12 @@ public class Home extends Pane{
 		this.getChildren().add(menu);
 	}
 	
+
+	private Menubar Menubar(MyScene scene) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	private void setLogout() {
 		box = new HBox();

@@ -39,10 +39,6 @@ public class InlogPane extends BorderPane {
 
 	public InlogPane(MyScene myScene) {
 		main = myScene;
-		//this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
-				//BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-				//new BackgroundSize(0, 0, false, false, false, true))));
-	
 
 		// Username textArea
 		usernameField = new TextArea();
