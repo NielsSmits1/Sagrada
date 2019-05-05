@@ -49,6 +49,7 @@ public class Menubar extends MenuBar {
 
 	private void showStats() {
 		alert.setHeaderText(self.getStats());
+		// test
 		alert.showAndWait();
 	}
 
