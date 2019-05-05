@@ -1,5 +1,7 @@
 package View;
 
+import controller.MenubarController;
+import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -11,8 +13,12 @@ public class Menubar extends MenuBar {
 	private MenuItem exit;
 	private MenuItem filter;
 	private MenuItem stats;
+	private MyScene main;
 	
-	public Menubar(){
+	private MenubarController menuController;
+	
+	public Menubar(MyScene main){
+		this.main = main;
 		creatMenu();
 	}
 	
@@ -29,7 +35,7 @@ public class Menubar extends MenuBar {
 		//menu.getExit().setOnAction(e -> model.Exit());
 		//menu.getLogout().setOnAction(e -> model.logout());
 		
-		options.getItems().addAll(logout, exit, filter, stats);
+		options.getItems().addAll(logout, stats, filter,  exit);
 		this.getMenus().add(options);
 		
 	}

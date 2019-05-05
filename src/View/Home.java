@@ -22,7 +22,7 @@ public class Home extends Pane{
 	private ChallengerPane challenger;
 	private ChallengesPane challenges;
 	private SearchPlayerPane search;
-	private Menubar menu = new Menubar();
+	private Menubar menu;
 	private HomeController home;
 	private MyScene main;
 	Label lb;
@@ -38,6 +38,7 @@ public class Home extends Pane{
 		search = new SearchPlayerPane(home);
 		challenges = new ChallengesPane(home);
 		challenger = new ChallengerPane(home);
+		
 		
 		setPanes("Uw uitdagingen",challenges);
 		
@@ -142,7 +143,7 @@ public class Home extends Pane{
 		
 
 		centerPane.getChildren().add(menu);
-	==BRAM
+	
 	}
 	private void makeRightBorderPane() {
 		rightPane = new VBox();
@@ -279,7 +280,8 @@ public class Home extends Pane{
 
 		
 		setCenter(centerPane);
-
+    == BRAM
 	}*/
+	
 
 }
