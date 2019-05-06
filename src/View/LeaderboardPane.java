@@ -1,13 +1,21 @@
 package View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+
 import controller.HomeController;
 import controller.LeaderboardController;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.VBox;
+
 
 public class LeaderboardPane extends ScrollPane {
 	private ArrayList<LeaderboardPlayerLinePane> playerLine;
@@ -59,4 +67,37 @@ public class LeaderboardPane extends ScrollPane {
 		}
 
 	}
+	
+//	public ObservableList<Object> leaderboardList(){
+//		TableColumn<String, String> nameColumn = new TableColumn<>("name");
+//		nameColumn.setMinWidth(200);
+//		
+//	}
+//	public void getPlayerGamesPlayed() {
+//		TableColumn<Map, String> firstDataColumn = new TableColumn<>("Naam");
+//		TableColumn<Map, String> secondDataColumn = new TableColumn<>("Naam");
+//		
+//		firstDataColumn.setCellFactory(new MapValueFactory("A"));
+//		firstDataColumn.setMinWidth(75);
+//		secondDataColumn.setCellFactory(new MapValueFactory("A"));
+//		secondDataColumn.setMinWidth(75);
+//		
+//		TableView tableView = new TableView<>(generateDataInMap());
+//		
+//		tableView.setEditable(true);
+//		tableView.getSelectionModel().setCellSelectionEnabled(true);
+//		tableView.getColumns().setAll(firstDataColumn, secondDataColumn);
+//		
+//	}
+//	public ObservableList<Map> generateDataInMap(){
+//		int i = 300;
+//		String a;
+//		String b;
+//		ObservableList<Map> allDataList = FXCollections.observableArrayList();
+//		for (HashMap<String, String> a = lc.getPlayersFilteredByAmountOfGames()){
+//
+//			
+//		}
+//		return allDataList;
+//	}
 }

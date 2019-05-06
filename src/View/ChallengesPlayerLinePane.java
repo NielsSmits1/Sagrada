@@ -10,7 +10,7 @@ public class ChallengesPlayerLinePane extends HBox {
 	private Label playerName;
 	private Button accept;
 	private Button decline;
-//	private ChallengesController cc = new ChallengesController(); 
+//	private ChallengesController cc = new ChallengesController(self); 
 
 	public ChallengesPlayerLinePane(String name) {
 		playerName = new Label();
@@ -28,5 +28,14 @@ public class ChallengesPlayerLinePane extends HBox {
 
 	
 	}
+
+//	private void declineChallengeLine() {
+//		
+//		
+//	}
+//
+//	private void acceptChallengeLine() {
+//	
+//	}
 
 }
