@@ -63,6 +63,7 @@ public class ChallengesPane extends ScrollPane {
 //			addChallengesLine((String) a.get(0));			
 
 		}
+	
 	}
 
 }

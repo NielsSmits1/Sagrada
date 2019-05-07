@@ -23,14 +23,14 @@ public class Challenge {
 	}
 
 	public void changePlayerStatusToAccepted() {
-//		database.CUD("UPDATE player SET playstatus = 'geaccepteerd' WHERE idplayer = 1 "); // idplayer needs to be variabel
+//		database.CUD("UPDATE player SET playstatus_playstatus = 'geaccepteerd' WHERE idplayer = 1 and playstatus_playstatus = 'Uitgedaagde' "); // idplayer needs to be variabel
 		System.out.println("PlayerAccepted");
 	}
 
 	public void changePlayerStatusToDeclined() {
 
 		System.out.println("PlayerDeclined");
-//		database.CUD("UPDATE player SET playstatus = 'afgewezen' WHERE idplayer = 1 "); // idplayer needs to be variabel
+//		database.CUD("UPDATE player SET playstatus_playstatus = 'afgewezen' WHERE idplayer = 1 and playstatus_playstatus = 'Uitgedaagde'"); // idplayer needs to be variabel
 
 	}
 

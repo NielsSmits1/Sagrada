@@ -24,6 +24,7 @@ import javafx.scene.text.Font;
 public class Home extends Pane {
 	private ChallengerPane challenger;
 	private ChallengesPane challenges;
+	private LeaderboardPane leaderboard;
 	private SearchPlayerPane search;
 	private Menubar menu;
 
@@ -46,20 +47,28 @@ public class Home extends Pane {
 		search = new SearchPlayerPane(home);
 		challenges = new ChallengesPane(home);
 		challenger = new ChallengerPane(home);
+
 		menu = new Menubar(scene, self);
 
-		setPanes("Uw uitdagingen", challenges);
-
+		leaderboard = new LeaderboardPane(home);
+		
+		setPanes("Uw uitdagingen",challenges);
+		
 		x += 400;
-
-		setPanes("Wie u heeft uitgedaagt", challenger);
-
+		
+		setPanes("Wie u heeft uitgedaagd", challenger);
+		
 		x += 400;
 
 		setPanes("Zoek een speler", search);
 
 		setLogout();
 
+		
+		x += 400;
+		
+		setPanes("Spelers", leaderboard);
+		
 		this.getChildren().add(menu);
 
 	}

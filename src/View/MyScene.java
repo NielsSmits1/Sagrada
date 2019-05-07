@@ -14,9 +14,7 @@ public class MyScene extends Scene {
 	public MyScene() {
 		super(new Pane());
 		launcher = new InlogPane(this);
-
 		pattern = new PatterncardSelect(this);
-
 		setRoot(launcher);
 
 	}
