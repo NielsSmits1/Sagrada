@@ -9,6 +9,8 @@ public class Player {
 	private String password;
 	private db database = new db();
 	private Board board;
+	
+	private String differendPlayer;
 
 	public Player(String u, String p) {
 		this.username = u;
@@ -96,6 +98,41 @@ public class Player {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
+	public int getTimesWonPlayer() {
+		int amount = 0;
+		for(ArrayList<Object> a: database.Select("select username from games_won")) {
+			if(a.get(0).equals(this.differendPlayer)) {
+				amount +=1;
+			}
+		}
+		return amount;
+	}
+
+	public int getTimesLostPlayer() {
+		int amount = 0;
+		for(ArrayList<Object> a: database.Select("select username from games_won")) {
+			if(!a.get(0).equals(this.differendPlayer)) {
+				amount +=1;
+			}
+		}
+		return amount;
+	}
+
+
+	public void setDifferendPlayer(String differendPlayer) {
+		this.differendPlayer = differendPlayer;
+	}
+	
+	
+	
+	
 
 
 

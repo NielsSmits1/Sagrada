@@ -14,7 +14,7 @@ public class MySceneModel {
 	
 	private MenubarController mencon;
 	private Menubar menu;
-	private MenubarModel menumodel;
+
 	
 	public MySceneModel(MyScene scene) {
 		this.scene = scene;
