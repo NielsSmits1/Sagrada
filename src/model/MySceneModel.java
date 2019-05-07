@@ -14,14 +14,14 @@ public class MySceneModel {
 	
 	private MenubarController mencon;
 	private Menubar menu;
-	private MenubarModel menumodel;
+
 	
 	public MySceneModel(MyScene scene) {
 		this.scene = scene;
 	}
 	
 	public Pane createscene(Pane pane) {
-		menu = new Menubar();
+		
 //		menumodel = new MenubarModel(menu);
 //		mencon = new MenubarController(menumodel, menu);
 		

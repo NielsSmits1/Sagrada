@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-
 import model.Player;
 
 public class PlayerController {
@@ -65,5 +63,25 @@ public class PlayerController {
 		player.challenge();
 		
 	}
+
+	public String getStats() {
+		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWon() + " : " + player.getTimesLost()
+				+ "\nHoogst behaalde score: " + player.getHighScore() 
+				+ "\nMeest geplaatste dobbelsteenkleur: " + player.getMostPlacedDiceColor()
+				+ "\nMeest geplaatste dobbelsteenwaarde: " + player.getMostPlacedDiceEyes()
+				+ "\nAantal verschillende tegenstanders waartegen gespeeld is: " + player.getAmountOfUniquePlayers();
+		return stats;
+	}
+	
+	public String getStatsPlayer(String username) {
+		player.setDifferendPlayer(username);
+		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWonPlayer() + " : " + player.getTimesLostPlayer()
+				+ "\nHoogst behaalde score: " + player.getHighScore() 
+				+ "\nMeest geplaatste dobbelsteenkleur: " + player.getMostPlacedDiceColor()
+				+ "\nMeest geplaatste dobbelsteenwaarde: " + player.getMostPlacedDiceEyes()
+				+ "\nAantal verschillende tegenstanders waartegen gespeeld is: " + player.getAmountOfUniquePlayers();
+		return stats;
+	}
+
 
 }
