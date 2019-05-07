@@ -31,4 +31,11 @@ public class BoardController {
 	public void setPatternId(int id) {
 		field = new Board(id);
 	}
+	
+	public void makeBoard(int id) {
+		field = new Board(id);
+		field.addPatternPositions();
+	}
+	
+	
 }

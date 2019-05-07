@@ -26,6 +26,15 @@ public class Board {
         return database.Select("SELECT * FROM patterncardfield WHERE patterncard_idpatterncard = " + getPatternId() +";");
     }
 	
+	public void addPatternPositions() {
+		//Can removed later, for now it is an easy way to quickly test it.
+		database.CUD("DELETE FROM tjpmsalt_db2.playerframefield WHERE player_idplayer = 1;");
+		for(int i = 0;i<patternfield.size();i++) {
+			database.CUD("insert into tjpmsalt_db2.playerframefield (player_idplayer,position_x,position_y) VALUES (1," + patternfield.get(i).getXPos() + "," + patternfield.get(i).getYPos() +");");
+		}
+		
+	}
+	
 	///*
 		//Fills the ArrayList that contains all of the spaces.
 		///**
@@ -69,6 +78,7 @@ public class Board {
 			if(p.get(i).get(4) != null) {
 				patternfield.get(i).setEyes((int) p.get(i).get(4));
 			}
+			
 		}
 	}
 	

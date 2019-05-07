@@ -38,7 +38,7 @@ public class BoardPane extends Pane{
 		transparent = false;
 		setPatternId(pattern);
 		controller = new BoardController();
-		controller.setPatternId(patternid);
+		controller.makeBoard(patternid);
 		rootPane = rp;
 		setShape();
 		setGrid();

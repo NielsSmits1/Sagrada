@@ -34,29 +34,29 @@ public class PatterncardSelect extends Pane {
 		setGrid();
 		
 		controller = new BoardController();
-		patternid1 = r.nextInt(11)+1;
+		patternid1 = r.nextInt(23)+1;
 		controller.setPatternId(patternid1);
 		setBoard(field1);
 		
 		
-		patternid2 = r.nextInt(11)+1;
+		patternid2 = r.nextInt(23)+1;
 		while (patternid2 == patternid1) {
-			patternid2 = r.nextInt(11)+1;
+			patternid2 = r.nextInt(23)+1;
 		}
 		controller.setPatternId(patternid2);
 		setBoard(field2);
 		
 		
-		patternid3 = r.nextInt(11)+1;
+		patternid3 = r.nextInt(23)+1;
 		while (patternid3 == patternid1 || patternid3 == patternid2) {
-			patternid3 = r.nextInt(11)+1;
+			patternid3 = r.nextInt(23)+1;
 		}
 		controller.setPatternId(patternid3);
 		setBoard(field3);
 		
-		patternid4 = r.nextInt(11)+1;
+		patternid4 = r.nextInt(23)+1;
 		while (patternid4 == patternid1 || patternid4 == patternid2 || patternid4 == patternid3) {
-			patternid4 = r.nextInt(11)+1;
+			patternid4 = r.nextInt(23)+1;
 		}
 		controller.setPatternId(patternid4);
 		setBoard(field4);
