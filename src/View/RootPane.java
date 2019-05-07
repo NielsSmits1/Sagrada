@@ -33,12 +33,6 @@ public class RootPane extends BorderPane{
 	private BoardPane player4;
 	private HBox boards;
 	private HBox dices;
-	private DicePane dice1;
-	private DicePane dice2;
-	private DicePane dice3;
-	private DicePane dice4;
-	private DicePane dice5;
-	private DicePane dice6;
 	private DicePane selected;
 	private ToolCardPane tcp;
 	private ToolCardPane tcp2;
@@ -50,10 +44,8 @@ public class RootPane extends BorderPane{
 	private HeaderPane privateCard;
 	private HeaderPane toolCard;
 	private BorderPane bottom;
-	private MyScene scene;
 	private GameController controller;
 	private Random r;
-	private ArrayList<Dice> diceArray;
 	private Button endTurn;
 	private Button refreshDice;
 //	private Menubar menu;
@@ -73,7 +65,6 @@ public class RootPane extends BorderPane{
 		dices = new HBox();
 		dices.setSpacing(20);
 		controller = new GameController();
-		diceArray = getDiceArray();
 		r = new Random();
 		setBoard(number);
 		addDice();
@@ -112,11 +103,11 @@ public class RootPane extends BorderPane{
 		
 		int number = 0;
 		for(int i = 0;i<7;i++) {
-			number = r.nextInt(diceArray.size());
-			System.out.println("" + (diceArray.size()) + " " + number);
-			dices.getChildren().add(new DicePane(diceArray.get(number), this));
-			diceArray.remove(number);
-				
+			number = r.nextInt(getDiceArray().size());
+			System.out.println("" + (getDiceArray().size()) + " " + number);
+			dices.getChildren().add(new DicePane(getDiceArray().get(number).getEyes(),getDiceArray().get(number).getDieColor(), this));
+//			getDiceArray().remove(number);
+			remove(number);
 		}
 		
 		
@@ -242,5 +233,9 @@ public class RootPane extends BorderPane{
 		}else {
 			
 		}
+	}
+	
+	public void remove(int number) {
+		controller.removeNumber(number);
 	}
 }

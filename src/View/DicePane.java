@@ -27,7 +27,7 @@ public class DicePane extends Pane{
 	private RootPane rootPane;
 	private int value;
 	private String color;
-	private int dieNumber;
+//	private int dieNumber;
 	
 	///*
 		//This constructor only gets used by the privateCardPane
@@ -69,11 +69,11 @@ public class DicePane extends Pane{
 		//This constructor is used to make a dice.
 		///**
 	
-	public DicePane(Dice d, RootPane rp) {
-		value = d.getEyes();
-		color = d.getDieColor();
-		dieNumber = d.getDieNumber();
-		addDice(d.getEyes(), d.getDieColor());
+	public DicePane(int eyes, String c, RootPane rp) {
+		value = eyes;
+		color = c;
+//		dieNumber = d.getDieNumber();
+		addDice(eyes, c);
 		rootPane = rp;
 		addEvent(this);
 	}
@@ -213,9 +213,6 @@ public class DicePane extends Pane{
 		return color;
 	}
 	
-	public int getDieNumber() {
-		return dieNumber;
-	}
 	
 	
 //	public DicePane getSelected() {

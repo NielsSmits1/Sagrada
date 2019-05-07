@@ -53,4 +53,8 @@ public class Game {
 	public ArrayList<Dice> getDiceArray(){
 		return diceArray;
 	}
+	
+	public void removeDice(int number) {
+		diceArray.remove(number);
+	}
 }
