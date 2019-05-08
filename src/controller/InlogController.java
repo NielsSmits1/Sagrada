@@ -16,15 +16,28 @@ public class InlogController{
 		scene = myScene;
 	}
 
-	public Parent showInlog() {
+	public InlogPane showInlog() {
 		inlog = new InlogPane(this.login(), this.register());
 		return inlog;
 	}
 	
+	public void show() {
+
+		inlog = new InlogPane();
+		scene.setRoot(inlog);
+	}
+	
 
 	private EventHandler<ActionEvent> register() {
+		player = new Player(inlog.getUsernameText());
+		if(inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("") || player.checkUsernameExists()) {
+			inlog.giveErrorBox();
+		}else {
+			player = new Player(inlog.getUsernameText(), inlog.getPasswordText());
+			player.addUser();
+			buildHome();
+		}
 		return null;
-		
 	}
 
 	private EventHandler<ActionEvent> login() {
@@ -32,14 +45,18 @@ public class InlogController{
 			inlog.giveErrorBox();
 		}else {
 			player = new Player(inlog.getUsernameText(), inlog.getPasswordText());
-			if(player.getSelect().isEmpty()) {
+			if(player.checkLogin()) {
 				inlog.giveErrorBox();
 			}else {
-				home = new HomeController(scene, player);
-				scene.setRoot(home.showHome());
+				buildHome();
 			}
 		}
 		return null;
+	}
+	private void buildHome() {
+		//build and show
+		home = new HomeController(scene, player);
+		scene.setRoot(home.showHome());
 	}
 	
 	

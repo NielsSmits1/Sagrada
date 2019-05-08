@@ -1,14 +1,20 @@
 package controller;
 
 import View.Menubar;
-import model.MenubarModel;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 
 public class MenubarController {
 
-	private MenubarModel model = new MenubarModel();
+	//private MenubarModel model = new MenubarModel();
 	
 	public MenubarController() {
 		
+	}
+
+	public Menubar getMenubar() {
+		Menubar mb = new Menubar();
+		return mb;
 	}
 	
 	

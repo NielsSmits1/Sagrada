@@ -3,6 +3,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import View.ChallengesPane;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import model.Challenge;
 
 public class ChallengesController {
@@ -13,6 +16,10 @@ public class ChallengesController {
 	public ChallengesController(HomeController home) {
 		this.home = home;
 		challenge = new Challenge(home.getSelf());
+	}
+
+	public ChallengesController() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public void acceptChallenge() {
@@ -52,5 +59,10 @@ public class ChallengesController {
 			} 
 		}
 		return challengedPlayerNames;
+	}
+
+	public ChallengesPane getChallengesPane() {
+		ChallengesPane cp = new ChallengesPane();
+		return cp;
 	}
 }
