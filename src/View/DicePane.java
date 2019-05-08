@@ -3,6 +3,7 @@ package View;
 import java.util.ArrayList;
 
 
+
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -185,11 +186,14 @@ public class DicePane extends Pane{
 //			getChildren().addAll(dice);
 			getChildren().addAll(six);
 	}
-	
+		
 
 		///*
 		//This event is set only for the dicePane that become dices. When a dice is clicked is will become the selected rootPane.
 		///**
+		
+	}
+	public void removeEyes() {
 		
 	}
 	public void addEvent(DicePane p) {

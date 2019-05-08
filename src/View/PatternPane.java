@@ -45,7 +45,7 @@ public class PatternPane extends StackPane{
 						deleteSelected();
 						return;
 					}else {
-						if(template.getColor().equals(getSelected().getColor()) && getNearDice(getSelected())) {
+						if(checkColor() && getNearDice(getSelected())) {
 							dice = getSelected();
 							dice.setMouseTransparent(true);
 							getChildren().add(dice);
@@ -133,6 +133,14 @@ public class PatternPane extends StackPane{
 	
 	public boolean getNearDice(DicePane p) {
 		return boardPane.getNearDice(this, p);
+	}
+	
+	public boolean checkColor() {
+		if(template.getColor().equals(getSelected().getColor())) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	
