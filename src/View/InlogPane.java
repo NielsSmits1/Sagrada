@@ -1,28 +1,18 @@
 package View;
 
-import controller.MyScene;
-import controller.PlayerController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -35,8 +25,6 @@ public class InlogPane extends BorderPane {
 	private TextArea usernameField;
 	private TextArea passwordField;
 	private HBox buttonAlignment;
-	private MyScene main;
-	private PlayerController player;
 	private Label gameTitle;
 	private BorderPane textAlignment;
 
@@ -92,12 +80,10 @@ public class InlogPane extends BorderPane {
 		setCenter(layout);
 		setTop(textAlignment);
 	}
-	
-
-
 
 	public InlogPane(EventHandler<ActionEvent> login, EventHandler<ActionEvent> register) {
 		loginButton.setOnAction(login);
+		registerButton.setOnAction(register);
 	}
 
 	public String getUsernameText() {
@@ -108,19 +94,10 @@ public class InlogPane extends BorderPane {
 		return this.passwordField.getText();
 	}
 
-
 	public void giveErrorBox() {
 		usernameField.setBorder(
 				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 		passwordField.setBorder(
 				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 	}
-	
-	private void giveSuccessfulBox() {
-		usernameField.setBorder(
-				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-		passwordField.setBorder(
-				new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-	}
-
 }

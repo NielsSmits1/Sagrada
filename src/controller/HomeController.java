@@ -1,16 +1,26 @@
 package controller;
 
+import View.*;
 import java.util.ArrayList;
 
 import javafx.scene.Parent;
 import model.Player;
 
 public class HomeController {
+	private HomePane home;
+	private SearchPlayerController sp;
+	private ChallengerController cpp;
+	private ChallengesController cp;
+	private MenubarController mb;
 	private Player player;
 	private Player self;
 
-	public HomeController(MyScene scene, Player player2) {
-		this.self = scene.getPlayer();
+	public HomeController(MyScene scene, Player self) {
+		this.self = self;
+		sp = new SearchPlayerController();
+		cpp = new ChallengerController();
+		cp = new ChallengesController();
+		mb = new MenubarController();
 	}
 
 	public String getUsername() {
@@ -58,8 +68,8 @@ public class HomeController {
 	}
 
 	public Parent showHome() {
-		// TODO Auto-generated method stub
-		return null;
+		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), mb.getMenubar());
+		return home;
 	}
 
 }
