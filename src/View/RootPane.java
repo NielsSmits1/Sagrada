@@ -7,6 +7,7 @@ import java.util.Random;
 
 
 import controller.GameController;
+import controller.MyScene;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

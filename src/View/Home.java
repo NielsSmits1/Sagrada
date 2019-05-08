@@ -2,6 +2,7 @@ package View;
 
 import controller.HomeController;
 import controller.MenubarController;
+import controller.MyScene;
 import controller.PlayerController;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;

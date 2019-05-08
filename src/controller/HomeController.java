@@ -2,14 +2,15 @@ package controller;
 
 import java.util.ArrayList;
 
+import javafx.scene.Parent;
 import model.Player;
 
 public class HomeController {
 	private Player player;
 	private Player self;
 
-	public HomeController(PlayerController self) {
-		this.self = self.getPlayer();
+	public HomeController(MyScene scene, Player player2) {
+		this.self = scene.getPlayer();
 	}
 
 	public String getUsername() {
@@ -54,6 +55,11 @@ public class HomeController {
 	
 	public Player getSelf() {
 		return this.self;
+	}
+
+	public Parent showHome() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,8 +1,8 @@
 package model;
 
 import View.Menubar;
-import View.MyScene;
 import controller.MenubarController;
+import controller.MyScene;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;

@@ -1,6 +1,5 @@
 package controller;
 
-import View.MyScene;
 import model.MySceneModel;
 
 public class MySceneController {
