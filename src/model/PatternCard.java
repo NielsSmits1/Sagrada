@@ -2,22 +2,32 @@ package model;
 
 import java.util.ArrayList;
 
+import java.util.Random;
 import Database.db;
 import controller.BoardController;
 
-public class Board {
+public class PatternCard {
 	
 	private ArrayList<Space> patternfield;
 	private db database = new db();
 	private ArrayList<ArrayList<Object>> p;
 	private int patternId;
-
+	private Random random;
 
 	//	private BoardController controller;
-	public Board(int number) {
+	public PatternCard(int number) {
 //		controller = c;
+		
 		patternfield = new ArrayList<>();
 		setPatternId(number);
+		p = getSelect();
+		setPatternField();
+	}
+	
+	public PatternCard() {
+		random = new Random();
+		patternfield = new ArrayList<>();
+		setPatternId(random.nextInt(23)+1);
 		p = getSelect();
 		setPatternField();
 	}
@@ -82,5 +92,15 @@ public class Board {
 	
 	public void setPatternId(int patternId) {
 		this.patternId = patternId;
+	}
+	
+	public void changeField() {
+		patternfield.clear();
+		p = getSelect();
+		setPatternField();
+	}
+	
+	public void randomNumber() {
+		patternId  = random.nextInt(23)+1;
 	}
 }
