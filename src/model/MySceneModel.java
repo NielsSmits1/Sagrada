@@ -1,6 +1,5 @@
 package model;
 
-import View.Menubar;
 import View.MyScene;
 import controller.MenubarController;
 import javafx.scene.Parent;
@@ -12,21 +11,17 @@ public class MySceneModel {
 	private MyScene scene;
 	private Pane pane;
 	
-	private MenubarController mencon;
-	private Menubar menu;
-	private MenubarModel menumodel;
+	private MenubarController menucon;	
 	
 	public MySceneModel(MyScene scene) {
 		this.scene = scene;
+		menucon = new MenubarController();
 	}
 	
 	public Pane createscene(Pane pane) {
-		menu = new Menubar();
-//		menumodel = new MenubarModel(menu);
-//		mencon = new MenubarController(menumodel, menu);
 		
 		this.pane = pane;
-		pane = new VBox(menu, new VBox(pane));
+		pane = new VBox(menucon.getMenu(), new VBox(pane));
 		return pane;
 	}
 	

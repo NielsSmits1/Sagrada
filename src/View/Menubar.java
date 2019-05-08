@@ -41,7 +41,10 @@ public class Menubar extends MenuBar {
 	public MenuItem getLogout() {
 		return logout;
 	}
-	
+
+	public MenuItem getStats() {
+		return stats;
+	}
 	
 	
 	
