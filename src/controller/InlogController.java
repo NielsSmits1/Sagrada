@@ -22,7 +22,6 @@ public class InlogController{
 	}
 	
 	public void show() {
-
 		inlog = new InlogPane();
 		scene.setRoot(inlog);
 	}

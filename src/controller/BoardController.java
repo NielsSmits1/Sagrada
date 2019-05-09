@@ -13,6 +13,8 @@ public class BoardController {
 //	private PatternCard field3;
 //	private PatternCard field4;
 	private ArrayList<PatternCard> options;
+	private PatternCard finalCard;
+	private BoardPane boardpane;
 //	private BoardPane b;
 	public BoardController() {
 //		b = bp;
@@ -22,6 +24,9 @@ public class BoardController {
 			options.add(new PatternCard());
 		}
 		checkDuplicatePatternCard();
+		for(int i = 0; i<options.size();i++) {
+			options.get(i).addOptionToDB();
+		}
 //		options.add(new PatternCard());
 //		field1 = new PatternCard();
 //		field2 = new PatternCard();
@@ -31,8 +36,21 @@ public class BoardController {
 	///*
 		//Asks for the ArrayList of spaces.
 		///**
-	public ArrayList<PatternCard> getPatternCard() {
+	
+	public void showBoard() {
+		boardpane = new BoardPane(this);
+	}
+	public ArrayList<PatternCard> getPatternCardOptions() {
 		return options;
+	}
+	
+	public ArrayList<Space> getPatternCard() {
+		return finalCard.getPatternField();
+	}
+	
+	public void setPatternCard(int id) {
+		finalCard = new PatternCard(id);
+//		showBoard();
 	}
 	
 	public void checkDuplicatePatternCard() {
@@ -49,6 +67,12 @@ public class BoardController {
 			options.get(3).changeField();
 		}
 	}
+	
+	
+	
+//	public void showBoardPane() {
+//		
+//	}
 	
 	///*
 		//this id is used for the query that gets the windowPattern out of the DB.

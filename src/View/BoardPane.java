@@ -21,11 +21,10 @@ public class BoardPane extends Pane{
 	private Rectangle square;
 //	private ArrayList<DicePane> board;
 	private ArrayList<PatternPane> board;
-	private DicePane selected;
+//	private DicePane selected;
 	private GridPane field;
 	private BoardController controller;
 	private int patternid;
-	private RootPane rootPane;
 	private boolean transparent;
 //	private Board b;
 	
@@ -33,18 +32,17 @@ public class BoardPane extends Pane{
 	///*
 		//This constructor requires a rootPane to return the selected DicePane. It also asks for an int that it can give to the BoardController. This number stands for the number of the windowPattern.
 		///**
-	public BoardPane(RootPane rp, int pattern) {
+	public BoardPane(BoardController bc) {
 //		setPrefSize(s.getWidth()/4, s.getHeight() - 200);
-		transparent = false;
-		setPatternId(pattern);
-		controller = new BoardController();
-		controller.setPatternId(patternid);
-		rootPane = rp;
+		transparent = true;
+//		setPatternId(pattern);
+		controller = bc;
+//		controller.setPatternId(patternid);
 		setShape();
 		setGrid();
 //		b = be;
 		getChildren().addAll(top, square);
-		setBoard2();
+		setBoard();
 		
 		
 		
@@ -71,6 +69,7 @@ public class BoardPane extends Pane{
 		//Sets the shape of the board, it has nothing to do with the actual windowPattern.
 		///**
 	
+	//TODO THOSE NUMBERS MIGHT BE MOVED TO A NEW MODEL
 	private void setShape() {
 		top = new QuadCurve(0, 200, 200, -150, 400, 200);
 		square = new Rectangle();
@@ -130,7 +129,7 @@ public class BoardPane extends Pane{
 		///**
 
 	
-	private void setBoard2() {
+	private void setBoard() {
 		int counter = 0;
 		board = new ArrayList<>();
 		for(int c = 1;c<=5;c++) {
@@ -141,6 +140,7 @@ public class BoardPane extends Pane{
 				}
 		}
 		getChildren().add(field);
+//		System.out.println("Should have worked");
 	}
 	
 	///*
@@ -148,7 +148,7 @@ public class BoardPane extends Pane{
 		///**
 	
 	public ArrayList<Space> getPatternField() {
-		return controller.getPatternField();
+		return controller.getPatternCard();
 		}
 	
 	
@@ -165,16 +165,17 @@ public class BoardPane extends Pane{
 	///*
 		//This is what rootPane is used for, to get the selected DicePane and to delete it. PatternPane uses those methods.
 		///**
-
-	public DicePane getSelected() {
-		return rootPane.getSelected();
-	}
+//TODO FIX THAT THE SELECTED DICE IS GIVEN THROUGH THE CONTROLLER, IF POSSIBLE
+//	public DicePane getSelected() {
+//		return rootPane.getSelected();
+//	}
+//	
+//	public void deleteSelected() {
+//		rootPane.deleteSelected();
+//		
+//	}
 	
-	public void deleteSelected() {
-		rootPane.deleteSelected();
-		
-	}
-	
+	//TODO THOSE CHECKS MIGHT BE MOVING TO THE MODEL, WHICH WILL CHECK WITH THE INFO OUT OF THE DB
 	public boolean getNearDice(PatternPane p, DicePane s) {
 		PatternPane upPane = null;
 		PatternPane downPane = null;
@@ -184,6 +185,8 @@ public class BoardPane extends Pane{
 		boolean down;
 		boolean left;
 		boolean right;
+		
+		//TODO IN MODEL X & Y POSITIONS.
 		if(p.getNumber()-1 >= 0 && board.get(p.getNumber()-1) != null && p.getNumber()-1 != 3 && p.getNumber()-1 != 7 && p.getNumber()-1 != 11 && p.getNumber()-1 != 15) {
 			upPane = board.get(p.getNumber()-1);
 		}
@@ -200,6 +203,7 @@ public class BoardPane extends Pane{
 			
 		}
 		
+		//TODO IN MODEL VALUE & COLOR.
 		if(upPane != null && upPane.getDice() != null && (upPane.getColor().equals(s.getColor()) || upPane.getEyes() == s.getValue())) {
 			return false;
 		}else {

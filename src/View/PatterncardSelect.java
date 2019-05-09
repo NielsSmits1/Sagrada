@@ -1,21 +1,31 @@
 package View;
 
+
 import java.util.ArrayList;
+
 import java.util.Random;
 
 import controller.BoardController;
+import controller.GameController;
 import controller.MyScene;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import model.PatternCard;
 import model.Space;
 
 public class PatterncardSelect extends Pane {
 	private ArrayList<PatternPane> board;
-	private BoardController controller;
 //	private GridPane field1;
 //	private GridPane field2;
 //	private GridPane field3;
@@ -23,16 +33,18 @@ public class PatterncardSelect extends Pane {
 	private ArrayList<Integer> id;
 	private int patternId;
 	private ArrayList<GridPane> choice;
-	private Random r;
-	private RootPane rootPane;
-	private MyScene scene;
- 
+	private Button button;
+	private GameController controller;
+	final private Border peru = new Border(new BorderStroke(Color.PERU, BorderStrokeStyle.SOLID, null, new BorderWidths(10.0)));
 	
-	public PatterncardSelect(ArrayList<PatternCard> patternCardOptions) {
+	public PatterncardSelect(GameController gc) {
 		super();
-		r = new Random();
+		controller = gc;
 		id = new ArrayList<>();
 		setGrid();
+		button = new Button("Pick This one!");
+		button.setOnAction(e -> handle());
+		button.setDisable(true);
 //		controller = new BoardController();
 //		patternid1 = r.nextInt(23)+1;
 //		controller.setPatternId(patternid1);
@@ -59,7 +71,7 @@ public class PatterncardSelect extends Pane {
 //			patternid4 = r.nextInt(23)+1;
 //		}
 //		controller.setPatternId(patternid4);
-		setBoard(patternCardOptions);
+		setBoard();
 		
 	}
 	
@@ -84,7 +96,14 @@ public class PatterncardSelect extends Pane {
 			@Override
 			public void handle(MouseEvent event) {
 				patternId = id.get(0);
-				System.out.println("" + getChosenId());
+				for (int i = 0; i < 4; i++) {
+					if(i == 0) {
+						choice.get(i).setBorder(peru);
+					}else {
+						choice.get(i).setBorder(null);
+					}
+				}
+				button.setDisable(false);
 			}
 			
 		});
@@ -93,7 +112,14 @@ public class PatterncardSelect extends Pane {
 			@Override
 			public void handle(MouseEvent event) {
 				patternId = id.get(1);
-				System.out.println("" + getChosenId());
+				for (int i = 0; i < 4; i++) {
+					if(i == 1) {
+						choice.get(i).setBorder(peru);
+					}else {
+						choice.get(i).setBorder(null);
+					}
+				}
+				button.setDisable(false);
 			}
 			
 		});
@@ -102,7 +128,14 @@ public class PatterncardSelect extends Pane {
 			@Override
 			public void handle(MouseEvent event) {
 				patternId = id.get(2);
-				System.out.println("" + getChosenId());
+				for (int i = 0; i < 4; i++) {
+					if(i == 2) {
+						choice.get(i).setBorder(peru);
+					}else {
+						choice.get(i).setBorder(null);
+					}
+				}
+				button.setDisable(false);
 			}
 			
 		});
@@ -111,7 +144,14 @@ public class PatterncardSelect extends Pane {
 			@Override
 			public void handle(MouseEvent event) {
 				patternId = id.get(3);
-				System.out.println("" + getChosenId());
+				for (int i = 0; i < 4; i++) {
+					if(i == 3) {
+						choice.get(i).setBorder(peru);
+					}else {
+						choice.get(i).setBorder(null);
+					}
+				}
+				button.setDisable(false);
 			}
 			
 		});
@@ -184,19 +224,19 @@ public class PatterncardSelect extends Pane {
 		///**
 
 			
-		private void setBoard(ArrayList<PatternCard> patternCardOptions) {
+		private void setBoard() {
 			int counter = 0;
 			board = new ArrayList<>();
 			for (int j = 0; j < 4; j++) {
 				counter = 0;
 				for(int c = 1;c<=5;c++) {
 					for(int i = 0; i<4;i++) {
-							board.add(new PatternPane(new DicePane(patternCardOptions.get(j).getPatternField().get(counter).getEyes(), patternCardOptions.get(j).getPatternField().get(counter).getColor()), counter));
-							choice.get(j).add(board.get(board.size()-1), patternCardOptions.get(j).getPatternField().get(counter).getXPos(), patternCardOptions.get(j).getPatternField().get(counter).getYPos());
+							board.add(new PatternPane(new DicePane(getPatternCard().get(j).getPatternField().get(counter).getEyes(), getPatternCard().get(j).getPatternField().get(counter).getColor()), counter));
+							choice.get(j).add(board.get(board.size()-1), getPatternCard().get(j).getPatternField().get(counter).getXPos(), getPatternCard().get(j).getPatternField().get(counter).getYPos());
 							counter++;
 						}	
 				}
-				id.add(patternCardOptions.get(j).getPatternId());
+				id.add(getPatternCard().get(j).getPatternId());
 				board.removeAll(board);
 			
 			}
@@ -205,7 +245,9 @@ public class PatterncardSelect extends Pane {
 				hBox.getChildren().add(choice.get(i));
 			}
 			hBox.setSpacing(50.0);
-			getChildren().addAll(hBox);
+			VBox box = new VBox(hBox, button);
+			box.setSpacing(25.0);
+			getChildren().addAll(box);
 			
 			
 			
@@ -217,6 +259,16 @@ public class PatterncardSelect extends Pane {
 			}
 			return 0;
 		}
+		
+		public void handle(){
+			controller.setPatternCard(getChosenId());
+		}
+		
+		public ArrayList<PatternCard> getPatternCard(){
+			return controller.getPatternCardOptions();
+		}
+		
+		
 		
 		///*
 			//Returns the ArrayList with Spaces.

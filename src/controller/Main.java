@@ -11,7 +11,7 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		 MyScene scene = new MyScene();
 	     stage.setScene(scene);
-	     //stage.setFullScreen(true);
+	     stage.setFullScreen(true);
 	     stage.setTitle("Sagrada login and register");
 	     stage.show();
 	}

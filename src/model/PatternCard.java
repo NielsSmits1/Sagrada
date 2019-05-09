@@ -13,15 +13,16 @@ public class PatternCard {
 	private ArrayList<ArrayList<Object>> p;
 	private int patternId;
 	private Random random;
-
+	
 	//	private BoardController controller;
 	public PatternCard(int number) {
 //		controller = c;
-		
+//		patternfield.clear();
 		patternfield = new ArrayList<>();
 		setPatternId(number);
 		p = getSelect();
 		setPatternField();
+//		addCard();
 	}
 	
 	public PatternCard() {
@@ -39,6 +40,12 @@ public class PatternCard {
 	///*
 		//Fills the ArrayList that contains all of the spaces.
 		///**
+	
+	public void addCard() {
+		for (int i = 0; i < patternfield.size(); i++) {
+			addChosenCard(patternfield.get(i).getXPos(), patternfield.get(i).getYPos());
+		}
+	}
 	private void setPatternField() {
 		for(int i = 0;i<20;i++) {
 			patternfield.add(new Space());
@@ -102,5 +109,16 @@ public class PatternCard {
 	
 	public void randomNumber() {
 		patternId  = random.nextInt(23)+1;
+	}
+	
+	public void addOptionToDB() {
+//		database.CUD("DELETE FROM tjpmsalt_db2.patterncardoption WHERE player_idplayer = 1;");
+//		database.CUD("insert into tjpmsalt_db2.patterncardoption (patterncard_idpatterncard,player_idplayer) VALUES (" + patternId + ",1);");
+	}
+	
+	//TODO ADD THE CHOSEN PATTERNCARD TO PLAYERFRAMEFIELD
+	
+	public void addChosenCard(int xPos, int yPos) {
+		database.CUD("insert into tjpmsalt_db2.playerframefield (player_idplayer, position_x,position_y) VALUES (1,"+ xPos + "," + yPos + ");");
 	}
 }
