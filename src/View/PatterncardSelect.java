@@ -231,7 +231,7 @@ public class PatterncardSelect extends Pane {
 				counter = 0;
 				for(int c = 1;c<=5;c++) {
 					for(int i = 0; i<4;i++) {
-							board.add(new PatternPane(new DicePane(getPatternCard().get(j).getPatternField().get(counter).getEyes(), getPatternCard().get(j).getPatternField().get(counter).getColor()), counter));
+							board.add(new PatternPane(new DicePane(getPatternCard().get(j).getPatternField().get(counter).getEyes(), getPatternCard().get(j).getPatternField().get(counter).getColor())));
 							choice.get(j).add(board.get(board.size()-1), getPatternCard().get(j).getPatternField().get(counter).getXPos(), getPatternCard().get(j).getPatternField().get(counter).getYPos());
 							counter++;
 						}	

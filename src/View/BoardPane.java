@@ -34,7 +34,7 @@ public class BoardPane extends Pane{
 		///**
 	public BoardPane(BoardController bc) {
 //		setPrefSize(s.getWidth()/4, s.getHeight() - 200);
-		transparent = true;
+//		transparent = true;
 //		setPatternId(pattern);
 		controller = bc;
 //		controller.setPatternId(patternid);
@@ -134,7 +134,7 @@ public class BoardPane extends Pane{
 		board = new ArrayList<>();
 		for(int c = 1;c<=5;c++) {
 			for(int i = 0; i<4;i++) {
-					board.add(new PatternPane(this,new DicePane(getPatternField().get(counter).getEyes(), getPatternField().get(counter).getColor()), counter));
+					board.add(new PatternPane(this,new DicePane(getPatternField().get(counter).getEyes(), getPatternField().get(counter).getColor()), getPatternField().get(counter).getXPos(), getPatternField().get(counter).getYPos()));
 					field.add(board.get(board.size()-1), getPatternField().get(counter).getXPos(), getPatternField().get(counter).getYPos());
 					counter++;
 				}
@@ -166,9 +166,13 @@ public class BoardPane extends Pane{
 		//This is what rootPane is used for, to get the selected DicePane and to delete it. PatternPane uses those methods.
 		///**
 //TODO FIX THAT THE SELECTED DICE IS GIVEN THROUGH THE CONTROLLER, IF POSSIBLE
-//	public DicePane getSelected() {
-//		return rootPane.getSelected();
-//	}
+	public DicePane getSelected() {
+		return controller.getSelected();
+	}
+	
+	public void giveCords(int x, int y) {
+		controller.validateMove(x, y);
+	}
 //	
 //	public void deleteSelected() {
 //		rootPane.deleteSelected();
@@ -237,10 +241,10 @@ public class BoardPane extends Pane{
 
 	}
 	
-	public void switchTransparent() {
-		transparent = !transparent;
-		setMouseTransparent(transparent);
-	}
+//	public void switchTransparent() {
+//		transparent = !transparent;
+//		setMouseTransparent(transparent);
+//	}
 
 }
 

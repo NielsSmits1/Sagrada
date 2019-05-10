@@ -2,6 +2,8 @@ package controller;
 
 import java.util.ArrayList;
 
+import View.BoardPane;
+import View.DicePane;
 import View.PatterncardSelect;
 import View.RootPane;
 import javafx.event.ActionEvent;
@@ -18,45 +20,53 @@ public class GameController {
 	private PatterncardSelect option;
 	private RootPane rootpane;
 	private BoardController boardcontroller;
+
 	public GameController(MyScene s) {
 		scene = s;
-		boardcontroller = new BoardController();
+		boardcontroller = new BoardController(this);
+		game = new Game();
+		game.setPlayableDices();
 	}
 	
+
 	public Parent showOptions() {
 		option = new PatterncardSelect(this);
 		return option;
 	}
-	
-//	private EventHandler<ActionEvent>confirm(){
-//		if(option != null && option.getChosenId() != 0) {
-//			option.getChosenId();
-//			System.out.println("You've picked number" + option.getChosenId());
-//		}
-//		return null;
-//	}
-	
+
 	public ArrayList<PatternCard> getPatternCardOptions() {
 		return boardcontroller.getPatternCardOptions();
 	}
-	
-	///*
-		//Gets all dices available in the game.
-		///**
-	public ArrayList<Dice> getDiceArray(){
-		game = new Game();
-		return game.getDiceArray();
+
+	/// *
+	// Gets all dices available in the game.
+	/// **
+	public ArrayList<Dice> getPlayableDices() {
+		return game.getPlayableDices();
 	}
 	
-//	public ArrayList<Space> getPatternCard(){
-//		return boardcontroller.getPatternCard();
-//	}
+	public DicePane getSelected() {
+		return rootpane.getSelected();
+	}
 	
+	public int getIdGame() {
+		return game.getIdGame();
+	}
+
+	// public ArrayList<Space> getPatternCard(){
+	// return boardcontroller.getPatternCard();
+	// }
+
 	public void setPatternCard(int id) {
 		boardcontroller.setPatternCard(id);
 	}
+
+	public void setRootpane() {
+		rootpane = new RootPane(this);
+		scene.setRoot(rootpane);
+	}
 	
-//	public void showRootPane() {
-//		rootpane = new RootPane();
-//	}
+	public BoardPane returnBoardPane() {
+		return boardcontroller.returnBoardPane();
+	}
 }

@@ -9,15 +9,17 @@ public class PatternPane extends StackPane{
 	private DicePane template;
 	private DicePane dice;
 	private BoardPane boardPane;
-	private int number;
-	
+	private int xPos;
+	private int yPos;
 	///*
 		//BoardPane is required to get and delete the selected DicePane from RootPane. The required DicePane will become the template
 		///**
-	public PatternPane(BoardPane p, DicePane d, int i) {
+	public PatternPane(BoardPane p, DicePane d, int x, int y) {
 		template = d;
 		boardPane = p;
-		number = i;
+		xPos = x;
+		yPos = y;
+		System.out.println("" + xPos + " " + yPos);
 		///*
 		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
 		//Dice will be 'pasted' on the template.
@@ -32,7 +34,7 @@ public class PatternPane extends StackPane{
 							dice = getSelected();
 							dice.setMouseTransparent(true);
 							getChildren().add(dice);
-							deleteSelected();
+//							deleteSelected();
 							return;
 						}
 						return;
@@ -42,14 +44,14 @@ public class PatternPane extends StackPane{
 						dice = getSelected();
 						dice.setMouseTransparent(true);
 						getChildren().add(dice);
-						deleteSelected();
+//						deleteSelected();
 						return;
 					}else {
 						if(template.getColor().equals(getSelected().getColor()) && getNearDice(getSelected())) {
 							dice = getSelected();
 							dice.setMouseTransparent(true);
 							getChildren().add(dice);
-							deleteSelected();
+//							deleteSelected();
 							return;
 						}
 					}
@@ -65,10 +67,8 @@ public class PatternPane extends StackPane{
 		
 	}
 	
-	public PatternPane(DicePane d, int i) {
+	public PatternPane(DicePane d) {
 		template = d;
-		number = i;
-		
 		getChildren().add(template);
 	}
 	
@@ -104,17 +104,21 @@ public class PatternPane extends StackPane{
 		return boardPane.getSelected();
 	}
 	
-	public void deleteSelected() {
-		boardPane.deleteSelected();
+	public void giveCords(int x, int y) {
+		boardPane.giveCords(x, y);
 	}
+	
+//	public void deleteSelected() {
+//		boardPane.deleteSelected();
+//	}
 	
 	public String getDiceColor() {
 		return dice.getColor();
 	}
 	
-	public int getNumber() {
-		return number;
-	}
+//	public int getNumber() {
+//		return number;
+//	}
 	
 	public String getColor() {
 		return dice.getColor();
