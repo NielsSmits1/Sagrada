@@ -199,7 +199,7 @@ public class DicePane extends Pane{
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
 				rootPane.setSelected(p);
-				System.out.println("" + p);
+//				System.out.println("" + p);
 			}
 			
 		});

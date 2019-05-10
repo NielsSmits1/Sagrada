@@ -19,7 +19,7 @@ public class PatternPane extends StackPane{
 		boardPane = p;
 		xPos = x;
 		yPos = y;
-		System.out.println("" + xPos + " " + yPos);
+//		System.out.println("" + xPos + " " + yPos);
 		///*
 		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
 		//Dice will be 'pasted' on the template.
@@ -28,38 +28,7 @@ public class PatternPane extends StackPane{
 
 			@Override
 			public void handle(MouseEvent event) {
-				if(getSelected() != null) {
-					if(template.getValue() != 0 && getNearDice(getSelected())) {
-						if(template.getValue() == getSelected().getValue()) {
-							dice = getSelected();
-							dice.setMouseTransparent(true);
-							getChildren().add(dice);
-//							deleteSelected();
-							return;
-						}
-						return;
-					}
-					
-					if(template.getColor().equals("WHITE") && getNearDice(getSelected())) {
-						dice = getSelected();
-						dice.setMouseTransparent(true);
-						getChildren().add(dice);
-//						deleteSelected();
-						return;
-					}else {
-						if(template.getColor().equals(getSelected().getColor()) && getNearDice(getSelected())) {
-							dice = getSelected();
-							dice.setMouseTransparent(true);
-							getChildren().add(dice);
-//							deleteSelected();
-							return;
-						}
-					}
-					
-					
-				}
-//				getClicked();
-				
+				giveCords();
 			}
 			
 		});
@@ -104,8 +73,8 @@ public class PatternPane extends StackPane{
 		return boardPane.getSelected();
 	}
 	
-	public void giveCords(int x, int y) {
-		boardPane.giveCords(x, y);
+	public void giveCords() {
+		boardPane.giveCords(xPos, yPos);
 	}
 	
 //	public void deleteSelected() {
@@ -135,9 +104,22 @@ public class PatternPane extends StackPane{
 		return 0;
 	}
 	
-	public boolean getNearDice(DicePane p) {
-		return boardPane.getNearDice(this, p);
+	public int getX() {
+		return xPos;
 	}
+	
+	public int getY() {
+		return yPos;
+	}
+	
+	public void setDice(DicePane selected) {
+		dice = selected;
+		getChildren().add(dice);
+	}
+	
+//	public boolean getNearDice(DicePane p) {
+//		return boardPane.getNearDice(this, p);
+//	}
 	
 	
 }

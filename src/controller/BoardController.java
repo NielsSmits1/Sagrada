@@ -34,7 +34,9 @@ public class BoardController {
 		return gameController.getIdGame();
 	}
 	public void validateMove(int x, int y) {
-		finalCard.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor(), getIdGame());
+		if(getSelected() != null && finalCard.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor())){
+			boardpane.setSelected(getSelected(), x, y);
+		}
 	}
 	public DicePane getSelected() {
 		return gameController.getSelected();
@@ -56,7 +58,7 @@ public class BoardController {
 	}
 
 	public void setPatternCard(int id) {
-		finalCard = new PatternCard(id);
+		finalCard = new PatternCard(id, getIdGame());
 		setBoard();
 		gameController.setRootpane();
 	}
