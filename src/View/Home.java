@@ -27,6 +27,9 @@ public class Home extends Pane {
 	private LeaderboardPane leaderboard;
 	private SearchPlayerPane search;
 	private Menubar menu;
+	private Button players;
+	private Button playersPlayed;
+	private Button playersWins;
 
 	private HomeController home;
 	private MyScene main;
@@ -34,7 +37,7 @@ public class Home extends Pane {
 	HBox box;
 	VBox boxie;
 	Font f = new Font(20);
-	int x = 250;
+	int x = 50; // 250
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private PlayerController self;
@@ -63,12 +66,21 @@ public class Home extends Pane {
 		setPanes("Zoek een speler", search);
 
 		setLogout();
-
-		
-		x += 400;
+	
+		x += 150;
+//		
+//		setButtons("Filter");
+	
+		x += 100;
 		
 		setPanes("Spelers", leaderboard);
 		
+		x += 300;
+		setButtons("Filter");
+		
+		
+		
+
 		this.getChildren().add(menu);
 
 	}
@@ -101,7 +113,7 @@ public class Home extends Pane {
 		boxie = new VBox();
 		scr.setPrefSize(250, 400);
 		this.search = scr;
-		scr.getStats().setOnAction(e -> showPlayerStats(search.getUsername()));
+		scr.getStats().setOnAction(e -> showPlayerStats());
 		boxie.setLayoutX(x);
 		boxie.setLayoutY(200);
 		boxie.setPrefSize(250, 500);
@@ -112,8 +124,8 @@ public class Home extends Pane {
 
 	}
 	
-	public void showPlayerStats(String username) {
-		alert.setHeaderText(self.getStatsPlayer(username));
+	public void showPlayerStats() {
+		alert.setHeaderText(home.getStatsPlayer());
 		
 		alert.showAndWait();
 	}
@@ -130,6 +142,29 @@ public class Home extends Pane {
 		lb.setFont(f);
 
 		boxie.getChildren().addAll(lb, scr);
+		this.getChildren().add(boxie);
+	}
+	private void setButtons(String text) {
+		Label lb = new Label(text);
+		boxie = new VBox();
+		boxie.setLayoutX(x);
+		boxie.setLayoutY(200);
+		boxie.setPrefSize(100, 200);
+		lb.setFont(f);
+		
+
+		players = new Button("Spelers");
+		playersPlayed = new Button("Aantal gespeeld");
+		playersWins = new Button("Aantal gewonnen");
+		
+		
+		players.setPrefSize(200, 30);
+		playersPlayed.setPrefSize(200, 30);
+		playersWins.setPrefSize(200, 30);
+		players.setOnAction(e -> leaderboard.setPlayers());
+		playersPlayed.setOnAction(e -> leaderboard.setPlayers2());
+		playersWins.setOnAction(e -> leaderboard.setPlayers3());
+		boxie.getChildren().addAll(lb, players, playersPlayed, playersWins);
 		this.getChildren().add(boxie);
 	}
 	

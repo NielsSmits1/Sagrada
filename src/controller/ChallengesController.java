@@ -14,18 +14,24 @@ public class ChallengesController {
 		this.home = home;
 		challenge = new Challenge(home.getSelf());
 	}
+//	public ChallengesController() {
+//		challenge = new Challenge(home.getSelf());
+//	}
 
-	public void acceptChallenge() {
+	public void acceptChallenge(String differentPlayer) {
+		challenge.setChallengerUsername(differentPlayer);
 		challenge.changePlayerStatusToAccepted();
+		
 	}
 
-	public void declineChallenge() {
+	public void declineChallenge(String differentPlayer) {
+		challenge.setChallengerUsername(differentPlayer);
 		challenge.changePlayerStatusToDeclined();
 	}
 
-	public void setChallenges() {
-		home.buildPlayer("Teun");
-	}
+//	public void setChallenges() {
+//		home.buildPlayer("Teun");
+//	}
 
 	public ArrayList<String> getChallengers() {
 		ArrayList<String> challengedPlayerNames = new ArrayList<String>();
@@ -33,6 +39,7 @@ public class ChallengesController {
 
 		for (ArrayList<Object> a : challenge.GetPlayerWithChallengedStatus()) {
 			u = (String) a.get(0);
+//			System.out.println(u);
 			if (!home.getSelf().getUsername().equals(u)) {
 				challengedPlayerNames.add(u);
 			} 

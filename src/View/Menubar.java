@@ -1,5 +1,6 @@
 package View;
 
+import controller.HomeController;
 import controller.PlayerController;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -21,10 +22,13 @@ public class Menubar extends MenuBar {
 	private MyScene main;
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private PlayerController self;
+	private HomeController home;
 	
 	public Menubar(MyScene main, PlayerController self){
+		home = new HomeController(self);
 		this.main = main;
 		this.self = self;
+
 		creatMenu();
 	}
 	
@@ -50,7 +54,7 @@ public class Menubar extends MenuBar {
 	}
 
 	private void showStats() {
-		alert.setHeaderText(self.getStats());
+		alert.setHeaderText(home.getStats());
 		// test
 		alert.showAndWait();
 	}

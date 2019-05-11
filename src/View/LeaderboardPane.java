@@ -3,17 +3,12 @@ package View;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-
 
 import controller.HomeController;
 import controller.LeaderboardController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -25,8 +20,9 @@ public class LeaderboardPane extends ScrollPane {
 	public LeaderboardPane(HomeController self) {
 		lc = new LeaderboardController(self);
 		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
+		
+		setPlayers();
 
-		setPlayers3();
 
 		playerColumn.getChildren().setAll(playerLine);
 		this.setContent(playerColumn);
@@ -47,24 +43,41 @@ public class LeaderboardPane extends ScrollPane {
 	}
 
 	public void setPlayers() {
+		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
 		for (String playerName : lc.getPlayers()) {
 			addPlayerNameLine(playerName);
 		}
+	
+		playerColumn.getChildren().setAll(playerLine);
+		this.setContent(playerColumn);
+		this.setHbarPolicy(getHbarPolicy().NEVER);
+		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 
 	}
 
 	public void setPlayers2() {
-		for (Map.Entry playerGamesPlayed : lc.getPlayersFilteredByAmountOfGames().entrySet()) {
+		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
+		for (Map.Entry<String, String> playerGamesPlayed : lc.getPlayersFilteredByAmountOfGames().entrySet()) {
 			addPlayerNameLineWithAmountOfGamesPlayed(playerGamesPlayed.getKey().toString(),
 					playerGamesPlayed.getValue().toString());
 		}
+		playerColumn.getChildren().setAll(playerLine);
+		this.setContent(playerColumn);
+		this.setHbarPolicy(getHbarPolicy().NEVER);
+		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 
 	}
 	public void setPlayers3() {
+		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
 		for (Map.Entry playerGamesPlayedWon : lc.getPlayersFilteredByAmountOfGamesWon().entrySet()) {
 			addPlayerNameLineWithAmountOfGamesWon(playerGamesPlayedWon.getKey().toString(),
 					(int) playerGamesPlayedWon.getValue());
+			
 		}
+		playerColumn.getChildren().setAll(playerLine);
+		this.setContent(playerColumn);
+		this.setHbarPolicy(getHbarPolicy().NEVER);
+		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 
 	}
 	

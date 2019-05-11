@@ -1,40 +1,52 @@
 package View;
 
 import controller.ChallengesController;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 public class ChallengesPlayerLinePane extends HBox {
-	private Label playerName;
+	
+	private String playerName;
+	private Label differentPlayer;
 	private Button accept;
 	private Button decline;
-//	private ChallengesController cc = new ChallengesController(self); 
+//	private ChallengesPane cp;
+//	private ChallengesController cc = new ChallengesController(); 
 
 	public ChallengesPlayerLinePane(String name) {
-		playerName = new Label();
+//		cp = new ChallengesPane();
+		
+		differentPlayer = new Label();
 		accept = new Button("Accepteer");
 		decline= new Button("Weiger");
+		this.playerName = name;
 		
 		this.setPrefSize(300, 30);
-		playerName.setText(name);
-		playerName.setPrefSize(100, 30);
+		differentPlayer.setText(playerName);
+		differentPlayer.setPrefSize(100, 30);
 		accept.setPrefSize(100, 30);
 		decline.setPrefSize(100, 30);
-		this.getChildren().setAll(playerName, accept, decline);
-//		accept.setOnAction(e -> cc.acceptChallenge());
-//		decline.setOnAction(e -> cc.declineChallenge());
-
+		this.getChildren().setAll(differentPlayer, accept, decline);
+//		accept.setOnAction(e -> this.acceptChallengeLine());
+//		decline.setOnAction(e -> this.declineChallengeLine());
+//		accept.setOnAction(e -> cp.acceptChallenge(playerName));
+//		decline.setOnAction(e -> cp.declineChallenge(playerName));
 	
 	}
 
 //	private void declineChallengeLine() {
+//		cc.declineChallenge(playerName);
+//		cp.declineChallenge(playerName);
+//		
+//		
 //		
 //		
 //	}
 //
 //	private void acceptChallengeLine() {
+//		cc.acceptChallenge(playerName);
+//		cp.acceptChallenge(playerName);
 //	
 //	}
 
