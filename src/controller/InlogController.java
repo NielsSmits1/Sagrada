@@ -3,7 +3,7 @@ package controller;
 import View.InlogPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
+import javafx.scene.layout.VBox;
 import model.Player;
 
 public class InlogController{
@@ -11,23 +11,27 @@ public class InlogController{
 	private HomeController home;
 	private Player player;
 	private MyScene scene;
+	private MenubarController menu;
 
 	public InlogController(MyScene myScene) {
 		scene = myScene;
 	}
 
 	public InlogPane showInlog() {
-		inlog = new InlogPane(this.login(), this.register());
+		inlog = new InlogPane();
+		inlog.getLoginButton().setOnAction(e -> login());
+		inlog.getLoginButton().setOnAction(e -> register());
 		return inlog;
 	}
 	
-	public void show() {
-		inlog = new InlogPane();
+	public InlogPane show() {
+//		inlog = new InlogPane();
 		scene.setRoot(inlog);
+		return inlog;
 	}
 	
 
-	private EventHandler<ActionEvent> register() {
+	public EventHandler<ActionEvent> register() {
 		player = new Player(inlog.getUsernameText());
 		if(inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("") || player.checkUsernameExists()) {
 			inlog.giveErrorBox();
@@ -39,7 +43,7 @@ public class InlogController{
 		return null;
 	}
 
-	private EventHandler<ActionEvent> login() {
+	public EventHandler<ActionEvent> login() {
 		if(inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("")) {
 			inlog.giveErrorBox();
 		}else {
@@ -52,10 +56,11 @@ public class InlogController{
 		}
 		return null;
 	}
-	private void buildHome() {
+	public void buildHome() {
 		//build and show
+		menu = new MenubarController();
 		home = new HomeController(scene, player);
-		scene.setRoot(home.showHome());
+		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));
 	}
 	
 	

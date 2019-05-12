@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-
 import model.Player;
 
 public class PlayerController {

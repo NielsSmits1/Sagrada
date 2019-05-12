@@ -1,6 +1,5 @@
 package controller;
 
-import View.InlogPane;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
@@ -9,10 +8,10 @@ public class MyScene extends Scene {
     private GameController game = new GameController(this);
     public MyScene() {
         super(new Pane());
-        setRoot(game.showOptions());
+//        setRoot(game.showOptions());
 
-        // inlog.show();
-        //setRoot(inlog.showInlog());
+         inlog.showInlog();
+        setRoot(inlog.show());
 
     }
 

@@ -6,16 +6,15 @@ import javafx.scene.Parent;
 
 public class MenubarController {
 
-	//private MenubarModel model = new MenubarModel();
-	
+	private Menubar menu;
+
 	public MenubarController() {
-		
+		menu = new Menubar();
 	}
 
 	public Menubar getMenubar() {
-		Menubar mb = new Menubar();
-		return mb;
+
+		return menu;
 	}
-	
-	
+
 }

@@ -81,10 +81,10 @@ public class InlogPane extends BorderPane {
 		setTop(textAlignment);
 	}
 
-	public InlogPane(EventHandler<ActionEvent> login, EventHandler<ActionEvent> register) {
-		loginButton.setOnAction(login);
-		registerButton.setOnAction(register);
-	}
+//	public InlogPane(EventHandler<ActionEvent> login, EventHandler<ActionEvent> register) {
+//		loginButton.setOnAction(login);
+//		registerButton.setOnAction(register);
+//	}
 
 	public String getUsernameText() {
 		return this.usernameField.getText();
@@ -100,4 +100,14 @@ public class InlogPane extends BorderPane {
 		passwordField.setBorder(
 				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 	}
+
+	public Button getLoginButton() {
+		return loginButton;
+	}
+
+	public Button getRegisterButton() {
+		return registerButton;
+	}
+	
+	
 }
