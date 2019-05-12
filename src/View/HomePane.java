@@ -22,8 +22,12 @@ public class HomePane extends Pane{
 	private VBox boxie;
 	private Font f = new Font(20);
 	private int x = 250;
+	private PlayerController self;
+	private MyScene scene;
 	
-	public HomePane(PlayerController self, MyScene scene) {
+	public void  createHomePane(PlayerController self, MyScene scene) {
+		this.self = self;
+		this.scene = scene;
 		this.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
 
 		
@@ -38,15 +42,16 @@ public class HomePane extends Pane{
 		
 		setPanes("Zoek een speler", search);
 		
-		this.getChildren().add(menu);
+//		this.getChildren().add(menu);
 	}
 	
 
-	public HomePane(SearchPlayerPane searchPlayerPane, ChallengerPane challengerPane, ChallengesPane challengesPane, Menubar menubar) {
+	public HomePane(SearchPlayerPane searchPlayerPane, ChallengerPane challengerPane, ChallengesPane challengesPane) {
 		search = searchPlayerPane;
 		challenges = challengesPane;
 		challenger = challengerPane;
-		menu = menubar;
+//		menu = menubar;
+		createHomePane(self, scene);
 	}
 
 

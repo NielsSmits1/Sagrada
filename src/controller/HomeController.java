@@ -68,7 +68,7 @@ public class HomeController {
 	}
 
 	public Parent showHome() {
-		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), mb.getMenubar());
+		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane());
 		return home;
 	}
 
