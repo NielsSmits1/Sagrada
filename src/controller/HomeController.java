@@ -20,7 +20,7 @@ public class HomeController {
 		sp = new SearchPlayerController();
 		cpp = new ChallengerController();
 		cp = new ChallengesController();
-		mb = new MenubarController();
+//		mb = new MenubarController();
 	}
 
 	public String getUsername() {

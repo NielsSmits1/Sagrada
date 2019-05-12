@@ -58,10 +58,16 @@ public class InlogController{
 	}
 	public void buildHome() {
 		//build and show
-		menu = new MenubarController();
+		menu = new MenubarController(scene, this);
 		home = new HomeController(scene, player);
 		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));
 	}
+
+	public InlogPane getInlog() {
+		return inlog;
+	}
+	
+	
 	
 	
 }
