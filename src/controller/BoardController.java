@@ -84,4 +84,8 @@ public class BoardController {
 		}
 	}
 
+	public void getTurns() {
+		gameController.getTurns();
+	}
+
 }

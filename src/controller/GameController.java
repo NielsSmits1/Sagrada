@@ -6,13 +6,11 @@ import View.BoardPane;
 import View.DicePane;
 import View.PatterncardSelect;
 import View.RootPane;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import model.Dice;
 import model.Game;
 import model.PatternCard;
-import model.Space;
+import model.Round;
 
 public class GameController {
 	private Game game;
@@ -20,6 +18,7 @@ public class GameController {
 	private PatterncardSelect option;
 	private RootPane rootpane;
 	private BoardController boardcontroller;
+	private Round round;
 
 	public GameController(MyScene s) {
 		scene = s;
@@ -51,6 +50,10 @@ public class GameController {
 	
 	public int getIdGame() {
 		return game.getIdGame();
+	}
+	
+	public int getTurns() {
+		return round.calculateTurns(getIdGame());
 	}
 
 	// public ArrayList<Space> getPatternCard(){

@@ -194,6 +194,12 @@ public class BoardPane extends Pane{
 //		transparent = !transparent;
 //		setMouseTransparent(transparent);
 //	}
+	
+	
+	
+	public void getTurns() {
+		controller.getTurns();
+	}
 
 }
 
