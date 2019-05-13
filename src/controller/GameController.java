@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import View.BoardPane;
 import View.DicePane;
+import View.MyScene;
 import View.PatterncardSelect;
 import View.RootPane;
 import javafx.scene.Parent;
