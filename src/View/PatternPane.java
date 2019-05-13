@@ -28,7 +28,9 @@ public class PatternPane extends StackPane{
 
 			@Override
 			public void handle(MouseEvent event) {
+
 				giveCords();
+
 			}
 			
 		});
@@ -108,6 +110,7 @@ public class PatternPane extends StackPane{
 		return xPos;
 	}
 	
+
 	public int getY() {
 		return yPos;
 	}
@@ -121,5 +124,6 @@ public class PatternPane extends StackPane{
 //		return boardPane.getNearDice(this, p);
 //	}
 	
+
 	
 }

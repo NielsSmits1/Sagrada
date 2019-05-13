@@ -14,6 +14,8 @@ import model.Round;
 
 public class GameController {
 	private Game game;
+
+
 	private MyScene scene;
 	private PatterncardSelect option;
 	private RootPane rootpane;
@@ -72,4 +74,10 @@ public class GameController {
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();
 	}
+	
+	public void removeNumber(int number) {
+		game.removeDice(number);
+	}
+	
+	
 }
