@@ -17,14 +17,14 @@ public class ChallengesController {
 		this.home = home;
 		challenge = new Challenge(home.getSelf());
 	}
-//	public ChallengesController() {
-//		challenge = new Challenge(home.getSelf());
-//	}
+public ChallengesController() {
+		challenge = new Challenge(home.getSelf());
+	}
 
 
 	public void acceptChallenge(String differentPlayer) {
 		challenge.setChallengerUsername(differentPlayer);
-
+	}
 	// public ChallengesController() {
 	// 	// TODO Auto-generated constructor stub
 	// }

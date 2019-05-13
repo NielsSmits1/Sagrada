@@ -61,6 +61,7 @@ public class LeaderboardController {
 
 		for (ArrayList<Object> a : leaderboard.getListOfUsernamesWithAmountOfGamesWon()) {
 			u = (String) a.get(0);
+			s = (int)a.get(1);
 			s = ((Number)a.get(1)).intValue();
 			PlayerNamesWithGamesWon.put(u, s);
 		}

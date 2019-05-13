@@ -23,6 +23,10 @@ public class HomeController {
 //		mb = new MenubarController();
 	}
 
+	public HomeController(PlayerController self2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getUsername() {
 		return self.getUsername();
 	}

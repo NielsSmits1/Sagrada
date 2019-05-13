@@ -31,6 +31,10 @@ public class SearchPlayerPane extends VBox  {
 		this.getChildren().setAll(online,search);
 	}
 	
+	public SearchPlayerPane() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private void alert(String message) {
 		alert.setHeaderText(message);
 		alert.showAndWait();

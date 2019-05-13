@@ -9,7 +9,7 @@ public class Player {
 	private String username;
 	private String password;
 	private db database = new db();
-	private Board board;
+	//private Board board;
 	
 //	private String differendPlayer;
 
