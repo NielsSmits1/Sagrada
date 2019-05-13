@@ -45,7 +45,6 @@ public class ChallengesPane extends ScrollPane {
 		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 	}
 
-
 	public void addChallengesLine(String name) {
 
 		playerLine.add(new ChallengesPlayerLinePane(name));
@@ -58,15 +57,15 @@ public class ChallengesPane extends ScrollPane {
 	}
 
 	private void setChallenger() {
-
-		for (String name : cc.getChallengers()) {
-			addChallengesLine(name);
+//
+//		for (String name : cc.getChallengers()) {
+//			addChallengesLine(name);
 
 //		for(ArrayList<Object> a: challenge.GetPlayerWithChallengedStatus()){
 //			a.get(0);
 //			addChallengesLine((String) a.get(0));			
 
-		}
+//		}
 
 	}
 

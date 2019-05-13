@@ -2,14 +2,14 @@ package model;
 import java.util.ArrayList;
 
 import Database.db;
-import controller.HomeController;
 
 public class Player {
 	private int idplayer;
 	private String username;
 	private String password;
 	private db database = new db();
-	//private Board board;
+	private PatternCard board;
+
 	
 //	private String differendPlayer;
 

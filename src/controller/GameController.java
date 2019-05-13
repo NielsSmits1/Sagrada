@@ -4,16 +4,20 @@ import java.util.ArrayList;
 
 import View.BoardPane;
 import View.DicePane;
+import View.MyScene;
 import View.PatterncardSelect;
 import View.RootPane;
 import javafx.scene.Parent;
 import model.Dice;
 import model.Game;
 import model.PatternCard;
+//import model.Round;
 import model.Round;
 
 public class GameController {
 	private Game game;
+
+
 	private MyScene scene;
 	private PatterncardSelect option;
 	private RootPane rootpane;
@@ -72,4 +76,6 @@ public class GameController {
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();
 	}
+	
+	
 }
