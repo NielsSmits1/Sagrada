@@ -8,8 +8,8 @@ public class MyScene extends Scene {
     private GameController game = new GameController(this);
     public MyScene() {
         super(new Pane());
-//        setRoot(game.showOptions());
-
+        setRoot(game.showOptions());
+        
          inlog.showInlog();
         setRoot(inlog.show());
 
