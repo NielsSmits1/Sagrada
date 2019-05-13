@@ -117,6 +117,7 @@ public class PatternPane extends StackPane{
 	
 	public void setDice(DicePane selected) {
 		dice = selected;
+		dice.setMouseTransparent(true);
 		getChildren().add(dice);
 	}
 	
