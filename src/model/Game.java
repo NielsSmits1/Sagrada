@@ -11,7 +11,8 @@ public class Game {
 	private ArrayList<Dice> diceArray;
 	private ArrayList<Dice> playableDices;
 	private ArrayList<Round> rounds;
-	private int idgame; 
+	private int idgame;
+	private int yourself;
 	private Random r;
 	public Game() {
 		r = new Random();
@@ -35,6 +36,12 @@ public class Game {
 		return (long) database
 				.Select("SELECT (idgame+1) AS newGameId FROM tjpmsalt_db2.gamedie ORDER BY idgame DESC LIMIT 1;").get(0)
 				.get(0);
+	}
+	
+	public void setOwnId(int chosenPatternId) {
+		yourself = (int) database.Select("SELECT (idplayer+1) AS newPlayerId FROM tjpmsalt_db2.player ORDER BY game_idgame DESC LIMIT 1;").get(0).get(0);
+		database.CUD("INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color, patterncard_idpatterncard ) "
+				+ "VALUES("+ yourself+ ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw' , " + chosenPatternId + ")");
 	}
 
 	// gets all die information where id game equals the new game.
@@ -105,6 +112,10 @@ public class Game {
 	
 	public int getIdGame() {
 		return idgame;
+	}
+	
+	public int getOwnId() {
+		return yourself;
 	}
 	
 }

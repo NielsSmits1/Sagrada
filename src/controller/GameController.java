@@ -13,6 +13,7 @@ import model.Game;
 import model.PatternCard;
 //import model.Round;
 import model.Round;
+import model.Space;
 
 public class GameController {
 	private Game game;
@@ -65,6 +66,7 @@ public class GameController {
 	// }
 
 	public void setPatternCard(int id) {
+		game.setOwnId(id);
 		boardcontroller.setPatternCard(id);
 	}
 
@@ -75,6 +77,14 @@ public class GameController {
 	
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();
+	}
+	
+	public int getOwnId() {
+		return game.getOwnId();
+	}
+	
+	public ArrayList<BoardPane> getOpponentBoard(){
+		return boardcontroller.getOpponentBoard();
 	}
 	
 	

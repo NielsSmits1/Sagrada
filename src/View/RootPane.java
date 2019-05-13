@@ -94,7 +94,7 @@ public class RootPane extends BorderPane {
 //		player4 = new BoardPane(this, 3);
 //		player4.switchTransparent();
 		
-		boards = new HBox(player1);
+		boards = new HBox(player1, player2,player3,player4);
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 50));
 	}
@@ -205,6 +205,9 @@ public class RootPane extends BorderPane {
 
 	public void setBoardPlayerOne() {
 		player1 = controller.returnBoardPane();
+		player2 = controller.getOpponentBoard().get(0);
+		player3 = controller.getOpponentBoard().get(1);
+		player4 = controller.getOpponentBoard().get(2);
 	}
 
 //	private void handle() {
