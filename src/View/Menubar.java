@@ -26,9 +26,10 @@ public class Menubar extends MenuBar {
 	private HomeController home;
 	
 	public Menubar(MyScene main, PlayerController self){
-		home = new HomeController(self);
 		this.main = main;
 		this.self = self;
+		home = new HomeController(main, self.getPlayer());
+	
 
 		creatMenu();
 	}

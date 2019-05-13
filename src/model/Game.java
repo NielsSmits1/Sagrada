@@ -76,6 +76,7 @@ public class Game {
 		return diceArray;
 	}
 
+
 	// inserts standard values for dices for a new game.
 	public void insertDicesIntoDatabase() {
 		database.CUD("insert into game(idgame) VALUES("+ idgame + ");");

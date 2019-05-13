@@ -1,5 +1,6 @@
 package View;
 
+
 import controller.MyScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,7 +31,7 @@ public class InlogPane extends BorderPane {
 	private BorderPane textAlignment;
 
 
-	public InlogPane() {
+	public InlogPane(MyScene scene) {
 
 
 		usernameField = new TextArea();

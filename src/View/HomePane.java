@@ -1,6 +1,5 @@
 package View;
 
-import controller.MyScene;
 import controller.PlayerController;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
