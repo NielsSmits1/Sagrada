@@ -21,4 +21,7 @@ public int getPlayerId() {
 public int getseNumber() {
 	return this.senumber;
 }
+public Player getPlayer() {
+	return this.player;
+}
 }
