@@ -458,12 +458,11 @@ public class PatternCard {
 	}
 
 	private boolean validateStartsInCorner(int x, int y) {
-		if ((x == 1 && y == 1) || (x == 5 && y == 1) || (x == 1 && y == 4) || (x == 5 && y == 4)) {
-			return true;
-
-		} else {
+		if((x > 1 && x < 5) && (y > 1 && y<4)){
 			return false;
-		}
+		
+	}
+		return true;
 	}
 
 	private void addDiceToField(int x, int y, int dienumber, String color) {
