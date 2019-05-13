@@ -1,17 +1,13 @@
 package View;
 
 import controller.HomeController;
-import controller.MyScene;
 import controller.PlayerController;
 import javafx.application.Platform;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class Menubar extends MenuBar {
 
@@ -26,9 +22,10 @@ public class Menubar extends MenuBar {
 	private HomeController home;
 	
 	public Menubar(MyScene main, PlayerController self){
-		home = new HomeController(self);
 		this.main = main;
 		this.self = self;
+		home = new HomeController(main, self.getPlayer());
+	
 
 		creatMenu();
 	}

@@ -63,7 +63,9 @@ public class BoardController {
 		gameController.setRootpane();
 	}
 
+
 	public void checkDuplicatePatternCard() {
+		//hoort hier eik niet maar kan nergens anders
 		while (patternCardOptions.get(1).getPatternId() == patternCardOptions.get(0).getPatternId()
 				|| patternCardOptions.get(1).getPatternId() == patternCardOptions.get(2).getPatternId()
 				|| patternCardOptions.get(1).getPatternId() == patternCardOptions.get(3).getPatternId()) {
@@ -87,5 +89,6 @@ public class BoardController {
 	public void getTurns() {
 		gameController.getTurns();
 	}
+
 
 }

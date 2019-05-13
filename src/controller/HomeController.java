@@ -19,7 +19,7 @@ public class HomeController {
 		this.self = self;
 		sp = new SearchPlayerController();
 		cpp = new ChallengerController();
-		cp = new ChallengesController();
+		cp = new ChallengesController(this);
 //		mb = new MenubarController();
 	}
 
@@ -91,7 +91,7 @@ public class HomeController {
 
 
 	public Parent showHome() {
-		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane());
+		home = new HomePane(sp.getSearchPlayerPane(this), cpp.getChallengerPane(), cp.getChallengesPane());
 		return home;
 	}
 

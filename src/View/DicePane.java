@@ -3,6 +3,7 @@ package View;
 import java.util.ArrayList;
 
 
+
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
@@ -69,6 +70,7 @@ public class DicePane extends Pane{
 		//This constructor is used to make a dice.
 		///**
 	
+
 	public DicePane(int eyes, String color,int dienumber, RootPane rp) {
 		value = eyes;
 		this.color = color;
@@ -185,11 +187,14 @@ public class DicePane extends Pane{
 //			getChildren().addAll(dice);
 			getChildren().addAll(six);
 	}
-	
+		
 
 		///*
 		//This event is set only for the dicePane that become dices. When a dice is clicked is will become the selected rootPane.
 		///**
+		
+	}
+	public void removeEyes() {
 		
 	}
 	public void addEvent(DicePane p) {
@@ -216,6 +221,7 @@ public class DicePane extends Pane{
 	public int getDieNumber() {
 		return dieNumber;
 	}
+	
 	
 	
 //	public DicePane getSelected() {
