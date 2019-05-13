@@ -75,9 +75,5 @@ public class GameController {
 		return boardcontroller.returnBoardPane();
 	}
 	
-	public void removeNumber(int number) {
-		game.removeDice(number);
-	}
-	
 	
 }
