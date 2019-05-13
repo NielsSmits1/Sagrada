@@ -1,15 +1,11 @@
 package View;
 
 import controller.HomeController;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -21,10 +17,13 @@ public class SearchPlayerPane extends VBox  {
 	private Button stats = new Button("Statistieken");
 	private Alert alert = new Alert(AlertType.ERROR);
 	
-
 	private HomeController hc;
-	public SearchPlayerPane(){
-		//hc = home;
+	
+	private String username;
+	
+	public SearchPlayerPane(HomeController home){
+		hc = home;
+
 		search.setOnAction(E -> search());
 		online.setFont(Font.font(14));
 		online.setMaxWidth(120);
@@ -37,7 +36,7 @@ public class SearchPlayerPane extends VBox  {
 		alert.showAndWait();
 	}
 	private void search() {
-		String username = online.getText();
+		this.username = online.getText();
 		if(!username.equals("")) {
 			if(hc.usernameExist(username)) {
 				showPlayer(username);
@@ -61,13 +60,13 @@ public class SearchPlayerPane extends VBox  {
 		 */
 		
 	}
-	private void showPlayer(String username) {
+	public void showPlayer(String username) {
 		VBox boxie = new VBox();
 		boxie.setLayoutY(30);
 		boxie.setMinWidth(300);
 		user.setFont(Font.font(20));
 		user.setText(username);
-		stats.setOnAction(E-> showPlayerStats(username));
+//		stats.setOnAction(E-> showPlayerStats(username));
 		challenge.setOnAction(E -> challengePlayer(username));
 		boxie.getChildren().addAll(user,stats, challenge);
 		
@@ -75,8 +74,8 @@ public class SearchPlayerPane extends VBox  {
 		
 	}
 
-	private Object showPlayerStats(String username) {
-		// TODO Auto-generated method stub
+	private String showPlayerStats(String username) {
+		
 		return null;
 	}
 
@@ -102,7 +101,25 @@ public class SearchPlayerPane extends VBox  {
 			}
 			
 		}*/
+		
 	}
+
+	public Button getStats() {
+		return stats;
+	}
+
+	public TextField getOnline() {
+		return online;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+	
+	
+	
+	
+	
 	
 
 	

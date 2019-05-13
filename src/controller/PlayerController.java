@@ -3,10 +3,11 @@ package controller;
 import model.Player;
 
 public class PlayerController {
+
 	private Player player;
 
-	public PlayerController(String u, String p) {
-		player = new Player(u, p);
+	public PlayerController(String username, String password) {
+		player = new Player(username, password);
 	}
 	
 	public PlayerController(String un) {
@@ -63,5 +64,25 @@ public class PlayerController {
 		player.challenge();
 		
 	}
+
+//	public String getStats() {
+//		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWon() + " : " + player.getTimesLost()
+//				+ "\nHoogst behaalde score: " + player.getHighScore() 
+//				+ "\nMeest geplaatste dobbelsteenkleur: " + player.getMostPlacedDiceColor()
+//				+ "\nMeest geplaatste dobbelsteenwaarde: " + player.getMostPlacedDiceEyes()
+//				+ "\nAantal verschillende tegenstanders waartegen gespeeld is: " + player.getAmountOfUniquePlayers();
+//		return stats;
+//	}
+//	
+//	public String getStatsPlayer(String username) {
+//		player.setDifferendPlayer(username);
+//		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWonPlayer() + " : " + player.getTimesLostPlayer()
+//				+ "\nHoogst behaalde score: " + player.getHighScore() 
+//				+ "\nMeest geplaatste dobbelsteenkleur: " + player.getMostPlacedDiceColor()
+//				+ "\nMeest geplaatste dobbelsteenwaarde: " + player.getMostPlacedDiceEyes()
+//				+ "\nAantal verschillende tegenstanders waartegen gespeeld is: " + player.getAmountOfUniquePlayers();
+//		return stats;
+//	}
+
 
 }

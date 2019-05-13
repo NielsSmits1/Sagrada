@@ -1,5 +1,8 @@
 package controller;
+import View.Menubar;
+import View.MyScene;
 import javafx.application.Application;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 public class Main extends Application {
 

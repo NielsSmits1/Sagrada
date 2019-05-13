@@ -28,7 +28,9 @@ public class InlogPane extends BorderPane {
 	private Label gameTitle;
 	private BorderPane textAlignment;
 
+
 	public InlogPane() {
+
 
 		usernameField = new TextArea();
 		usernameField.setPromptText("Username...");
