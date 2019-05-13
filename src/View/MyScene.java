@@ -1,5 +1,7 @@
-package controller;
+package View;
 
+import controller.GameController;
+import controller.InlogController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 

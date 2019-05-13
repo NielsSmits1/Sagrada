@@ -2,6 +2,7 @@ package controller;
 
 
 import View.Menubar;
+import View.MyScene;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 
@@ -11,11 +12,13 @@ public class MenubarController {
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlogController;
+	private PlayerController controller;
 
-	public MenubarController(MyScene scene, InlogController controller) {
+	public MenubarController(MyScene scene, InlogController controller, PlayerController player) {
 		this.scene = scene;
 		this.inlogController = controller;
-		menu = new Menubar();
+		this.controller = player;
+		menu = new Menubar(scene, this.controller);
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());
 	}

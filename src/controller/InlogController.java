@@ -1,6 +1,7 @@
 package controller;
 
 import View.InlogPane;
+import View.MyScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.VBox;
@@ -12,13 +13,15 @@ public class InlogController{
 	private Player player;
 	private MyScene scene;
 	private MenubarController menu;
+	private PlayerController controller;
 
 	public InlogController(MyScene myScene) {
+		
 		scene = myScene;
 	}
 
 	public InlogPane showInlog() {
-		inlog = new InlogPane();
+		inlog = new InlogPane(scene);
 		inlog.getLoginButton().setOnAction(e -> login());
 		inlog.getLoginButton().setOnAction(e -> register());
 		return inlog;
@@ -58,7 +61,8 @@ public class InlogController{
 	}
 	public void buildHome() {
 		//build and show
-		menu = new MenubarController(scene, this);
+		controller = new PlayerController(player.getUsername());
+		menu = new MenubarController(scene, this, controller);
 		home = new HomeController(scene, player);
 		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));
 	}

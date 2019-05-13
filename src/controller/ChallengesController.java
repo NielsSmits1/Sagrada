@@ -27,7 +27,7 @@ public class ChallengesController {
 
 	// public ChallengesController() {
 	// 	// TODO Auto-generated constructor stub
-	// }
+	 }
 
 	public void acceptChallenge() {
 
