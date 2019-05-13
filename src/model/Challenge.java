@@ -23,14 +23,14 @@ public class Challenge {
 	}
 
 	public void changePlayerStatusToAccepted() {
-//		database.CUD("UPDATE player SET playstatus = 'geaccepteerd' WHERE idplayer = 1 "); // idplayer needs to be variabel
+		database.CUD("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from player where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
 		System.out.println("PlayerAccepted");
 	}
 
 	public void changePlayerStatusToDeclined() {
 
 		System.out.println("PlayerDeclined");
-//		database.CUD("UPDATE player SET playstatus = 'afgewezen' WHERE idplayer = 1 "); // idplayer needs to be variabel
+		database.CUD("UPDATE player SET playstatus_playstatus = 'Geweigerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from player where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
 
 	}
 
@@ -47,5 +47,22 @@ public class Challenge {
 		// 			teun
 		//			niels
 	}
+	public Player getSelf() {
+		return self;
+	}
+	public Player getChallenger() {
+		return challenger;
+	}
+	public void setSelf(Player self) {
+		this.self = self;
+	}
+	public void setChallenger(Player challenger) {
+		this.challenger = challenger;
+	}
+	public void setChallengerUsername(String challengerUsername){
+		challenger.setUsername(challengerUsername);
+		
+	}
+
 
 }

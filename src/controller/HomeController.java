@@ -1,15 +1,26 @@
 package controller;
 
+import View.*;
 import java.util.ArrayList;
 
+import javafx.scene.Parent;
 import model.Player;
 
 public class HomeController {
+	private HomePane home;
+	private SearchPlayerController sp;
+	private ChallengerController cpp;
+	private ChallengesController cp;
+	private MenubarController mb;
 	private Player player;
 	private Player self;
 
-	public HomeController(PlayerController self) {
-		this.self = self.getPlayer();
+	public HomeController(MyScene scene, Player self) {
+		this.self = self;
+		sp = new SearchPlayerController();
+		cpp = new ChallengerController();
+		cp = new ChallengesController();
+//		mb = new MenubarController();
 	}
 
 	public String getUsername() {
@@ -54,6 +65,30 @@ public class HomeController {
 	
 	public Player getSelf() {
 		return this.self;
+	}
+	public String getStats() {
+		String stats = "Aantal gewonnen en verloren potjes: " + self.getTimesWon() + " : " + self.getTimesLost()
+				+ "\nHoogst behaalde score: " + self.getHighScore() 
+				+ "\nMeest geplaatste dobbelsteenkleur: " + self.getMostPlacedDiceColor()
+				+ "\nMeest geplaatste dobbelsteenwaarde: " + self.getMostPlacedDiceEyes()
+				+ "\nAantal verschillende tegenstanders waartegen gespeeld is: " + self.getAmountOfUniquePlayers();
+		return stats;
+	}
+	
+	public String getStatsPlayer() {
+//		player.setDifferendPlayer(username);
+		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWon() + " : " + player.getTimesLost()
+				+ "\nHoogst behaalde score: " + player.getHighScore() 
+				+ "\nMeest geplaatste dobbelsteenkleur: " + player.getMostPlacedDiceColor()
+				+ "\nMeest geplaatste dobbelsteenwaarde: " + player.getMostPlacedDiceEyes()
+				+ "\nAantal verschillende tegenstanders waartegen gespeeld is: " + player.getAmountOfUniquePlayers();
+		return stats;
+	}
+
+
+	public Parent showHome() {
+		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane());
+		return home;
 	}
 
 }
