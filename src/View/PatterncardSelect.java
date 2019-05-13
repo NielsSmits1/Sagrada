@@ -5,12 +5,14 @@ import java.util.Random;
 
 import controller.BoardController;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Space;
 
@@ -22,30 +24,33 @@ public class PatterncardSelect extends Pane {
 	
 	private Random r;
 	
-	private GridPane field1;
-	private GridPane field2;
-	private GridPane field3;
-	private GridPane field4;
-	
-	private int patternid1;
-	private int patternid2;
-	private int patternid3;
-	private int patternid4;
-	
 	private Pane pattern1;
 	private Pane pattern2;
 	private Pane pattern3;
 	private Pane pattern4;
-
-	private int heightPosition = 375;
-	private int paneHeight = 403;
-	private int paneWidth = 324;
+	
+	private GridPane field1;
+	private GridPane field2;
+	private GridPane field3;
+	private GridPane field4;
 	
 	private Text text1;
 	private Text text2;
 	private Text text3;
 	private Text text4;
 	
+	private int patternid1;
+	private int patternid2;
+	private int patternid3;
+	private int patternid4;
+	
+	private Button randomButton;
+	
+	private double textX = 175;
+	private int fontSize = 20;
+	private int heightPosition = 375;
+	private int paneHeight = 403;
+	private int paneWidth = 324;
 	
 	public PatterncardSelect(MyScene s) {
 		super();
@@ -63,9 +68,23 @@ public class PatterncardSelect extends Pane {
 		pattern4 = new Pane();
 		
 		text1 = new Text("Kaart 1");
-		text2 = new Text("kaart 2");
-		text3 = new Text("kaart 3");
-		text4 = new Text("kaart 4");
+		text2 = new Text("Kaart 2");
+		text3 = new Text("Kaart 3");
+		text4 = new Text("Kaart 4");
+		
+		randomButton = new Button();
+		
+		text1.setX(textX);
+		text1.setFont(Font.font(null, fontSize));
+		
+		text2.setX(textX);
+		text2.setFont(Font.font(null, fontSize));
+		
+		text3.setX(textX);
+		text3.setFont(Font.font(null, fontSize));
+		
+		text4.setX(textX);
+		text4.setFont(Font.font(null, fontSize));
 		
 		controller = new BoardController();
 		patternid1 = r.nextInt(23)+1;
@@ -102,7 +121,7 @@ public class PatterncardSelect extends Pane {
 		pattern1.setMinSize(paneHeight, paneWidth);
 		pattern1.setLayoutX(50);
 		pattern1.setLayoutY(heightPosition);
-		pattern1.getChildren().addAll(field1, text1);
+		pattern1.getChildren().addAll(text1, field1);
 		
 		
 		
@@ -134,8 +153,16 @@ public class PatterncardSelect extends Pane {
 		pattern4.setLayoutY(heightPosition);
 		pattern4.getChildren().addAll(field4, text4);
 		
+		randomButton.setText("Random kaarten");
+		randomButton.setLayoutX(54);
+		randomButton.setLayoutY(200);
+		randomButton.setMaxSize(150, 40);
+		randomButton.setMinSize(150, 40);
+		randomButton.setPrefSize(150, 40);
+		randomButton.setFont(Font.font(null, 17));
 		
-		this.getChildren().addAll(pattern1, pattern2, pattern3, pattern4);
+		
+		this.getChildren().addAll(pattern1, pattern2, pattern3, pattern4, randomButton);
 		
 	}
 
@@ -148,8 +175,6 @@ public class PatterncardSelect extends Pane {
 		
 		field1.setVgap(8);
 		field1.setHgap(8);
-//		field1.setLayoutX(50);
-//		field1.setLayoutY(patternHeight);
 		field1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -164,8 +189,6 @@ public class PatterncardSelect extends Pane {
 		
 		field2.setVgap(8);
 		field2.setHgap(8);
-//		field2.setLayoutX(525);
-//		field2.setLayoutY(heightPosition);
 		field2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -180,9 +203,6 @@ public class PatterncardSelect extends Pane {
 		
 		field3.setVgap(8);
 		field3.setHgap(8);
-		
-//		field3.setLayoutX(1000);
-//		field3.setLayoutY(heightPosition);
 		field3.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -197,8 +217,6 @@ public class PatterncardSelect extends Pane {
 		
 		field4.setVgap(8);
 		field4.setHgap(8);
-//		field4.setLayoutX(1450);
-//		field4.setLayoutY(heightPosition);
 		field4.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
