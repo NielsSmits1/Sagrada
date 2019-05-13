@@ -1,6 +1,7 @@
 package View;
 
 import controller.HomeController;
+import controller.MyScene;
 import controller.PlayerController;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -33,6 +34,10 @@ public class Menubar extends MenuBar {
 		creatMenu();
 	}
 	
+	public Menubar() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private void creatMenu() {
 		
 		options = new Menu("opties");

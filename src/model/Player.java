@@ -9,6 +9,7 @@ public class Player {
 	private String password;
 	private db database = new db();
 	private PatternCard board;
+
 	
 //	private String differendPlayer;
 

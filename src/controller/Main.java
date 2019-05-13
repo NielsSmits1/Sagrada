@@ -1,4 +1,5 @@
 package controller;
+import View.Menubar;
 import View.MyScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
