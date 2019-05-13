@@ -45,6 +45,11 @@ public class ChallengesPane extends ScrollPane {
 		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 	}
 
+	
+	public ChallengesPane() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void addChallengesLine(String name) {
 
 		playerLine.add(new ChallengesPlayerLinePane(name));

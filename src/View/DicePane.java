@@ -69,11 +69,11 @@ public class DicePane extends Pane{
 		//This constructor is used to make a dice.
 		///**
 	
-	public DicePane(Dice d, RootPane rp) {
-		value = d.getEyes();
-		color = d.getDieColor();
-		dieNumber = d.getDieNumber();
-		addDice(d.getEyes(), d.getDieColor());
+	public DicePane(int eyes, String color,int dienumber, RootPane rp) {
+		value = eyes;
+		this.color = color;
+		dieNumber = dienumber;
+		addDice(value, this.color);
 		rootPane = rp;
 		addEvent(this);
 	}

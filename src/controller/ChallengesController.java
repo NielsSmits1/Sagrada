@@ -3,6 +3,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import View.ChallengesPane;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import model.Challenge;
 
 public class ChallengesController {
@@ -18,8 +21,16 @@ public class ChallengesController {
 //		challenge = new Challenge(home.getSelf());
 //	}
 
+
 	public void acceptChallenge(String differentPlayer) {
 		challenge.setChallengerUsername(differentPlayer);
+
+	// public ChallengesController() {
+	// 	// TODO Auto-generated constructor stub
+	// }
+
+	public void acceptChallenge() {
+
 		challenge.changePlayerStatusToAccepted();
 		
 	}
@@ -59,5 +70,10 @@ public class ChallengesController {
 			} 
 		}
 		return challengedPlayerNames;
+	}
+
+	public ChallengesPane getChallengesPane() {
+		ChallengesPane cp = new ChallengesPane();
+		return cp;
 	}
 }

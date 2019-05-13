@@ -23,6 +23,7 @@ public class SearchPlayerPane extends VBox  {
 	
 	public SearchPlayerPane(HomeController home){
 		hc = home;
+
 		search.setOnAction(E -> search());
 		online.setFont(Font.font(14));
 		online.setMaxWidth(120);

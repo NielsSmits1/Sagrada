@@ -2,6 +2,7 @@ package model;
 import java.util.ArrayList;
 
 import Database.db;
+import controller.HomeController;
 
 public class Player {
 	private int idplayer;
@@ -44,7 +45,22 @@ public class Player {
         database.CUD("INSERT INTO account (username, password) VALUES ('" + username + "', '" + password + "');");
     }
     
-    public String getPassword() {
+    public boolean checkLogin() {
+    	if(getSelect().isEmpty()) {
+    		return false;
+    	}else {
+    		return true;
+    	}
+    }
+    
+    public boolean checkUsernameExists() {
+    	if(this.checkUsername().isEmpty()) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    }
+    String getPassword() {
 		return password;
 	}
 	public String getUsername() {
