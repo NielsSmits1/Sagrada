@@ -106,7 +106,6 @@ public class RootPane extends BorderPane {
 	/// **
 
 	private void addDice() {
-
 		for (int i = 0; i < getPlayableDices().size(); i++) {
 			dices.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),getPlayableDices().get(i).getDieColor(),getPlayableDices().get(i).getDieNumber()  , this));
 		}
