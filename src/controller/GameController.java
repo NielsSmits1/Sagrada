@@ -10,7 +10,7 @@ import javafx.scene.Parent;
 import model.Dice;
 import model.Game;
 import model.PatternCard;
-import model.Round;
+//import model.Round;
 
 public class GameController {
 	private Game game;
@@ -20,7 +20,7 @@ public class GameController {
 	private PatterncardSelect option;
 	private RootPane rootpane;
 	private BoardController boardcontroller;
-	private Round round;
+//	private Round round;
 
 	public GameController(MyScene s) {
 		scene = s;
