@@ -10,6 +10,7 @@ public class Game {
 	private ArrayList<ArrayList<Object>> diceData;
 	private ArrayList<Dice> diceArray;
 	private ArrayList<Dice> playableDices;
+	private ArrayList<Round> rounds;
 	private int idgame; 
 	private Random r;
 	public Game() {
@@ -22,6 +23,13 @@ public class Game {
 		setDiceArray();
 	}
 
+	private void buildRounds() {
+		for(int x = 0; x < 10; x++) {
+			Round r = new Round();
+			r.buildTurnes(this.idgame);
+			rounds.add(r);
+		}
+	}
 	//creates a new gameId based on the highest current gameId + 1.
 	private long createNewGameId() {
 		return (long) database
