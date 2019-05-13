@@ -12,13 +12,22 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
+
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import model.PatternCard;
@@ -26,6 +35,16 @@ import model.Space;
 
 public class PatterncardSelect extends Pane {
 	private ArrayList<PatternPane> board;
+
+	
+	private Button randomButton;
+	
+	private double textX = 175;
+	private int fontSize = 20;
+	private int heightPosition = 375;
+	private int paneHeight = 403;
+	private int paneWidth = 324;
+
 //	private GridPane field1;
 //	private GridPane field2;
 //	private GridPane field3;
@@ -39,6 +58,25 @@ public class PatterncardSelect extends Pane {
 	
 	public PatterncardSelect(GameController gc) {
 		super();
+
+		
+		this.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, null, null)));
+		
+		r = new Random();
+		
+		randomButton.setText("Random kaarten");
+		randomButton.setLayoutX(54);
+		randomButton.setLayoutY(200);
+		randomButton.setMaxSize(150, 40);
+		randomButton.setMinSize(150, 40);
+		randomButton.setPrefSize(150, 40);
+		randomButton.setFont(Font.font(null, 17));
+		
+		
+		this.getChildren().addAll(randomButton);
+		
+	}
+
 		controller = gc;
 		id = new ArrayList<>();
 		setGrid();
@@ -76,12 +114,14 @@ public class PatterncardSelect extends Pane {
 	}
 	
 	
+
 	///*
 		//Sets the GridPane called field that represents the pattern.
 		///**
 		
 	private void setGrid() {
 		
+
 		choice = new ArrayList<>();
 		
 		for (int i = 0; i < 4; i++) {
@@ -107,6 +147,7 @@ public class PatterncardSelect extends Pane {
 			}
 			
 		});
+
 		choice.get(1).setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override
@@ -123,6 +164,7 @@ public class PatterncardSelect extends Pane {
 			}
 			
 		});
+
 		choice.get(2).setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override
@@ -139,8 +181,8 @@ public class PatterncardSelect extends Pane {
 			}
 			
 		});
+
 		choice.get(3).setOnMouseClicked(new EventHandler<MouseEvent>() {
-			
 			@Override
 			public void handle(MouseEvent event) {
 				patternId = id.get(3);
