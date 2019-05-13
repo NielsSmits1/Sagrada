@@ -1,9 +1,6 @@
 package View;
 
 
-import controller.MyScene;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -90,10 +87,7 @@ public class InlogPane extends BorderPane {
 //		registerButton.setOnAction(register);
 //	}
 
-	public InlogPane(MyScene main) {
-		// TODO Auto-generated constructor stub
-	}
-
+	
 	public String getUsernameText() {
 		return this.usernameField.getText();
 	}
