@@ -1,24 +1,20 @@
 package View;
 
+import controller.GameController;
+import controller.InlogController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 public class MyScene extends Scene {
-	private InlogPane launcher;
-	private RootPane game;
-	private PatterncardSelect pattern;
-	private Menubar menu;
-	private MyScene scene;
+    private InlogController inlog = new InlogController(this);
+    private GameController game = new GameController(this);
+    public MyScene() {
+        super(new Pane());
+//        setRoot(game.showOptions());
+        
+         inlog.showInlog();
+        setRoot(inlog.show());
 
-	public MyScene() {
-		super(new Pane());
-		launcher = new InlogPane(this);
-		pattern = new PatterncardSelect(this);
-		setRoot(launcher);
+    }
 
-	}
-
-	
-	
 }

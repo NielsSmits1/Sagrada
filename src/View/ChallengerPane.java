@@ -12,15 +12,14 @@ import javafx.scene.layout.VBox;
 public class ChallengerPane extends ScrollPane{
 	private ArrayList<ChallengerPlayerLinePane> playerLine;
 	private VBox playerColumn = new VBox();
-	private ChallengesController cc;
 	
 	
 	
-	public ChallengerPane(HomeController self) {
-		cc = new ChallengesController(self);
+	public ChallengerPane() {
+		//cc = new ChallengesController(self);
 		playerLine = new ArrayList<ChallengerPlayerLinePane>();
 		
-		setChallenges();
+		//setChallenges();
 		
 		playerColumn.getChildren().setAll(playerLine);
 		this.setContent(playerColumn);
@@ -31,10 +30,10 @@ public class ChallengerPane extends ScrollPane{
 		playerLine.add(new ChallengerPlayerLinePane(name, status));
 	}
 	
-	private void setChallenges() {
+	/*private void setChallenges() {
 		for (Map.Entry challenge : cc.getChallenged().entrySet()) {
 			addStatusLine(challenge.getKey().toString(), challenge.getValue().toString());
 		}
-	}
+	}*/
 
 }

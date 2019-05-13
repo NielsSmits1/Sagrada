@@ -1,15 +1,13 @@
 package View;
 
+import controller.HomeController;
 import controller.PlayerController;
 import javafx.application.Platform;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class Menubar extends MenuBar {
 
@@ -20,14 +18,26 @@ public class Menubar extends MenuBar {
 	private MenuItem filter;
 	private MenuItem stats;
 	private MyScene main;
-	
-	private PlayerController self;
 
-	public Menubar() {
+	private Alert alert = new Alert(AlertType.INFORMATION);
+	private PlayerController self;
+	private HomeController home;
+	
+	public Menubar(MyScene main, PlayerController self){
+		this.main = main;
+		this.self = self;
+		home = new HomeController(main, self.getPlayer());
+	
+
 		creatMenu();
 	}
+	
+	public Menubar() {
+		// TODO Auto-generated constructor stub
+	}
 
-	public void creatMenu() {
+	private void creatMenu() {
+		
 
 		options = new Menu("opties");
 
@@ -45,6 +55,11 @@ public class Menubar extends MenuBar {
 
 		options.getItems().addAll(logout, stats, filter, exit);
 		this.getMenus().add(options);
+
+	private void showStats() {
+		alert.setHeaderText(home.getStats());
+		// test
+		alert.showAndWait();
 
 	}
 

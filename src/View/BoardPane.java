@@ -21,28 +21,28 @@ public class BoardPane extends Pane{
 	private Rectangle square;
 //	private ArrayList<DicePane> board;
 	private ArrayList<PatternPane> board;
-	private DicePane selected;
+//	private DicePane selected;
 	private GridPane field;
 	private BoardController controller;
 	private int patternid;
-	private RootPane rootPane;
+	private boolean transparent;
 //	private Board b;
 	
 	
 	///*
 		//This constructor requires a rootPane to return the selected DicePane. It also asks for an int that it can give to the BoardController. This number stands for the number of the windowPattern.
 		///**
-	public BoardPane(RootPane rp, int pattern) {
+	public BoardPane(BoardController bc) {
 //		setPrefSize(s.getWidth()/4, s.getHeight() - 200);
-		setPatternId(pattern);
-		controller = new BoardController();
-		controller.setPatternId(patternid);
-		rootPane = rp;
+//		transparent = true;
+//		setPatternId(pattern);
+		controller = bc;
+//		controller.setPatternId(patternid);
 		setShape();
 		setGrid();
 //		b = be;
 		getChildren().addAll(top, square);
-		setBoard2();
+		setBoard();
 		
 		
 		
@@ -69,6 +69,7 @@ public class BoardPane extends Pane{
 		//Sets the shape of the board, it has nothing to do with the actual windowPattern.
 		///**
 	
+	//TODO THOSE NUMBERS MIGHT BE MOVED TO A NEW MODEL
 	private void setShape() {
 		top = new QuadCurve(0, 200, 200, -150, 400, 200);
 		square = new Rectangle();
@@ -128,17 +129,18 @@ public class BoardPane extends Pane{
 		///**
 
 	
-	private void setBoard2() {
+	private void setBoard() {
 		int counter = 0;
 		board = new ArrayList<>();
 		for(int c = 1;c<=5;c++) {
 			for(int i = 0; i<4;i++) {
-					board.add(new PatternPane(this,new DicePane(getPatternField().get(counter).getEyes(), getPatternField().get(counter).getColor()), counter));
+					board.add(new PatternPane(this,new DicePane(getPatternField().get(counter).getEyes(), getPatternField().get(counter).getColor()), getPatternField().get(counter).getXPos(), getPatternField().get(counter).getYPos()));
 					field.add(board.get(board.size()-1), getPatternField().get(counter).getXPos(), getPatternField().get(counter).getYPos());
 					counter++;
 				}
 		}
 		getChildren().add(field);
+//		System.out.println("Should have worked");
 	}
 	
 	///*
@@ -146,7 +148,7 @@ public class BoardPane extends Pane{
 		///**
 	
 	public ArrayList<Space> getPatternField() {
-		return controller.getPatternField();
+		return controller.getPatternCard();
 		}
 	
 	
@@ -163,72 +165,40 @@ public class BoardPane extends Pane{
 	///*
 		//This is what rootPane is used for, to get the selected DicePane and to delete it. PatternPane uses those methods.
 		///**
-
+//TODO FIX THAT THE SELECTED DICE IS GIVEN THROUGH THE CONTROLLER, IF POSSIBLE
 	public DicePane getSelected() {
-		return rootPane.getSelected();
+		return controller.getSelected();
 	}
 	
-	public void deleteSelected() {
-		rootPane.deleteSelected();
-		
+	public void setSelected(DicePane selected, int x, int y) {
+		for (int i = 0; i < board.size(); i++) {
+			if(board.get(i).getX() == x && board.get(i).getY() == y) {
+				board.get(i).setDice(selected);
+				System.out.println("GESELECTEERD - PATTERNPANE");
+			}
+		}
 	}
 	
-	public boolean getNearDice(PatternPane p, DicePane s) {
-		PatternPane upPane = null;
-		PatternPane downPane = null;
-		PatternPane leftPane = null;
-		PatternPane rightPane = null;
-		boolean up;
-		boolean down;
-		boolean left;
-		boolean right;
-		if(p.getNumber()-1 >= 0 && board.get(p.getNumber()-1) != null && p.getNumber()-1 != 3 && p.getNumber()-1 != 7 && p.getNumber()-1 != 11 && p.getNumber()-1 != 15) {
-			upPane = board.get(p.getNumber()-1);
-		}
-		if(p.getNumber()+1 <= 19 && board.get(p.getNumber()+1) != null && p.getNumber()+1 != 4 && p.getNumber()+1 != 8 && p.getNumber()+1 != 12 && p.getNumber()+1 != 16) {
-			downPane = board.get(p.getNumber()+1);
-			
-		}
-		if(p.getNumber()-4 >= 0 && board.get(p.getNumber()-4) != null) {
-			leftPane = board.get(p.getNumber()-4);
-			
-		}
-		if(p.getNumber()+4 <= 19 && board.get(p.getNumber()+4) != null) {
-			rightPane = board.get(p.getNumber()+4);
-			
-		}
-		
-		if(upPane != null && upPane.getDice() != null && (upPane.getColor().equals(s.getColor()) || upPane.getEyes() == s.getValue())) {
-			return false;
-		}else {
-			up = true;
-			
-		}
-		if(downPane != null && downPane.getDice() != null && (downPane.getColor().equals(s.getColor()) || downPane.getEyes() == s.getValue())) {
-			return false;
-		}else {
-			down = true;
-			
-		}
-		if(leftPane != null && leftPane.getDice() != null && (leftPane.getColor().equals(s.getColor()) || leftPane.getEyes() == s.getValue())) {
-			return false;
-		}else {
-			left = true;
-			
-		}
-		if(rightPane != null && rightPane.getDice() != null && (rightPane.getColor().equals(s.getColor()) || rightPane.getEyes() == s.getValue())) {
-			return false;
-		}else {
-			right = true;
-			
-		}
-		
-		if(up == true && down == true && left == true && right == true) {
-			return true;
-		}else {
-			return false;
-		}
-
+	public void giveCords(int x, int y) {
+		controller.validateMove(x, y);
+	}
+//	
+//	public void deleteSelected() {
+//		rootPane.deleteSelected();
+//		
+//	}
+	
+	
+	
+//	public void switchTransparent() {
+//		transparent = !transparent;
+//		setMouseTransparent(transparent);
+//	}
+	
+	
+	
+	public void getTurns() {
+		controller.getTurns();
 	}
 
 }

@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import model.Leaderboard;
 
@@ -40,28 +41,28 @@ public class LeaderboardController {
 //		}
 //		return challengedPlayerNames;
 //	}
-	public HashMap<String, String> getPlayersFilteredByAmountOfGames() {
-		HashMap<String, String> PlayerNamesWithGames = new HashMap<String, String>();
+	public LinkedHashMap<String, String> getPlayersFilteredByAmountOfGames() {
+		LinkedHashMap<String, String> PlayerNamesWithGames = new LinkedHashMap<String, String>();
 		String u;
 		String s;
 
 		for (ArrayList<Object> a : leaderboard.getListOfUsernamesWithAmountOfGamesPlayed()) {
 			u = (String) a.get(0);
 			s = String.valueOf(a.get(1));
+//			System.out.println(u + s); klopt
 			PlayerNamesWithGames.put(u, s);
 		}
 		return PlayerNamesWithGames;
 	}
-	public HashMap<String, Integer> getPlayersFilteredByAmountOfGamesWon() {
-		HashMap<String, Integer> PlayerNamesWithGamesWon = new HashMap<String, Integer>();
+	public LinkedHashMap<String, Integer> getPlayersFilteredByAmountOfGamesWon() {
+		LinkedHashMap<String, Integer> PlayerNamesWithGamesWon = new LinkedHashMap<String, Integer>();
 		String u;
-		String s1;
 		int s;
 
 		for (ArrayList<Object> a : leaderboard.getListOfUsernamesWithAmountOfGamesWon()) {
 			u = (String) a.get(0);
-			s1 = String.valueOf(a.get(1));
-			s = Integer.parseInt(s1);
+			//s = (int)a.get(1);
+			s = ((Number)a.get(1)).intValue();
 			PlayerNamesWithGamesWon.put(u, s);
 		}
 		return PlayerNamesWithGamesWon;
