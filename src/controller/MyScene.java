@@ -10,8 +10,8 @@ public class MyScene extends Scene {
         super(new Pane());
         setRoot(game.showOptions());
         
-         inlog.showInlog();
-        setRoot(inlog.show());
+//         inlog.showInlog();
+//        setRoot(inlog.show());
 
     }
 
