@@ -125,10 +125,13 @@ public class PatternCard {
 	// TODO ADD THE CHOSEN PATTERNCARD TO PLAYERFRAMEFIELD
 
 	private boolean checkFirstMove() {
-		if (database.Select("SELECT dienumber FROM tjpmsalt_db2.playerframefield WHERE idgame = " + idgame
-				+ " && player_idplayer = 1 ORDER BY dienumber DESC LIMIT 1;").get(0).isEmpty()) {
+		ArrayList<ArrayList<Object>> getQuery = database.Select("SELECT dienumber FROM tjpmsalt_db2.playerframefield WHERE idgame = " + idgame
+				+ " && player_idplayer = 1 ORDER BY dienumber DESC LIMIT 1;");
+		if (getQuery.get(0).get(0) == null) {
+			System.out.println("eerste zet");
 			return true;
 		} else {
+			System.out.println("andere zet");
 			return false;
 		}
 	}
@@ -174,7 +177,7 @@ public class PatternCard {
 				System.out.println("eerste zet");
 				return true;
 			}
-		} else if (!checkFirstMove()) {
+		} else if (!(checkFirstMove())) {
 			if (validateColorTemplateBox(x, y, color) && validateNumberTemplateBox(x, y, dienumber, color)
 					&& isEmptyPlace(x, y) && validateNextToDice(x, y) && validateNearbyDice(x, y, dienumber, color)) {
 				addDiceToField(x, y, dienumber, color);
@@ -190,11 +193,9 @@ public class PatternCard {
 				.Select("SELECT color FROM tjpmsalt_db2.patterncardfield WHERE patterncard_idpatterncard = " + patternId
 						+ " && position_x = " + x + " && position_y = " + y);
 		if (getQuery.get(0).get(0) == null) {
-			System.out.println("YEET-KLEURLEEG");
 			return true;
 
 		} else if (diecolor.equals((String) getQuery.get(0).get(0))) {
-			System.out.println("YEET-KLEURVOL");
 			return true;
 
 		}
@@ -449,7 +450,6 @@ public class PatternCard {
 				.Select("SELECT dienumber FROM tjpmsalt_db2.playerframefield WHERE position_x = " + x
 						+ "&& position_y = " + y + " && player_idplayer = 1 && idgame = " + idgame)
 				.get(0).get(0) == null) {
-			System.out.println("isEmpty");
 			return true;
 
 		}
@@ -469,7 +469,6 @@ public class PatternCard {
 		database.CUD("UPDATE tjpmsalt_db2.playerframefield SET dienumber = " + dienumber + ", diecolor = '" + color
 				+ "' WHERE player_idplayer = 1 AND position_x = " + x + " AND position_y = " + y + " AND idgame = "
 				+ idgame + ";");
-		System.out.println("YEET1");
 	}
 
 }

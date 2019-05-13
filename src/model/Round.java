@@ -22,7 +22,7 @@ public class Round {
 				"WHERE gd.idgame = 2 AND p.isCurrentPlayer = 1");
 	}
 	public void buildRemaningRounds() {
-		while(getRemaines)
+//		while(getRemaines);
 	}
 	public int calculateRounds(int gameId) {
 		// dit sijn hoeveel turnes er nog in de ronde sijn die besig is
