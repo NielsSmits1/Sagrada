@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import View.BoardPane;
 import View.DicePane;
+import View.MyScene;
 import View.PatterncardSelect;
 import View.RootPane;
 import javafx.scene.Parent;
 import model.Dice;
 import model.Game;
 import model.PatternCard;
+//import model.Round;
 import model.Round;
 
 public class GameController {
@@ -73,10 +75,6 @@ public class GameController {
 	
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();
-	}
-	
-	public void removeNumber(int number) {
-		game.removeDice(number);
 	}
 	
 	

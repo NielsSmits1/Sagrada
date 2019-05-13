@@ -7,7 +7,6 @@ import java.util.Random;
 
 import controller.BoardController;
 import controller.GameController;
-import controller.MyScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -59,12 +58,14 @@ public class PatterncardSelect extends Pane {
 	public PatterncardSelect(GameController gc) {
 		super();
 
-		
+		controller = gc;
+		id = new ArrayList<>();
+		setGrid();
+		button = new Button("Pick This one!");
+		button.setOnAction(e -> handle());
+		button.setDisable(true);
 		this.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, null, null)));
-		
-		r = new Random();
-		
-		randomButton.setText("Random kaarten");
+		randomButton = new Button("Random kaarten");
 		randomButton.setLayoutX(54);
 		randomButton.setLayoutY(200);
 		randomButton.setMaxSize(150, 40);
@@ -72,17 +73,11 @@ public class PatterncardSelect extends Pane {
 		randomButton.setPrefSize(150, 40);
 		randomButton.setFont(Font.font(null, 17));
 		
-		
-		this.getChildren().addAll(randomButton);
+		setBoard();
 		
 	}
 
-		controller = gc;
-		id = new ArrayList<>();
-		setGrid();
-		button = new Button("Pick This one!");
-		button.setOnAction(e -> handle());
-		button.setDisable(true);
+		
 //		controller = new BoardController();
 //		patternid1 = r.nextInt(23)+1;
 //		controller.setPatternId(patternid1);
@@ -109,9 +104,8 @@ public class PatterncardSelect extends Pane {
 //			patternid4 = r.nextInt(23)+1;
 //		}
 //		controller.setPatternId(patternid4);
-		setBoard();
 		
-	}
+		
 	
 	
 
@@ -130,6 +124,7 @@ public class PatterncardSelect extends Pane {
 		for(int i = 0;i<choice.size();i++) {
 			choice.get(i).setVgap(8);
 			choice.get(i).setHgap(8);
+			choice.get(i).setBackground(new Background(new BackgroundFill(Color.HOTPINK, null, null)));
 		}
 		choice.get(0).setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
@@ -289,7 +284,7 @@ public class PatterncardSelect extends Pane {
 			hBox.setSpacing(50.0);
 			VBox box = new VBox(hBox, button);
 			box.setSpacing(25.0);
-			getChildren().addAll(box);
+			getChildren().addAll(box, randomButton);
 			
 			
 			
