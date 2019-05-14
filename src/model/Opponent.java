@@ -19,7 +19,7 @@ public class Opponent {
 		setOpponents();
 		setGamemode();
 		opponents = new ArrayList<>();
-//		p = getSelect();
+		p = getSelect();
 		setPatternField();
 		addCard();
 		
@@ -28,23 +28,24 @@ public class Opponent {
 	//TODO MAKE THIS AUTOMATIC, CURRENTLY THIS IS HARD CODED FOR TESTING SCENARIOS
 	private void setOpponents() {
 		for (int i = 0; i < 3; i++) {
-			ArrayList<ArrayList<Object>> opponent = database.Select("SELECT (idplayer+1) AS newPlayerId FROM tjpmsalt_db2.player ORDER BY idgame DESC LIMIT 1;");
-			idOpponent.add((int)opponent.get(i).get(0));
+			ArrayList<ArrayList<Object>> opponent = database.Select("SELECT (idplayer+1) AS newPlayerId FROM tjpmsalt_db2.player ORDER BY idplayer DESC LIMIT 1;");
+			long id = (long)opponent.get(0).get(0);
+			idOpponent.add((int)id);
 			database.CUD("INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color, patterncard_idpatterncard) "
-					+ "VALUES("+ opponent.get(i).get(0)+ ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw', 5)");
+					+ "VALUES("+ opponent.get(0).get(0)+ ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw', 5)");
 		}
 		
 	}
 	
 	public void setGamemode() {
-		ArrayList<ArrayList<Object>> opponents = database.Select("SELECT player_idplayer FROM playerframefield WHERE player_idplayer != " + yourself + "AND idgame = " + idgame +";");
+		ArrayList<ArrayList<Object>> opponents = database.Select("SELECT idplayer FROM player WHERE idplayer != " + yourself + " AND game_idgame = " + idgame +";");
 		gamemode = opponents.size();
 	}
 	
-//	public ArrayList<ArrayList<Object>> getSelect() {
-//		return database
-//				.Select("SELECT * FROM patterncardfield WHERE patterncard_idpatterncard = " + getPatternId() + ";");
-//	}
+	public ArrayList<ArrayList<Object>> getSelect() {
+		return database
+				.Select("SELECT * FROM patterncardfield WHERE patterncard_idpatterncard = " + 5 + ";");
+	}
 	
 	public void addCard() {
 		for(int j = 0; j < gamemode ; j++) {
@@ -62,6 +63,7 @@ public class Opponent {
 
 	private void setPatternField() {
 		for(int j = 0; j < gamemode ; j++) {
+			opponents.add(new ArrayList<Space>());
 		for (int i = 0; i < 20; i++) {
 			opponents.get(j).add(new Space());
 			opponents.get(j).get(i).setXPOS((int) p.get(i).get(1));

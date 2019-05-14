@@ -34,14 +34,18 @@ public class Game {
 	//creates a new gameId based on the highest current gameId + 1.
 	private long createNewGameId() {
 		return (long) database
-				.Select("SELECT (idgame+1) AS newGameId FROM tjpmsalt_db2.gamedie ORDER BY idgame DESC LIMIT 1;").get(0)
+				.Select("SELECT (idgame+1) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
 				.get(0);
 	}
 	
 	public void setOwnId(int chosenPatternId) {
-		yourself = (int) database.Select("SELECT (idplayer+1) AS newPlayerId FROM tjpmsalt_db2.player ORDER BY game_idgame DESC LIMIT 1;").get(0).get(0);
+		yourself = (int) getNewId();
 		database.CUD("INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color, patterncard_idpatterncard ) "
 				+ "VALUES("+ yourself+ ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw' , " + chosenPatternId + ")");
+	}
+	
+	public long getNewId() {
+		return (long) database.Select("SELECT (idplayer+1) AS newPlayerId FROM tjpmsalt_db2.player ORDER BY game_idgame DESC LIMIT 1;").get(0).get(0);
 	}
 
 	// gets all die information where id game equals the new game.
@@ -86,7 +90,7 @@ public class Game {
 
 	// inserts standard values for dices for a new game.
 	public void insertDicesIntoDatabase() {
-		database.CUD("insert into game(idgame) VALUES("+ idgame + ");");
+		database.CUD("insert into game(idgame, creationdate) VALUES("+ idgame +", CURRENT_TIME());");
 		database.CUD(
 				"INSERT INTO gamedie (idgame, dienumber, diecolor) SELECT " + idgame + ", number, color FROM die;");
 	}
@@ -103,10 +107,19 @@ public class Game {
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			int randomDie = r.nextInt(diceArray.size());
-			playableDices.add(diceArray.get(randomDie));
-			System.out.println("" + diceArray.get(randomDie).getDieNumber());
-			diceArray.remove(randomDie);
+			int randomDie = r.nextInt(17)+1;
+			String[] colors = {"BLUE", "GREEN", "YELLOW","RED", "PURPLE"};
+			String color = colors[r.nextInt(5)];
+			for (int j = 0; j < diceArray.size(); j++) {
+				if(diceArray.get(j).getDieNumber() == randomDie && diceArray.get(j).getDieColor() == color) {
+					playableDices.add(diceArray.get(j));
+					diceArray.remove(j);
+				}
+			}
+//				if(database.Select("SELECT FROM gamedie WHERE dieumber = " + randomDie + " AND diecolor = '" + color + "'"))
+//			}
+//			System.out.println("" + diceArray.get(randomDie).getDieNumber());
+			
 		}
 	}
 	

@@ -157,7 +157,7 @@ public class BoardPane extends Pane{
 		board = new ArrayList<>();
 		for(int c = 1;c<=5;c++) {
 			for(int i = 0; i<4;i++) {
-					board.add(new PatternPane(this,new DicePane(opponentBoard.get(counter).getEyes(), opponentBoard.get(counter).getColor()), opponentBoard.get(counter).getXPos(), opponentBoard.get(counter).getYPos()));
+					board.add(new PatternPane(this,new DicePane(opponentBoard.get(counter).getEyes(), opponentBoard.get(counter).getColor())));
 					field.add(board.get(board.size()-1), opponentBoard.get(counter).getXPos(), opponentBoard.get(counter).getYPos());
 					counter++;
 				}
