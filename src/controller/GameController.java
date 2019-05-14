@@ -28,9 +28,11 @@ public class GameController {
 	public GameController(MyScene s) {
 		scene = s;
 		game = new Game();
+
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		
+
 	}
 	
 

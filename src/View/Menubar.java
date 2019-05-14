@@ -1,5 +1,7 @@
 package View;
 
+import java.util.ArrayList;
+
 import controller.HomeController;
 import controller.PlayerController;
 import javafx.application.Platform;
@@ -20,6 +22,10 @@ public class Menubar extends MenuBar {
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private PlayerController self;
 	private HomeController home;
+	
+	
+	private ArrayList<Menu> gameList = new ArrayList<>();
+	private int x = 0;
 	
 	public Menubar(MyScene main, PlayerController self){
 		this.main = main;
@@ -75,6 +81,13 @@ public class Menubar extends MenuBar {
 
 	public MenuItem getLogout() {
 		return logout;
+	}
+	//done
+	public void creatNewTabs() {
+		Menu gamex = new Menu("game" + x);
+		this.getMenus().add(gamex);
+		gameList.add(gamex);
+		x ++;
 	}
 	
 	
