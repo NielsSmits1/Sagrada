@@ -43,10 +43,19 @@ public class BoardPane extends Pane{
 //		b = be;
 		getChildren().addAll(top, square);
 		setBoard();
-		
-		
-		
-		
+	}
+	
+	public BoardPane(ArrayList<Space> opponentBoard) {
+//		setPrefSize(s.getWidth()/4, s.getHeight() - 200);
+//		transparent = true;
+//		setPatternId(pattern);
+//		controller = bc;
+//		controller.setPatternId(patternid);
+		setShape();
+		setGrid();
+//		b = be;
+		getChildren().addAll(top, square);
+		setOpponentBoard(opponentBoard);
 	}
 	
 	///*
@@ -136,6 +145,20 @@ public class BoardPane extends Pane{
 			for(int i = 0; i<4;i++) {
 					board.add(new PatternPane(this,new DicePane(getPatternField().get(counter).getEyes(), getPatternField().get(counter).getColor()), getPatternField().get(counter).getXPos(), getPatternField().get(counter).getYPos()));
 					field.add(board.get(board.size()-1), getPatternField().get(counter).getXPos(), getPatternField().get(counter).getYPos());
+					counter++;
+				}
+		}
+		getChildren().add(field);
+//		System.out.println("Should have worked");
+	}
+	
+	private void setOpponentBoard(ArrayList<Space> opponentBoard) {
+		int counter = 0;
+		board = new ArrayList<>();
+		for(int c = 1;c<=5;c++) {
+			for(int i = 0; i<4;i++) {
+					board.add(new PatternPane(this,new DicePane(opponentBoard.get(counter).getEyes(), opponentBoard.get(counter).getColor())));
+					field.add(board.get(board.size()-1), opponentBoard.get(counter).getXPos(), opponentBoard.get(counter).getYPos());
 					counter++;
 				}
 		}
