@@ -104,6 +104,7 @@ public class Game {
 		return playableDices;
 	}
 	
+
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
@@ -122,6 +123,8 @@ public class Game {
 			
 		}
 	}
+
+
 	
 	public int getIdGame() {
 		return idgame;
