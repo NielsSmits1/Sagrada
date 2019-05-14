@@ -21,9 +21,9 @@ public class Round {
 				"p ON pff.player_idplayer = p.idplayer " + 
 				"WHERE gd.idgame = 2 AND p.isCurrentPlayer = 1");
 	}
-	public void buildRemaningRounds() {
-		while(getRemaines)
-	}
+//	public void buildRemaningRounds() {
+//		while(getRemaines)
+//	}
 	public int calculateRounds(int gameId) {
 		// dit sijn hoeveel turnes er nog in de ronde sijn die besig is
 		return (int)getRemaines().get(0).get(3) - (int)GetPlayerWithChallengedStatus(gameId).get(0).get(0);

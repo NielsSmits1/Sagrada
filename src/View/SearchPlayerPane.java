@@ -35,11 +35,11 @@ public class SearchPlayerPane extends VBox  {
 		// TODO Auto-generated constructor stub
 	}
 
-	private void alert(String message) {
+	public void alert(String message) {
 		alert.setHeaderText(message);
 		alert.showAndWait();
 	}
-	private void search() {
+	public void search() {
 		this.username = online.getText();
 		if(!username.equals("")) {
 			if(hc.usernameExist(username)) {

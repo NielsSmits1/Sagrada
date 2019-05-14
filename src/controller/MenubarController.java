@@ -21,6 +21,7 @@ public class MenubarController {
 		menu = new Menubar(scene, this.controller);
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());
+		inlogController.getHome().getHome().getGameTab().setOnAction(e -> menu.creatNewTabs());
 	}
 
 	public Menubar getMenubar() {
@@ -37,6 +38,12 @@ public class MenubarController {
 		 scene.setRoot(inlogController.getInlog());
 		 return pane;
 	 }
+	 
+	 public void makeNewGameTab() {
+			System.out.println("new game");
+	}
+		
+
 	
 
 }

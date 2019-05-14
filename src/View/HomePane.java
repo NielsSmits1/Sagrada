@@ -33,8 +33,12 @@ public class HomePane extends Pane{
 	
 	private HomeController home;
 	
+	
+	// just to test the gametabs.
+	private Button gametab;
+	//
+	
 	public void  createHomePane(PlayerController self, MyScene scene) {
-		home = new HomeController(self);
 		this.self = self;
 		this.scene = scene;
 		
@@ -121,6 +125,9 @@ public class HomePane extends Pane{
 
 	private void setPanes(String text, ScrollPane scr) {
 		Label lb = new Label(text);
+		//
+		gametab = new Button("new game");
+		//
 		boxie = new VBox();
 		scr.setPrefSize(250, 400);
 		
@@ -130,8 +137,18 @@ public class HomePane extends Pane{
 		lb.setFont(f);
 		
 		boxie.getChildren().addAll(lb,scr);
-		this.getChildren().add(boxie);
+		this.getChildren().addAll(boxie,gametab);
 	}
+
+
+	public SearchPlayerPane getSearch() {
+		return search;
+	}
+	
+	public Button getGameTab() {
+		return gametab;
+	}
+	
 	
 	
 
