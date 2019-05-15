@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import Database.db;
 
@@ -47,6 +49,67 @@ public class Challenge {
 		// 			teun
 		//			niels
 	}
+	
+	public ArrayList<String> playersChallengedYou() {
+		ArrayList<String> challengedPlayerNames = new ArrayList<String>();
+		String u;
+
+		for (ArrayList<Object> a : this.GetPlayerWithChallengedStatus()) {
+			u = (String) a.get(0);
+			if (!self.getUsername().equals(u)) {
+				challengedPlayerNames.add(u);
+			} 
+		}
+		return challengedPlayerNames;
+	}
+	public LinkedHashMap<String, String> playersYouChallenged() {
+		LinkedHashMap<String, String> challengedPlayerNames = new LinkedHashMap<String, String>();
+		String u;
+		String s;
+
+		for (ArrayList<Object> a : this.GetPlayerWithChallengeeStatus()) {
+			u = (String) a.get(1);
+			s = (String) a.get(3);
+			System.out.println(u+s);
+			if (!self.getUsername().equals(u)) {
+				challengedPlayerNames.put(u, s);
+			} 
+		}
+		return challengedPlayerNames;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public Player getSelf() {
 		return self;
 	}

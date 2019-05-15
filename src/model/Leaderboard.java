@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import Database.db;
+import View.ChallengesPane;
+import View.LeaderboardPane;
 
 public class Leaderboard {
 	private Player self;
@@ -17,12 +19,19 @@ public class Leaderboard {
 		return database.Select("Select * from account order by username ASC");
 	}
 	
-	public ArrayList<ArrayList<Object>> getListOfUsernamesWithAmountOfGamesPlayed() {
-		return database.Select("select distinct player.username, IFNULL(games_played.games_played, 0) as games_played from player left join games_played on player.username = games_played.username order by games_played.games_played DESC, username ASC");
+	public ArrayList<ArrayList<Object>> getListOfUsernamesWithAmountOfGamesPlayed() {		
+		
+		return database.Select("select username, count(game_idgame) as played_games from player where playstatus_playstatus = 'Uitgespeeld' group by username");
+
+		
+//		return database.Select("select distinct player.username, IFNULL(games_played.games_played, 0) as games_played from player left join games_played on player.username = games_played.username order by games_played.games_played DESC, username ASC");
 	}
 	
 	public ArrayList<ArrayList<Object>> getListOfUsernamesWithAmountOfGamesWon() {
-		return database.Select("select p1.username, IFNULL(games_won.games_won,0) as amount_won from player p1 LEFT JOIN games_won on p1.username = games_won.username group by p1.username order by amount_won DESC, p1.username ASC");
+		return database.Select("SELECT p1.username,count(p1.username) as games_won FROM player p1 LEFT JOIN player p2 ON p1.game_idgame = p2.game_idgame AND p1.score < p2.score where p2.score is null AND p1.playstatus_playstatus = 'Uitgespeeld' group by p1.username");
+		
+		
+//		return database.Select("select p1.username, IFNULL(games_won.games_won,0) as amount_won from player p1 LEFT JOIN games_won on p1.username = games_won.username group by p1.username order by amount_won DESC, p1.username ASC");
 	}
 	// selects and returns arraylist of usernames.
 //	    public ArrayList<ArrayList<Object>> checkPlayerInGame(){
@@ -39,6 +48,23 @@ public class Leaderboard {
 		} 
 	return playerNames;
 }
+	public LinkedHashMap<String, String> getPlayersFilteredByAmountOfGames() {
+		LinkedHashMap<String, String> PlayerNamesWithGames = new LinkedHashMap<String, String>();
+		String u;
+		String s;
+
+		for (ArrayList<Object> a : this.getListOfUsernamesWithAmountOfGamesPlayed()) {
+			u = (String) a.get(0);
+			if (a.get(1)==null) {
+				s = String.valueOf(0);
+			}
+			s = String.valueOf(a.get(1));
+//			System.out.println(u + s); klopt
+			PlayerNamesWithGames.put(u, s);
+		}
+		return PlayerNamesWithGames;
+	}
+
 	public LinkedHashMap<String, Integer> getPlayersFilteredByAmountOfGamesWon() {
 		LinkedHashMap<String, Integer> PlayerNamesWithGamesWon = new LinkedHashMap<String, Integer>();
 		String u;
@@ -47,23 +73,13 @@ public class Leaderboard {
 		for (ArrayList<Object> a : this.getListOfUsernamesWithAmountOfGamesWon()) {
 			u = (String) a.get(0);
 //			s = (int)a.get(1);
+			if (a.get(1)==null) {
+				s = 0;
+			}
 			s = ((Number)a.get(1)).intValue();
 			PlayerNamesWithGamesWon.put(u, s);
 		}
 		return PlayerNamesWithGamesWon;
-	}
-	public LinkedHashMap<String, String> getPlayersFilteredByAmountOfGames() {
-		LinkedHashMap<String, String> PlayerNamesWithGames = new LinkedHashMap<String, String>();
-		String u;
-		String s;
-
-		for (ArrayList<Object> a : this.getListOfUsernamesWithAmountOfGamesPlayed()) {
-			u = (String) a.get(0);
-			s = String.valueOf(a.get(1));
-//			System.out.println(u + s); klopt
-			PlayerNamesWithGames.put(u, s);
-		}
-		return PlayerNamesWithGames;
 	}
 
 }

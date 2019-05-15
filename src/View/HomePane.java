@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -20,13 +19,16 @@ public class HomePane extends Pane{
 	private ChallengerPane challenger;
 	private ChallengesPane challenges;
 	private SearchPlayerPane search;
+
+
+
 	private Button players;
 	private Button playersPlayed;
 	private Button playersWins;
 	private Label lb;
 	private VBox boxie;
 	private Font f = new Font(20);
-	private int x = 250;
+	private int x = 50;   //250;
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private PlayerController self;
 	private MyScene scene;
@@ -40,9 +42,9 @@ public class HomePane extends Pane{
 		
 		this.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
 		home = new HomeController(self);
-		leaderboard = new LeaderboardPane(home);
+//		leaderboard = new LeaderboardPane();
 		
-		setPanes("Uw uitdagingen",challenges);
+		setPanes("Uw uitdagingen", challenges);
 		
 		x += 400;
 		
@@ -60,6 +62,7 @@ public class HomePane extends Pane{
 		setPanes("Spelers", leaderboard);
 		
 		x += 300;
+		
 		setButtons("Filter");
 		
 		
@@ -69,10 +72,11 @@ public class HomePane extends Pane{
 	}
 	
 
-	public HomePane(SearchPlayerPane searchPlayerPane, ChallengerPane challengerPane, ChallengesPane challengesPane) {
+	public HomePane(SearchPlayerPane searchPlayerPane, ChallengerPane challengerPane, ChallengesPane challengesPane, LeaderboardPane leaderboardPane) {
 		search = searchPlayerPane;
 		challenges = challengesPane;
 		challenger = challengerPane;
+		leaderboard = leaderboardPane;
 
 		createHomePane(self, scene);
 	}
@@ -111,9 +115,9 @@ public class HomePane extends Pane{
 		players.setPrefSize(200, 30);
 		playersPlayed.setPrefSize(200, 30);
 		playersWins.setPrefSize(200, 30);
-		players.setOnAction(e -> leaderboard.setPlayers());
-		playersPlayed.setOnAction(e -> leaderboard.setPlayers2());
-		playersWins.setOnAction(e -> leaderboard.setPlayers3());
+//		players.setOnAction(e -> LeaderboardController.setPlayers1());
+//		playersPlayed.setOnAction(e -> LeaderboardController.setPlayers2());
+//		playersWins.setOnAction(e -> LeaderboardController.setPlayers3());
 		boxie.getChildren().addAll(lb, players, playersPlayed, playersWins);
 		this.getChildren().add(boxie);
 	}
@@ -131,6 +135,34 @@ public class HomePane extends Pane{
 		
 		boxie.getChildren().addAll(lb,scr);
 		this.getChildren().add(boxie);
+	}
+	public Button getPlayers() {
+		return players;
+	}
+
+
+	public Button getPlayersPlayed() {
+		return playersPlayed;
+	}
+
+
+	public Button getPlayersWins() {
+		return playersWins;
+	}
+
+
+	public void setPlayers(Button players) {
+		this.players = players;
+	}
+
+
+	public void setPlayersPlayed(Button playersPlayed) {
+		this.playersPlayed = playersPlayed;
+	}
+
+
+	public void setPlayersWins(Button playersWins) {
+		this.playersWins = playersWins;
 	}
 	
 	

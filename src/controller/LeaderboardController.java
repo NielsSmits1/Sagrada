@@ -1,24 +1,24 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
+import View.ChallengesPane;
 import View.LeaderboardPane;
-import View.LeaderboardPlayerLinePane;
 import model.Leaderboard;
 
 public class LeaderboardController {
 
 	private Leaderboard leaderboard;
 	private HomeController home;
-	private LeaderboardPane leaderBoardPane;
+	private LeaderboardPane leaderboardPane;
 
 	public LeaderboardController(HomeController home) {
 		this.home = home;
+//		System.out.println(home.getUsername());
 		leaderboard = new Leaderboard();
-		leaderBoardPane = new LeaderboardPane();
+		leaderboardPane = new LeaderboardPane();
+		this.setPlayers1();
+
 	}
 
 //	public ArrayList<String> getPlayers() {
@@ -33,27 +33,37 @@ public class LeaderboardController {
 //		return playerNames;
 //	}
 	public void setPlayers3() {
+		leaderboardPane.setPlayersName();
 		for (Map.Entry playerGamesPlayedWon : leaderboard.getPlayersFilteredByAmountOfGamesWon().entrySet()) {
-			leaderBoardPane.addPlayerNameLineWithAmountOfGamesWon(playerGamesPlayedWon.getKey().toString(),
+			leaderboardPane.addPlayerNameLineWithAmountOfGamesWon(playerGamesPlayedWon.getKey().toString(),
 					(int) playerGamesPlayedWon.getValue());
 			
 		}
-		leaderBoardPane.setPlayersWin();
+		leaderboardPane.setLayout();
 
 	}
 	public void setPlayers2() {
+		leaderboardPane.setPlayersName();
 		for (Map.Entry<String, String> playerGamesPlayed : leaderboard.getPlayersFilteredByAmountOfGames().entrySet()) {
-			leaderBoardPane.addPlayerNameLineWithAmountOfGamesPlayed(playerGamesPlayed.getKey().toString(),
+			leaderboardPane.addPlayerNameLineWithAmountOfGamesPlayed(playerGamesPlayed.getKey().toString(),
 					playerGamesPlayed.getValue().toString());
 		}
-		leaderBoardPane.setPlayersPlayed();
+//		leaderboardPane.setPlayersPlayed();
+		leaderboardPane.setLayout();
+		
 	}
 
 	public void setPlayers1() {
-		
+		leaderboardPane.setPlayersName();
 		for (String playerName : leaderboard.getPlayers()) {
-			leaderBoardPane.addPlayerNameLine(playerName);
+			leaderboardPane.addPlayerNameLine(playerName);
 		}
+		leaderboardPane.setLayout();
+		System.out.println("at least this works");
+	}
+	public LeaderboardPane getLeaderboardPane() {
+		LeaderboardPane lp = leaderboardPane;
+		return lp;
 	}
 }
 	
