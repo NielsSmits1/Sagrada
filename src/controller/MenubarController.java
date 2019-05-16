@@ -13,14 +13,22 @@ public class MenubarController {
 	private MyScene scene;
 	private InlogController inlogController;
 	private PlayerController controller;
+	
+
 
 	public MenubarController(MyScene scene, InlogController controller, PlayerController player) {
+		
 		this.scene = scene;
 		this.inlogController = controller;
 		this.controller = player;
 		menu = new Menubar(scene, this.controller);
+		
+		
+		
+		
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());
+		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 		inlogController.getHome().getHome().getGameTab().setOnAction(e -> menu.creatNewTabs());
 	}
 
@@ -39,11 +47,5 @@ public class MenubarController {
 		 return pane;
 	 }
 	 
-	 public void makeNewGameTab() {
-			System.out.println("new game");
-	}
-		
-
-	
-
+	 
 }

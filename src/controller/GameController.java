@@ -64,9 +64,9 @@ public class GameController {
 		return round.calculateTurns(getIdGame());
 	}
 
-	// public ArrayList<Space> getPatternCard(){
-	// return boardcontroller.getPatternCard();
-	// }
+	 public ArrayList<Space> getPatternCard(){
+	 return boardcontroller.getPatternCard();
+	 }
 
 	public void setPatternCard(int id) {
 		game.setOwnId(id);

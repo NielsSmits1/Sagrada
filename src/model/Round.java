@@ -24,7 +24,7 @@ public class Round {
 
 	// public void buildRemaningRounds() {
 //		while(getRemaines);
-	}
+
 
 	public int calculateRounds(int gameId) {
 		// dit sijn hoeveel turnes er nog in de ronde sijn die besig is
