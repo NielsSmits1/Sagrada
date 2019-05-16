@@ -1,27 +1,30 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Turn {
 	private Player player;
-	private int playerId;
-	private int senumber;
-	
-	Turn(int playerId, Player param){
-		this.player = param;
+
+	public void addPlayer(Player self) {
+		player = self;
+		
 	}
 	
-public void setPlayerId(int param) {
-	this.playerId = param;
+	public Turn() {
+		
 	}
-public void setSeNumber(int param) {
-	this.senumber = param;
-}
-public int getPlayerId() {
-	return this.playerId;
-}
-public int getseNumber() {
-	return this.senumber;
-}
-public Player getPlayer() {
-	return this.player;
-}
+	public void buildTurnPlayer(int idplayer, int seqnr,  int score) {
+		
+	}
+	public void buildTurnPlayer(int idplayer, String username, int seqnr, int score) {
+		this.player = new Player(username);
+		player.setId(idplayer);
+		player.setScore(score);
+		player.setSeqnr(seqnr);
+	}
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+
 }

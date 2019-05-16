@@ -8,12 +8,16 @@ import Database.db;
 public class Game {
 	private db database = new db();
 	private ArrayList<ArrayList<Object>> diceData;
+	private ArrayList<Round> rounds;
+	private ArrayList<ArrayList<Object>> forwardPlayer;
+	private ArrayList<ArrayList<Object>> backwardPlayer;
+	private ArrayList<ArrayList<Object>> normalTurnes;
 	private ArrayList<Dice> diceArray;
 	private ArrayList<Dice> playableDices;
-	private ArrayList<Round> rounds;
 	private int idgame; 
 	private Random r;
-	public Game() {
+	private Player self;
+	public Game(Player self) {
 		r = new Random();
 		diceArray = new ArrayList<>();
 		database = new db();
@@ -21,8 +25,86 @@ public class Game {
 		insertDicesIntoDatabase();
 		diceData = getSelect();
 		setDiceArray();
+		buildGameTurns();
+		checkIfGameHasStarted();
+		this.self = self;
+	}
+	private int getLastRound() {
+		ArrayList<ArrayList<Object>> maxRound = database.Select("select round, roundtrack from gamedie where idgame = " + this.idgame + " and round = (select max(round) from gamedie"
+				+ " where idgame = " + this.idgame +")");
+		if(maxRound.isEmpty()) {
+			// nog geen rondes geweest
+			return 0;
+		}else {
+			// check of de laatst gespeelde ronde voorbij is
+			if(maxRound.get(maxRound.size()).get(1) == maxRound.get(0).get(0)) {
+				// laatste ronde gespeeld
+				return (int)maxRound.get(0).get(0) + 1;
+			}else {
+				return (int)maxRound.get(0).get(0);
+			}
+			
+		}
+	}
+	private void buildRounds() {
+		// als lastround() 6 is moet ie nog 5 rondes spelen
+		for(int i = getLastRound(); i < 11; i++) {
+			Round r = new Round(i);
+			r.buildTurnes(self);
+		}
 	}
 
+	private void buildGameTurns() {
+		forwardPlayer = database.Select("select idplayer, username, seqnr from player where game_idgame = " + this.idgame);
+		for(ArrayList<Object> a : database.Select("select idplayer, username, seqnr from player where game_idgame = " + this.idgame + " order by idplayer desc")) {
+			forwardPlayer.add(a);
+		}
+		
+		for(int i = 0; i < forwardPlayer.size(); i++) {
+			
+		}
+	}
+	private void checkIfGameHasStarted() {
+		// check met select of game begonnen 
+		// als dat niet so is build de game 
+		if(gameStarted()) {
+			
+		}else {
+			
+		}
+	}
+	
+	private ArrayList<ArrayList<Object>> getLastRound() {
+		return database.Select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd " + 
+				"LEFT JOIN playerframefield AS pff ON gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor LEFT JOIN player AS "+
+				"p ON pff.player_idplayer = p.idplayer " + 
+				"WHERE gd.idgame = " + this.idgame +" AND p.isCurrentPlayer = 1");
+	}
+
+	private ArrayList<ArrayList<Object>> getPlayersInGame() {
+		return database.Select("select username from player where game_idgame = " + this.idgame);
+	}
+	public void checkofso() {
+		ArrayList<ArrayList<Object>> pl = this.getPlayersInGame();
+		ArrayList<ArrayList<Object>> la = this.getLastRound();
+		ArrayList<Object> rn = new ArrayList<Object>();
+		boolean check = false;
+		for(ArrayList<Object> a: pl) {
+			if(a.get(0)==la.get(0).get(1)) {
+				check = true;
+			}if(check) {
+				rn.add(a);
+			}
+		}
+	}
+	
+	private boolean gameStarted() {
+		if(getLastRound().get(0).get(0) == null) {
+			return false;
+		}else {
+			return true;
+		}
+	}
 	private void buildRounds() {
 		for(int x = 0; x < 10; x++) {
 			Round r = new Round();

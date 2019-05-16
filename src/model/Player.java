@@ -9,6 +9,8 @@ public class Player {
 	private String password;
 	private db database = new db();
 	private PatternCard board;
+	private int score;
+	private int seqnr;
 
 	
 //	private String differendPlayer;
@@ -134,6 +136,57 @@ public class Player {
 	
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public void setId(int idplayer2) {
+		this.idplayer = idplayer2;
+		
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+		
+	}
+
+	public void setSeqnr(int seqnr) {
+		this.seqnr = seqnr;
+		
+	}
+	public int getSeqnr() {
+		return this.seqnr;
+	}
+	public void changeSeqNr() {
+		switch(seqnr) {
+			case 1:
+				seqnr = 8;
+				break;
+			case 2:
+				seqnr = 7;
+				break;
+			case 3: 
+				seqnr = 6;
+				break;
+			case 4: 
+				seqnr = 5;
+				break;
+			case 5:
+				seqnr = 4;
+				break;
+			case 6:
+				seqnr = 3;
+				break;
+			case 7:
+				seqnr = 2;
+				break;
+			case 8:
+				seqnr = 1;
+				break;
+		}
+		updateSeqNr();
+	}
+
+	private void updateSeqNr() {
+		database.Select("update player set seqnr = " + this.seqnr + " where idplayer = " + this.idplayer);
 	}
 	
 	
