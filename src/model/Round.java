@@ -52,19 +52,6 @@ public class Round {
 		return database.Select("select * from player where game_idgame = "+ gameId +" AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
 	}
 
-	public void buildRemaningRounds(int gameId) {
-		ArrayList<ArrayList<Object>> rem = getRemaines();
-		ArrayList<ArrayList<Object>> player = GetPlayerWithChallengedStatus(gameId);
-		for(int x = (int)rem.get(0).get(2); x < (int)player.get(0).get(0) * 2; x++) {
-			if((int)rem.get(0).get(2) > (int)player.get(0).get(0)) {
-				
-			}
-			// senumber 0 is normaal;
-			// senumber 1 is achterstevoren
-			// if(senumber uit remains groter is dan de helft van calculaterounds dan is senumber 1)
-			// so niet dan moet ie nog een keer loopen
-		}
-	}
 	public int calculateRounds(int gameId) {
 		// dit sijn hoeveel turnes er nog in de ronde sijn die besig is
 		return (int)getRemaines().get(0).get(2) - (int)GetPlayerWithChallengedStatus(gameId).get(0).get(0);

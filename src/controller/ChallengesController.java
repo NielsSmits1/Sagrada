@@ -2,13 +2,16 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import View.ChallengesPane;
+import View.ChallengesPlayerLinePane;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import model.Challenge;
 
 public class ChallengesController {
+	private ChallengesPane challengesPane;
 
 	private Challenge challenge;
 	private HomeController home;
@@ -16,22 +19,31 @@ public class ChallengesController {
 	public ChallengesController(HomeController home) {
 		this.home = home;
 		challenge = new Challenge(home.getSelf());
+		challengesPane = new ChallengesPane();
+		setChallengers();
+
+		challengesPane.getAcceptButton().setOnAction(e -> acceptChallenge());
+
+		
 	}
-public ChallengesController() {
+	public ChallengesController() {
 		challenge = new Challenge(home.getSelf());
+		challengesPane = new ChallengesPane();
+		setChallengers();
 	}
 
-
-	public void acceptChallenge(String differentPlayer) {
-		challenge.setChallengerUsername(differentPlayer);
-	}
-	// public ChallengesController() {
-	// 	// TODO Auto-generated constructor stub
+//
+//	public void acceptChallenge(String differentPlayer) {
+//		System.out.println("Accept");
+//		challenge.setChallengerUsername(differentPlayer);
+//	}
 
 
 	public void acceptChallenge() {
-
-		challenge.changePlayerStatusToAccepted();
+		challengesPane.getPlayerName();
+		System.out.println("Accept");
+		System.out.println(challengesPane.getPlayerName());
+//		challenge.changePlayerStatusToAccepted();
 		
 	}
 
@@ -43,37 +55,55 @@ public ChallengesController() {
 //	public void setChallenges() {
 //		home.buildPlayer("Teun");
 //	}
-
-	public ArrayList<String> getChallengers() {
-		ArrayList<String> challengedPlayerNames = new ArrayList<String>();
-		String u;
-
-		for (ArrayList<Object> a : challenge.GetPlayerWithChallengedStatus()) {
-			u = (String) a.get(0);
-//			System.out.println(u);
-			if (!home.getSelf().getUsername().equals(u)) {
-				challengedPlayerNames.add(u);
-			} 
+	
+	public void setChallengers() {
+		for (String a: challenge.playersChallengedYou()) {
+			challengesPane.addChallengesLine(a);
 		}
-		return challengedPlayerNames;
+		challengesPane.setLayout();
 	}
-	public HashMap<String, String> getChallenged() {
-		HashMap<String, String> challengedPlayerNames = new HashMap<String, String>();
-		String u;
-		String s;
-
-		for (ArrayList<Object> a : challenge.GetPlayerWithChallengeeStatus()) {
-			u = (String) a.get(1);
-			s = (String) a.get(3);
-			if (!home.getSelf().getUsername().equals(u)) {
-				challengedPlayerNames.put(u, s);
-			} 
-		}
-		return challengedPlayerNames;
-	}
-
+	
 	public ChallengesPane getChallengesPane() {
-		ChallengesPane cp = new ChallengesPane();
+		ChallengesPane cp = challengesPane;
 		return cp;
 	}
 }
+	
+	
+//				leaderboardPane.setPlayersName();
+//				for (Map.Entry<String, String> playerGamesPlayed : leaderboard.getPlayersFilteredByAmountOfGames().entrySet()) {
+//					leaderboardPane.addPlayerNameLineWithAmountOfGamesPlayed(playerGamesPlayed.getKey().toString(),
+//							playerGamesPlayed.getValue().toString());
+//				}
+////				leaderboardPane.setPlayersPlayed();
+//				leaderboardPane.setLayout();
+
+//	public ArrayList<String> getChallengers() {
+//		ArrayList<String> challengedPlayerNames = new ArrayList<String>();
+//		String u;
+//
+//		for (ArrayList<Object> a : challenge.GetPlayerWithChallengedStatus()) {
+//			u = (String) a.get(0);
+//			System.out.println(u);
+//			if (!home.getSelf().getUsername().equals(u)) {
+//				challengedPlayerNames.add(u);
+//			} 
+//		}
+//		return challengedPlayerNames;
+//	}
+//	public HashMap<String, String> getChallenged() {
+//		HashMap<String, String> challengedPlayerNames = new HashMap<String, String>();
+//		String u;
+//		String s;
+//
+//		for (ArrayList<Object> a : challenge.GetPlayerWithChallengeeStatus()) {
+//			u = (String) a.get(1);
+//			s = (String) a.get(3);
+//			if (!home.getSelf().getUsername().equals(u)) {
+//				challengedPlayerNames.put(u, s);
+//			} 
+//		}
+//		return challengedPlayerNames;
+//	}
+
+

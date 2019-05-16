@@ -87,7 +87,7 @@ public class InlogPane extends BorderPane {
 //		registerButton.setOnAction(register);
 //	}
 
-	
+
 	public String getUsernameText() {
 		return this.usernameField.getText();
 	}

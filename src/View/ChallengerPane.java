@@ -19,17 +19,21 @@ public class ChallengerPane extends ScrollPane{
 		//cc = new ChallengesController(self);
 		playerLine = new ArrayList<ChallengerPlayerLinePane>();
 		
-		//setChallenges();
+		System.out.println("hmm2");
 		
+		setLayout();
+	}
+	public void addStatusLine(String name, String status) {
+		playerLine.add(new ChallengerPlayerLinePane(name, status));
+		System.out.println(name + status);
+	}
+	public void setLayout() {
 		playerColumn.getChildren().setAll(playerLine);
 		this.setContent(playerColumn);
 		this.setHbarPolicy(getHbarPolicy().NEVER);
 		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
+
 	}
-	public void addStatusLine(String name, String status) {
-		playerLine.add(new ChallengerPlayerLinePane(name, status));
-	}
-	
 	/*private void setChallenges() {
 		for (Map.Entry challenge : cc.getChallenged().entrySet()) {
 			addStatusLine(challenge.getKey().toString(), challenge.getValue().toString());

@@ -1,8 +1,9 @@
 package controller;
 
-import View.*;
 import java.util.ArrayList;
 
+import View.HomePane;
+import View.MyScene;
 import javafx.scene.Parent;
 import model.Player;
 
@@ -11,16 +12,28 @@ public class HomeController {
 	private SearchPlayerController sp;
 	private ChallengerController cpp;
 	private ChallengesController cp;
-	private MenubarController mb;
+	private LeaderboardController lc;
+	private PlayerController pc;
+	private MyScene scene;
+
 	private Player player;
 	private Player self;
 
 	public HomeController(MyScene scene, Player self) {
 		this.self = self;
+		this.scene = scene;
+		pc = new PlayerController(self.getUsername());
 		sp = new SearchPlayerController();
-		cpp = new ChallengerController();
+		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
-//		mb = new MenubarController();
+		lc = new LeaderboardController(this);
+		
+		home = new HomePane(sp.getSearchPlayerPane(this), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
+		
+		
+		home.getPlayers().setOnAction(e -> lc.setPlayers1());
+		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
+		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
 	}
 
 	public HomeController(PlayerController self2) {
@@ -91,8 +104,10 @@ public class HomeController {
 
 
 	public Parent showHome() {
-		home = new HomePane(sp.getSearchPlayerPane(this), cpp.getChallengerPane(), cp.getChallengesPane());
 		return home;
 	}
+//	public void showHomePane() {
+//		home.createHomePane(pc, scene);
+//	}
 
 }

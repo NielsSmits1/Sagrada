@@ -175,15 +175,15 @@ public class Game {
 		return playableDices;
 	}
 	
-	public void setPlayableDices() {
-		playableDices = new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
-			int randomDie = r.nextInt(diceArray.size());
-			playableDices.add(diceArray.get(randomDie));
-			System.out.println("" + diceArray.get(randomDie).getDieNumber());
-			diceArray.remove(randomDie);
-		}
-	}
+//	public void setPlayableDices() {
+//		playableDices = new ArrayList<>();
+//		for (int i = 0; i < 5; i++) {
+//			int randomDie = r.nextInt(diceArray.size());
+//			playableDices.add(diceArray.get(randomDie));
+//			System.out.println("" + diceArray.get(randomDie).getDieNumber());
+//			diceArray.remove(randomDie);
+//		}
+//	}
 	
 	public int getIdGame() {
 		return idgame;

@@ -10,6 +10,7 @@ public class ChallengesPlayerLinePane extends HBox {
 	private String playerName;
 	private Label differentPlayer;
 	private Button accept;
+
 	private Button decline;
 //	private ChallengesPane cp;
 //	private ChallengesController cc = new ChallengesController(); 
@@ -34,6 +35,30 @@ public class ChallengesPlayerLinePane extends HBox {
 //		decline.setOnAction(e -> cp.declineChallenge(playerName));
 	
 	}
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public Button getAccept() {
+		return accept;
+	}
+
+	public Button getDecline() {
+		return decline;
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+
+	public void setAccept(Button accept) {
+		this.accept = accept;
+	}
+
+	public void setDecline(Button decline) {
+		this.decline = decline;
+	}
+
 
 //	private void declineChallengeLine() {
 //		cc.declineChallenge(playerName);
