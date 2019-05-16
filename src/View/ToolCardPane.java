@@ -9,13 +9,13 @@ import javafx.scene.shape.Rectangle;
 public class ToolCardPane extends Pane{
 	private Rectangle card;
 	private Label price;
-	private TextArea description;
+	private TextArea textArea;
 	
-	public ToolCardPane() {
+	public ToolCardPane(String description) {
 		setCard();
 		setPrice();
-		setTextArea();
-		getChildren().addAll(card,price,description);
+		setTextArea(description);
+		getChildren().addAll(card,price,textArea);
 	}
 	
 	private void setCard() {
@@ -34,17 +34,17 @@ public class ToolCardPane extends Pane{
 		price.setText(value);
 	}
 	
-	private void setTextArea() {
-		description = new TextArea("Dit is een textarea die niet aan te passen is maar die wel binnen de toolcard blijft, dit is dus ideaal voor de beschrijving van een kaart");
-		description.setEditable(false);
-		description.setWrapText(true);
-		description.setPrefSize(130, 100);
-		description.setLayoutX(10);
-		description.setLayoutY(80);
+	private void setTextArea(String description) {
+		textArea = new TextArea(description);
+		textArea.setEditable(false);
+		textArea.setWrapText(true);
+		textArea.setPrefSize(130, 100);
+		textArea.setLayoutX(10);
+		textArea.setLayoutY(80);
 	}
 	
 	public void changeText(String text) {
-		description.setText(text);
+		textArea.setText(text);
 	}
 	
 	
