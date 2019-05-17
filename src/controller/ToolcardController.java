@@ -19,5 +19,10 @@ public class ToolcardController {
 		toolcardpanes.add(new ToolCardPane((int)toolcard.getToolcardsFromDatabase().get(2).get(0), (String)toolcard.getToolcardsFromDatabase().get(2).get(1)));
 //		toolcards = toolcard.getToolcardsFromDaW
 	}
+	
+	
+	public ArrayList<ToolCardPane> getToolCards(){
+		return toolcardpanes;
+	}
 
 }

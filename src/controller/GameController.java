@@ -7,6 +7,7 @@ import View.DicePane;
 import View.MyScene;
 import View.PatterncardSelect;
 import View.RootPane;
+import View.ToolCardPane;
 import javafx.scene.Parent;
 import model.Dice;
 import model.Game;
@@ -88,6 +89,10 @@ public class GameController {
 	
 	public ArrayList<BoardPane> getOpponentBoard(){
 		return boardcontroller.getOpponentBoard();
+	}
+	
+	public ArrayList<ToolCardPane> getToolCards(){
+		return toolcardcontroller.getToolCards();
 	}
 	
 	

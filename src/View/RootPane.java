@@ -33,9 +33,10 @@ public class RootPane extends BorderPane {
 	private HBox boards;
 	private HBox dices;
 	private DicePane selected;
-	private ToolCardPane tcp;
-	private ToolCardPane tcp2;
-	private ToolCardPane tcp3;
+//	private ToolCardPane tcp1;
+//	private ToolCardPane tcp2;
+//	private ToolCardPane tcp3;
+	private ArrayList<ToolCardPane> toolcards;
 	private PrivateCardPane pc;
 	private ObjectiveCardPane ocp;
 	private ObjectiveCardPane ocp2;
@@ -121,9 +122,7 @@ public class RootPane extends BorderPane {
 		pc = new PrivateCardPane();
 		ocp = new ObjectiveCardPane();
 		ocp2 = new ObjectiveCardPane();
-		tcp = new ToolCardPane();
-		tcp2 = new ToolCardPane();
-		tcp3 = new ToolCardPane();
+		toolcards = controller.getToolCards();
 		// Creates new headers
 		objectiveCard = new HeaderPane();
 		privateCard = new HeaderPane();
@@ -133,7 +132,7 @@ public class RootPane extends BorderPane {
 		privateCard.changeLabel("Private Card");
 		toolCard.changeLabel("Toolcards");
 		// changes the price labels
-		tcp.changePrice("2");
+//		tcp1.changePrice("2");
 		bottom = new BorderPane();
 		bottom.setPadding(new Insets(0, 130, 50, 50));
 		bottom.setLeft(dices);
@@ -144,7 +143,8 @@ public class RootPane extends BorderPane {
 		finalOc.setSpacing(5);
 		VBox finalPc = new VBox(privateCard, pc);
 		finalPc.setSpacing(5);
-		HBox tcp1 = new HBox(tcp, tcp2, tcp3);
+		HBox tcp1 = new HBox();
+		tcp1.getChildren().addAll(toolcards);
 		tcp1.setSpacing(5);
 		VBox finalTcp = new VBox(toolCard, tcp1);
 		finalTcp.setSpacing(5);
