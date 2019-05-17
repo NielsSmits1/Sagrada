@@ -23,15 +23,15 @@ public class GameController {
 	private PatterncardSelect option;
 	private RootPane rootpane;
 	private BoardController boardcontroller;
+	private ToolcardController toolcardcontroller;
 	private Round round;
 
 	public GameController(MyScene s) {
 		scene = s;
 		game = new Game();
-
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
-		
+		toolcardcontroller = new ToolcardController(this);
 
 	}
 	

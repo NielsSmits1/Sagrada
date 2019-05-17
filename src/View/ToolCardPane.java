@@ -10,8 +10,10 @@ public class ToolCardPane extends Pane{
 	private Rectangle card;
 	private Label price;
 	private TextArea textArea;
+	private int toolCardId;
 	
-	public ToolCardPane(String description) {
+	public ToolCardPane(int id, String description) {
+		this.toolCardId = id;
 		setCard();
 		setPrice();
 		setTextArea(description);
