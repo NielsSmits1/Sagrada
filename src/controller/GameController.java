@@ -6,7 +6,7 @@ import View.BoardPane;
 import View.DicePane;
 import View.MyScene;
 import View.PatterncardSelect;
-import View.RootPane;
+import View.GamePane;
 import View.ToolCardPane;
 import javafx.scene.Parent;
 import model.Dice;
@@ -18,11 +18,9 @@ import model.Space;
 
 public class GameController {
 	private Game game;
-
-
 	private MyScene scene;
 	private PatterncardSelect option;
-	private RootPane rootpane;
+	private GamePane gamePane;
 	private BoardController boardcontroller;
 	private ToolcardController toolcardcontroller;
 	private Round round;
@@ -34,6 +32,10 @@ public class GameController {
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
 
+	}
+	
+	public void setToolcardActive() {
+		gamePane.setToolCardActive();
 	}
 	
 
@@ -54,7 +56,7 @@ public class GameController {
 	}
 	
 	public DicePane getSelected() {
-		return rootpane.getSelected();
+		return gamePane.getSelected();
 	}
 	
 	public int getIdGame() {
@@ -75,8 +77,8 @@ public class GameController {
 	}
 
 	public void setRootpane() {
-		rootpane = new RootPane(this);
-		scene.setRoot(rootpane);
+		gamePane = new GamePane(this);
+		scene.setRoot(gamePane);
 	}
 	
 	public BoardPane returnBoardPane() {

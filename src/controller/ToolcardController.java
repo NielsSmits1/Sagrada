@@ -8,21 +8,30 @@ import model.Toolcard;
 public class ToolcardController {
 	private Toolcard toolcard;
 	private GameController gamecontroller;
-//	private ArrayList<ArrayList<Object>> toolcards;
 	private ArrayList<ToolCardPane> toolcardpanes;
+	
 	public ToolcardController(GameController gc) {
 		gamecontroller = gc;
-		toolcard = new Toolcard();
+		toolcard = new Toolcard(this);
 		toolcardpanes = new ArrayList<>();
-		toolcardpanes.add(new ToolCardPane((int)toolcard.getToolcardsFromDatabase().get(0).get(0), (String)toolcard.getToolcardsFromDatabase().get(0).get(1)));
-		toolcardpanes.add(new ToolCardPane((int)toolcard.getToolcardsFromDatabase().get(1).get(0), (String)toolcard.getToolcardsFromDatabase().get(1).get(1)));
-		toolcardpanes.add(new ToolCardPane((int)toolcard.getToolcardsFromDatabase().get(2).get(0), (String)toolcard.getToolcardsFromDatabase().get(2).get(1)));
-//		toolcards = toolcard.getToolcardsFromDaW
+		setToolcardsDescription();
 	}
 	
+	public void setToolcardActive() {
+		gamecontroller.setToolcardActive();
+	}
 	
+	private void setToolcardsDescription() {
+		toolcardpanes.add(new ToolCardPane(toolcard.getCardOneId(), toolcard.getCardOneDescription(), this));
+		toolcardpanes.add(new ToolCardPane(toolcard.getCardTwoId(), toolcard.getCardTwoDescription(), this));
+		toolcardpanes.add(new ToolCardPane(toolcard.getCardThreeId(), toolcard.getCardThreeDescription(), this));
+	}
 	public ArrayList<ToolCardPane> getToolCards(){
 		return toolcardpanes;
+	}
+	
+	public void toolcardClicked(int id) {
+		toolcard.activateToolcard(id);
 	}
 
 }

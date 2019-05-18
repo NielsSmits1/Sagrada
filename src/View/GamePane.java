@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import model.Dice;
 
-public class RootPane extends BorderPane {
+public class GamePane extends BorderPane {
 	/// *
 	// Sets all instances of a variety of objects, some of them might be removed
 	/// later on.
@@ -33,9 +33,6 @@ public class RootPane extends BorderPane {
 	private HBox boards;
 	private HBox dices;
 	private DicePane selected;
-//	private ToolCardPane tcp1;
-//	private ToolCardPane tcp2;
-//	private ToolCardPane tcp3;
 	private ArrayList<ToolCardPane> toolcards;
 	private PrivateCardPane pc;
 	private ObjectiveCardPane ocp;
@@ -45,11 +42,8 @@ public class RootPane extends BorderPane {
 	private HeaderPane toolCard;
 	private BorderPane bottom;
 	private GameController controller;
-	private Random r;
 	private ArrayList<Dice> diceArray;
-//	private Button endTurn;
-//	private Button refreshDice;
-	// private Menubar menu;
+	private boolean toolcardIsActive;
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -58,18 +52,11 @@ public class RootPane extends BorderPane {
 	/// the screen.
 	/// **
 
-	public RootPane(GameController gameController) {
-		// scene = s;
-		// this.menu = menu;
-//		endTurn = new Button("End Turn");
-//		endTurn.setOnAction(e -> handle());
-//		refreshDice = new Button("Refresh");
-//		refreshDice.setOnAction(e -> refresh());
+	public GamePane(GameController gameController) {
+		toolcardIsActive = false;
 		dices = new HBox();
 		dices.setSpacing(20);
 		this.controller = gameController;
-//		diceArray = getDiceArray();
-//		r = new Random();
 		setBoard();
 		addDice();
 		finish();
@@ -87,15 +74,15 @@ public class RootPane extends BorderPane {
 		// player1 = new BoardPane(this,5);
 		setBoardPlayerOne();
 
-//		player2 = new BoardPane(this, 7);
-//		player2.switchTransparent();
-//
-//		player3 = new BoardPane(this, 12);
-//		player3.switchTransparent();
-//		player4 = new BoardPane(this, 3);
-//		player4.switchTransparent();
-		
-		boards = new HBox(player1, player2,player3,player4);
+		// player2 = new BoardPane(this, 7);
+		// player2.switchTransparent();
+		//
+		// player3 = new BoardPane(this, 12);
+		// player3.switchTransparent();
+		// player4 = new BoardPane(this, 3);
+		// player4.switchTransparent();
+
+		boards = new HBox(player1, player2, player3, player4);
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 50));
 	}
@@ -108,7 +95,8 @@ public class RootPane extends BorderPane {
 
 	private void addDice() {
 		for (int i = 0; i < getPlayableDices().size(); i++) {
-			dices.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),getPlayableDices().get(i).getDieColor(),getPlayableDices().get(i).getDieNumber()  , this));
+			dices.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
+					getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
 		}
 
 	}
@@ -132,7 +120,7 @@ public class RootPane extends BorderPane {
 		privateCard.changeLabel("Private Card");
 		toolCard.changeLabel("Toolcards");
 		// changes the price labels
-//		tcp1.changePrice("2");
+		// tcp1.changePrice("2");
 		bottom = new BorderPane();
 		bottom.setPadding(new Insets(0, 130, 50, 50));
 		bottom.setLeft(dices);
@@ -185,11 +173,26 @@ public class RootPane extends BorderPane {
 
 	public void setSelected(DicePane p) {
 		selected = p;
-		// p.removeEventHandler(MouseEvent.MOUSE_CLICKED, p.getOnMouseClicked());
-		// selected.removeEventHandler(MouseEvent.MOUSE_CLICKED,
-		// selected.getOnMouseClicked());
-		// selected.removeEventHandler(MouseEvent.MOUSE_PRESSED, p.getClicker());
-		// System.out.println("" + selected);
+		if(toolcardIsActive) {
+			for (int i = 0; i < dices.getChildren().size(); i++) {
+	            DicePane temporarilyDice = (DicePane)dices.getChildren().get(i);
+	            if(selected.getDieNumber() == temporarilyDice.getDieNumber() && selected.getColor().equals(temporarilyDice.getColor())) {
+	                temporarilyDice.removeEyes();
+	                temporarilyDice.setValue(temporarilyDice.getValue()+1);
+	                temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+	            }
+	            disableToolcard();
+	        }
+		}
+		
+	}
+	
+	public void setToolCardActive() {
+		toolcardIsActive = true;
+	}
+	
+	public void disableToolcard() {
+		toolcardIsActive = false;
 	}
 
 	/// *
@@ -198,8 +201,8 @@ public class RootPane extends BorderPane {
 	public DicePane getSelected() {
 		return selected;
 	}
-	
-	private ArrayList<Dice> getPlayableDices(){
+
+	private ArrayList<Dice> getPlayableDices() {
 		return controller.getPlayableDices();
 	}
 
@@ -210,34 +213,34 @@ public class RootPane extends BorderPane {
 		player4 = controller.getOpponentBoard().get(2);
 	}
 
-//	private void handle() {
-//		if (player1.isMouseTransparent() == false) {
-//			player1.switchTransparent();
-//			player2.switchTransparent();
-//			return;
-//		}
-//		if (player2.isMouseTransparent() == false) {
-//			player2.switchTransparent();
-//			player3.switchTransparent();
-//			return;
-//		}
-//		if (player3.isMouseTransparent() == false) {
-//			player3.switchTransparent();
-//			player4.switchTransparent();
-//			return;
-//		}
-//		if (player4.isMouseTransparent() == false) {
-//			player4.switchTransparent();
-//			player1.switchTransparent();
-//			return;
-//		}
-//	}
+	// private void handle() {
+	// if (player1.isMouseTransparent() == false) {
+	// player1.switchTransparent();
+	// player2.switchTransparent();
+	// return;
+	// }
+	// if (player2.isMouseTransparent() == false) {
+	// player2.switchTransparent();
+	// player3.switchTransparent();
+	// return;
+	// }
+	// if (player3.isMouseTransparent() == false) {
+	// player3.switchTransparent();
+	// player4.switchTransparent();
+	// return;
+	// }
+	// if (player4.isMouseTransparent() == false) {
+	// player4.switchTransparent();
+	// player1.switchTransparent();
+	// return;
+	// }
+	// }
 
-//	private void refresh() {
-//		if (dices.getChildren().isEmpty()) {
-//			addDice();
-//		} else {
-//
-//		}
-//	}
+	// private void refresh() {
+	// if (dices.getChildren().isEmpty()) {
+	// addDice();
+	// } else {
+	//
+	// }
+	// }
 }

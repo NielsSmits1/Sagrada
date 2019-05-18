@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Database.db;
+import controller.ToolcardController;
 
 public class Toolcard {
 	private Random random;
@@ -11,31 +12,106 @@ public class Toolcard {
 	private int card2;
 	private int card3;
 	private db database;
-	
-	public Toolcard() {
+	private ToolcardController toolcardController;
+
+	public Toolcard(ToolcardController toolcardController) {
+		this.toolcardController = toolcardController;
 		random = new Random();
 		database = new db();
 		generateRandomInts();
 	}
-	
+
 	public ArrayList<ArrayList<Object>> getToolcardsFromDatabase() {
-		String query = ("SELECT idtoolcard, description FROM tjpmsalt_db2.toolcard WHERE idtoolcard = "+card1+" OR idtoolcard = "+card2+" OR idtoolcard = "+card3 +"");
+		String query = ("SELECT idtoolcard, description FROM tjpmsalt_db2.toolcard WHERE idtoolcard = " + card1
+				+ " OR idtoolcard = " + card2 + " OR idtoolcard = " + card3 + "");
 		return database.Select(query);
-		
+	}
+
+	private void generateRandomInts() {
+		card1 = random.nextInt(12) + 1;
+		card2 = random.nextInt(12) + 1;
+		card3 = random.nextInt(12) + 1;
+
+		while (card2 == card1) {
+			card2 = random.nextInt(12) + 1;
+		}
+
+		while (card3 == card1 || card3 == card2) {
+			card3 = random.nextInt(12) + 1;
+		}
+
 	}
 	
-	private void generateRandomInts() {
-		card1 = random.nextInt(12)+1;		
-		card2 = random.nextInt(12)+1;
-		card3 = random.nextInt(12)+1;
-	
-		while(card2 == card1) {
-			card2 = random.nextInt(12)+1;
+	public void activateToolcard(int id) {
+		switch (id) {
+		case 1: activateToolCardOne();
+			
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;
+		case 5:
+			
+			break;
+		case 6:
+			
+			break;
+		case 7:
+			
+			break;
+		case 8:
+			
+			break;
+		case 9:
+			
+			break;
+		case 10:
+			
+			break;
+		case 11:
+			
+			break;
+		case 12:
+			
+			break;
+
+		default:
+			break;
 		}
+	}
+
+	private void activateToolCardOne() {
+		toolcardController.setToolcardActive();
 		
-		while(card3 == card1 || card3 == card2) {
-			card3 = random.nextInt(12)+1;
-		}
-		
+	}
+
+	public int getCardOneId() {
+		return card1;
+	}
+
+	public int getCardTwoId() {
+		return card2;
+	}
+
+	public int getCardThreeId() {
+		return card3;
+	}
+
+	public String getCardOneDescription() {
+		return (String) getToolcardsFromDatabase().get(0).get(1);
+	}
+
+	public String getCardTwoDescription() {
+		return (String) getToolcardsFromDatabase().get(1).get(1);
+	}
+
+	public String getCardThreeDescription() {
+		return (String) getToolcardsFromDatabase().get(2).get(1);
 	}
 }
