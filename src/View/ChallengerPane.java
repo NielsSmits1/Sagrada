@@ -10,21 +10,21 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 public class ChallengerPane extends ScrollPane{
-	private ArrayList<ChallengerPlayerLinePane> playerLine;
+	private ArrayList<ChallengesPlayerLinePane> playerLine;
 	private VBox playerColumn = new VBox();
 	
 	
 	
 	public ChallengerPane() {
 		//cc = new ChallengesController(self);
-		playerLine = new ArrayList<ChallengerPlayerLinePane>();
+		playerLine = new ArrayList<ChallengesPlayerLinePane>();
 		
 		System.out.println("hmm2");
 		
 		setLayout();
 	}
 	public void addStatusLine(String name, String status) {
-		playerLine.add(new ChallengerPlayerLinePane(name, status));
+		playerLine.add(new ChallengesPlayerLinePane(name, status));
 		System.out.println(name + status);
 	}
 	public void setLayout() {

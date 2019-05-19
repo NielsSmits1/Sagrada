@@ -13,17 +13,17 @@ import model.Challenge;
 
 public class ChallengesPane extends ScrollPane {
 
-	private ArrayList<ChallengesPlayerLinePane> playerLine;
+	private ArrayList<ChallengesPlayerLinePane> playerLine = new ArrayList<ChallengesPlayerLinePane>();
 	private VBox playerColumn = new VBox();
 //	private ChallengesController cc;
 //	private Challenge challenge;
 
 	public ChallengesPane() {
-		playerLine = new ArrayList<ChallengesPlayerLinePane>();
 
 
 
-		setLayout();
+
+//		setLayout();
 
 	}
 
@@ -40,6 +40,9 @@ public class ChallengesPane extends ScrollPane {
 //		this.setHbarPolicy(getHbarPolicy().NEVER);
 //		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 //	}
+	public void copyArraylist(ArrayList<ChallengesPlayerLinePane> playerArray) {
+		this.playerLine = playerArray;
+	}
 
 	public void addChallengesLine(String name) {
 
@@ -47,7 +50,7 @@ public class ChallengesPane extends ScrollPane {
 
 	}
 	public void setLayout() {
-		
+		System.out.println(playerLine.size());
 		playerColumn.getChildren().setAll(playerLine);
 		this.setContent(playerColumn);
 		this.setHbarPolicy(getHbarPolicy().NEVER);
@@ -62,12 +65,18 @@ public class ChallengesPane extends ScrollPane {
 		this.playerLine = playerLine;
 	}
 	
-	
-	public Button getAcceptButton() {
-		return playerLine.get(0).getAccept();
+	public void setsooi() {
+		
 	}
-	public String getPlayerName() {
-		return playerLine.get(0).getPlayerName();
+//	public Button getAcceptButton() {
+//		return playerLine.get(0).getAccept();
+//	}
+//	public String getPlayerName() {
+//		return playerLine.get(0).getPlayerName();
+//	}
+
+	public void setPlayerLines(ArrayList<ChallengesPlayerLinePane> challenges) {
+		this.getChildren().addAll(challenges);
 	}
 
 }

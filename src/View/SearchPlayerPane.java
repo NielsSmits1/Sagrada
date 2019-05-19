@@ -16,40 +16,35 @@ public class SearchPlayerPane extends VBox  {
 	private Button search = new Button("Zoeken");
 	private Button stats = new Button("Statistieken");
 	private Alert alert = new Alert(AlertType.ERROR);
-	
-	private HomeController hc;
+
 	
 	private String username;
 	
-	public SearchPlayerPane(HomeController home){
-		hc = home;
 
-		search.setOnAction(E -> search());
+
+	public SearchPlayerPane(){		
+
+//		search.setOnAction(E -> search());
 		online.setFont(Font.font(14));
 		online.setMaxWidth(120);
 
 		this.getChildren().setAll(online,search);
 	}
-	
-	public SearchPlayerPane() {
-		// TODO Auto-generated constructor stub
-	}
-
-	private void alert(String message) {
+	public void alert(String message) {
 		alert.setHeaderText(message);
 		alert.showAndWait();
 	}
-	private void search() {
-		this.username = online.getText();
-		if(!username.equals("")) {
-			if(hc.usernameExist(username)) {
-				showPlayer(username);
-				
-				
-			}else {
-				alert("Niemand gevonden met deze gebruikersnaam");
-			}
-		}
+//	private void search() {
+//		this.username = online.getText();
+//		if(!username.equals("")) {
+//			if(hc.usernameExist(username)) {
+//				showPlayer(username);
+//				
+//				
+//			}else {
+//				alert("Niemand gevonden met deze gebruikersnaam");
+//			}
+//		}
 		
 		/*
 		 * de tekst ophlen --------
@@ -63,7 +58,7 @@ public class SearchPlayerPane extends VBox  {
 		 * en iets terug krijgen?
 		 */
 		
-	}
+//	}
 	public void showPlayer(String username) {
 		VBox boxie = new VBox();
 		boxie.setLayoutY(30);
@@ -71,7 +66,7 @@ public class SearchPlayerPane extends VBox  {
 		user.setFont(Font.font(20));
 		user.setText(username);
 //		stats.setOnAction(E-> showPlayerStats(username));
-		challenge.setOnAction(E -> challengePlayer(username));
+//		challenge.setOnAction(E -> challengePlayer(username));
 		boxie.getChildren().addAll(user,stats, challenge);
 		
 		this.getChildren().add(boxie);
@@ -118,6 +113,40 @@ public class SearchPlayerPane extends VBox  {
 
 	public String getUsername() {
 		return username;
+	}
+	public Button getChallenge() {
+		
+		return challenge;
+	}
+	public Alert getAlert() {
+		return alert;
+	}
+	public Button getSearch() {
+		return search;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setSearch(Button search) {
+		this.search = search;
+	}
+
+	public void setAlert(Alert alert) {
+		this.alert = alert;
+	}
+
+
+	public void setOnline(TextField online) {
+		this.online = online;
+	}
+
+	public void setChallenge(Button challenge) {
+		this.challenge = challenge;
+	}
+
+	public void setStats(Button stats) {
+		this.stats = stats;
 	}
 	
 	

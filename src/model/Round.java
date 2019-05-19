@@ -52,28 +52,28 @@ public class Round {
 		return database.Select("select * from player where game_idgame = "+ gameId +" AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
 	}
 
-	public int calculateRounds(int gameId) {
-		// dit sijn hoeveel turnes er nog in de ronde sijn die besig is
-		return (int)getRemaines().get(0).get(2) - (int)GetPlayerWithChallengedStatus(gameId).get(0).get(0);
-	}
+//	public int calculateRounds(int gameId) {
+//		// dit sijn hoeveel turnes er nog in de ronde sijn die besig is
+//		return (int)getRemaines().get(0).get(2) - (int)GetPlayerWithChallengedStatus(gameId).get(0).get(0);
+//	}
 	// Calculates the amount of turns in a round
 	public int calculateTurns(int gameId) {
 		// dit sijn hoeveel turns er in een game sijn.
 		return (int)(GetPlayerWithChallengedStatus(gameId).get(0).get(0)) * 2;
 		
 	}
-	private void buildTurnesForward(int gameId) {
-		for(ArrayList<Object> a: database.Select("select idplayer, username from player where game_idgame = " + gameId +" and "
-				+ "playstatus_playstatus != 'Uitgespeeld' order by idplayer asc")){
-			turnes.add(new Turn((int)a.get(0),new Player((String) a.get(1)), 0));
-		}
-	}
-	private void buiildTurnesBackward(int gameId) {
-		for(ArrayList<Object> a: database.Select("select idplayer, username from player where game_idgame = " + gameId +" and "
-				+ "playstatus_playstatus != 'Uitgespeeld' order by idplayer desc")){
-			turnes.add(new Turn((int)a.get(0),new Player((String) a.get(1)), 1));
-		}
-	}	
+//	private void buildTurnesForward(int gameId) {
+//		for(ArrayList<Object> a: database.Select("select idplayer, username from player where game_idgame = " + gameId +" and "
+//				+ "playstatus_playstatus != 'Uitgespeeld' order by idplayer asc")){
+//			turnes.add(new Turn((int)a.get(0),new Player((String) a.get(1)), 0));
+//		}
+//	}
+//	private void buiildTurnesBackward(int gameId) {
+//		for(ArrayList<Object> a: database.Select("select idplayer, username from player where game_idgame = " + gameId +" and "
+//				+ "playstatus_playstatus != 'Uitgespeeld' order by idplayer desc")){
+//			turnes.add(new Turn((int)a.get(0),new Player((String) a.get(1)), 1));
+//		}
+//	}	
 	// adds a number to a username 
 	public void setUserNameId() {
 		

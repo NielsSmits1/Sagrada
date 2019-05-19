@@ -23,12 +23,12 @@ public class HomeController {
 		this.self = self;
 		this.scene = scene;
 		pc = new PlayerController(self.getUsername());
-		sp = new SearchPlayerController();
+		sp = new SearchPlayerController(this);
 		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
 		
-		home = new HomePane(sp.getSearchPlayerPane(this), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
+		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
 		
 		
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());

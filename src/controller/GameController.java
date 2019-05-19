@@ -27,7 +27,7 @@ public class GameController {
 	public GameController(MyScene s) {
 		scene = s;
 		boardcontroller = new BoardController(this);
-		game = new Game();
+//		game = new Game();
 //		game.setPlayableDices();
 	}
 	
