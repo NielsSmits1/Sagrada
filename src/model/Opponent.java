@@ -72,32 +72,11 @@ public class Opponent {
 			// The color might be null, in that case the color will be set the white.
 			/// **
 			if ((String) p.get(i).get(3) == null) {
-				opponents.get(j).get(i).setColor("WHITE");
-			} else {
-				/// *
-				// This switch is needed because all of the colors in the DB are in dutch.
-				/// **
-				switch ((String) p.get(i).get(3)) {
-				case "blauw":
-					opponents.get(j).get(i).setColor("BLUE");
-					break;
-				case "rood":
-					opponents.get(j).get(i).setColor("RED");
-					break;
-				case "geel":
-					opponents.get(j).get(i).setColor("YELLOW");
-					break;
-				case "groen":
-					opponents.get(j).get(i).setColor("GREEN");
-					break;
-				case "paars":
-					opponents.get(j).get(i).setColor("PURPLE");
-					break;
-				default:
-					opponents.get(j).get(i).setColor("WHITE");
-					break;
+				opponents.get(j).get(i).setColor("wit");
+			} 
+			else {
+				opponents.get(j).get(i).setColor((String) p.get(i).get(3));
 				}
-			}
 
 			if (p.get(i).get(4) != null) {
 				opponents.get(j).get(i).setEyes((int) p.get(i).get(4));

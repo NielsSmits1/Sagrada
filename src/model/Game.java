@@ -60,25 +60,22 @@ public class Game {
 			diceArray.get(i).setDieNumber((int) diceData.get(i).get(1));
 			switch ((String) diceData.get(i).get(2)) {
 			case "blauw":
-				diceArray.get(i).setDieColor("BLUE");
+				diceArray.get(i).setDieColor("blauw");
 				break;
 			case "rood":
-				diceArray.get(i).setDieColor("RED");
+				diceArray.get(i).setDieColor("rood");
 				break;
 			case "geel":
-				diceArray.get(i).setDieColor("YELLOW");
+				diceArray.get(i).setDieColor("geel");
 				break;
 			case "groen":
-				diceArray.get(i).setDieColor("GREEN");
+				diceArray.get(i).setDieColor("groen");
 				break;
 			case "paars":
-				diceArray.get(i).setDieColor("PURPLE");
-				break;
-			default:
-				diceArray.get(i).setDieColor("WHITE");
+				diceArray.get(i).setDieColor("paars");
 				break;
 			}
-			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), (String)diceData.get(i).get(2));
+			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
 		}
 	}
 
@@ -109,7 +106,7 @@ public class Game {
 		playableDices = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
 			int randomDie = r.nextInt(17)+1;
-			String[] colors = {"BLUE", "GREEN", "YELLOW","RED", "PURPLE"};
+			String[] colors = {"blauw", "groen", "geel","rood", "paars"};
 			String color = colors[r.nextInt(5)];
 			for (int j = 0; j < diceArray.size(); j++) {
 				if(diceArray.get(j).getDieNumber() == randomDie && diceArray.get(j).getDieColor() == color) {

@@ -74,6 +74,7 @@ public class DicePane extends Pane {
 		addDice(value, this.color);
 		gamePane = rp;
 		addEvent(this);
+		
 	}
 
 	/// *
@@ -81,11 +82,24 @@ public class DicePane extends Pane {
 	/// **
 
 	public void setColor(String c) {
-		dice.setFill(Color.valueOf(c));
+		switch(c) {
+		case "blauw":dice.setFill(Color.BLUE);
+					 break;
+		case "geel":dice.setFill(Color.YELLOW);
+		 			 break;		
+		case "groen":dice.setFill(Color.GREEN);
+		 			 break;
+		case "rood":dice.setFill(Color.RED);
+					 break;
+		case "paars":dice.setFill(Color.PURPLE);
+					 break;
+		default: dice.setFill(Color.WHITE);
+		}
+		
 	}
 
 	public void setWhite() {
-		setColor("WHITE");
+		setColor("");
 	}
 
 	/// *

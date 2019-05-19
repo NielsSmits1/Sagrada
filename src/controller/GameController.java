@@ -97,5 +97,9 @@ public class GameController {
 		return toolcardcontroller.getToolCards();
 	}
 	
+	public void updateEyes(int eyes, int dienumber, String color) {
+		game.updateEyes(eyes, dienumber, color);
+	}
+	
 	
 }

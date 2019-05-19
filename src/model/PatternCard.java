@@ -60,32 +60,36 @@ public class PatternCard {
 			// The color might be null, in that case the color will be set the white.
 			/// **
 			if ((String) p.get(i).get(3) == null) {
-				patternfield.get(i).setColor("WHITE");
-			} else {
-				/// *
-				// This switch is needed because all of the colors in the DB are in dutch.
-				/// **
-				switch ((String) p.get(i).get(3)) {
-				case "blauw":
-					patternfield.get(i).setColor("BLUE");
-					break;
-				case "rood":
-					patternfield.get(i).setColor("RED");
-					break;
-				case "geel":
-					patternfield.get(i).setColor("YELLOW");
-					break;
-				case "groen":
-					patternfield.get(i).setColor("GREEN");
-					break;
-				case "paars":
-					patternfield.get(i).setColor("PURPLE");
-					break;
-				default:
-					patternfield.get(i).setColor("WHITE");
-					break;
-				}
+				patternfield.get(i).setColor("wit");
+			} 
+			else {
+			patternfield.get(i).setColor((String) p.get(i).get(3));
 			}
+//				/// *
+//				// This switch is needed because all of the colors in the DB are in dutch.
+//				/// **
+//				switch ((String) p.get(i).get(3)) {
+//				case "blauw":
+//					patternfield.get(i).setColor("BLUE");
+//					break;
+//				case "rood":
+//					patternfield.get(i).setColor("RED");
+//					break;
+//				case "geel":
+//					patternfield.get(i).setColor("YELLOW");
+//					break;
+//				case "groen":
+//					patternfield.get(i).setColor("GREEN");
+//					break;
+//				case "paars":
+//					patternfield.get(i).setColor("PURPLE");
+//					break;
+//				default:
+//					patternfield.get(i).setColor("WHITE");
+//					break;
+//				}
+//			}
+			
 
 			if (p.get(i).get(4) != null) {
 				patternfield.get(i).setEyes((int) p.get(i).get(4));
@@ -153,24 +157,24 @@ public class PatternCard {
 	}
 
 	private boolean totalValidation(int x, int y, int dienumber, String diecolor) {
-		String color = "";
-		switch (diecolor) {
-		case "BLUE":
-			color = "blauw";
-			break;
-		case "RED":
-			color = "rood";
-			break;
-		case "YELLOW":
-			color = "geel";
-			break;
-		case "GREEN":
-			color = "groen";
-			break;
-		case "PURPLE":
-			color = "paars";
-			break;
-		}
+		String color = diecolor;
+//		switch (diecolor) {
+//		case "BLUE":
+//			color = "blauw";
+//			break;
+//		case "RED":
+//			color = "rood";
+//			break;
+//		case "YELLOW":
+//			color = "geel";
+//			break;
+//		case "GREEN":
+//			color = "groen";
+//			break;
+//		case "PURPLE":
+//			color = "paars";
+//			break;
+//		}
 		if (checkFirstMove()) {
 			if (validateStartsInCorner(x, y) && validateColorTemplateBox(x, y, color)
 					&& validateNumberTemplateBox(x, y, dienumber, color)) {
