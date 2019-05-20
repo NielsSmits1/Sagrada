@@ -24,13 +24,16 @@ public class GameController {
 	private RootPane rootpane;
 	private BoardController boardcontroller;
 	private Round round;
+	private GameProgress progress;
 
 	public GameController(MyScene s) {
+		
 		scene = s;
 		game = new Game();
 
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
+		progress = new GameProgress();
 		
 
 	}
@@ -75,7 +78,8 @@ public class GameController {
 
 	public void setRootpane() {
 		rootpane = new RootPane(this);
-		scene.setRoot(rootpane);
+//		scene.setRoot(rootpane);
+		progress.getScene().setRoot(rootpane);
 	}
 	
 	public BoardPane returnBoardPane() {
@@ -89,6 +93,22 @@ public class GameController {
 	public ArrayList<BoardPane> getOpponentBoard(){
 		return boardcontroller.getOpponentBoard();
 	}
+
+
+	public RootPane getRootpane() {
+		return rootpane;
+	}
+
+
+	public GameProgress getProgress() {
+		return progress;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 }

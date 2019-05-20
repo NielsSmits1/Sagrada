@@ -26,6 +26,8 @@ public class RootPane extends BorderPane {
 	// Sets all instances of a variety of objects, some of them might be removed
 	/// later on.
 	/// **
+	private Button close;
+	
 	private BoardPane player1;
 	private BoardPane player2;
 	private BoardPane player3;
@@ -118,12 +120,14 @@ public class RootPane extends BorderPane {
 
 	private void setCards() {
 		// Creates new cards
+		this.close = new Button("opgeven");
 		pc = new PrivateCardPane();
 		ocp = new ObjectiveCardPane();
 		ocp2 = new ObjectiveCardPane();
 		tcp = new ToolCardPane();
 		tcp2 = new ToolCardPane();
 		tcp3 = new ToolCardPane();
+		
 		// Creates new headers
 		objectiveCard = new HeaderPane();
 		privateCard = new HeaderPane();
@@ -148,9 +152,13 @@ public class RootPane extends BorderPane {
 		tcp1.setSpacing(5);
 		VBox finalTcp = new VBox(toolCard, tcp1);
 		finalTcp.setSpacing(5);
-		HBox toolCards = new HBox(finalOc, finalPc, finalTcp);
+		HBox toolCards = new HBox(finalOc, finalPc, finalTcp,close);
 		toolCards.setSpacing(5);
 		bottom.setRight(toolCards);
+		
+
+//		close.setOnAction(e -> controller.getProgress().closeGame());
+	
 	}
 
 	/// *
@@ -210,6 +218,10 @@ public class RootPane extends BorderPane {
 		player4 = controller.getOpponentBoard().get(2);
 	}
 
+	public Button getClose() {
+		return close;
+	}
+
 //	private void handle() {
 //		if (player1.isMouseTransparent() == false) {
 //			player1.switchTransparent();
@@ -240,4 +252,6 @@ public class RootPane extends BorderPane {
 //
 //		}
 //	}
+	
+	
 }

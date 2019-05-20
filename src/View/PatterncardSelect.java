@@ -7,6 +7,7 @@ import java.util.Random;
 
 import controller.BoardController;
 import controller.GameController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -62,7 +63,7 @@ public class PatterncardSelect extends Pane {
 		id = new ArrayList<>();
 		setGrid();
 		button = new Button("Pick This one!");
-		button.setOnAction(e -> handle());
+		button.setOnAction(e -> {handle(); });
 		button.setDisable(true);
 		this.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, null, null)));
 		randomButton = new Button("Random kaarten");
