@@ -30,10 +30,12 @@ public class SearchPlayerPane extends VBox  {
 
 		this.getChildren().setAll(online,search);
 	}
+
 	public void alert(String message) {
 		alert.setHeaderText(message);
 		alert.showAndWait();
 	}
+
 //	private void search() {
 //		this.username = online.getText();
 //		if(!username.equals("")) {
@@ -45,6 +47,7 @@ public class SearchPlayerPane extends VBox  {
 //				alert("Niemand gevonden met deze gebruikersnaam");
 //			}
 //		}
+
 		
 		/*
 		 * de tekst ophlen --------

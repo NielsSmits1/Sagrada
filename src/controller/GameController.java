@@ -6,29 +6,38 @@ import View.BoardPane;
 import View.DicePane;
 import View.MyScene;
 import View.PatterncardSelect;
-import View.RootPane;
+import View.GamePane;
+import View.ToolCardPane;
 import javafx.scene.Parent;
 import model.Dice;
 import model.Game;
 import model.PatternCard;
 //import model.Round;
 import model.Round;
+import model.Space;
 
 public class GameController {
 	private Game game;
-
-
 	private MyScene scene;
 	private PatterncardSelect option;
-	private RootPane rootpane;
+	private GamePane gamePane;
 	private BoardController boardcontroller;
+	private ToolcardController toolcardcontroller;
 	private Round round;
 
 	public GameController(MyScene s) {
 		scene = s;
+
+		game = new Game();
+		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
-//		game = new Game();
-//		game.setPlayableDices();
+		toolcardcontroller = new ToolcardController(this);
+
+	}
+	
+	public void setToolcardActive() {
+		gamePane.setToolCardActive();
+
 	}
 	
 
@@ -49,7 +58,7 @@ public class GameController {
 	}
 	
 	public DicePane getSelected() {
-		return rootpane.getSelected();
+		return gamePane.getSelected();
 	}
 	
 	public int getIdGame() {
@@ -65,16 +74,37 @@ public class GameController {
 	// }
 
 	public void setPatternCard(int id) {
+		game.setOwnId(id);
 		boardcontroller.setPatternCard(id);
 	}
 
 	public void setRootpane() {
-		rootpane = new RootPane(this);
-		scene.setRoot(rootpane);
+		gamePane = new GamePane(this);
+		scene.setRoot(gamePane);
 	}
 	
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();
+	}
+	
+	public int getOwnId() {
+		return game.getOwnId();
+	}
+	
+	public ArrayList<BoardPane> getOpponentBoard(){
+		return boardcontroller.getOpponentBoard();
+	}
+	
+	public ArrayList<ToolCardPane> getToolCards(){
+		return toolcardcontroller.getToolCards();
+	}
+	
+	public void updateEyes(int eyes, int dienumber, String color) {
+		game.updateEyes(eyes, dienumber, color);
+	}
+	
+	public void enableDiceMovement() {
+		boardcontroller.setAllowsMovement();
 	}
 	
 	

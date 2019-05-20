@@ -52,10 +52,28 @@ public class Round {
 		return database.Select("select * from player where game_idgame = "+ gameId +" AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
 	}
 
+
 //	public int calculateRounds(int gameId) {
 //		// dit sijn hoeveel turnes er nog in de ronde sijn die besig is
 //		return (int)getRemaines().get(0).get(2) - (int)GetPlayerWithChallengedStatus(gameId).get(0).get(0);
 //	}
+
+	public ArrayList<ArrayList<Object>> getRemaines() {
+		return database.Select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd " + 
+				"LEFT JOIN playerframefield AS pff ON gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor LEFT JOIN player AS "+
+				"p ON pff.player_idplayer = p.idplayer " + 
+				"WHERE gd.idgame = 2 AND p.isCurrentPlayer = 1");
+	}
+
+	// public void buildRemaningRounds() {
+//		while(getRemaines);
+	}
+
+	public int calculateRounds(int gameId) {
+		// dit sijn hoeveel turnes er nog in de ronde sijn die besig is
+		return (int)getRemaines().get(0).get(3) - (int)GetPlayerWithChallengedStatus(gameId).get(0).get(0);
+	}
+
 	// Calculates the amount of turns in a round
 	public int calculateTurns(int gameId) {
 		// dit sijn hoeveel turns er in een game sijn.

@@ -4,18 +4,21 @@ import java.util.ArrayList;
 
 import View.BoardPane;
 import View.DicePane;
+import model.Opponent;
 import model.PatternCard;
 import model.Space;
 
 public class BoardController {
 	private ArrayList<PatternCard> patternCardOptions;
 	private PatternCard finalCard;
+	private Opponent opponent;
 	private BoardPane boardpane;
+	private ArrayList<BoardPane> opponentBoard;
 	private GameController gameController;
 
 	public BoardController(GameController gameController) {
 		this.gameController = gameController;
-
+		opponentBoard = new ArrayList<>();
 		patternCardOptions = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {
 			patternCardOptions.add(new PatternCard());
@@ -38,11 +41,26 @@ public class BoardController {
 			boardpane.setSelected(getSelected(), x, y);
 		}
 	}
+	
+	public void validateToolcardTwo(int dieNumber, String color, int xPos, int yPos) {
+		if(finalCard.validateMove(xPos, yPos, dieNumber,color)) {
+			boardpane.moveDiceAccepted(dieNumber, color, xPos, yPos);
+			boardpane.disableMovement();
+		}
+	}
 	public DicePane getSelected() {
 		return gameController.getSelected();
 	}
 	public void setBoard() {
 		boardpane = new BoardPane(this);
+	}
+	
+	public void setOpponentBoard() {
+		opponent = new Opponent(getIdGame(), getOwnId());
+		for (int i = 0; i < getOpponentCords().size(); i++) {
+			opponentBoard.add(new BoardPane(getOpponentCords().get(i)));
+		}
+		
 	}
 
 	public BoardPane returnBoardPane() {
@@ -58,8 +76,9 @@ public class BoardController {
 	}
 
 	public void setPatternCard(int id) {
-		finalCard = new PatternCard(id, getIdGame());
+		finalCard = new PatternCard(id, getIdGame(),getOwnId());
 		setBoard();
+		setOpponentBoard();
 		gameController.setRootpane();
 	}
 
@@ -89,6 +108,25 @@ public class BoardController {
 	public void getTurns() {
 		gameController.getTurns();
 	}
+	
+	public int getOwnId() {
+		return gameController.getOwnId();
+	}
+	
+	public ArrayList<ArrayList<Space>> getOpponentCords(){
+		return opponent.getOpponents();
+	}
+	
+	public ArrayList<BoardPane> getOpponentBoard(){
+		return opponentBoard;
+	}
+	
+	public void setAllowsMovement() {
+		boardpane.enableDiceMovement();
+		boardpane.allowMovement();
+		finalCard.setColorExamption();
+	}
+	
 
 
 }
