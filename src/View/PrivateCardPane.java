@@ -20,7 +20,7 @@ public class PrivateCardPane extends Pane {
 	
 	private void setDice() {
 		diceColor = new DicePane();
-		diceColor.setColor("BLUE");
+		diceColor.setColor("blauw");
 		diceColor.setLayoutX(40);
 		diceColor.setLayoutY(65);
 	}

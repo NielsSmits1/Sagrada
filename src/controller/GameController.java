@@ -6,7 +6,8 @@ import View.BoardPane;
 import View.DicePane;
 import View.MyScene;
 import View.PatterncardSelect;
-import View.RootPane;
+import View.GamePane;
+import View.ToolCardPane;
 import javafx.scene.Parent;
 import model.Dice;
 import model.Game;
@@ -17,12 +18,11 @@ import model.Space;
 
 public class GameController {
 	private Game game;
-
-
 	private MyScene scene;
 	private PatterncardSelect option;
-	private RootPane rootpane;
+	private GamePane gamePane;
 	private BoardController boardcontroller;
+	private ToolcardController toolcardcontroller;
 	private Round round;
 	private GameProgress progress;
 
@@ -30,12 +30,16 @@ public class GameController {
 		
 		scene = s;
 		game = new Game();
-
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		progress = new GameProgress();
-		
+		toolcardcontroller = new ToolcardController(this);
 
+
+	}
+	
+	public void setToolcardActive() {
+		gamePane.setToolCardActive();
 	}
 	
 
@@ -56,7 +60,7 @@ public class GameController {
 	}
 	
 	public DicePane getSelected() {
-		return rootpane.getSelected();
+		return gamePane.getSelected();
 	}
 	
 	public int getIdGame() {
@@ -77,9 +81,13 @@ public class GameController {
 	}
 
 	public void setRootpane() {
-		rootpane = new RootPane(this);
+
+		gamePane = new GamePane(this);
 //		scene.setRoot(rootpane);
-		progress.getScene().setRoot(rootpane);
+		progress.getScene().setRoot(gamePane);
+		
+
+
 	}
 	
 	public BoardPane returnBoardPane() {
@@ -109,6 +117,18 @@ public class GameController {
 	
 	
 	
+	
+	public ArrayList<ToolCardPane> getToolCards(){
+		return toolcardcontroller.getToolCards();
+	}
+	
+	public void updateEyes(int eyes, int dienumber, String color) {
+		game.updateEyes(eyes, dienumber, color);
+	}
+	
+	public void enableDiceMovement() {
+		boardcontroller.setAllowsMovement();
+	}
 	
 	
 }
