@@ -21,6 +21,10 @@ public class ToolcardController {
 		gamecontroller.setToolcardActive();
 	}
 	
+	public void enableDiceMovement() {
+		gamecontroller.enableDiceMovement();
+	}
+	
 	private void setToolcardsDescription() {
 		toolcardpanes.add(new ToolCardPane(toolcard.getCardOneId(), toolcard.getCardOneDescription(), this));
 		toolcardpanes.add(new ToolCardPane(toolcard.getCardTwoId(), toolcard.getCardTwoDescription(), this));

@@ -76,6 +76,14 @@ public class DicePane extends Pane {
 		addEvent(this);
 		
 	}
+	
+	public DicePane(int eyes, String color, int dienumber) {
+		value = eyes;
+		this.color = color;
+		dieNumber = dienumber;
+		addDice(value, this.color);
+		
+	}
 
 	/// *
 	// Sets the color of the rectangle called dice.
@@ -114,6 +122,7 @@ public class DicePane extends Pane {
 		setColor(c);
 
 	}
+	
 
 	/// *
 	// This method is directly or indirectly used for making a template AND a dice.
@@ -232,6 +241,7 @@ public class DicePane extends Pane {
 	public int getDieNumber() {
 		return dieNumber;
 	}
+	
 
 	// public DicePane getSelected() {
 	// return boardPane.getSelected();

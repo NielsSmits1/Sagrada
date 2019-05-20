@@ -184,12 +184,17 @@ public class GamePane extends BorderPane {
 		for (int i = 0; i < dices.getChildren().size(); i++) {
             DicePane temporarilyDice = (DicePane)dices.getChildren().get(i);
             if(selected.getDieNumber() == temporarilyDice.getDieNumber() && selected.getColor().equals(temporarilyDice.getColor())) {
+            	if(selected.getValue() == 1) {
+            		decisionpane.giveError();
+            		return;
+            	}
                 temporarilyDice.removeEyes();
                 temporarilyDice.setValue(temporarilyDice.getValue()-1);
                 temporarilyDice.addDiceEyes(temporarilyDice.getValue());
                 disableToolcard();
                 setRight(null);
                 controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
+                
             }
             
         }
@@ -200,6 +205,10 @@ public class GamePane extends BorderPane {
 		for (int i = 0; i < dices.getChildren().size(); i++) {
             DicePane temporarilyDice = (DicePane)dices.getChildren().get(i);
             if(selected.getDieNumber() == temporarilyDice.getDieNumber() && selected.getColor().equals(temporarilyDice.getColor())) {
+            	if(selected.getValue() == 6) {
+            		decisionpane.giveError();
+            		return;
+            	}
                 temporarilyDice.removeEyes();
                 temporarilyDice.setValue(temporarilyDice.getValue()+1);
                 temporarilyDice.addDiceEyes(temporarilyDice.getValue());
@@ -223,6 +232,10 @@ public class GamePane extends BorderPane {
 	public void disableToolcard() {
 		toolcardIsActive = false;
 	}
+	
+//	public void enableDiceMovement() {
+//		player1.enableDiceMovement();
+//	}
 
 	/// *
 	// Returns selected, will be used in the class patternPane.

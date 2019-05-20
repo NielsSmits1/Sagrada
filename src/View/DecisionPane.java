@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 public class DecisionPane extends BorderPane{
 	
 	private Label informativeText;
+	private Label errortext;
 	private ArrayList<Button> buttonOption;
 	private GamePane gamepane;
 	
@@ -17,10 +18,12 @@ public class DecisionPane extends BorderPane{
 		setButtons();
 		this.gamepane = gamepane;
 		informativeText = new Label("Kies!");
+		errortext = new Label("");
 		HBox buttons = new HBox();
 		buttons.getChildren().addAll(buttonOption);
 		setTop(informativeText);
 		setCenter(buttons);
+		setBottom(errortext);
 	}
 	
 	private void setButtons() {
@@ -43,5 +46,9 @@ public class DecisionPane extends BorderPane{
 	
 	public void plus() {
 		gamepane.upSelected();
+	}
+	
+	public void giveError() {
+		errortext.setText("Dit is niet mogelijk");
 	}
 }

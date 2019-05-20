@@ -47,7 +47,7 @@ public class Toolcard {
 		case 1: activateToolCardOne();
 			
 			break;
-		case 2:
+		case 2: activateToolCardTwo();
 			
 			break;
 		case 3:
@@ -88,6 +88,62 @@ public class Toolcard {
 
 	private void activateToolCardOne() {
 		toolcardController.setToolcardActive();
+		
+	}
+	
+	private void activateToolCardTwo() {
+		toolcardController.enableDiceMovement();
+		
+		
+	}
+	
+	private void activateToolCardThree() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardFour() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardFive() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardSix() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardSeven() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardEight() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardNine() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardTen() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardEleven() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void activateToolCardTwelve() {
+		// TODO Auto-generated method stub
 		
 	}
 

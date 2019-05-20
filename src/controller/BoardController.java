@@ -41,6 +41,13 @@ public class BoardController {
 			boardpane.setSelected(getSelected(), x, y);
 		}
 	}
+	
+	public void validateToolcardTwo(int dieNumber, String color, int xPos, int yPos) {
+		if(finalCard.validateMove(xPos, yPos, dieNumber,color)) {
+			boardpane.moveDiceAccepted(dieNumber, color, xPos, yPos);
+			boardpane.disableMovement();
+		}
+	}
 	public DicePane getSelected() {
 		return gameController.getSelected();
 	}
@@ -112,6 +119,12 @@ public class BoardController {
 	
 	public ArrayList<BoardPane> getOpponentBoard(){
 		return opponentBoard;
+	}
+	
+	public void setAllowsMovement() {
+		boardpane.enableDiceMovement();
+		boardpane.allowMovement();
+		finalCard.setColorExamption();
 	}
 	
 

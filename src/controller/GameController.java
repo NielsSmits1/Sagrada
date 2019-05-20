@@ -101,5 +101,9 @@ public class GameController {
 		game.updateEyes(eyes, dienumber, color);
 	}
 	
+	public void enableDiceMovement() {
+		boardcontroller.setAllowsMovement();
+	}
+	
 	
 }
