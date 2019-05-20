@@ -15,24 +15,22 @@ import javafx.scene.layout.VBox;
 public class LeaderboardPane extends ScrollPane {
 	private ArrayList<LeaderboardPlayerLinePane> playerLine;
 	private VBox playerColumn = new VBox();
-	private LeaderboardController lc;
+//	private LeaderboardController lc;
 
-	public LeaderboardPane(HomeController self) {
-		lc = new LeaderboardController(self);
+	public LeaderboardPane() {
 		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
+//		lc = new LeaderboardController(self);
+//		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
 		
-		setPlayers();
+//		setPlayers();
 
 
-		playerColumn.getChildren().setAll(playerLine);
-		this.setContent(playerColumn);
-		this.setHbarPolicy(getHbarPolicy().NEVER);
-		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
-
+		setLayout();
 	}
 
 	public void addPlayerNameLine(String name) {
 		playerLine.add(new LeaderboardPlayerLinePane(name));
+	
 	}
 
 	public void addPlayerNameLineWithAmountOfGamesPlayed(String name, String amountPlayed) {
@@ -42,38 +40,47 @@ public class LeaderboardPane extends ScrollPane {
 		playerLine.add(new LeaderboardPlayerLinePane(name, amountWon));
 	}
 
-	public void setPlayers() {
+	public void setPlayersName() {
 		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
-		for (String playerName : lc.getPlayers()) {
-			addPlayerNameLine(playerName);
-		}
+//		for (String playerName : lc.getPlayers()) {
+//			addPlayerNameLine(playerName);
+//		}
+//	
+//		playerColumn.getChildren().setAll(playerLine);
+//		this.setContent(playerColumn);
+//		this.setHbarPolicy(getHbarPolicy().NEVER);
+//		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
+
+	}
 	
+	
+
+	public void setPlayersPlayed() {
+		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
+//		for (Map.Entry<String, String> playerGamesPlayed : lc.getPlayersFilteredByAmountOfGames().entrySet()) {
+//			addPlayerNameLineWithAmountOfGamesPlayed(playerGamesPlayed.getKey().toString(),
+//					playerGamesPlayed.getValue().toString());
+//		}
 		playerColumn.getChildren().setAll(playerLine);
 		this.setContent(playerColumn);
 		this.setHbarPolicy(getHbarPolicy().NEVER);
 		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 
 	}
-
-	public void setPlayers2() {
+	public void setPlayersWin() {
 		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
-		for (Map.Entry<String, String> playerGamesPlayed : lc.getPlayersFilteredByAmountOfGames().entrySet()) {
-			addPlayerNameLineWithAmountOfGamesPlayed(playerGamesPlayed.getKey().toString(),
-					playerGamesPlayed.getValue().toString());
-		}
-		playerColumn.getChildren().setAll(playerLine);
-		this.setContent(playerColumn);
-		this.setHbarPolicy(getHbarPolicy().NEVER);
-		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
-
-	}
-	public void setPlayers3() {
-		playerLine = new ArrayList<LeaderboardPlayerLinePane>();
-		for (Map.Entry playerGamesPlayedWon : lc.getPlayersFilteredByAmountOfGamesWon().entrySet()) {
-			addPlayerNameLineWithAmountOfGamesWon(playerGamesPlayedWon.getKey().toString(),
-					(int) playerGamesPlayedWon.getValue());
+//		for (Map.Entry playerGamesPlayedWon : lc.getPlayersFilteredByAmountOfGamesWon().entrySet()) {
+//			addPlayerNameLineWithAmountOfGamesWon(playerGamesPlayedWon.getKey().toString(),
+//					(int) playerGamesPlayedWon.getValue());
 			
-		}
+//		}
+		playerColumn.getChildren().setAll(playerLine);
+		this.setContent(playerColumn);
+		this.setHbarPolicy(getHbarPolicy().NEVER);
+		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
+
+	}
+	public void setLayout() {
 		playerColumn.getChildren().setAll(playerLine);
 		this.setContent(playerColumn);
 		this.setHbarPolicy(getHbarPolicy().NEVER);

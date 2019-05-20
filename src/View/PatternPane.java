@@ -2,6 +2,7 @@ package View;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 public class PatternPane extends StackPane{
@@ -24,16 +25,19 @@ public class PatternPane extends StackPane{
 		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
 		//Dice will be 'pasted' on the template.
 		///**
-		setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-
-				giveCords();
-
-			}
-			
-		});
+		setOnMouseClicked(e -> handle());
+		getChildren().add(template);
+		
+	}
+	
+	public PatternPane(BoardPane p, DicePane d) {
+		template = d;
+		boardPane = p;
+//		System.out.println("" + xPos + " " + yPos);
+		///*
+		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
+		//Dice will be 'pasted' on the template.
+		///**
 		getChildren().add(template);
 		
 	}
@@ -71,9 +75,9 @@ public class PatternPane extends StackPane{
 	///*
 		//get and delete the selected DicePane in rootPane.
 		///**
-	public DicePane getSelected() {
-		return boardPane.getSelected();
-	}
+//	public DicePane getSelected() {
+//		return boardPane.getSelected();
+//	}
 	
 	public void giveCords() {
 		boardPane.giveCords(xPos, yPos);
@@ -82,7 +86,9 @@ public class PatternPane extends StackPane{
 //	public void deleteSelected() {
 //		boardPane.deleteSelected();
 //	}
-	
+	public int getDiceNumber() {
+		return dice.getDieNumber();
+	}
 	public String getDiceColor() {
 		return dice.getColor();
 	}
@@ -117,7 +123,38 @@ public class PatternPane extends StackPane{
 	
 	public void setDice(DicePane selected) {
 		dice = selected;
+		dice.setMouseTransparent(true);
 		getChildren().add(dice);
+	}
+	
+	public void moveDice(int dieNumber, String color) {
+		boardPane.moveDice(dieNumber,color, xPos, yPos);
+	}
+	
+//	public void moveDiceAccepted(DicePane selected) {
+//		System.out.println(dienumber + diecolor);
+//		System.out.println(boardPane.getSelected().getEyes());
+//		dice = new DicePane(boardPane.getSelected().getEyes(), diecolor, dienumber);
+//		getChildren().add(dice);
+//	}
+	
+	public void handle() {
+		if(boardPane.getAllowsMovement()) {
+			if(boardPane.getSelected() == null) {
+				boardPane.setSelectedPatternPane(this);
+				return;
+			}else {
+				moveDice(boardPane.getSelected().getDiceNumber(), boardPane.getSelected().getDiceColor());
+				
+			}
+			
+		}
+		giveCords();
+	}
+	
+	public void setDiceNull() {
+		dice = null;
+//		getChildren().remove(1);
 	}
 	
 //	public boolean getNearDice(DicePane p) {

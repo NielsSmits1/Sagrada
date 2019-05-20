@@ -14,10 +14,13 @@ public class InlogController{
 	private MyScene scene;
 	private MenubarController menu;
 	private PlayerController controller;
+	private GameController game;
 
 	public InlogController(MyScene myScene) {
 		
 		scene = myScene;
+		
+		
 	}
 
 	public InlogPane showInlog() {
@@ -62,16 +65,23 @@ public class InlogController{
 	public void buildHome() {
 		//build and show
 		controller = new PlayerController(player.getUsername());
-		menu = new MenubarController(scene, this, controller);
+		
 		home = new HomeController(scene, player);
+		game = new GameController(scene);
+		menu = new MenubarController(scene, this, controller);
+//		scene.setRoot(new VBox(menu.getMenubar(),game.showOptions()));
 		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));
 	}
 
 	public InlogPane getInlog() {
 		return inlog;
 	}
+
+	public HomeController getHome() {
+		return home;
+	}
 	
 	
 	
-	
+		
 }

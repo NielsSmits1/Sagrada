@@ -1,5 +1,7 @@
 package View;
 
+import java.util.ArrayList;
+
 import controller.HomeController;
 import controller.PlayerController;
 import javafx.application.Platform;
@@ -17,11 +19,17 @@ public class Menubar extends MenuBar {
 	private MenuItem exit;
 	private MenuItem filter;
 	private MenuItem stats;
+	private MenuItem help;
 	private MyScene main;
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private PlayerController self;
 	private HomeController home;
+    private gameRules rules = new gameRules();
+	
+	
+	private ArrayList<Menu> gameList = new ArrayList<>();
+	private int x = 0;
 	
 	public Menubar(MyScene main, PlayerController self){
 		this.main = main;
@@ -47,13 +55,14 @@ public class Menubar extends MenuBar {
 //		exit.setOnAction(E -> exit());
 
 		filter = new MenuItem("Filter");
+		help = new MenuItem("spelregels");
 		stats = new MenuItem("Statistieken");
-//		stats.setOnAction(E -> showStats());
-
-		// menu.getExit().setOnAction(e -> model.Exit());
-		// menu.getLogout().setOnAction(e -> model.logout());
-
-		options.getItems().addAll(logout, stats, filter, exit);
+		stats.setOnAction(E -> showStats());
+		
+		//menu.getExit().setOnAction(e -> model.Exit());
+		//menu.getLogout().setOnAction(e -> model.logout());
+		
+		options.getItems().addAll(logout, stats, filter,help, exit);
 		this.getMenus().add(options);
 
 	private void showStats() {
@@ -78,6 +87,25 @@ public class Menubar extends MenuBar {
 	public MenuItem getStats() {
 		return stats;
 	}
+	
+	public MenuItem getHelp() {
+		return help;
+	}
+	
+	
+
+	public gameRules getRules() {
+		return rules;
+	}
+
+	//done
+	public void creatNewTabs() {
+		Menu gamex = new Menu("game" + x);
+		this.getMenus().add(gamex);
+		gameList.add(gamex);
+		x ++;
+	}
+	
 	
 	
 }
