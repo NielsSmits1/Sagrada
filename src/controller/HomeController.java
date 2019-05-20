@@ -1,8 +1,9 @@
 package controller;
 
-import View.*;
 import java.util.ArrayList;
 
+import View.HomePane;
+import View.MyScene;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,6 +14,11 @@ public class HomeController {
 	private SearchPlayerController sp;
 	private ChallengerController cpp;
 	private ChallengesController cp;
+	private LeaderboardController lc;
+	private PlayerController pc;
+	private MyScene scene;
+
+
 	private Player player;
 	private Player self;
 
@@ -20,14 +26,19 @@ public class HomeController {
 
 	public HomeController(MyScene scene, Player self) {
 		this.self = self;
-
-		sp = new SearchPlayerController();
-		cpp = new ChallengerController();
+		this.scene = scene;
+		pc = new PlayerController(self.getUsername());
+		sp = new SearchPlayerController(this);
+		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
-
-		home = new HomePane(sp.getSearchPlayerPane(this), cpp.getChallengerPane(), cp.getChallengesPane());
-
-		home.getSearch().getStats().setOnAction(e -> showStatsPlayer());
+		lc = new LeaderboardController(this);
+		
+		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
+		
+		
+		home.getPlayers().setOnAction(e -> lc.setPlayers1());
+		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
+		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
 
 	}
 
@@ -109,9 +120,8 @@ public class HomeController {
 
 		return home;
 	}
-
-	public HomePane getHome() {
-		return home;
-	}
+//	public void showHomePane() {
+//		home.createHomePane(pc, scene);
+//	}
 
 }
