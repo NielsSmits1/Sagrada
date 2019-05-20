@@ -26,6 +26,8 @@ public class GamePane extends BorderPane {
 	// Sets all instances of a variety of objects, some of them might be removed
 	/// later on.
 	/// **
+	private Button close;
+	
 	private BoardPane player1;
 	private BoardPane player2;
 	private BoardPane player3;
@@ -109,9 +111,11 @@ public class GamePane extends BorderPane {
 
 	private void setCards() {
 		// Creates new cards
+		this.close = new Button("opgeven");
 		pc = new PrivateCardPane();
 		ocp = new ObjectiveCardPane();
 		ocp2 = new ObjectiveCardPane();
+
 		toolcards = controller.getToolCards();
 		// Creates new headers
 		objectiveCard = new HeaderPane();
@@ -138,9 +142,13 @@ public class GamePane extends BorderPane {
 		tcp1.setSpacing(5);
 		VBox finalTcp = new VBox(toolCard, tcp1);
 		finalTcp.setSpacing(5);
-		HBox toolCards = new HBox(finalOc, finalPc, finalTcp);
+		HBox toolCards = new HBox(finalOc, finalPc, finalTcp,close);
 		toolCards.setSpacing(5);
 		bottom.setRight(toolCards);
+		
+
+//		close.setOnAction(e -> controller.getProgress().closeGame());
+	
 	}
 
 	/// *
@@ -255,34 +263,9 @@ public class GamePane extends BorderPane {
 		player4 = controller.getOpponentBoard().get(2);
 	}
 
-	// private void handle() {
-	// if (player1.isMouseTransparent() == false) {
-	// player1.switchTransparent();
-	// player2.switchTransparent();
-	// return;
-	// }
-	// if (player2.isMouseTransparent() == false) {
-	// player2.switchTransparent();
-	// player3.switchTransparent();
-	// return;
-	// }
-	// if (player3.isMouseTransparent() == false) {
-	// player3.switchTransparent();
-	// player4.switchTransparent();
-	// return;
-	// }
-	// if (player4.isMouseTransparent() == false) {
-	// player4.switchTransparent();
-	// player1.switchTransparent();
-	// return;
-	// }
-	// }
 
-	// private void refresh() {
-	// if (dices.getChildren().isEmpty()) {
-	// addDice();
-	// } else {
-	//
-	// }
-	// }
+	public Button getClose() {
+		return close;
+	}
+
 }

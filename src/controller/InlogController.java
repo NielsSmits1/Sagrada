@@ -14,6 +14,7 @@ public class InlogController{
 	private MyScene scene;
 	private MenubarController menu;
 	private PlayerController controller;
+	private GameController game;
 
 	public InlogController(MyScene myScene) {
 		
@@ -66,7 +67,9 @@ public class InlogController{
 		controller = new PlayerController(player.getUsername());
 		
 		home = new HomeController(scene, player);
+		game = new GameController(scene);
 		menu = new MenubarController(scene, this, controller);
+//		scene.setRoot(new VBox(menu.getMenubar(),game.showOptions()));
 		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));
 	}
 

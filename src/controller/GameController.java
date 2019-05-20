@@ -24,13 +24,17 @@ public class GameController {
 	private BoardController boardcontroller;
 	private ToolcardController toolcardcontroller;
 	private Round round;
+	private GameProgress progress;
 
 	public GameController(MyScene s) {
+		
 		scene = s;
 		game = new Game();
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
+		progress = new GameProgress();
 		toolcardcontroller = new ToolcardController(this);
+
 
 	}
 	
@@ -67,9 +71,9 @@ public class GameController {
 		return round.calculateTurns(getIdGame());
 	}
 
-	// public ArrayList<Space> getPatternCard(){
-	// return boardcontroller.getPatternCard();
-	// }
+	 public ArrayList<Space> getPatternCard(){
+	 return boardcontroller.getPatternCard();
+	 }
 
 	public void setPatternCard(int id) {
 		game.setOwnId(id);
@@ -77,8 +81,13 @@ public class GameController {
 	}
 
 	public void setRootpane() {
+
 		gamePane = new GamePane(this);
-		scene.setRoot(gamePane);
+//		scene.setRoot(rootpane);
+		progress.getScene().setRoot(gamePane);
+		
+
+
 	}
 	
 	public BoardPane returnBoardPane() {
@@ -92,6 +101,22 @@ public class GameController {
 	public ArrayList<BoardPane> getOpponentBoard(){
 		return boardcontroller.getOpponentBoard();
 	}
+
+
+	public RootPane getRootpane() {
+		return rootpane;
+	}
+
+
+	public GameProgress getProgress() {
+		return progress;
+	}
+	
+	
+	
+	
+	
+	
 	
 	public ArrayList<ToolCardPane> getToolCards(){
 		return toolcardcontroller.getToolCards();
