@@ -261,7 +261,6 @@ public class BoardPane extends Pane {
 	}
 
 	public void moveDiceAccepted(int dieNumber, String color, int xPos, int yPos) {
-		System.out.println("Ik stuur iets terug");
 		for (int i = 0; i < board.size(); i++) {
 			if (board.get(i).getX() == xPos && board.get(i).getY() == yPos) {
 				board.get(i).setDice(selected.getDice());
@@ -272,7 +271,7 @@ public class BoardPane extends Pane {
 			if (board.get(i).getDice() != null) {
 				if (board.get(i).getDiceNumber() == dieNumber && board.get(i).getDiceColor().equals(color)) {
 					selected = null;
-					board.get(i).setDiceNull();
+//					board.get(i).setDiceNull();
 				}
 			}
 			
