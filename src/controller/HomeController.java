@@ -19,8 +19,10 @@ public class HomeController {
 	private MyScene scene;
 
 
+
 	private Player player;
 	private Player self;
+
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 

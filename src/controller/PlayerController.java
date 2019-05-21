@@ -1,4 +1,4 @@
-opackage controller;
+package controller;
 
 import model.Player;
 

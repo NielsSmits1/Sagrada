@@ -13,9 +13,8 @@ public class ChallengesController {
 
 	private Challenge challenge;
 	private HomeController home;
+//	private multiThreads multi;
 
-	private Runnable refreshChallenge;
-	
 	public ChallengesController(HomeController home) {
 		this.home = home;
 		
@@ -24,7 +23,10 @@ public class ChallengesController {
 		challengesPane = new ChallengesPane();
 //		challengesPane.copyArraylist(challengesPL);
 //		challengesPane.getAcceptButton().setOnAction(e -> acceptChallenge());
+		Thread t1 = new multiThreads(this, 1000L);
+		t1.start();
 		refresh();
+
 	}
 	public ChallengesController() {
 		challenge = new Challenge(home.getSelf());
@@ -105,9 +107,10 @@ public class ChallengesController {
 		setChallengers();
 		challengesPane.setPlayerLine(challengesPL);
 		challengesPane.setLayout();
-		System.out.println("een beetje gay");
 		
 	}
+	
+	
 }
 	
 	

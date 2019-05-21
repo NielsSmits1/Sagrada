@@ -1,23 +1,27 @@
 package controller;
 
-public class multiThreads implements Runnable {
+public class multiThreads extends Thread {
 	private ChallengesController challenge;
 	private HomeController home;
 	private InlogController controller;
 	private long refreshRate;
 	
-	public multiThreads(InlogController inlog, long refreshRate) {
-		this.controller = inlog;
-		this.challenge = new ChallengesController(home);
-		this.refreshRate = Math.max(refreshRate, 2000);
-		run();
+	public multiThreads(ChallengesController challenge, long refreshRate) {
+		this.challenge = challenge;
+		this.refreshRate = Math.max(refreshRate, 10000L);
 	}
 	
 	@Override
 	public void run() {
 		while (true) {
-			challenge.refresh();
-			System.out.println("facking gay");
+			try {
+				this.challenge.getChallengesPane().setLayout();
+				System.out.println("facking gay");
+				Thread.sleep(refreshRate);
+			} catch (InterruptedException e) {
+				System.out.println("gay");
+			}
+			
 		}
 		
 	}
