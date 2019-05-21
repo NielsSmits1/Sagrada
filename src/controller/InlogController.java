@@ -15,8 +15,6 @@ public class InlogController{
 	private MenubarController menu;
 	private PlayerController controller;
 	private GameController game;
-	
-	private Runnable multi;
 
 	public InlogController(MyScene myScene) {
 		
@@ -71,7 +69,6 @@ public class InlogController{
 		home = new HomeController(scene, player);
 		game = new GameController(scene);
 		menu = new MenubarController(scene, this, controller);
-		multi = new multiThreads(this, 2000);
 //		scene.setRoot(new VBox(menu.getMenubar(),game.showOptions()));
 		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));
 	}
@@ -83,28 +80,6 @@ public class InlogController{
 	public HomeController getHome() {
 		return home;
 	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public MyScene getScene() {
-		return scene;
-	}
-
-	public MenubarController getMenu() {
-		return menu;
-	}
-
-	public PlayerController getController() {
-		return controller;
-	}
-
-	public GameController getGame() {
-		return game;
-	}
-	
-	
 	
 	
 	

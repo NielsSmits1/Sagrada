@@ -15,7 +15,7 @@ public class SearchPlayerController {
 		this.hc = hc;
 		searchPlayerPane = new SearchPlayerPane();
 		searchPlayerPane.getSearch().setOnAction(e -> this.search());
-		searchPlayerPane.getChallenge().setOnAction(e -> {challengePlayer(); System.out.println("dit us het");});
+		searchPlayerPane.getChallenge().setOnAction(e -> challengePlayer());
 		searchPlayerPane.getStats().setOnAction(e -> showStats());
 //		player = new Player(username);
 	}
@@ -36,10 +36,6 @@ public class SearchPlayerController {
 		}
 	}
 
-	
-	
-	
-	
 	private void challengePlayer() {
 		if (!hc.getPlayer().checkGameSize()) { // true = game less then 4 players
 			hc.getPlayer().createNewGame();

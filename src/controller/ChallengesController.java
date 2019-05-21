@@ -14,8 +14,6 @@ public class ChallengesController {
 	private Challenge challenge;
 	private HomeController home;
 
-	private Runnable refreshChallenge;
-	
 	public ChallengesController(HomeController home) {
 		this.home = home;
 		
@@ -105,7 +103,6 @@ public class ChallengesController {
 		setChallengers();
 		challengesPane.setPlayerLine(challengesPL);
 		challengesPane.setLayout();
-		System.out.println("een beetje gay");
 		
 	}
 }

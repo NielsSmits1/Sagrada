@@ -61,18 +61,12 @@ public class Player {
     public ArrayList<ArrayList<Object>> lastGamePlayers(){
     	return database.Select("SELECT username FROM player where game_idgame = '"+ getLastGame() +"'");
     }
-   
-    
     public void createNewGame() {
     	database.CUD("INSERT INTO GAME(creationdate) VALUES (now())");
     }
-   
-    
     public void addSelf() {
     	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + username +"', " + getLastGame() + " , 'Uitdager', 0, 'rood')"); // rood has to be variable between all colors
     }
-    
-    
     public void addChallenger() {
     	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + username +"', " + getLastGame() + " , 'Uitgedaagde', 0, 'rood')");  // rood has to be variable between all colors
     }
