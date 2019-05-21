@@ -58,7 +58,7 @@ public class LeaderboardController {
 			leaderboardPane.addPlayerNameLine(playerName);
 		}
 		leaderboardPane.setLayout();
-		System.out.println("at least this works");
+//		System.out.println("at least this works");
 	}
 	public LeaderboardPane getLeaderboardPane() {
 		LeaderboardPane lp = leaderboardPane;
