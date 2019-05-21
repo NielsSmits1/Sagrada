@@ -100,52 +100,6 @@ public class GameController {
 		builtGameStage();
 		return scene;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	public void setToolcardActive() {
 		gamePane.setToolCardActive();
@@ -222,9 +176,9 @@ public class GameController {
 	public void updateEyes(int eyes, int dienumber, String color) {
 		game.updateEyes(eyes, dienumber, color);
 	}
-
-	public void enableDiceMovement() {
-		boardcontroller.setAllowsMovement();
+	
+	public void enableDiceMovement(int i) {
+		boardcontroller.setAllowsMovement(i);
 	}
 	
 	

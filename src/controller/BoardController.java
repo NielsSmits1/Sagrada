@@ -121,10 +121,17 @@ public class BoardController {
 		return opponentBoard;
 	}
 	
-	public void setAllowsMovement() {
+	public void setAllowsMovement(int i) {
 		boardpane.enableDiceMovement();
 		boardpane.allowMovement();
-		finalCard.setColorExamption();
+		if(i == 2) {
+			finalCard.setColorExamption();
+
+		}
+		
+		if(i == 3) {
+			finalCard.setNumberExamption();
+		}
 	}
 	
 
