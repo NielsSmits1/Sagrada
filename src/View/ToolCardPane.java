@@ -23,7 +23,7 @@ public class ToolCardPane extends Pane {
 	public ToolCardPane(int id, String description, ToolcardController toolcardController) {
 		this.toolcardController = toolcardController;
 //		this.toolCardId = id;
-		toolCardId = 2;
+		toolCardId = 3;
 		cardPropertiesAlignment = new VBox();
 		button = new Button("Koop");
 		button.setOnAction(e -> handleButton());

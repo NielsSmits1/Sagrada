@@ -16,6 +16,7 @@ public class PatternCard {
 	private int idgame;
 	private int yourself;
 	private boolean hasColorExamption;
+	private boolean hasNumberExamption;
 
 	// private BoardController controller;
 	public PatternCard(int number, int idgame, int ownId) {
@@ -29,6 +30,7 @@ public class PatternCard {
 		setPatternField();
 		addCard();
 		hasColorExamption = false;
+		hasNumberExamption = false;
 	}
 
 	public PatternCard() {
@@ -174,6 +176,12 @@ public class PatternCard {
 	public void setColorExamption() {
 		hasColorExamption = true;
 	}
+	
+	public void setNumberExamption() {
+		System.out.println("heeft nummer exepctie");
+		hasNumberExamption = true;
+		
+	}
 
 	private boolean totalValidation(int x, int y, int dienumber, String diecolor) {
 		String color = diecolor;
@@ -245,7 +253,6 @@ public class PatternCard {
 	// checks if color is correct
 	private boolean validateColorTemplateBox(int x, int y, String diecolor) {
 		if (hasColorExamption) {
-
 			hasColorExamption = false;
 			return true;
 		}
@@ -263,6 +270,10 @@ public class PatternCard {
 	}
 
 	private boolean validateNumberTemplateBox(int x, int y, int dienumber, String diecolor) {
+		if(hasNumberExamption) {
+			hasColorExamption = false;
+			return true;
+		}
 		ArrayList<ArrayList<Object>> getQuery = database
 				.Select("SELECT value FROM tjpmsalt_db2.patterncardfield WHERE patterncard_idpatterncard = " + patternId
 						+ " && position_x = " + x + " && position_y = " + y);
@@ -546,5 +557,7 @@ public class PatternCard {
 	private ArrayList<ArrayList<Object>> getPosition(int dienumber, String diecolor){
 		return database.Select("SELECT position_x, position_y FROM tjpmsalt_db2.playerframefield WHERE idgame = " + idgame + " AND player_idplayer = " + yourself +" AND dienumber = " + dienumber + " AND diecolor = '" + diecolor +"';");
 	}
+
+
 
 }
