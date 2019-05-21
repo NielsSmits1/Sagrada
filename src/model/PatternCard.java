@@ -17,12 +17,15 @@ public class PatternCard {
 	private int yourself;
 	private boolean hasColorExamption;
 	private boolean hasNumberExamption;
+	private boolean hasNextToDiceExamption;
+	private BoardController controller;
 
 	// private BoardController controller;
-	public PatternCard(int number, int idgame, int ownId) {
+	public PatternCard(int number, int idgame, int ownId, BoardController bc) {
 		// controller = c;
 		// patternfield.clear();
 		patternfield = new ArrayList<>();
+		controller = bc;
 		this.idgame = idgame;
 		yourself = ownId;
 		setPatternId(number);
@@ -31,6 +34,7 @@ public class PatternCard {
 		addCard();
 		hasColorExamption = false;
 		hasNumberExamption = false;
+		hasNextToDiceExamption = false;
 	}
 
 	public PatternCard() {
@@ -123,10 +127,8 @@ public class PatternCard {
 	}
 
 	public void addOptionToDB() {
-		// database.CUD("DELETE FROM tjpmsalt_db2.patterncardoption WHERE
-		// player_idplayer = 1;");
-		// database.CUD("insert into tjpmsalt_db2.patterncardoption
-		// (patterncard_idpatterncard,player_idplayer) VALUES (" + patternId + ",1);");
+		 database.CUD("insert into tjpmsalt_db2.patterncardoption"
+		 + "(patterncard_idpatterncard,player_idplayer) VALUES (" + patternId + "," + yourself +");");
 	}
 
 	// TODO ADD THE CHOSEN PATTERNCARD TO PLAYERFRAMEFIELD
@@ -136,10 +138,8 @@ public class PatternCard {
 				.Select("SELECT dienumber FROM tjpmsalt_db2.playerframefield WHERE idgame = " + idgame
 						+ " && player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
 		if (getQuery.get(0).get(0) == null) {
-			System.out.println("eerste zet");
 			return true;
 		}
-		System.out.println("andere zet");
 		return false;
 
 	}
@@ -159,7 +159,6 @@ public class PatternCard {
 	}
 
 	public void setPositionEmpty(int dienumber, String diecolor, int xPos, int yPos) {
-		System.out.println("" + yourself + " " + idgame + " " + dienumber + " " + diecolor);
 		database.CUD("UPDATE playerframefield SET diecolor = null, dienumber = null  WHERE player_idplayer = "
 				+ yourself + " AND idgame = " + idgame + " AND dienumber = " + dienumber + " AND diecolor = '"
 				+ diecolor + "';");
@@ -178,7 +177,6 @@ public class PatternCard {
 	}
 	
 	public void setNumberExamption() {
-		System.out.println("heeft nummer exepctie");
 		hasNumberExamption = true;
 		
 	}
@@ -187,7 +185,7 @@ public class PatternCard {
 		String color = diecolor;
 		int old_x = 0;
 		int old_y = 0;
-		if (hasColorExamption) {
+		if (hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
 			old_x = (int)getPosition(dienumber, diecolor).get(0).get(0);
 			old_y = (int)getPosition(dienumber, diecolor).get(0).get(1);
 			setPositionEmpty(dienumber, diecolor, x, y);
@@ -209,46 +207,56 @@ public class PatternCard {
 		// color = "paars";
 		// break;
 		// }
-		if(hasColorExamption) {
-			if (validateStartsInCorner(x, y) && validateColorTemplateBox(x, y, color)
-					&& validateNumberTemplateBox(x, y, dienumber, color)) {
-				moveDie(dienumber, color, x, y);
-				return true;
-			}else {
-				moveDie(dienumber, color, old_x, old_y);
-				return false;
-			}
-		}
+//		if(hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
+//			if (validateStartsInCorner(x, y) && validateColorTemplateBox(x, y, color)
+//					&& validateNumberTemplateBox(x, y, dienumber, color)) {
+//				moveDie(dienumber, color, x, y);
+//				
+//				return true;
+//			}else {
+//				moveDie(dienumber, color, old_x, old_y);
+//				return false;
+//			}
+//		}
 		if (checkFirstMove()) {
 			if (validateStartsInCorner(x, y) && validateColorTemplateBox(x, y, color)
 					&& validateNumberTemplateBox(x, y, dienumber, color)) {
+				
 				addDiceToField(x, y, dienumber, color);
-
+				if(hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
+					controller.disableMovement(old_x, old_y);
+				}
+				System.out.println("Eerste move");
 				return true;
 			}
 		} else {
-			if (hasColorExamption) {
 				if (validateColorTemplateBox(x, y, color) && validateNumberTemplateBox(x, y, dienumber, color)
 						&& isEmptyPlace(x, y) && validateNextToDice(x, y)
 						&& validateNearbyDice(x, y, dienumber, color)) {
 					moveDie(dienumber, color, x, y);
+					if(hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
+					controller.disableMovement(old_x, old_y);
+					}
 					return true;
 				}else {
+					if(hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
 					moveDie(dienumber, diecolor, old_x, old_y);
+					}
 					return false;
 				}
 				
-				
-			}
-			if (validateColorTemplateBox(x, y, color) && validateNumberTemplateBox(x, y, dienumber, color)
-					&& isEmptyPlace(x, y) && validateNextToDice(x, y) && validateNearbyDice(x, y, dienumber, color)) {
-
-				addDiceToField(x, y, dienumber, color);
-				return true;
-			}
 		}
 		return false;
 	}
+			
+//			if (validateColorTemplateBox(x, y, color) && validateNumberTemplateBox(x, y, dienumber, color)
+//					&& isEmptyPlace(x, y) && validateNextToDice(x, y) && validateNearbyDice(x, y, dienumber, color)) {
+//
+//				addDiceToField(x, y, dienumber, color);
+//				return true;
+//			}
+//		return false;
+
 
 	// checks if color is correct
 	private boolean validateColorTemplateBox(int x, int y, String diecolor) {
@@ -271,7 +279,7 @@ public class PatternCard {
 
 	private boolean validateNumberTemplateBox(int x, int y, int dienumber, String diecolor) {
 		if(hasNumberExamption) {
-			hasColorExamption = false;
+			hasNumberExamption = false;
 			return true;
 		}
 		ArrayList<ArrayList<Object>> getQuery = database
@@ -436,7 +444,10 @@ public class PatternCard {
 	// TODO niet in combinatie met checkfirstmove doen
 	private boolean validateNextToDice(int x, int y) {
 		// above
-		System.out.println("nextToDice");
+		if(hasNextToDiceExamption) {
+			hasNextToDiceExamption = false;
+			return true;
+		}
 		if (y - 1 > 0) {
 			ArrayList<ArrayList<Object>> upPosition = database
 					.Select("SELECT dienumber FROM tjpmsalt_db2.playerframefield WHERE player_idplayer = " + yourself
@@ -556,6 +567,11 @@ public class PatternCard {
 	
 	private ArrayList<ArrayList<Object>> getPosition(int dienumber, String diecolor){
 		return database.Select("SELECT position_x, position_y FROM tjpmsalt_db2.playerframefield WHERE idgame = " + idgame + " AND player_idplayer = " + yourself +" AND dienumber = " + dienumber + " AND diecolor = '" + diecolor +"';");
+	}
+
+	public void setNextToDiceExamption() {
+		// TODO Auto-generated method stub
+		hasNextToDiceExamption = true;
 	}
 
 

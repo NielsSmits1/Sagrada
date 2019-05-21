@@ -41,44 +41,49 @@ public class Toolcard {
 		}
 
 	}
-	
+
 	public void activateToolcard(int id) {
 		switch (id) {
-		case 1: activateToolCardOne();
-			
+		case 1:
+			activateToolCardOne();
+
 			break;
-		case 2: activateToolCardTwo();
-			
+		case 2:
+			activateToolCardTwo();
+
 			break;
-		case 3: activateToolCardThree();
-			
+		case 3:
+			activateToolCardThree();
+
 			break;
 		case 4:
-			
+
 			break;
 		case 5:
-			
+
 			break;
 		case 6:
-			
+			activateToolCardSix();
+
 			break;
 		case 7:
-			
+
 			break;
 		case 8:
-			
+
 			break;
 		case 9:
-			
+			activateToolCardNine();
 			break;
 		case 10:
-			
+			activateToolCardTen();
 			break;
 		case 11:
-			
+			activateToolCardEleven();
+
 			break;
 		case 12:
-			
+
 			break;
 
 		default:
@@ -87,65 +92,63 @@ public class Toolcard {
 	}
 
 	private void activateToolCardOne() {
-		toolcardController.setToolcardActive();
-		
+		toolcardController.setToolcardOneActive();
+
 	}
-	
+
 	private void activateToolCardTwo() {
 		toolcardController.enableDiceMovement(2);
-		
-		
+
 	}
-	
+
 	private void activateToolCardThree() {
 		toolcardController.enableDiceMovement(3);
 
-		
 	}
-	
+
 	private void activateToolCardFour() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void activateToolCardFive() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void activateToolCardSix() {
-		// TODO Auto-generated method stub
-		
+		toolcardController.setToolcardSixActive();
+
 	}
-	
+
 	private void activateToolCardSeven() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void activateToolCardEight() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void activateToolCardNine() {
 		// TODO Auto-generated method stub
-		
+		toolcardController.enableDiceMovement(9);
 	}
-	
+
 	private void activateToolCardTen() {
-		// TODO Auto-generated method stub
-		
+		toolcardController.setToolcardTenActive();
+
 	}
-	
+
 	private void activateToolCardEleven() {
-		// TODO Auto-generated method stub
-		
+		toolcardController.setToolcardElevenActive();
+
 	}
-	
+
 	private void activateToolCardTwelve() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public int getCardOneId() {

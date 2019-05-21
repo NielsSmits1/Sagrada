@@ -101,9 +101,21 @@ public class GameController {
 		return scene;
 	}
 
-	public void setToolcardActive() {
-		gamePane.setToolCardActive();
+	public void setToolcardOneActive() {
+		gamePane.setToolCardOneActive();
 
+	}
+	
+	public void setToolcardSixActive() {
+		gamePane.setToolCardSixActive();
+	}
+	
+	public void setToolcardTenActive() {
+		gamePane.setToolCardTenActive();
+	}
+	
+	public void setToolcardElevenActive() {
+		gamePane.setToolCardElevenActive();
 	}
 
 	public Parent showOptions() {
@@ -179,6 +191,15 @@ public class GameController {
 	
 	public void enableDiceMovement(int i) {
 		boardcontroller.setAllowsMovement(i);
+	}
+	
+	public void swapDice(int dienumber, String color, int value, int chosenvalue) {
+		game.getDiceWithChosenValue(dienumber, color, value, chosenvalue);
+		gamePane.addDice();
+	}
+	
+	public int returnAmountOfOpponents() {
+		return opponents.length;
 	}
 	
 	

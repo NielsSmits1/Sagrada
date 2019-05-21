@@ -195,12 +195,29 @@ public class Game {
 
 		return playableDices;
 	}
+	
+	public void getDiceWithChosenValue(int dienumber, String color, int value, int chosenvalue) {
+		diceArray.add(new Dice(dienumber, color, value));
+		for (int i = 0; i < playableDices.size(); i++) {
+			if(playableDices.get(i).getDieNumber() == dienumber && playableDices.get(i).getDieColor().equals(color)) {
+				playableDices.remove(i);
+			}
+		}
+		int index = r.nextInt(diceArray.size());
+		Dice newDice = diceArray.get(index);
+		while(newDice.getEyes() != chosenvalue) {
+			index = r.nextInt(diceArray.size());
+			newDice = diceArray.get(index);
+		}
+		diceArray.remove(index);
+		playableDices.add(newDice);
+	}
 
 
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			int randomDie = r.nextInt(17) + 1;
+			int randomDie = r.nextInt(18) + 1;
 			String[] colors = { "blauw", "groen", "geel", "rood", "paars" };
 			String color = colors[r.nextInt(5)];
 			for (int j = 0; j < diceArray.size(); j++) {
