@@ -1,13 +1,21 @@
 package controller;
 
+
 import View.Menubar;
 import View.MyScene;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
+import model.MenuBarModel;
+
 
 public class MenubarController {
-
+	
 	private Menubar menu;
+	private MenuBarModel menuModel;
+	
+	private PlayerController self;
+
+
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlogController;
@@ -33,6 +41,7 @@ public class MenubarController {
 	public Menubar getMenubar() {
 
 		return menu;
+
 
 	}
 
