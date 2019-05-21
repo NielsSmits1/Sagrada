@@ -16,8 +16,10 @@ public class MyScene extends Scene {
 //        
 //        setRoot(rules);
         
-         inlog.showInlog();
-        setRoot(inlog.show());
+//         inlog.showInlog();
+//        setRoot(inlog.show());
+    	setRoot(game.showOptions());
+
 
     }
     public void builtNewGame() {

@@ -105,9 +105,9 @@ public class GameController {
 	}
 
 
-	public RootPane getRootpane() {
-		return rootpane;
-	}
+//	public RootPane getRootpane() {
+//		return rootpane;
+//	}
 
 
 	public GameProgress getProgress() {

@@ -5,6 +5,7 @@ import View.Menubar;
 import View.MyScene;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
+import model.MenuBarModel;
 
 
 public class MenubarController {
@@ -15,7 +16,6 @@ public class MenubarController {
 	private PlayerController self;
 
 
-	private Menubar menu;
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlogController;
