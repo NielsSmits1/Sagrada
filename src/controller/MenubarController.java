@@ -25,11 +25,13 @@ public class MenubarController {
 
 	public MenubarController(MyScene scene, InlogController controller, PlayerController player) {
 
+		
 		this.scene = scene;
 		this.inlogController = controller;
 		this.controller = player;
-		game = new GameController(scene);
-		menu = new Menubar(scene, this.controller);
+		menuModel = new MenuBarModel(this.scene);
+		game = new GameController(this.scene);
+		menu = new Menubar(this.scene, this.controller);
 
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());

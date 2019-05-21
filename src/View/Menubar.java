@@ -50,7 +50,7 @@ public class Menubar extends MenuBar {
 		options = new Menu("opties");
 
 		logout = new MenuItem("Log-out");
-		logout.setOnAction(E -> logOut());
+//		logout.setOnAction(E -> logOut());
 		exit = new MenuItem("Afsluiten");
 //		exit.setOnAction(E -> exit());
 
@@ -64,6 +64,7 @@ public class Menubar extends MenuBar {
 		
 		options.getItems().addAll(logout, stats, filter,help, exit);
 		this.getMenus().add(options);
+	}
 
 	private void showStats() {
 		alert.setHeaderText(home.getStats());

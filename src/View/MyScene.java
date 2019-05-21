@@ -16,9 +16,9 @@ public class MyScene extends Scene {
 //        
 //        setRoot(rules);
         
-//         inlog.showInlog();
-//        setRoot(inlog.show());
-    	setRoot(game.showOptions());
+         inlog.showInlog();
+        setRoot(inlog.show());
+//    	setRoot(game.showOptions());
 
 
     }
