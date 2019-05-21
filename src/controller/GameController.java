@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import View.BoardPane;
 import View.DicePane;
+import View.GamePane;
 import View.MyScene;
 import View.PatterncardSelect;
-import View.GamePane;
 import View.ToolCardPane;
 import javafx.scene.Parent;
 import model.Dice;
@@ -105,8 +105,8 @@ public class GameController {
 	}
 
 
-	public RootPane getRootpane() {
-		return rootpane;
+	public GamePane getRootpane() {
+		return gamePane;
 	}
 
 

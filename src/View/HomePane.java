@@ -119,9 +119,6 @@ public class HomePane extends Pane{
 		players.setPrefSize(200, 30);
 		playersPlayed.setPrefSize(200, 30);
 		playersWins.setPrefSize(200, 30);
-//		players.setOnAction(e -> LeaderboardController.setPlayers1());
-//		playersPlayed.setOnAction(e -> LeaderboardController.setPlayers2());
-//		playersWins.setOnAction(e -> LeaderboardController.setPlayers3());
 		boxie.getChildren().addAll(lb, players, playersPlayed, playersWins);
 		this.getChildren().add(boxie);
 	}

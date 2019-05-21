@@ -2,14 +2,8 @@ package View;
 
 import java.util.ArrayList;
 
-import controller.ChallengesController;
-import controller.HomeController;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.Challenge;
 
 public class ChallengesPane extends ScrollPane {
 
