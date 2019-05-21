@@ -13,13 +13,14 @@ public class MenubarController {
 	private InlogController inlogController;
 	private PlayerController controller;
 
-	private GameProgress game = new GameProgress();
+	private GameController game;
 
 	public MenubarController(MyScene scene, InlogController controller, PlayerController player) {
 
 		this.scene = scene;
 		this.inlogController = controller;
 		this.controller = player;
+		game = new GameController(scene);
 		menu = new Menubar(scene, this.controller);
 
 		menu.getExit().setOnAction(e -> exit());
