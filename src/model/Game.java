@@ -21,7 +21,7 @@ public class Game {
 	public Game(Player self) {
 
 	}
-	
+
 	
 	// private Random r;
 
