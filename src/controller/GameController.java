@@ -129,8 +129,8 @@ public class GameController {
 		game.updateEyes(eyes, dienumber, color);
 	}
 	
-	public void enableDiceMovement() {
-		boardcontroller.setAllowsMovement();
+	public void enableDiceMovement(int i) {
+		boardcontroller.setAllowsMovement(i);
 	}
 	
 	

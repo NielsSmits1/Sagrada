@@ -50,7 +50,7 @@ public class Toolcard {
 		case 2: activateToolCardTwo();
 			
 			break;
-		case 3:
+		case 3: activateToolCardThree();
 			
 			break;
 		case 4:
@@ -92,13 +92,14 @@ public class Toolcard {
 	}
 	
 	private void activateToolCardTwo() {
-		toolcardController.enableDiceMovement();
+		toolcardController.enableDiceMovement(2);
 		
 		
 	}
 	
 	private void activateToolCardThree() {
-		// TODO Auto-generated method stub
+		toolcardController.enableDiceMovement(3);
+
 		
 	}
 	

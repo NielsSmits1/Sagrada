@@ -22,9 +22,9 @@ public class MenuBarModel {
 		Platform.exit();
 	}
 	
-	public Pane logOut() {
-		pane = new InlogPane();
-		return pane;
-	}
+//	public Pane logOut() {
+//		pane = new InlogPane();
+//		return pane;
+//	}
 
 }
