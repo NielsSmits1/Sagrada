@@ -1,12 +1,8 @@
 package controller;
 
 import View.SearchPlayerPane;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import model.Player;
 
 public class SearchPlayerController {

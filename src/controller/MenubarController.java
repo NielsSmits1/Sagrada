@@ -35,7 +35,7 @@ public class MenubarController {
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 //		menu.getHelp().setOnAction(e -> game.builtAlertbox());
 //		inlogController.getHome().getHome().getGameTab().setOnAction(e -> menu.creatNewTabs());
-		inlogController.getHome().getHome().getGameTab().setOnAction(e -> game.builtGameStage());
+		inlogController.getHome().getHome().getGameTab().setOnAction(e ->game.builtGameStage());
 	}
 
 	public Menubar getMenubar() {

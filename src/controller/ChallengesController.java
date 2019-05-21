@@ -1,14 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 import View.ChallengesPane;
 import View.ChallengesPlayerLinePane;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import model.Challenge;
 import model.Player;
 

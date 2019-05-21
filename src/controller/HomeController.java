@@ -124,4 +124,10 @@ public class HomeController {
 //		home.createHomePane(pc, scene);
 //	}
 
+	public HomePane getHome() {
+		return home;
+	}
+	
+	
+
 }

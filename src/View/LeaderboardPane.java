@@ -1,14 +1,8 @@
 package View;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import controller.HomeController;
-import controller.LeaderboardController;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 

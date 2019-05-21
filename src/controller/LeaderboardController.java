@@ -2,7 +2,6 @@ package controller;
 
 import java.util.Map;
 
-import View.ChallengesPane;
 import View.LeaderboardPane;
 import model.Leaderboard;
 

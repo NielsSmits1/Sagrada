@@ -1,8 +1,5 @@
 package View;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 public class PatternPane extends StackPane{
