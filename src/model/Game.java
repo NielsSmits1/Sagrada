@@ -21,7 +21,7 @@ public class Game {
 	public Game(Player self) {
 
 	}
-	private ArrayList<Round> rounds;
+
 	
 	// private Random r;
 

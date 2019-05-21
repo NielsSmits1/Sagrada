@@ -1,11 +1,7 @@
 package View;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import controller.ChallengesController;
-import controller.HomeController;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 

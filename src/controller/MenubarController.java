@@ -5,6 +5,7 @@ import View.Menubar;
 import View.MyScene;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
+import model.MenuBarModel;
 
 
 public class MenubarController {
@@ -15,7 +16,6 @@ public class MenubarController {
 	private PlayerController self;
 
 
-	private Menubar menu;
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlogController;
@@ -35,7 +35,7 @@ public class MenubarController {
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 //		menu.getHelp().setOnAction(e -> game.builtAlertbox());
 //		inlogController.getHome().getHome().getGameTab().setOnAction(e -> menu.creatNewTabs());
-		inlogController.getHome().getHome().getGameTab().setOnAction(e -> game.builtGameStage());
+		inlogController.getHome().getHome().getGameTab().setOnAction(e ->game.builtGameStage());
 	}
 
 	public Menubar getMenubar() {
