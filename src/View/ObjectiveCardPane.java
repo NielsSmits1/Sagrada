@@ -16,7 +16,7 @@ public class ObjectiveCardPane extends Pane{
 	}
 	
 	private void setCard() {
-		card = new Rectangle(0,0, 150, 200);
+		card = new Rectangle(0,0, 200, 275);
 		card.setStroke(Color.BLACK);
 		card.setFill(Color.DARKSLATEGREY);
 	}

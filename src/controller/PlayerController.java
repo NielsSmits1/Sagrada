@@ -73,7 +73,7 @@ public class PlayerController {
 				+ "\nAantal verschillende tegenstanders waartegen gespeeld is: " + player.getAmountOfUniquePlayers();
 		return stats;
 	}
-	
+//	
 //	public String getStatsPlayer(String username) {
 //		player.setDifferendPlayer(username);
 //		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWonPlayer() + " : " + player.getTimesLostPlayer()

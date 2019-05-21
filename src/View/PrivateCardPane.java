@@ -13,7 +13,7 @@ public class PrivateCardPane extends Pane {
 		getChildren().addAll(card, diceColor);
 	}
 	private void setCard() {
-		card = new Rectangle(0,0, 150, 200);
+		card = new Rectangle(0,0, 200, 275);
 		card.setStroke(Color.BLACK);
 		card.setFill(Color.DARKSLATEGREY);
 	}
@@ -21,8 +21,8 @@ public class PrivateCardPane extends Pane {
 	private void setDice() {
 		diceColor = new DicePane();
 		diceColor.setColor("blauw");
-		diceColor.setLayoutX(40);
-		diceColor.setLayoutY(65);
+		diceColor.setLayoutX(65);
+		diceColor.setLayoutY(93.5);
 	}
 
 }
