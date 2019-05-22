@@ -157,6 +157,8 @@ public class BoardPane extends Pane {
 		getChildren().add(field);
 		// System.out.println("Should have worked");
 	}
+	
+	
 
 	private void setOpponentBoard(ArrayList<Space> opponentBoard) {
 		int counter = 0;
