@@ -49,13 +49,20 @@ public class PatternCard {
 		setpatternfield();
 	}
 	
-	public PatternCard(int idgame) {
+	public PatternCard(int ownId, int idgame, BoardController bc) {
 		random = new Random();
+		yourself = ownId;
+		this.idgame = idgame;
+		controller = bc;
 		patternfield = new ArrayList<>();
 		generateRandomPatternCard();
 		insertRandomPatternCardIntoDB();
+		setPatternId(getHighestPatternId());
 		p = getSelect();
 		addCard();
+		hasColorExamption = false;
+		hasNumberExamption = false;
+		hasNextToDiceExamption = false;
 //		setpatternfield();
 	}
 
@@ -125,7 +132,7 @@ public class PatternCard {
 	private boolean checkFirstMove() {
 		ArrayList<ArrayList<Object>> getQuery = database
 				.Select("SELECT dienumber FROM tjpmsalt_db2.playerframefield WHERE idgame = " + idgame
-						+ " && player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
+						+ " AND player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
 		if (getQuery.get(0).get(0) == null) {
 			return true;
 		}

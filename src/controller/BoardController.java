@@ -79,7 +79,7 @@ public class BoardController {
 	}
 	
 	public void setRandomCard() {
-		finalCard = new PatternCard(getIdGame());
+		finalCard = new PatternCard(getOwnId(), getIdGame(), this);
 		setBoard();
 		setOpponentBoard();
 		gameController.setRootpane();

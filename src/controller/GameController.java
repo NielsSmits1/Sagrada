@@ -203,6 +203,7 @@ public class GameController {
 	}
 	
 	public void setRandomCard() {
+		game.setOwnId();
 		boardcontroller.setRandomCard();
 	}
 	
