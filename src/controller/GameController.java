@@ -202,6 +202,10 @@ public class GameController {
 		return opponents.length;
 	}
 	
+	public void setRandomCard() {
+		boardcontroller.setRandomCard();
+	}
+	
 	
 
 }

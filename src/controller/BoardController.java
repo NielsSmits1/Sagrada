@@ -70,15 +70,23 @@ public class BoardController {
 		return patternCardOptions;
 	}
 
-	public ArrayList<Space> getPatternCard() {
-		return finalCard.getRandom();
-	}
 
 	public void setPatternCard(int id) {
 		finalCard = new PatternCard(id, getIdGame(),getOwnId(), this);
 		setBoard();
 		setOpponentBoard();
 		gameController.setRootpane();
+	}
+	
+	public void setRandomCard() {
+		finalCard = new PatternCard(getIdGame());
+		setBoard();
+		setOpponentBoard();
+		gameController.setRootpane();
+	}
+	
+	public ArrayList<Space> getPatternCard(){
+		return finalCard.getPatternField();
 	}
 
 

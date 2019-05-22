@@ -64,7 +64,7 @@ public class PatterncardSelect extends Pane {
 	/// **
 
 	private void handleRandomCard() {
-		
+		controller.setRandomCard();
 	}
 
 	private void setGrid() {
