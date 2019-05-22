@@ -1,52 +1,89 @@
 package controller;
 
+import java.util.ArrayList;
+
 import View.SearchPlayerPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import model.Challenge;
+import model.Game;
 import model.Player;
 
 public class SearchPlayerController {
-	private SearchPlayerPane searchPlayerPane;
+	private SearchPlayerPane spp;
 	private HomeController hc;
 	private Player player;
+	private Player self;
+	private Challenge ch;
+	private ChallengerController cp;
+	private Game game = new Game();
 	private Alert alert = new Alert(AlertType.INFORMATION);
 
-	public SearchPlayerController(HomeController hc) {
+	public SearchPlayerController(HomeController hc, ChallengerController cp) {
+		this.cp = cp;
 		this.hc = hc;
-		searchPlayerPane = new SearchPlayerPane();
-		searchPlayerPane.getSearch().setOnAction(e -> this.search());
-		searchPlayerPane.getChallenge().setOnAction(e -> challengePlayer());
-		searchPlayerPane.getStats().setOnAction(e -> showStats());
+		spp = new SearchPlayerPane();
+		spp.getSearch().setOnAction(e -> this.search());
+		spp.getChallenge().setOnAction(e -> challengePlayer());
+		spp.getStats().setOnAction(e -> showStats());
+		self = hc.getSelf();
+		this.RefreshChoiceBox();
 //		player = new Player(username);
 	}
 
 	private void search() {
 
-		searchPlayerPane.setUsername(searchPlayerPane.getOnline().getText());
-		System.out.println(searchPlayerPane.getUsername());
-		if (!searchPlayerPane.getUsername().equals("")) {
-			if (hc.usernameExist(searchPlayerPane.getUsername())) {
-				searchPlayerPane.showPlayer(searchPlayerPane.getUsername());
+		spp.setUsername(spp.getOnline().getText());
+		player = new Player(spp.getUsername());
+		if (!spp.getUsername().equals("")) {
+			if (player.checkUsernameExists()) {
+				spp.showPlayer(player.getUsername());
 
 			} else {
-//				searchPlayerPane.setAlert(alert);
-				searchPlayerPane.alert("Niemand gevonden met deze gebruikersnaam");
-				searchPlayerPane.getAlert();
+				spp.alert("Niemand gevonden met deze gebruikersnaam");
+				spp.getAlert();
 			}
 		}
 	}
 
 	private void challengePlayer() {
-		if (!hc.getPlayer().checkGameSize()) { // true = game less then 4 players
-			hc.getPlayer().createNewGame();
-		}
-		if (hc.getSelf().checkSelf()) { // true = already in game false = not in game
-			hc.getPlayer().addChallenger();
-		} else {
-			hc.getSelf().addSelf();
-			hc.getPlayer().addChallenger();
+		String[] choice = spp.getChoice().split("Voeg toe aan spel nummer: ");
+		 
+		if(self.checkIfGame(player.getUsername())) {
+			spp.alert("U sit al in een game met dese persoon");
+			spp.getAlert();
+		}else {
+			Game g = new Game();
+			if(spp.getChoice().equals("Nieuw spel")) {
+				g.createNewGame();
+			}else {
+				int c =(Integer.parseInt(choice[1])); 
+				g.setGameId(c);
+			}
+			if(!g.alreadyInGame(self)) {
+				g.addPlayer(self, "Uitdager");
+			}
+			g.addPlayer(player, "Uitgedaagde");
+			//games.add(g);
+			cp.refresh();
+			RefreshChoiceBox();
 		}
 
+	}
+	private void RefreshChoiceBox() {
+		ArrayList<String> op = new ArrayList<String>();
+		op.add("Nieuw spel");
+		for(ArrayList<Object> g : game.countOpenChallenges(self.getUsername())) {
+			op.add("Voeg toe aan spel nummer: " + Integer.toString((int)g.get(0)));
+		}
+		spp.setChoiceBox(op);
+		
+	}
+
+	public void createChallenge() {
+		ch = new Challenge();
+		ch.addChallenger(self);
+		ch.addChallengee(player);
 	}
 
 //	public void showPlayerInformation() {
@@ -58,14 +95,24 @@ public class SearchPlayerController {
 //
 //		
 //	}
+	public String getStatsPlayer() {
+//		player.setDifferendPlayer(username);
+		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWon() + " : " + player.getTimesLost()
+				+ "\nHoogst behaalde score: " + player.getHighScore() + "\nMeest geplaatste dobbelsteenkleur: "
+				+ player.getMostPlacedDiceColor() + "\nMeest geplaatste dobbelsteenwaarde: "
+				+ player.getMostPlacedDiceEyes() + "\nAantal verschillende tegenstanders waartegen gespeeld is: "
+				+ player.getAmountOfUniquePlayers();
+		return stats;
+	}
+
 	private void showStats() {
-		alert.setHeaderText(hc.getStatsPlayer());
+		alert.setHeaderText(getStatsPlayer());
 		// test
 		alert.showAndWait();
 	}
 
 	public SearchPlayerPane getSearchPlayerPane() {
-		SearchPlayerPane spp = searchPlayerPane;
+		SearchPlayerPane spp = this.spp;
 		return spp;
 	}
 

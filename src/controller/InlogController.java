@@ -27,14 +27,14 @@ public class InlogController{
 	}
 
 	public InlogPane showInlog() {
-		inlog = new InlogPane(scene);
+		inlog = new InlogPane();
 		inlog.getLoginButton().setOnAction(e -> login());
 		inlog.getLoginButton().setOnAction(e -> register());
 		return inlog;
 	}
 	
 	public InlogPane show() {
-//		inlog = new InlogPane();
+        inlog = new InlogPane();
 		scene.setRoot(inlog);
 		return inlog;
 	}
@@ -42,7 +42,7 @@ public class InlogController{
 
 	public EventHandler<ActionEvent> register() {
 		player = new Player(inlog.getUsernameText());
-		if(inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("") || player.checkUsernameExists()) {
+		if(inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("") || !player.checkUsernameExists()) {
 			inlog.giveErrorBox();
 		}else {
 			player = new Player(inlog.getUsernameText(), inlog.getPasswordText());
@@ -71,7 +71,7 @@ public class InlogController{
 		
 		home = new HomeController(scene, player);
 		challenges = new ChallengesController(home);
-		game = new GameController(scene);
+		//game = new GameController(scene);
 		menu = new MenubarController(scene, this, controller);			
 //		scene.setRoot(new VBox(menu.getMenubar(),game.showOptions()));
 		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));

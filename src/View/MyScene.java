@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 
 public class MyScene extends Scene {
     private InlogController inlog = new InlogController(this);
-    private GameController game = new GameController(this);
+    //private GameController game = new GameController(this);
 //    private GameProgress gameProgress = new GameProgress();
     
 
@@ -17,19 +17,21 @@ public class MyScene extends Scene {
 //        setRoot(rules);
         
 //         inlog.showInlog();
-//        setRoot(inlog.show());
-    	setRoot(game.showOptions());
+
+        
+        setRoot(inlog.showInlog());
+    	//setRoot(game.showOptions());
 
 
     }
     public void builtNewGame() {
     	
-    	setRoot(game.showOptions());
+    	//setRoot(game.showOptions());
     	
     }
 	
     public GameController getGame() {
-		return game;
+		return null;
 	}
     
     public void closeThis() {

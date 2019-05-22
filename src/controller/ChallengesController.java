@@ -4,7 +4,12 @@ import java.util.ArrayList;
 
 import View.ChallengesPane;
 import View.ChallengesPlayerLinePane;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import model.Challenge;
+import model.Game;
 import model.Player;
 
 public class ChallengesController {
@@ -20,14 +25,23 @@ public class ChallengesController {
 		
 		challenge = new Challenge(home.getSelf());
 
+		Timeline timeline = new Timeline();
+		 //timeline.setCycleCount(8);
+		 //timeline.setAutoReverse(true);
+		 timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), check()));
+		 timeline.play();
 		challengesPane = new ChallengesPane();
 //		challengesPane.copyArraylist(challengesPL);
 //		challengesPane.getAcceptButton().setOnAction(e -> acceptChallenge());
-		Thread t1 = new multiThreads(this, 1000L);
-		t1.start();
+		//Thread t1 = new multiThreads(this, 1000L);
+		//t1.start();
 		refresh();
 
 	}
+	private KeyValue check() {
+	 System.out.println("uyfghujmjbm");
+	return null;
+}
 	public ChallengesController() {
 		challenge = new Challenge(home.getSelf());
 		challengesPane = new ChallengesPane();
@@ -55,36 +69,17 @@ public class ChallengesController {
 //		home.buildPlayer("Teun");
 //	}
 	public void setChallengers() {
-		/**
-		 * challengerlinepane array =- new array
-		 * clpa.bgetaccept9).setonaction()
-		 * loop voorbij
-		 * dan geef jij die aan je challengerpane
-		 * en die challengerpane voegt em toe
-		 * challengerpane.getchildren.addall
-		 */
 		challengesPL = new ArrayList<ChallengesPlayerLinePane>();
 		
 		for (Player a: challenge.playersChallengedYou()) {
 			ChallengesPlayerLinePane p = new ChallengesPlayerLinePane(a.getUsername());
-			System.out.println();
-			System.out.println("test");
 			p.getAccept().setOnAction(e -> setPlayerStatusToAccepted(a));
 			p.getDecline().setOnAction(e -> setPlayerStatusToDeclined(a));
 			challengesPL.add(p);
-//			challengesPane.addChallengesLine(a.getUsername());
-//			challengesPane.addChallengesLine(a.getUsername());
-//			p.getAccept().setOnAction(arg0);
-//			p.getDecline().setOnAction(arg0);
-//			challenges.add(p);
-			/*
-			challengesPane.addChallengesLine(a);
-			challengesPane.setButtonzooi()*/
 		}
-		challengesPane.setLayout();
-//		challengesPane.setPlayerLines(challenges);
-//		challengesPane.setLayout();
+		challengesPane.showPlayerLines(challengesPL);
 	}
+	
 	
 	public ChallengesPane getChallengesPane() {
 		ChallengesPane cp = challengesPane;
@@ -106,8 +101,6 @@ public class ChallengesController {
 	public void refresh() {
 		setChallengers();
 		challengesPane.setPlayerLine(challengesPL);
-		challengesPane.setLayout();
-		
 	}
 	
 	
