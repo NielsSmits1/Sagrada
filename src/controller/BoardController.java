@@ -71,7 +71,7 @@ public class BoardController {
 	}
 
 	public ArrayList<Space> getPatternCard() {
-		return finalCard.getPatternField();
+		return finalCard.getRandom();
 	}
 
 	public void setPatternCard(int id) {

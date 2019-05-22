@@ -24,15 +24,18 @@ public class PatternCard {
 	private BoardController controller;
 
 	public PatternCard(int number, int idgame, int ownId, BoardController bc) {
-		randomPatternfield = new ArrayList<Space>();
+//		randomPatternfield = new ArrayList<Space>();
 		patternfield = new ArrayList<>();
 		controller = bc;
 		this.idgame = idgame;
 		yourself = ownId;
+		random = new Random();
 		setPatternId(number);
 		p = getSelect();
 		setPatternField();
 		addCard();
+//		generateRandomPatternCard();
+//		insertRandomPatternCardIntoDB();
 		hasColorExamption = false;
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
@@ -515,10 +518,9 @@ public class PatternCard {
 	}
 
 	public void generateRandomPatternCard() {
-		boolean wantToFill = random.nextBoolean();
-		boolean fillWithColor = random.nextBoolean();
-		boolean fillWithNumber = random.nextBoolean();
-
+		boolean wantToFill = false;
+		boolean colorOrNumber = false;
+		int amountPlaced = 0;
 		for (int x = 1; x <= 5; x++) {
 			for (int y = 1; y <= 4; y++) {
 				randomPatternfield.add(new Space(x, y));
@@ -526,27 +528,135 @@ public class PatternCard {
 		}
 
 		for (int i = 0; i < randomPatternfield.size(); i++) {
-
+			wantToFill = random.nextBoolean();
+			colorOrNumber = random.nextBoolean();
 			if (wantToFill) {
 
-				if (fillWithColor && allowsColorPlacement(randomPatternfield.get(i).getXPos(),
-						randomPatternfield.get(i).getYPos())) {
-					System.out.println("Er zal een kleur geplaats worden als dit kan.");
+				if (colorOrNumber) {
+					randomPatternfield.get(i).setColor(getRandomColor());
+					for (int j = 0; j < randomPatternfield.size(); j++) {
+						//Left
+						if(randomPatternfield.get(i).getXPos() - 1 > 0 && randomPatternfield.get(i).getXPos() - 1 == randomPatternfield.get(j).getXPos() && randomPatternfield.get(i).getYPos() == randomPatternfield.get(j).getYPos()) {
+							if(randomPatternfield.get(i).getColor().equals(randomPatternfield.get(j).getColor())) {
+								randomPatternfield.get(i).setColor("");
+								break;
+							}
+						}
+						
+						//Up
+						if(randomPatternfield.get(i).getYPos() - 1 > 0 &&randomPatternfield.get(i).getYPos() - 1 == randomPatternfield.get(j).getYPos() && randomPatternfield.get(i).getXPos() == randomPatternfield.get(j).getXPos()) {
+							if(randomPatternfield.get(i).getColor().equals(randomPatternfield.get(j).getColor())) {
+								randomPatternfield.get(i).setColor("");
+								break;
+							}
+						}
+		
+					}
 
+				}
+					
+				if(!colorOrNumber) {
+					randomPatternfield.get(i).setEyes(random.nextInt(6)+1);
+					for (int j = 0; j < randomPatternfield.size(); j++) {
+						//Left
+						if(randomPatternfield.get(i).getXPos() - 1 > 0 && randomPatternfield.get(i).getXPos() - 1 == randomPatternfield.get(j).getXPos() && randomPatternfield.get(i).getYPos() == randomPatternfield.get(j).getYPos()) {
+							if(randomPatternfield.get(i).getEyes() == randomPatternfield.get(j).getEyes()) {
+								randomPatternfield.get(i).setEyes(0);
+								break;
+							}
+						}
+						
+						//Up
+						if(randomPatternfield.get(i).getYPos() - 1 > 0 &&randomPatternfield.get(i).getYPos() - 1 == randomPatternfield.get(j).getYPos() && randomPatternfield.get(i).getXPos() == randomPatternfield.get(j).getXPos()) {
+							if(randomPatternfield.get(i).getEyes() == randomPatternfield.get(j).getEyes()) {
+								randomPatternfield.get(i).setEyes(0);
+								break;
+							}
+						}	
+						
+					}
 				}
 			}
 
 		}
 	}
-
-	private boolean allowsColorPlacement(int x, int y) {
-
-		if (x + 1 >= 6) {	
-		}else if(){
-			
+	
+	public int getDifficulty() {
+		int amountPlaced = 0;
+		for (int i = 0; i < randomPatternfield.size(); i++) {
+			if(randomPatternfield.get(i).getEyes() != 0 || !randomPatternfield.get(i).getColor().equals("")) {
+				amountPlaced++;			
+			}
 		}
-
-		return false;
+		
+		if(amountPlaced < 3) {
+			return 1;
+		}
+		if(amountPlaced > 2 && amountPlaced <= 5) {
+			return 2;
+		}
+		if(amountPlaced > 5 && amountPlaced <= 6) {
+			return 3;
+		}
+		if(amountPlaced > 6 && amountPlaced < 10) {
+			return 4;
+		}
+		if(amountPlaced > 9 && amountPlaced < 14) {
+			return 5;
+		}
+		if(amountPlaced > 13) {
+			return 6;
+		}
+		
+		return 0;
 	}
+	
+	public void insertRandomPatternCardIntoDB() {
+		database.CUD("INSERT INTO patterncard (idpatterncard, difficulty, standard) VALUES(" + (int)getNewPatternId() +"," + getDifficulty() + ", 0);");
+		insertRandomPatternCardSpaces();
+	}
+	
+	public void insertRandomPatternCardSpaces() {
+		for (int i = 0; i < randomPatternfield.size(); i++) {
+			database.CUD("INSERT INTO patterncardfield (patterncard_idpatterncard, position_x, position_y) VALUES(" + getHighestPatternId() +"," + randomPatternfield.get(i).getXPos() + ", " + randomPatternfield.get(i).getYPos() +");");
+			if(!randomPatternfield.get(i).getColor().equals("")) {
+				database.CUD("UPDATE patterncardfield SET color = '" + randomPatternfield.get(i).getColor() + "' WHERE patterncard_idpatterncard = " + getHighestPatternId() + " AND position_x = " + randomPatternfield.get(i).getXPos() + " AND position_y = " + randomPatternfield.get(i).getYPos() + "");
+			}
+			
+			if(randomPatternfield.get(i).getEyes() != 0) {
+				database.CUD("UPDATE patterncardfield SET value = " + randomPatternfield.get(i).getEyes() + " WHERE patterncard_idpatterncard = " + getHighestPatternId() + " AND position_x = " + randomPatternfield.get(i).getXPos() + " AND position_y = " + randomPatternfield.get(i).getYPos() + "");
+			}
+		}
+	}
+	
+	
+	public long getNewPatternId() {
+		return (long) database.Select("SELECT idpatterncard+1 FROM tjpmsalt_db2.patterncard ORDER BY idpatterncard DESC LIMIT 1").get(0).get(0);
+	}
+	
+	public int getHighestPatternId() {
+		return (int) database.Select("SELECT idpatterncard FROM tjpmsalt_db2.patterncard ORDER BY idpatterncard DESC LIMIT 1").get(0).get(0);
+	}
+		
+	
+	
+	public String getRandomColor() {
+		String[] color = {"blauw", "groen", "rood", "geel", "paars"};
+		return color[random.nextInt(color.length)];
+	}
+	
+	public ArrayList<Space> getRandom(){
+		return randomPatternfield;
+	}
+
+//	private boolean allowsColorPlacement(int x, int y) {
+//
+//		if (x + 1 >= 6) {	
+//		}else if(){
+//			
+//		}
+//
+//		return false;
+//	}
 
 }
