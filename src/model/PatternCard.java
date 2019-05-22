@@ -514,39 +514,6 @@ public class PatternCard {
 		hasNextToDiceExamption = true;
 	}
 
-	public void generateRandomPatternCard() {
-		boolean wantToFill = random.nextBoolean();
-		boolean fillWithColor = random.nextBoolean();
-		boolean fillWithNumber = random.nextBoolean();
-
-		for (int x = 1; x <= 5; x++) {
-			for (int y = 1; y <= 4; y++) {
-				randomPatternfield.add(new Space(x, y));
-			}
-		}
-
-		for (int i = 0; i < randomPatternfield.size(); i++) {
-
-			if (wantToFill) {
-
-				if (fillWithColor && allowsColorPlacement(randomPatternfield.get(i).getXPos(),
-						randomPatternfield.get(i).getYPos())) {
-					System.out.println("Er zal een kleur geplaats worden als dit kan.");
-
-				}
-			}
-
-		}
-	}
-
-	private boolean allowsColorPlacement(int x, int y) {
-
-		if (x + 1 >= 6) {	
-		}else if(){
-			
-		}
-
-		return false;
-	}
+	
 
 }
