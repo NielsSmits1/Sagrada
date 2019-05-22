@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import java.util.Random;
 import Database.db;
+import View.DicePane;
+import View.PatternPane;
 import controller.BoardController;
 
 public class PatternCard {
 
 	private ArrayList<Space> patternfield;
+	private ArrayList<Space> randomPatternfield;
 	private db database = new db();
 	private ArrayList<ArrayList<Object>> p;
 	private int patternId;
@@ -20,10 +23,8 @@ public class PatternCard {
 	private boolean hasNextToDiceExamption;
 	private BoardController controller;
 
-	// private BoardController controller;
 	public PatternCard(int number, int idgame, int ownId, BoardController bc) {
-		// controller = c;
-		// patternfield.clear();
+		randomPatternfield = new ArrayList<Space>();
 		patternfield = new ArrayList<>();
 		controller = bc;
 		this.idgame = idgame;
@@ -73,31 +74,6 @@ public class PatternCard {
 			} else {
 				patternfield.get(i).setColor((String) p.get(i).get(3));
 			}
-			// /// *
-			// // This switch is needed because all of the colors in the DB are in dutch.
-			// /// **
-			// switch ((String) p.get(i).get(3)) {
-			// case "blauw":
-			// patternfield.get(i).setColor("BLUE");
-			// break;
-			// case "rood":
-			// patternfield.get(i).setColor("RED");
-			// break;
-			// case "geel":
-			// patternfield.get(i).setColor("YELLOW");
-			// break;
-			// case "groen":
-			// patternfield.get(i).setColor("GREEN");
-			// break;
-			// case "paars":
-			// patternfield.get(i).setColor("PURPLE");
-			// break;
-			// default:
-			// patternfield.get(i).setColor("WHITE");
-			// break;
-			// }
-			// }
-
 			if (p.get(i).get(4) != null) {
 				patternfield.get(i).setEyes((int) p.get(i).get(4));
 			}
@@ -127,8 +103,8 @@ public class PatternCard {
 	}
 
 	public void addOptionToDB() {
-		 database.CUD("insert into tjpmsalt_db2.patterncardoption"
-		 + "(patterncard_idpatterncard,player_idplayer) VALUES (" + patternId + "," + yourself +");");
+		database.CUD("insert into tjpmsalt_db2.patterncardoption"
+				+ "(patterncard_idpatterncard,player_idplayer) VALUES (" + patternId + "," + yourself + ");");
 	}
 
 	// TODO ADD THE CHOSEN PATTERNCARD TO PLAYERFRAMEFIELD
@@ -175,10 +151,10 @@ public class PatternCard {
 	public void setColorExamption() {
 		hasColorExamption = true;
 	}
-	
+
 	public void setNumberExamption() {
 		hasNumberExamption = true;
-		
+
 	}
 
 	private boolean totalValidation(int x, int y, int dienumber, String diecolor) {
@@ -186,77 +162,40 @@ public class PatternCard {
 		int old_x = 0;
 		int old_y = 0;
 		if (hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
-			old_x = (int)getPosition(dienumber, diecolor).get(0).get(0);
-			old_y = (int)getPosition(dienumber, diecolor).get(0).get(1);
+			old_x = (int) getPosition(dienumber, diecolor).get(0).get(0);
+			old_y = (int) getPosition(dienumber, diecolor).get(0).get(1);
 			setPositionEmpty(dienumber, diecolor, x, y);
 		}
-		// switch (diecolor) {
-		// case "BLUE":
-		// color = "blauw";
-		// break;
-		// case "RED":
-		// color = "rood";
-		// break;
-		// case "YELLOW":
-		// color = "geel";
-		// break;
-		// case "GREEN":
-		// color = "groen";
-		// break;
-		// case "PURPLE":
-		// color = "paars";
-		// break;
-		// }
-//		if(hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
-//			if (validateStartsInCorner(x, y) && validateColorTemplateBox(x, y, color)
-//					&& validateNumberTemplateBox(x, y, dienumber, color)) {
-//				moveDie(dienumber, color, x, y);
-//				
-//				return true;
-//			}else {
-//				moveDie(dienumber, color, old_x, old_y);
-//				return false;
-//			}
-//		}
+
 		if (checkFirstMove()) {
 			if (validateStartsInCorner(x, y) && validateColorTemplateBox(x, y, color)
 					&& validateNumberTemplateBox(x, y, dienumber, color)) {
-				
+
 				addDiceToField(x, y, dienumber, color);
-				if(hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
+				if (hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
 					controller.disableMovement(old_x, old_y);
 				}
 				System.out.println("Eerste move");
 				return true;
 			}
 		} else {
-				if (validateColorTemplateBox(x, y, color) && validateNumberTemplateBox(x, y, dienumber, color)
-						&& isEmptyPlace(x, y) && validateNextToDice(x, y)
-						&& validateNearbyDice(x, y, dienumber, color)) {
-					moveDie(dienumber, color, x, y);
-					if(hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
+			if (validateColorTemplateBox(x, y, color) && validateNumberTemplateBox(x, y, dienumber, color)
+					&& isEmptyPlace(x, y) && validateNextToDice(x, y) && validateNearbyDice(x, y, dienumber, color)) {
+				moveDie(dienumber, color, x, y);
+				if (hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
 					controller.disableMovement(old_x, old_y);
-					}
-					return true;
-				}else {
-					if(hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
-					moveDie(dienumber, diecolor, old_x, old_y);
-					}
-					return false;
 				}
-				
+				return true;
+			} else {
+				if (hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
+					moveDie(dienumber, diecolor, old_x, old_y);
+				}
+				return false;
+			}
+
 		}
 		return false;
 	}
-			
-//			if (validateColorTemplateBox(x, y, color) && validateNumberTemplateBox(x, y, dienumber, color)
-//					&& isEmptyPlace(x, y) && validateNextToDice(x, y) && validateNearbyDice(x, y, dienumber, color)) {
-//
-//				addDiceToField(x, y, dienumber, color);
-//				return true;
-//			}
-//		return false;
-
 
 	// checks if color is correct
 	private boolean validateColorTemplateBox(int x, int y, String diecolor) {
@@ -278,7 +217,7 @@ public class PatternCard {
 	}
 
 	private boolean validateNumberTemplateBox(int x, int y, int dienumber, String diecolor) {
-		if(hasNumberExamption) {
+		if (hasNumberExamption) {
 			hasNumberExamption = false;
 			return true;
 		}
@@ -444,7 +383,7 @@ public class PatternCard {
 	// TODO niet in combinatie met checkfirstmove doen
 	private boolean validateNextToDice(int x, int y) {
 		// above
-		if(hasNextToDiceExamption) {
+		if (hasNextToDiceExamption) {
 			hasNextToDiceExamption = false;
 			return true;
 		}
@@ -564,16 +503,50 @@ public class PatternCard {
 				+ "' WHERE player_idplayer = " + yourself + " AND position_x = " + x + " AND position_y = " + y
 				+ " AND idgame = " + idgame + ";");
 	}
-	
-	private ArrayList<ArrayList<Object>> getPosition(int dienumber, String diecolor){
-		return database.Select("SELECT position_x, position_y FROM tjpmsalt_db2.playerframefield WHERE idgame = " + idgame + " AND player_idplayer = " + yourself +" AND dienumber = " + dienumber + " AND diecolor = '" + diecolor +"';");
+
+	private ArrayList<ArrayList<Object>> getPosition(int dienumber, String diecolor) {
+		return database.Select("SELECT position_x, position_y FROM tjpmsalt_db2.playerframefield WHERE idgame = "
+				+ idgame + " AND player_idplayer = " + yourself + " AND dienumber = " + dienumber + " AND diecolor = '"
+				+ diecolor + "';");
 	}
 
 	public void setNextToDiceExamption() {
-		// TODO Auto-generated method stub
 		hasNextToDiceExamption = true;
 	}
 
+	public void generateRandomPatternCard() {
+		boolean wantToFill = random.nextBoolean();
+		boolean fillWithColor = random.nextBoolean();
+		boolean fillWithNumber = random.nextBoolean();
 
+		for (int x = 1; x <= 5; x++) {
+			for (int y = 1; y <= 4; y++) {
+				randomPatternfield.add(new Space(x, y));
+			}
+		}
+
+		for (int i = 0; i < randomPatternfield.size(); i++) {
+
+			if (wantToFill) {
+
+				if (fillWithColor && allowsColorPlacement(randomPatternfield.get(i).getXPos(),
+						randomPatternfield.get(i).getYPos())) {
+					System.out.println("Er zal een kleur geplaats worden als dit kan.");
+
+				}
+			}
+
+		}
+	}
+
+	private boolean allowsColorPlacement(int x, int y) {
+
+		if (x + 1 >= 6) {	
+		}else if(){
+			
+		}
+
+		return false;
+	}
 
 }

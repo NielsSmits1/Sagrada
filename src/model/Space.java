@@ -16,6 +16,15 @@ public class Space {
 		color = "";
 	}
 	
+	public Space(int x, int y) {
+		xPos = x;
+		yPos = y;
+		eyes = 0;
+		color = "";
+	}
+	
+	
+	
 	public void setXPOS(int i) {
 		xPos = i;
 		}
