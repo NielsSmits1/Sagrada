@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
+import model.Game;
 import model.Player;
 
 public class HomeController {
@@ -21,7 +22,9 @@ public class HomeController {
 	private ChallengesController cp;
 	private LeaderboardController lc;
 	private MyScene scene;
-	private multiThreads threads;
+
+
+	private MenubarController mbc;
 
 
 
@@ -31,9 +34,9 @@ public class HomeController {
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 
-	public HomeController(Player self) {
+	public HomeController(Player self, MenubarController mbc) {
+		this.mbc = mbc;
 		this.self = self;
-		//pc = new PlayerController(self.getUsername());
 		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
@@ -50,6 +53,17 @@ public class HomeController {
 		
 		
 
+	private void test() {
+		cpp.refresh();
+		cp.refresh();
+	}
+
+	private void openGames() {
+		// open the games that are being played, or are ready to be played
+		for(Game g : self.getOpenGames()) {
+			mbc.addGame(g);
+		}
+		
 	}
 
 	public String getUsername() {

@@ -78,9 +78,9 @@ public class Game {
 			forwardPlayer.add(a);
 		}
 
-		for (int i = 0; i < forwardPlayer.size(); i++) {
+		/*for (int i = 0; i < forwardPlayer.size(); i++) {
 
-		}
+		}*/
 	}
 	public ArrayList<ArrayList<Object>> getColorsFromGame(int idgame) {
 		return database.Select("SELECT private_objectivecard_color FROM player WHERE game_idgame ='"+ idgame + "'");

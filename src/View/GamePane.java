@@ -54,7 +54,7 @@ public class GamePane extends BorderPane {
 	/// **
 
 	public GamePane(GameController gameController) {
-		r = new Random();
+		/*r = new Random();
 		toolcardIsActiveOne = false;
 		toolcardIsActiveSix = false;
 		toolcardIsActiveTen = false;
@@ -62,11 +62,11 @@ public class GamePane extends BorderPane {
 
 		decisionpane = new DecisionPane(this);
 		dices = new HBox();
-		dices.setSpacing(20);
+		dices.setSpacing(20);*/
 		this.controller = gameController;
-		setBoard();
+		/*setBoard();
 		addDice();
-		finish();
+		finish();*/
 	}
 
 	/// *
@@ -79,7 +79,7 @@ public class GamePane extends BorderPane {
 		/// windowpattern in the DB.
 		/// **
 		// player1 = new BoardPane(this,5);
-		setBoardPlayerOne();
+		/*setBoardPlayerOne();
 
 		// player2 = new BoardPane(this, 7);
 		// player2.switchTransparent();
@@ -91,7 +91,7 @@ public class GamePane extends BorderPane {
 
 		boards = new HBox(player1, player2, player3, player4);
 		boards.setSpacing(20);
-		boards.setPadding(new Insets(0, 0, 0, 50));
+		boards.setPadding(new Insets(0, 0, 0, 50));*/
 	}
 
 	/// *
