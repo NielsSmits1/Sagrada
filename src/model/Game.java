@@ -94,8 +94,8 @@ public class Game {
 				"WHERE gd.idgame = " + this.idgame +" AND p.isCurrentPlayer = 1");
 	}
 
-	private ArrayList<ArrayList<Object>> getPlayersInGame() {
-		return database.Select("select username from player where game_idgame = " + this.idgame);
+	public ArrayList<ArrayList<Object>> getPlayersInGame() {
+		return database.Select("select idplayer, username, seqnr, private_objectivecard_color, score, patterncard_idpatterncard from player where game_idgame = " + this.idgame);
 	}
 	public void checkofso() {
 		ArrayList<ArrayList<Object>> pl = this.getPlayersInGame();

@@ -14,10 +14,20 @@ public class Player {
 	private int lastgame;
 	private int gameId;
 	private String status;
+	private Boolean self;
+	private String objective_color;
+	private int patternCardId;
 
 	
 //	private String differendPlayer;
 
+	public void setPatternCardId(int i) {
+		this.patternCardId = i;
+		
+	}
+	public void setObjective_color(String o) {
+		this.objective_color = o;
+	}
 	public Player(String u, String p) {
 		this.username = u;
 		this.password = p;
@@ -44,7 +54,8 @@ public class Player {
     //selects and returns arraylist of usernames.
     public ArrayList<ArrayList<Object>> checkPlayerInGame(){
     	return database.Select("select username from player where game_idgame in (select game_idgame from player where username ='" + username + "') ");
-   }
+    }
+    
     
     public ArrayList<ArrayList<Object>> playerWonList(){
     	return database.Select("SELECT p1.username,count(p1.username) as games_won FROM player p1 LEFT JOIN player p2 ON p1.game_idgame = p2.game_idgame AND p1.score < p2.score where p2.score is null AND p1.playstatus_playstatus = 'Uitgespeeld' group by p1.username");
@@ -69,6 +80,9 @@ public class Player {
     }
     public ArrayList<ArrayList<Object>> lastGamePlayers(){
     	return database.Select("SELECT username FROM player where game_idgame = '"+ getLastGame() +"'");
+    }
+    public ArrayList<ArrayList<Object>> getPlayedGames(){
+    	return database.Select("SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '" + this.username +"') GROUP BY p1.game_idgame");
     }
    
     
@@ -256,5 +270,32 @@ public class Player {
 
 	public int getGameId() {
 		return this.gameId;
+	}
+	public ArrayList<Game> getOpenGames() {
+		for(ArrayList<Object> a: this.getPlayedGames()) {
+			if((int)a.get(0)==(int)countPlayersGame((int)a.get(1))) {
+				Game g = new Game();
+				g.setGameId((int)a.get(1));
+				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
+			}
+		}
+		return null;
+	}
+	private ArrayList<Player> buildPlayersForGame(ArrayList<ArrayList<Object>> players) {
+		ArrayList<Player> P = new ArrayList<Player>();
+		for(ArrayList<Object> pl: players) {
+			Player pop = new Player((String)pl.get(1));
+			pop.setId((int)pl.get(0));
+			pop.setSeqnr((int)pl.get(2));
+			pop.setObjective_color((String)pl.get(3));
+			pop.setScore((int)pl.get(4));
+			pop.setPatternCardId((int)pl.get(5));
+			P.add(pop);
+		}
+		return P;
+		
+	}
+	private int countPlayersGame(int gameId) {
+		return (int)database.Select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
 	}
 }

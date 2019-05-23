@@ -46,9 +46,6 @@ public class HomeController {
 
 	}
 
-	
-
-
 	public String getUsername() {
 		return self.getUsername();
 	}
