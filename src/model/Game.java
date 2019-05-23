@@ -38,11 +38,12 @@ public class Game {
 		diceArray = new ArrayList<>();
 		database = new db();
 		idgame = (int) createNewGameId();
+		System.out.println(idgame);
 		insertDicesIntoDatabase();
 		diceData = getSelect();
 		setDiceArray();
 		//buildGameTurns();
-		checkIfGameHasStarted();
+//		checkIfGameHasStarted();
 		
 	}
 	public boolean alreadyInGame(Player player) {
@@ -153,8 +154,8 @@ public class Game {
 	//creates a new gameId based on the highest current gameId + 1.
 
 	private long createNewGameId() {
-		return (int) database
-				.Select("SELECT (idgame) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
+		return (long) database
+				.Select("SELECT (idgame+1) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
 				.get(0);
 	}
 

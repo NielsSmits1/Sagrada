@@ -27,44 +27,44 @@ public class ToolCardPane extends Pane {
 		this.toolcardController = toolcardController;
 		this.toolCardId = id;
 		//toolCardId = 3;
-		switch(id) {
-		case 1:
-			toolcard = new Image("/Resources/toolcard_1.png");
-		break;
-		case 2:
-			toolcard = new Image("/Resources/toolcard_2.png");
-		break;
-		case 3: 
-			toolcard = new Image("/Resources/toolcard_3.png");
-		break;
-		case 4:
-			toolcard = new Image("/Resources/toolcard_4.png");
-		break;
-		case 5:
-			toolcard = new Image("/Resources/toolcard_5.png");
-		break;
-		case 6: 
-			toolcard = new Image("/Resources/toolcard_6.png");
-		break;
-		case 7: 
-			toolcard = new Image("/Resources/toolcard_7.png");
-		break;
-		case 8: 
-			toolcard = new Image("/Resources/toolcard_8.png");
-		break;
-		case 9: 
-			toolcard = new Image("/Resources/toolcard_9.png");
-		break;
-		case 10:
-			toolcard = new Image("/Resources/toolcard_10.png");
-		break;
-		case 11: 
-			toolcard = new Image("/Resources/toolcard_11.png");
-		break;
-		case 12: 
-			toolcard = new Image("/Resources/toolcard_12.png");
-		break;
-		}
+//		switch(id) {
+//		case 1:
+//			toolcard = new Image("/Resources/toolcard_1.png");
+//		break;
+//		case 2:
+//			toolcard = new Image("/Resources/toolcard_2.png");
+//		break;
+//		case 3: 
+//			toolcard = new Image("/Resources/toolcard_3.png");
+//		break;
+//		case 4:
+//			toolcard = new Image("/Resources/toolcard_4.png");
+//		break;
+//		case 5:
+//			toolcard = new Image("/Resources/toolcard_5.png");
+//		break;
+//		case 6: 
+//			toolcard = new Image("/Resources/toolcard_6.png");
+//		break;
+//		case 7: 
+//			toolcard = new Image("/Resources/toolcard_7.png");
+//		break;
+//		case 8: 
+//			toolcard = new Image("/Resources/toolcard_8.png");
+//		break;
+//		case 9: 
+//			toolcard = new Image("/Resources/toolcard_9.png");
+//		break;
+//		case 10:
+//			toolcard = new Image("/Resources/toolcard_10.png");
+//		break;
+//		case 11: 
+//			toolcard = new Image("/Resources/toolcard_11.png");
+//		break;
+//		case 12: 
+//			toolcard = new Image("/Resources/toolcard_12.png");
+//		break;
+//		}
 
 		cardPropertiesAlignment = new VBox();
 		button = new Button("Koop");
