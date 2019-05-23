@@ -28,8 +28,10 @@ public class SearchPlayerController {
 		spp.getStats().setOnAction(e -> showStats());
 		self = hc.getSelf();
 		this.RefreshChoiceBox();
+
 //		player = new Player(username);
 	}
+
 
 	private void search() {
 
@@ -73,8 +75,8 @@ public class SearchPlayerController {
 	private void RefreshChoiceBox() {
 		ArrayList<String> op = new ArrayList<String>();
 		op.add("Nieuw spel");
-		for(ArrayList<Object> g : game.countOpenChallenges(self.getUsername())) {
-			op.add("Voeg toe aan spel nummer: " + Integer.toString((int)g.get(0)));
+		for(Integer g : game.availableGames(self.getUsername())) {
+			op.add("Voeg toe aan spel nummer: " + g);
 		}
 		spp.setChoiceBox(op);
 		
