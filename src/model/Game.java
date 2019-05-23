@@ -14,18 +14,32 @@ public class Game {
 	private ArrayList<ArrayList<Object>> normalTurnes;
 	private ArrayList<Dice> diceArray;
 	private ArrayList<Dice> playableDices;
-	private int idgame; 
+	private ArrayList<Player> players = new ArrayList<Player>();
+	private int idgame;
 	private int yourself;
 	private Random r;
+
 	private Player self;
-	
-	
-	
+
+
+
 	public Game(Player self) {
 
 	}
 
 
+
+	public void addPlayer(Player param) {
+		insertPlayer(param);
+
+	}
+	public void addPlayer(Player param, String status) {
+		insertPlayer(param, status);
+
+	}
+	public ArrayList<Player> getPlayers(){
+		return this.players;
+	}
 	public Game() {
 		r = new Random();
 		diceArray = new ArrayList<>();
@@ -34,10 +48,32 @@ public class Game {
 		insertDicesIntoDatabase();
 		diceData = getSelect();
 		setDiceArray();
-		buildGameTurns();
+		//buildGameTurns();
 		checkIfGameHasStarted();
-		this.self = self;
+
 	}
+	public boolean alreadyInGame(Player player) {
+		for(ArrayList<Object>  a : getPlayersInGame()) {
+			String s = (String)a.get(0);
+			if(s.equals(player.getUsername())) {
+				return true;
+			}
+		}
+		return false;
+
+	}
+	public void createNewGame() {
+	    database.CUD("INSERT INTO GAME(creationdate) VALUES (now())");
+	    idgame = (int) createNewGameId();
+	}
+	public void insertPlayer(Player p) {
+    	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + p.getUsername() +"', " + this.idgame + " , 'Uitgedaagde', 0, 'rood')");  // rood has to be variable between all colors
+    }
+	public void insertPlayer(Player p, String status) {
+    	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + p.getUsername() +"', " + this.idgame + " , '" + status + "', 0, 'rood')");  // rood has to be variable between all colors
+        System.out.println(this.idgame);
+	}
+
 //	private int getLastRound() {
 //		ArrayList<ArrayList<Object>> maxRound = database.Select("select round, roundtrack from gamedie where idgame = " + this.idgame + " and round = (select max(round) from gamedie"
 //				+ " where idgame = " + this.idgame +")");
@@ -52,7 +88,7 @@ public class Game {
 //			}else {
 //				return (int)maxRound.get(0).get(0);
 //			}
-//			
+//
 //		}
 //	}
 //	private void buildRounds() {
@@ -68,25 +104,25 @@ public class Game {
 		for(ArrayList<Object> a : database.Select("select idplayer, username, seqnr from player where game_idgame = " + this.idgame + " order by idplayer desc")) {
 			forwardPlayer.add(a);
 		}
-		
+
 		for(int i = 0; i < forwardPlayer.size(); i++) {
-			
+
 		}
 	}
 	private void checkIfGameHasStarted() {
-		// check met select of game begonnen 
-		// als dat niet so is build de game 
+		// check met select of game begonnen
+		// als dat niet so is build de game
 		if(gameStarted()) {
-			
+
 		}else {
-			
+
 		}
 	}
-	
+
 	private ArrayList<ArrayList<Object>> getLastRound() {
-		return database.Select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd " + 
+		return database.Select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd " +
 				"LEFT JOIN playerframefield AS pff ON gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor LEFT JOIN player AS "+
-				"p ON pff.player_idplayer = p.idplayer " + 
+				"p ON pff.player_idplayer = p.idplayer " +
 				"WHERE gd.idgame = " + this.idgame +" AND p.isCurrentPlayer = 1");
 	}
 
@@ -106,7 +142,7 @@ public class Game {
 			}
 		}
 	}
-	
+
 	private boolean gameStarted() {
 		if(getLastRound().get(0).get(0) == null) {
 			return false;
@@ -124,8 +160,8 @@ public class Game {
 	//creates a new gameId based on the highest current gameId + 1.
 
 	private long createNewGameId() {
-		return (long) database
-				.Select("SELECT (idgame+1) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
+		return (int) database
+				.Select("SELECT (idgame) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
 				.get(0);
 	}
 
@@ -136,7 +172,7 @@ public class Game {
 						+ "VALUES(" + yourself + ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw' , "
 						+ chosenPatternId + ")");
 	}
-	
+
 	public void setOwnId() {
 		yourself = (int) getNewId();
 		database.CUD(
@@ -194,7 +230,7 @@ public class Game {
 	}
 
 	public void updateEyes(int eyes, int dienumber, String color) {
-		
+
 		database.CUD("UPDATE gamedie SET eyes = " + eyes + " WHERE idgame = " + idgame + " AND dienumber = " + dienumber
 				+ " AND diecolor = '" + color + "';");
 	}
@@ -203,7 +239,7 @@ public class Game {
 
 		return playableDices;
 	}
-	
+
 	public void getDiceWithChosenValue(int dienumber, String color, int value, int chosenvalue) {
 		diceArray.add(new Dice(dienumber, color, value));
 		for (int i = 0; i < playableDices.size(); i++) {
@@ -242,13 +278,20 @@ public class Game {
 
 		}
 	}
-	
+
 	public int getIdGame() {
 		return idgame;
 	}
 
 	public int getOwnId() {
 		return yourself;
+	}
+	public ArrayList<ArrayList<Object>> countOpenChallenges(String u) {
+		return database.Select("SELECT game_idgame, count(game_idgame) as amountPlayers FROM player where game_idgame in (select game_idgame from player where username ='" + u +"') AND playstatus_playstatus = 'Uitgedaagde' group by game_idgame having amountPlayers < 4");
+	}
+	public void setGameId(int gid) {
+		this.idgame = gid;
+
 	}
 
 }

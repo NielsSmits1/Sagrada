@@ -21,19 +21,6 @@ public class ChallengesPane extends ScrollPane {
 
 	}
 
-//	public ChallengesPane(HomeController self) {
-////		challenge = new Challenge();
-//		cc = new ChallengesController(self);
-//		playerLine = new ArrayList<ChallengesPlayerLinePane>();
-//
-//		setChallenger();
-//		getChallengedPlayerName();
-//
-//		playerColumn.getChildren().setAll(playerLine);
-//		this.setContent(playerColumn);
-//		this.setHbarPolicy(getHbarPolicy().NEVER);
-//		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
-//	}
 	public void copyArraylist(ArrayList<ChallengesPlayerLinePane> playerArray) {
 		this.playerLine = playerArray;
 	}
@@ -62,15 +49,11 @@ public class ChallengesPane extends ScrollPane {
 	public void setsooi() {
 		
 	}
-//	public Button getAcceptButton() {
-//		return playerLine.get(0).getAccept();
-//	}
-//	public String getPlayerName() {
-//		return playerLine.get(0).getPlayerName();
-//	}
 
-	public void setPlayerLines(ArrayList<ChallengesPlayerLinePane> challenges) {
-		this.getChildren().addAll(challenges);
+	public void showPlayerLines(ArrayList<ChallengesPlayerLinePane> challengesPL) {
+		this.playerLine = challengesPL;
+		this.setLayout();
+		
 	}
 
 }

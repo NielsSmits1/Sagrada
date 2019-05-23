@@ -34,7 +34,7 @@ public class InlogPane extends BorderPane {
 	private BorderPane textAlignment;
 
 
-	public InlogPane(MyScene scene) {
+	public InlogPane() {
 
 		//sets background_image
 		this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),

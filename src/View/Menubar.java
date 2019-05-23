@@ -3,6 +3,7 @@ package View;
 import java.util.ArrayList;
 
 import controller.HomeController;
+import controller.InlogController;
 import controller.PlayerController;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

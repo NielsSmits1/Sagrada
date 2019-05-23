@@ -4,9 +4,13 @@ import java.util.ArrayList;
 
 import View.HomePane;
 import View.MyScene;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.util.Duration;
 import model.Player;
 
 public class HomeController {
@@ -19,8 +23,10 @@ public class HomeController {
 	private MyScene scene;
 
 
+
 	private Player player;
 	private Player self;
+
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 
@@ -28,10 +34,10 @@ public class HomeController {
 		this.self = self;
 		this.scene = scene;
 		pc = new PlayerController(self.getUsername());
-		sp = new SearchPlayerController(this);
 		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
+		sp = new SearchPlayerController(this, cpp);
 		
 		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
 		
@@ -39,7 +45,17 @@ public class HomeController {
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
+		Timeline timeline = new Timeline(
+			    new KeyFrame(Duration.seconds(500), e -> {
+			        check();
+			    })
+			);
+			timeline.play();
 
+	}
+
+	private void check() {
+		System.out.println("uhjrjnmejm");
 	}
 
 	public HomeController(PlayerController self2) {
@@ -56,15 +72,6 @@ public class HomeController {
 
 	public void buildPlayer(String u, String pw) {
 		player = new Player(u, pw);
-	}
-
-	public boolean usernameExist(String u) {
-		buildPlayer(u);
-		if (player.checkUsername().isEmpty()) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	public boolean isInGame(String username, PlayerController self) {
@@ -100,21 +107,7 @@ public class HomeController {
 		return stats;
 	}
 
-	public String getStatsPlayer() {
-//		player.setDifferendPlayer(username);
-		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWon() + " : " + player.getTimesLost()
-				+ "\nHoogst behaalde score: " + player.getHighScore() + "\nMeest geplaatste dobbelsteenkleur: "
-				+ player.getMostPlacedDiceColor() + "\nMeest geplaatste dobbelsteenwaarde: "
-				+ player.getMostPlacedDiceEyes() + "\nAantal verschillende tegenstanders waartegen gespeeld is: "
-				+ player.getAmountOfUniquePlayers();
-		return stats;
-	}
 
-	public void showStatsPlayer() {
-		alert.setHeaderText(getStatsPlayer());
-
-		alert.showAndWait();
-	}
 
 	public Parent showHome() {
 
