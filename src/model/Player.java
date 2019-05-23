@@ -14,13 +14,16 @@ public class Player {
 	private int lastgame;
 	private int gameId;
 	private String status;
-	private Boolean self;
+	private Boolean self = false;
 	private String objective_color;
 	private int patternCardId;
 
 	
 //	private String differendPlayer;
 
+	public void setSelf(Boolean s) {
+		this.self = s;
+	}
 	public void setPatternCardId(int i) {
 		this.patternCardId = i;
 		
@@ -272,30 +275,48 @@ public class Player {
 		return this.gameId;
 	}
 	public ArrayList<Game> getOpenGames() {
+		ArrayList<Game> games = new ArrayList<Game>();
 		for(ArrayList<Object> a: this.getPlayedGames()) {
-			if((int)a.get(0)==(int)countPlayersGame((int)a.get(1))) {
+			if((long)a.get(0)==countPlayersGame((int)a.get(1))) {
 				Game g = new Game();
 				g.setGameId((int)a.get(1));
 				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
+				games.add(g);
 			}
 		}
-		return null;
+		return games;
 	}
 	private ArrayList<Player> buildPlayersForGame(ArrayList<ArrayList<Object>> players) {
 		ArrayList<Player> P = new ArrayList<Player>();
 		for(ArrayList<Object> pl: players) {
 			Player pop = new Player((String)pl.get(1));
 			pop.setId((int)pl.get(0));
-			pop.setSeqnr((int)pl.get(2));
+			if(pl.get(2)!=null) {
+				pop.setSeqnr((int)pl.get(2));
+			}else {
+				pop.setSeqnr(0);
+			}
+			if(pl.get(4)==null) {
+				pop.setScore(0);
+			}else {
+				pop.setScore((int)pl.get(4));
+			}
 			pop.setObjective_color((String)pl.get(3));
-			pop.setScore((int)pl.get(4));
-			pop.setPatternCardId((int)pl.get(5));
+			if(pl.get(5) == null) {
+				pop.setPatternCardId(0);
+			}else {
+				pop.setPatternCardId((int)pl.get(5));
+			}
+			
+			if(pl.get(1)==this.username) {
+				pop.setSelf(true);
+			}
 			P.add(pop);
 		}
 		return P;
 		
 	}
-	private int countPlayersGame(int gameId) {
-		return (int)database.Select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
+	private long countPlayersGame(int gameId) {
+		return (long)database.Select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
 	}
 }

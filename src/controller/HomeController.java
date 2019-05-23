@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
+import model.Game;
 import model.Player;
 
 public class HomeController {
@@ -20,7 +21,7 @@ public class HomeController {
 	private ChallengesController cp;
 	private LeaderboardController lc;
 	private MyScene scene;
-
+	private MenubarController mbc;
 
 
 	private Player player;
@@ -29,9 +30,9 @@ public class HomeController {
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 
-	public HomeController(Player self) {
+	public HomeController(Player self, MenubarController mbc) {
+		this.mbc = mbc;
 		this.self = self;
-		//pc = new PlayerController(self.getUsername());
 		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
@@ -43,7 +44,29 @@ public class HomeController {
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
+		openGames();
+		startTimeline();
 
+	}
+
+	private void startTimeline() {
+		Timeline timeline = new Timeline();
+		timeline.setCycleCount(timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e-> test()));
+		timeline.play();
+	}
+
+	private void test() {
+		cpp.refresh();
+		cp.refresh();
+	}
+
+	private void openGames() {
+		// open the games that are being played, or are ready to be played
+		for(Game g : self.getOpenGames()) {
+			mbc.addGame(g);
+		}
+		
 	}
 
 	public String getUsername() {

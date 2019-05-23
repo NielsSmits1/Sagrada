@@ -14,7 +14,7 @@ import javafx.scene.control.MenuItem;
 public class Menubar extends MenuBar {
 
 	private Menu options;
-	private Menu games;
+	private Menu games = new Menu();
 	private MenuItem logout;
 	private MenuItem exit;
 	private MenuItem filter;
@@ -70,6 +70,9 @@ public class Menubar extends MenuBar {
 
 	}
 
+	public void showGame(GamePane gamePane) {
+		
+	}
 		
 	
 
@@ -102,6 +105,13 @@ public class Menubar extends MenuBar {
 		this.getMenus().add(gamex);
 		gameList.add(gamex);
 		x ++;
+	}
+
+	public void addGameItem(GamePane gamePane, int id) {
+		Menu m = new Menu("Gamenummer : " + id);
+		this.getMenus().add(m);
+		
+		
 	}
 	
 	

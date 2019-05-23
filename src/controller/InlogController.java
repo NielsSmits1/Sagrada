@@ -61,8 +61,8 @@ public class InlogController{
 		return null;
 	}
 	public void buildHome() {
-		home = new HomeController(player);
-		menu = new MenubarController(scene, this, player);			
+		menu = new MenubarController(scene, this, player);
+		home = new HomeController(player, menu);
 		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));
 		
 	}

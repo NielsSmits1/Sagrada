@@ -50,7 +50,9 @@ public class GameController {
 		toolcardcontroller = new ToolcardController(this);
 
 	}
-	
+	public GameController(Game g) {
+		this.game = g;
+	}
 	public void addOpponets(Opponent op) {
 		for(int x = 0; x<opponents.length; x++) {
 			if(opponents[x] == null) {
@@ -155,11 +157,11 @@ public class GameController {
 		boardcontroller.setPatternCard(id);
 	}
 
-	public void setRootpane() {
+	public void buildGame() {
 
 		gamePane = new GamePane(this);
 //		scene.setRoot(rootpane);
-		this.scene.setRoot(gamePane);
+		//this.scene.setRoot(gamePane);
 
 	}
 
@@ -205,6 +207,10 @@ public class GameController {
 	public void setRandomCard() {
 		game.setOwnId();
 		boardcontroller.setRandomCard();
+	}
+	public GamePane getGameStage() {
+		return this.gamePane;
+		
 	}
 	
 	
