@@ -42,9 +42,10 @@ public class GamePane extends BorderPane {
 	private boolean toolcardIsActiveSix;
 	private boolean toolcardIsActiveTen;
 	private boolean toolcardIsActiveEleven;
-
 	private DecisionPane decisionpane;
 	private Random r;
+	private RoundTrack track;
+
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
 	/// 90 dices.
