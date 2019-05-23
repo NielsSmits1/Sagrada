@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import controller.HomeController;
 import controller.InlogController;
-import controller.PlayerController;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -24,18 +23,15 @@ public class Menubar extends MenuBar {
 	private MyScene main;
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
-	private PlayerController self;
-	private HomeController home;
-    private gameRules rules = new gameRules();
+	private gameRules rules = new gameRules();
 	
 	
 	private ArrayList<Menu> gameList = new ArrayList<>();
 	private int x = 0;
 	
-	public Menubar(MyScene main, PlayerController self){
+	public Menubar(MyScene main){
 		this.main = main;
-		this.self = self;
-		home = new HomeController(main, self.getPlayer());
+		//home = new HomeController(main, self.getPlayer());
 	
 
 		creatMenu();
@@ -68,9 +64,9 @@ public class Menubar extends MenuBar {
 	}
 
 	private void showStats() {
-		alert.setHeaderText(home.getStats());
+		/*alert.setHeaderText(home.getStats());
 		// test
-		alert.showAndWait();
+		alert.showAndWait();*/
 
 	}
 

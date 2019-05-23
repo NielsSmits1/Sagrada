@@ -66,31 +66,6 @@ public class Game {
     	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + p.getUsername() +"', " + this.idgame + " , '" + status + "', 0, 'rood')");  // rood has to be variable between all colors
         System.out.println(this.idgame);
 	}
-	
-//	private int getLastRound() {
-//		ArrayList<ArrayList<Object>> maxRound = database.Select("select round, roundtrack from gamedie where idgame = " + this.idgame + " and round = (select max(round) from gamedie"
-//				+ " where idgame = " + this.idgame +")");
-//		if(maxRound.isEmpty()) {
-//			// nog geen rondes geweest
-//			return 0;
-//		}else {
-//			// check of de laatst gespeelde ronde voorbij is
-//			if(maxRound.get(maxRound.size()).get(1) == maxRound.get(0).get(0)) {
-//				// laatste ronde gespeeld
-//				return (int)maxRound.get(0).get(0) + 1;
-//			}else {
-//				return (int)maxRound.get(0).get(0);
-//			}
-//			
-//		}
-//	}
-//	private void buildRounds() {
-//		// als lastround() 6 is moet ie nog 5 rondes spelen
-//		for(int i = getLastRound(); i < 11; i++) {
-//			Round r = new Round(i);
-//			r.buildTurnes(self);
-//		}
-//	}
 
 	private void buildGameTurns() {
 		forwardPlayer = database.Select("select idplayer, username, seqnr from player where game_idgame = " + this.idgame);
@@ -143,14 +118,6 @@ public class Game {
 			return true;
 		}
 	}
-//	private void buildRounds() {
-//		for(int x = 0; x < 10; x++) {
-//			Round r = new Round();
-//			r.buildTurnes(this.idgame);
-//			rounds.add(r);
-//		}
-//	}
-	//creates a new gameId based on the highest current gameId + 1.
 
 	private long createNewGameId() {
 		return (int) database

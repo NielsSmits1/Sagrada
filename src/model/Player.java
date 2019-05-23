@@ -101,20 +101,6 @@ public class Player {
 		return username;
 	}
 
-	public void challenge() {
-		/*
-		 *eerst bouw nieuw game
-		 *dan bouw spelers jezelf
-		 *dan bouw speler ander
-		 *update game zet jezelf als startspeler 
-		 * database.CUD("");
-		 */
-		
-	}
-	public void buildNewGame() {
-		database.CUD("insert into game ()");
-	}
-
 	public int getTimesWon() {
 		int w = 0;
 		for(ArrayList<Object> a: playerWonList()) {
@@ -185,11 +171,6 @@ public class Player {
 		return w;
 	}
 
-//		int w = (int) lastGameMade().get(0);
-////		int w = ((Number)lastGameMade().get(0)).intValue();
-//		
-//		return w;
-//  }
 	public boolean checkGameSize() {
 		if(lastGamePlayers().size() == 4) {
 			return false;
@@ -276,38 +257,4 @@ public class Player {
 	public int getGameId() {
 		return this.gameId;
 	}
-	
-	
-//	public int getTimesWonPlayer() {
-//		int amount = 0;
-//		for(ArrayList<Object> a: database.Select("select username from games_won")) {
-//			if(a.get(0).equals(this.username)) {
-//				amount +=1;
-//			}
-//		}
-//		return amount;
-//	}
-//	
-//
-//	public int getTimesLostPlayer() {
-//		int amount = 0;
-//		for(ArrayList<Object> a: database.Select("select username from games_won")) {
-//			if(!a.get(0).equals(this.username)) {
-//				amount +=1;
-//			}
-//		}
-//		return amount;
-//	}
-
-//
-//	public void setDifferendPlayer(String differendPlayer) {
-//		this.differendPlayer = differendPlayer;
-//	}
-	
-	
-	
-	
-
-
-
 }

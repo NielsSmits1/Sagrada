@@ -44,7 +44,7 @@ public class GamePane extends BorderPane {
 	private boolean toolcardIsActiveEleven;
 	private DecisionPane decisionpane;
 	private Random r;
-	private RoundTrack track;
+	//private RoundTrack track;
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all

@@ -6,30 +6,30 @@ import View.MyScene;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import model.MenuBarModel;
+import model.Player;
 
 
 public class MenubarController {
 	
 	private Menubar menu;
-	private MenuBarModel menuModel;
-	
-	private PlayerController self;
+	//private MenuBarModel menuModel;
 
 
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlogController;
-	private PlayerController controller;
+	private HomeController home;
+	private Player self;
 
 	private GameController game;
 
-	public MenubarController(MyScene scene, InlogController controller, PlayerController player) {
+	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
 		this.scene = scene;
 		this.inlogController = controller;
-		this.controller = player;
+		this.self = player;
 		game = new GameController(scene);
-		menu = new Menubar(scene, this.controller);
+		menu = new Menubar(scene);
 
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());

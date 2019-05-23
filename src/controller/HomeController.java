@@ -19,7 +19,6 @@ public class HomeController {
 	private ChallengerController cpp;
 	private ChallengesController cp;
 	private LeaderboardController lc;
-	private PlayerController pc;
 	private MyScene scene;
 
 
@@ -30,10 +29,9 @@ public class HomeController {
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 
-	public HomeController(MyScene scene, Player self) {
+	public HomeController(Player self) {
 		this.self = self;
-		this.scene = scene;
-		pc = new PlayerController(self.getUsername());
+		//pc = new PlayerController(self.getUsername());
 		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
@@ -45,22 +43,11 @@ public class HomeController {
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
-		Timeline timeline = new Timeline(
-			    new KeyFrame(Duration.seconds(500), e -> {
-			        check();
-			    })
-			);
-			timeline.play();
 
 	}
 
-	private void check() {
-		System.out.println("uhjrjnmejm");
-	}
+	
 
-	public HomeController(PlayerController self2) {
-		// TODO Auto-generated constructor stub
-	}
 
 	public String getUsername() {
 		return self.getUsername();
@@ -74,10 +61,10 @@ public class HomeController {
 		player = new Player(u, pw);
 	}
 
-	public boolean isInGame(String username, PlayerController self) {
+	public boolean isInGame(String username, Player self) {
 		String u;
 		this.player = new Player(username);
-		for (ArrayList<Object> a : self.getPlayer().checkPlayerInGame()) {
+		for (ArrayList<Object> a : self.checkPlayerInGame()) {
 			u = (String) a.get(0);
 			if (u.equals(username)) {
 				return true;

@@ -87,7 +87,7 @@ public class GameController {
 	
 	public void builtGameStage() {
 		scene = new MyScene();
-		scene.builtNewGame();
+		//scene.builtNewGame();
 		
 		gameStage = new Stage();
 		gameStage.setTitle("Sagrada");
