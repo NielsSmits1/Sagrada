@@ -18,12 +18,13 @@ public class Game {
 	private int yourself;
 	private Random r;
 	private Player self;
+	
+	
+	
 	public Game(Player self) {
 
 	}
 
-	
-	// private Random r;
 
 	public Game() {
 		r = new Random();
@@ -223,7 +224,7 @@ public class Game {
 
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
+		while(playableDices.size() < 5) {
 			int randomDie = r.nextInt(18) + 1;
 			String[] colors = { "blauw", "groen", "geel", "rood", "paars" };
 			String color = colors[r.nextInt(5)];
