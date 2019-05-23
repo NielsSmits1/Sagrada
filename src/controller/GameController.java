@@ -205,6 +205,22 @@ public class GameController {
 		boardcontroller.setRandomCard();
 	}
 	
+//	public int getDifficulty() {
+//		return boardcontroller.getDifficulty();
+//	}
+	
+	public void updateTokens(int difficulty) {
+		game.updateTokenArrayList(difficulty);
+	}
+
+	public void setPlayerTokens(int minus) {
+		boardcontroller.setPlayerTokens(minus);
+	}
+	
+	public void setGameCard(int id) {
+		game.addGametoolcard(id);
+	}
+	
 	
 
 }

@@ -4,10 +4,11 @@ public class Gamefavortoken {
 
 	private int tokenID;
 	private int playerID;
-	
-	public Gamefavortoken() {
-		tokenID = 0;
+
+	public Gamefavortoken(int i) {
+		tokenID = i;
 		playerID = 0;
+
 	}
 
 	public int getTokenID() {

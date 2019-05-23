@@ -174,4 +174,12 @@ public class Toolcard {
 	public String getCardThreeDescription() {
 		return (String) getToolcardsFromDatabase().get(2).get(1);
 	}
+	
+	public ArrayList<Integer> getToolCards(){
+		ArrayList<Integer> toolcards = new ArrayList<>();
+		toolcards.add(card1);
+		toolcards.add(card2);
+		toolcards.add(card3);
+		return toolcards;
+	}
 }
