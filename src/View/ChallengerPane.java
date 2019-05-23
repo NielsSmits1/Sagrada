@@ -32,10 +32,5 @@ public class ChallengerPane extends ScrollPane{
 		this.playerLine = challengesPL;
 		this.setLayout();
 	}
-	/*private void setChallenges() {
-		for (Map.Entry challenge : cc.getChallenged().entrySet()) {
-			addStatusLine(challenge.getKey().toString(), challenge.getValue().toString());
-		}
-	}*/
 
 }

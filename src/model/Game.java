@@ -76,10 +76,6 @@ public class Game {
 		database.CUD(
 				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
 						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, 'rood')"); // rood has to be
-																										// variable
-																										// between all
-																										// colors
-		System.out.println(this.idgame);
 	}
 
 	private void buildGameTurns() {
@@ -90,9 +86,9 @@ public class Game {
 			forwardPlayer.add(a);
 		}
 
-		for (int i = 0; i < forwardPlayer.size(); i++) {
+		/*for (int i = 0; i < forwardPlayer.size(); i++) {
 
-		}
+		}*/
 	}
 
 	private void checkIfGameHasStarted() {
