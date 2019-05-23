@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import Database.db;
@@ -21,13 +22,9 @@ public class Game {
 
 	// private Random r;
 
-	public void addPlayer(Player param) {
-		insertPlayer(param);
 
-	}
-
-	public void addPlayer(Player param, String status) {
-		insertPlayer(param, status);
+	public void addPlayer(Player param, String status, String color) {
+		insertPlayer(param, status, color);
 
 	}
 
@@ -64,22 +61,13 @@ public class Game {
 		idgame = (int) createNewGameId();
 	}
 
-	public void insertPlayer(Player p) {
+	public void insertPlayer(Player p, String status, String color) {
 		database.CUD(
 				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
-						+ p.getUsername() + "', " + this.idgame + " , 'Uitgedaagde', 0, 'rood')"); // rood has to be
-																									// variable between
-																									// all colors
-	}
-
-	public void insertPlayer(Player p, String status) {
-		database.CUD(
-				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
-						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, 'rood')"); // rood has to be
+						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, '"+ color +"')"); // rood has to be
 																										// variable
 																										// between all
 																										// colors
-		System.out.println(this.idgame);
 	}
 
 	private void buildGameTurns() {
@@ -93,6 +81,32 @@ public class Game {
 		for (int i = 0; i < forwardPlayer.size(); i++) {
 
 		}
+	}
+	public ArrayList<ArrayList<Object>> getColorsFromGame(int idgame) {
+		return database.Select("SELECT private_objectivecard_color FROM player WHERE game_idgame ='"+ idgame + "'");
+	}
+	public String getRandomColor() {
+		return checkColor().get(0);
+	}
+	
+	public ArrayList<String> checkColor() {
+		ArrayList<String> allColors = new ArrayList<String>();
+		allColors.add("rood");
+		allColors.add("blauw");
+		allColors.add("groen");
+		allColors.add("paars");
+		allColors.add("geel");
+		
+		ArrayList<String> takenColors = new ArrayList<String>();
+		String colors;
+		for (ArrayList<Object> a : getColorsFromGame(idgame)) {
+			colors = (String) a.get(0);
+			takenColors.add(colors);
+	
+		}
+		allColors.removeAll(takenColors);
+		Collections.shuffle(allColors);
+		return allColors;
 	}
 
 	private void checkIfGameHasStarted() {

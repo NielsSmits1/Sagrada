@@ -63,9 +63,9 @@ public class SearchPlayerController {
 				g.setGameId(c);
 			}
 			if(!g.alreadyInGame(self)) {
-				g.addPlayer(self, "Uitdager");
+				g.addPlayer(self, "Uitdager", g.getRandomColor());
 			}
-			g.addPlayer(player, "Uitgedaagde");
+			g.addPlayer(player, "Uitgedaagde", g.getRandomColor());
 			//games.add(g);
 			cp.refresh();
 			RefreshChoiceBox();

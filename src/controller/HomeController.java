@@ -7,6 +7,7 @@ import View.MyScene;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -20,6 +21,7 @@ public class HomeController {
 	private ChallengesController cp;
 	private LeaderboardController lc;
 	private MyScene scene;
+	private multiThreads threads;
 
 
 
@@ -36,6 +38,7 @@ public class HomeController {
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
 		sp = new SearchPlayerController(this, cpp);
+	
 		
 		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
 		
@@ -43,6 +46,9 @@ public class HomeController {
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
+		
+		
+		
 
 	}
 

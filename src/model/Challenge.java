@@ -106,8 +106,8 @@ public class Challenge {
 	
 	public void buildGame() {
 		game = new Game();
-		game.addPlayer(self);
-		game.addPlayer(challenger);
+		game.addPlayer(self,"Uitdager",game.getRandomColor());
+		game.addPlayer(challenger, "Uitgedaagde",game.getRandomColor());
 	}
 
 

@@ -12,7 +12,7 @@ import model.Challenge;
 import model.Game;
 import model.Player;
 
-public class ChallengesController {
+public class ChallengesController{
 	private ChallengesPane challengesPane;
 	private ArrayList<ChallengesPlayerLinePane> challengesPL;
 
@@ -68,6 +68,7 @@ public class ChallengesController {
 		refresh();
 	}
 	public void refresh() {
+		System.out.println("=)");
 		setChallengers();
 		challengesPane.setPlayerLine(challengesPL);
 	}
