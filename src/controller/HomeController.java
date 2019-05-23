@@ -53,6 +53,18 @@ public class HomeController {
 		
 		
 
+		openGames();
+		startTimeline();
+
+	}
+
+	private void startTimeline() {
+		Timeline timeline = new Timeline();
+		timeline.setCycleCount(timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e-> test()));
+		timeline.play();
+	}
+
 	private void test() {
 		cpp.refresh();
 		cp.refresh();
