@@ -15,20 +15,27 @@ public class Game {
 	private ArrayList<Dice> diceArray;
 	private ArrayList<Dice> playableDices;
 	private ArrayList<Player> players = new ArrayList<Player>();
-	private int idgame; 
+	private int idgame;
 	private int yourself;
 	private Random r;
 
-	
-	// private Random r;
+	private Player self;
+
+
+
+	public Game(Player self) {
+
+	}
+
+
 
 	public void addPlayer(Player param) {
 		insertPlayer(param);
-		
+
 	}
 	public void addPlayer(Player param, String status) {
 		insertPlayer(param, status);
-		
+
 	}
 	public ArrayList<Player> getPlayers(){
 		return this.players;
@@ -43,8 +50,8 @@ public class Game {
 		diceData = getSelect();
 		setDiceArray();
 		//buildGameTurns();
-//		checkIfGameHasStarted();
-		
+		checkIfGameHasStarted();
+
 	}
 	public boolean alreadyInGame(Player player) {
 		for(ArrayList<Object>  a : getPlayersInGame()) {
@@ -54,7 +61,7 @@ public class Game {
 			}
 		}
 		return false;
-			 
+
 	}
 	public void createNewGame() {
 	    database.CUD("INSERT INTO GAME(creationdate) VALUES (now())");
@@ -67,7 +74,7 @@ public class Game {
     	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + p.getUsername() +"', " + this.idgame + " , '" + status + "', 0, 'rood')");  // rood has to be variable between all colors
         System.out.println(this.idgame);
 	}
-	
+
 //	private int getLastRound() {
 //		ArrayList<ArrayList<Object>> maxRound = database.Select("select round, roundtrack from gamedie where idgame = " + this.idgame + " and round = (select max(round) from gamedie"
 //				+ " where idgame = " + this.idgame +")");
@@ -82,7 +89,7 @@ public class Game {
 //			}else {
 //				return (int)maxRound.get(0).get(0);
 //			}
-//			
+//
 //		}
 //	}
 //	private void buildRounds() {
@@ -98,25 +105,25 @@ public class Game {
 		for(ArrayList<Object> a : database.Select("select idplayer, username, seqnr from player where game_idgame = " + this.idgame + " order by idplayer desc")) {
 			forwardPlayer.add(a);
 		}
-		
+
 		for(int i = 0; i < forwardPlayer.size(); i++) {
-			
+
 		}
 	}
 	private void checkIfGameHasStarted() {
-		// check met select of game begonnen 
-		// als dat niet so is build de game 
+		// check met select of game begonnen
+		// als dat niet so is build de game
 		if(gameStarted()) {
-			
+
 		}else {
-			
+
 		}
 	}
-	
+
 	private ArrayList<ArrayList<Object>> getLastRound() {
-		return database.Select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd " + 
+		return database.Select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd " +
 				"LEFT JOIN playerframefield AS pff ON gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor LEFT JOIN player AS "+
-				"p ON pff.player_idplayer = p.idplayer " + 
+				"p ON pff.player_idplayer = p.idplayer " +
 				"WHERE gd.idgame = " + this.idgame +" AND p.isCurrentPlayer = 1");
 	}
 
@@ -136,7 +143,7 @@ public class Game {
 			}
 		}
 	}
-	
+
 	private boolean gameStarted() {
 		if(getLastRound().get(0).get(0) == null) {
 			return false;
@@ -166,7 +173,7 @@ public class Game {
 						+ "VALUES(" + yourself + ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw' , "
 						+ chosenPatternId + ")");
 	}
-	
+
 	public void setOwnId() {
 		yourself = (int) getNewId();
 		database.CUD(
@@ -224,7 +231,7 @@ public class Game {
 	}
 
 	public void updateEyes(int eyes, int dienumber, String color) {
-		
+
 		database.CUD("UPDATE gamedie SET eyes = " + eyes + " WHERE idgame = " + idgame + " AND dienumber = " + dienumber
 				+ " AND diecolor = '" + color + "';");
 	}
@@ -233,7 +240,7 @@ public class Game {
 
 		return playableDices;
 	}
-	
+
 	public void getDiceWithChosenValue(int dienumber, String color, int value, int chosenvalue) {
 		diceArray.add(new Dice(dienumber, color, value));
 		for (int i = 0; i < playableDices.size(); i++) {
@@ -254,7 +261,7 @@ public class Game {
 
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
+		while(playableDices.size() < 5) {
 			int randomDie = r.nextInt(18) + 1;
 			String[] colors = { "blauw", "groen", "geel", "rood", "paars" };
 			String color = colors[r.nextInt(5)];
@@ -272,7 +279,7 @@ public class Game {
 
 		}
 	}
-	
+
 	public int getIdGame() {
 		return idgame;
 	}
@@ -285,7 +292,7 @@ public class Game {
 	}
 	public void setGameId(int gid) {
 		this.idgame = gid;
-		
+
 	}
 
 }

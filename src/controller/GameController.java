@@ -179,8 +179,6 @@ public class GameController {
 		return gamePane;
 	}
 
-	
-
 	public ArrayList<ToolCardPane> getToolCards() {
 		return toolcardcontroller.getToolCards();
 	}
