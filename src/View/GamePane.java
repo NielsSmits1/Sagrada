@@ -1,6 +1,7 @@
 package View;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import controller.GameController;
 import javafx.geometry.Insets;
@@ -37,8 +38,13 @@ public class GamePane extends BorderPane {
 	private BorderPane bottom;
 	private GameController controller;
 	private ArrayList<Dice> diceArray;
-	private boolean toolcardIsActive;
+	private boolean toolcardIsActiveOne;
+	private boolean toolcardIsActiveSix;
+	private boolean toolcardIsActiveTen;
+	private boolean toolcardIsActiveEleven;
+
 	private DecisionPane decisionpane;
+	private Random r;
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
 	/// 90 dices.
@@ -47,7 +53,12 @@ public class GamePane extends BorderPane {
 	/// **
 
 	public GamePane(GameController gameController) {
-		toolcardIsActive = false;
+		r = new Random();
+		toolcardIsActiveOne = false;
+		toolcardIsActiveSix = false;
+		toolcardIsActiveTen = false;
+		toolcardIsActiveEleven = false;
+
 		decisionpane = new DecisionPane(this);
 		dices = new HBox();
 		dices.setSpacing(20);
@@ -88,7 +99,8 @@ public class GamePane extends BorderPane {
 	// This model contains the amount of eyes and the color that the dice should be.
 	/// **
 
-	private void addDice() {
+	public void addDice() {
+		dices.getChildren().clear();
 		for (int i = 0; i < getPlayableDices().size(); i++) {
 			dices.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
 					getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
@@ -175,7 +187,18 @@ public class GamePane extends BorderPane {
 
 	public void setSelected(DicePane p) {
 		selected = p;
-		if(toolcardIsActive) {
+		if(toolcardIsActiveOne) {
+			decisionpane.showInfoBoxToolcardOne();
+			setRight(decisionpane);
+		}
+		if(toolcardIsActiveSix) {
+			randomSelected();
+		}
+		if(toolcardIsActiveTen) {
+			flipDice();
+		}
+		if(toolcardIsActiveEleven) {
+			decisionpane.showInfoBoxToolcardEleven();
 			setRight(decisionpane);
 		}
 	}
@@ -220,17 +243,84 @@ public class GamePane extends BorderPane {
         }
 	}
 	
+	public void randomSelected() {
+		
+		for (int i = 0; i < dices.getChildren().size(); i++) {
+            DicePane temporarilyDice = (DicePane)dices.getChildren().get(i);
+            if(selected.getDieNumber() == temporarilyDice.getDieNumber() && selected.getColor().equals(temporarilyDice.getColor())) {
+                temporarilyDice.removeEyes();
+                temporarilyDice.setValue(r.nextInt(6)+1);
+                temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+                disableToolcard();
+                controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
+                
+            }
+            
+        }
+	}
+	
+public void flipDice() {
+		
+		for (int i = 0; i < dices.getChildren().size(); i++) {
+            DicePane temporarilyDice = (DicePane)dices.getChildren().get(i);
+            if(selected.getDieNumber() == temporarilyDice.getDieNumber() && selected.getColor().equals(temporarilyDice.getColor())) {
+                temporarilyDice.removeEyes();
+                switch(temporarilyDice.getValue()) {
+                case 1: temporarilyDice.setValue(6);
+                		break;
+                case 2: temporarilyDice.setValue(5);
+        				break;
+                case 3: temporarilyDice.setValue(4);
+        				break;
+                case 4: temporarilyDice.setValue(3);
+        				break;
+                case 5: temporarilyDice.setValue(2);
+        				break;
+                case 6: temporarilyDice.setValue(1);
+        				break;
+                }
+                temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+                disableToolcard();
+                controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
+                
+            }
+            
+        }
+	}
+	
 	public void SelectedStaysEqual() {
 		disableToolcard();
 		setRight(null);
 	}
 	
-	public void setToolCardActive() {
-		toolcardIsActive = true;
+	public void setToolCardOneActive() {
+		toolcardIsActiveOne = true;
+	}
+	
+	public void setToolCardSixActive() {
+		toolcardIsActiveSix = true;
+	}
+	
+	public void setToolCardTenActive() {
+		toolcardIsActiveTen = true;
+	}
+	
+	public void setToolCardElevenActive() {
+		toolcardIsActiveEleven = true;
+	}
+	
+	public void swapDice(int chosenEyes) {
+		controller.swapDice(selected.getDieNumber(), selected.getColor(), selected.getValue(), chosenEyes);
+		disableToolcard();
+		setRight(null);
 	}
 	
 	public void disableToolcard() {
-		toolcardIsActive = false;
+		toolcardIsActiveOne = false;
+		toolcardIsActiveSix = false;
+		toolcardIsActiveTen = false;
+		toolcardIsActiveEleven = false;
+
 	}
 	
 //	public void enableDiceMovement() {

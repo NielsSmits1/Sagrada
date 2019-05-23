@@ -65,6 +65,7 @@ public class ToolCardPane extends Pane {
 			toolcard = new Image("/Resources/toolcard_12.png");
 		break;
 		}
+
 		cardPropertiesAlignment = new VBox();
 		button = new Button("Koop");
 		button.setOnAction(e -> handleButton());

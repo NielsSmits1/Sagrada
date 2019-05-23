@@ -157,6 +157,8 @@ public class BoardPane extends Pane {
 		getChildren().add(field);
 		// System.out.println("Should have worked");
 	}
+	
+	
 
 	private void setOpponentBoard(ArrayList<Space> opponentBoard) {
 		int counter = 0;
@@ -209,7 +211,6 @@ public class BoardPane extends Pane {
 		for (int i = 0; i < board.size(); i++) {
 			if (board.get(i).getX() == x && board.get(i).getY() == y) {
 				board.get(i).setDice(selected);
-				System.out.println("GESELECTEERD - PATTERNPANE");
 			}
 		}
 	}
@@ -237,13 +238,25 @@ public class BoardPane extends Pane {
 			patternPane.setMouseTransparent(false);
 		}
 	}
+	
+	public void disableDiceMovement(int x, int y) {
+		for (PatternPane patternPane : board) {
+			if(patternPane.getDice() != null) {
+				patternPane.setMouseTransparent(true);
+			}
+			if(patternPane.getX() == x && patternPane.getY() == y) {
+				patternPane.setMouseTransparent(false);
+			}
+		}
+	}
 
 	public void allowMovement() {
 		allowsMovement = true;
 	}
 	
-	public void disableMovement() {
+	public void disableMovement(int x, int y) {
 		allowsMovement = false;
+		disableDiceMovement(x, y);
 	}
 
 	public boolean getAllowsMovement() {
@@ -271,6 +284,10 @@ public class BoardPane extends Pane {
 			}
 			
 		}
+	}
+	
+	public void setSelectedToNull() {
+		selected = null;
 	}
 
 }

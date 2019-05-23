@@ -165,6 +165,13 @@ public class Game {
 						+ "VALUES(" + yourself + ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw' , "
 						+ chosenPatternId + ")");
 	}
+	
+	public void setOwnId() {
+		yourself = (int) getNewId();
+		database.CUD(
+				"INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color) "
+						+ "VALUES(" + yourself + ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw')");
+	}
 
 	public long getNewId() {
 		return (long) database.Select(
@@ -225,15 +232,33 @@ public class Game {
 
 		return playableDices;
 	}
+	
+	public void getDiceWithChosenValue(int dienumber, String color, int value, int chosenvalue) {
+		diceArray.add(new Dice(dienumber, color, value));
+		for (int i = 0; i < playableDices.size(); i++) {
+			if(playableDices.get(i).getDieNumber() == dienumber && playableDices.get(i).getDieColor().equals(color)) {
+				playableDices.remove(i);
+			}
+		}
+		int index = r.nextInt(diceArray.size());
+		Dice newDice = diceArray.get(index);
+		while(newDice.getEyes() != chosenvalue) {
+			index = r.nextInt(diceArray.size());
+			newDice = diceArray.get(index);
+		}
+		diceArray.remove(index);
+		playableDices.add(newDice);
+	}
 
 
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			int randomDie = r.nextInt(17) + 1;
+			int randomDie = r.nextInt(18) + 1;
 			String[] colors = { "blauw", "groen", "geel", "rood", "paars" };
 			String color = colors[r.nextInt(5)];
 			for (int j = 0; j < diceArray.size(); j++) {
+				//TODO Make sure the same combination can't be added multiple times, a solution might be the random function in SQL, and also update the round.
 				if (diceArray.get(j).getDieNumber() == randomDie && diceArray.get(j).getDieColor() == color) {
 					playableDices.add(diceArray.get(j));
 					diceArray.remove(j);

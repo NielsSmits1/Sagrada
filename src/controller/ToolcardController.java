@@ -17,13 +17,27 @@ public class ToolcardController {
 		setToolcardsDescription();
 	}
 	
-	public void setToolcardActive() {
-		gamecontroller.setToolcardActive();
+	public void setToolcardOneActive() {
+		gamecontroller.setToolcardOneActive();
+	}
+	
+	public void setToolcardSixActive() {
+		gamecontroller.setToolcardSixActive();
+	}
+	
+	public void setToolcardTenActive() {
+		gamecontroller.setToolcardTenActive();
+	}
+	
+	public void setToolcardElevenActive() {
+		gamecontroller.setToolcardElevenActive();
+		
 	}
 	
 	public void enableDiceMovement(int i) {
 		gamecontroller.enableDiceMovement(i);
 	}
+	
 	
 	private void setToolcardsDescription() {
 		toolcardpanes.add(new ToolCardPane(toolcard.getCardOneId(), toolcard.getCardOneDescription(), this));
@@ -37,5 +51,7 @@ public class ToolcardController {
 	public void toolcardClicked(int id) {
 		toolcard.activateToolcard(id);
 	}
+
+
 
 }

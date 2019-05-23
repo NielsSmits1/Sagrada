@@ -45,7 +45,6 @@ public class BoardController {
 	public void validateToolcardTwo(int dieNumber, String color, int xPos, int yPos) {
 		if(finalCard.validateMove(xPos, yPos, dieNumber,color)) {
 			boardpane.moveDiceAccepted(dieNumber, color, xPos, yPos);
-			boardpane.disableMovement();
 		}
 	}
 	public DicePane getSelected() {
@@ -71,15 +70,23 @@ public class BoardController {
 		return patternCardOptions;
 	}
 
-	public ArrayList<Space> getPatternCard() {
-		return finalCard.getPatternField();
-	}
 
 	public void setPatternCard(int id) {
-		finalCard = new PatternCard(id, getIdGame(),getOwnId());
+		finalCard = new PatternCard(id, getIdGame(),getOwnId(), this);
 		setBoard();
 		setOpponentBoard();
 		gameController.setRootpane();
+	}
+	
+	public void setRandomCard() {
+		finalCard = new PatternCard(getOwnId(), getIdGame(), this);
+		setBoard();
+		setOpponentBoard();
+		gameController.setRootpane();
+	}
+	
+	public ArrayList<Space> getPatternCard(){
+		return finalCard.getPatternField();
 	}
 
 
@@ -126,12 +133,23 @@ public class BoardController {
 		boardpane.allowMovement();
 		if(i == 2) {
 			finalCard.setColorExamption();
-
 		}
-		
 		if(i == 3) {
 			finalCard.setNumberExamption();
 		}
+		if(i == 9) {
+			finalCard.setNextToDiceExamption();
+		}
+	}
+	
+	public void disableMovement(int x, int y) {
+		boardpane.disableMovement(x , y);
+	}
+	
+	public void calculatePatterncardNeeded() {
+		//TODO maak 3 var.
+		int x = (3 + 1)*4;
+			
 	}
 	
 
