@@ -12,6 +12,8 @@ public class Player {
 	private int score;
 	private int seqnr;
 	private int lastgame;
+	private int gameId;
+	private String status;
 
 	
 //	private String differendPlayer;
@@ -20,10 +22,17 @@ public class Player {
 		this.username = u;
 		this.password = p;
 	}
+	public void setStatus(String s) {
+		this.status = s;
+	}
+	public String getStatus() {
+		return this.status;
+	}
 	
 	public Player(String username) {
 		this.username = username;
 	}
+	
 	//selects and returns the username and password.
     public ArrayList<ArrayList<Object>> getSelect() {
         return database.Select("SELECT * FROM account WHERE username = '" + username + "' AND password = '" + password + "';");
@@ -34,7 +43,7 @@ public class Player {
     }
     //selects and returns arraylist of usernames.
     public ArrayList<ArrayList<Object>> checkPlayerInGame(){
-    	return database.Select("select username from player where game_idgame = (select game_idgame from player where username ='" + username + "') ");
+    	return database.Select("select username from player where game_idgame in (select game_idgame from player where username ='" + username + "') ");
    }
     
     public ArrayList<ArrayList<Object>> playerWonList(){
@@ -61,15 +70,8 @@ public class Player {
     public ArrayList<ArrayList<Object>> lastGamePlayers(){
     	return database.Select("SELECT username FROM player where game_idgame = '"+ getLastGame() +"'");
     }
-    public void createNewGame() {
-    	database.CUD("INSERT INTO GAME(creationdate) VALUES (now())");
-    }
-    public void addSelf() {
-    	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + username +"', " + getLastGame() + " , 'Uitdager', 0, 'rood')"); // rood has to be variable between all colors
-    }
-    public void addChallenger() {
-    	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + username +"', " + getLastGame() + " , 'Uitgedaagde', 0, 'rood')");  // rood has to be variable between all colors
-    }
+   
+    
    
     
        //adds new user to the database.
@@ -87,9 +89,9 @@ public class Player {
     
     public boolean checkUsernameExists() {
     	if(this.checkUsername().isEmpty()) {
-    		return true;
-    	}else {
     		return false;
+    	}else {
+    		return true;
     	}
     }
     String getPassword() {
@@ -189,8 +191,7 @@ public class Player {
 //		return w;
 //  }
 	public boolean checkGameSize() {
-		System.out.println(lastGamePlayers().size());
-		if(lastGamePlayers().size() >= 4) {
+		if(lastGamePlayers().size() == 4) {
 			return false;
 		}
 		return true;
@@ -256,6 +257,24 @@ public class Player {
 
 	private void updateSeqNr() {
 		database.Select("update player set seqnr = " + this.seqnr + " where idplayer = " + this.idplayer);
+	}
+
+	public boolean checkIfGame(String username) {
+		for(ArrayList<Object> a: this.checkPlayerInGame()) {
+			String u = (String)a.get(0);
+			if(u.equals(username)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addGameId(int gameId) {
+		this.gameId = gameId;
+	}
+
+	public int getGameId() {
+		return this.gameId;
 	}
 	
 	
