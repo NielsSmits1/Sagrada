@@ -30,10 +30,10 @@ public class Game {
 
 	}
 
-	public ArrayList<Player> getPlayers() {
-		return this.players;
-
-	}
+//	public ArrayList<Player> getPlayers() {
+//		return this.players;
+//
+//	}
 	
 
 	public Game() {
