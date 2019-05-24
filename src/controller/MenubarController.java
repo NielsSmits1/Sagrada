@@ -26,7 +26,7 @@ public class MenubarController {
 		this.self = player;
 		this.inlog = ic;
 		menu = new Menubar();
-		this.inlogController = controller;
+		this.inlog = ic;
 
 
 		menu.getExit().setOnAction(e -> exit());
