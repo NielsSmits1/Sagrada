@@ -6,11 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
 
 public class ToolCardPane extends Pane {
 	private Rectangle card;
@@ -20,66 +20,70 @@ public class ToolCardPane extends Pane {
 	private VBox cardPropertiesAlignment;
 	private ToolcardController toolcardController;
 	private ImageView toolcards;
-	
+	private HBox BuyAlignment;
+
 	private Image toolcard;
 
 	public ToolCardPane(int id, String description, ToolcardController toolcardController) {
 		this.toolcardController = toolcardController;
 		this.toolCardId = id;
-		//toolCardId = 3;
-		switch(id) {
+		// toolCardId = 3;
+		switch (id) {
 		case 1:
 			toolcard = new Image("/Resources/toolcard_1.png");
-		break;
+			break;
 		case 2:
 			toolcard = new Image("/Resources/toolcard_2.png");
-		break;
-		case 3: 
+			break;
+		case 3:
 			toolcard = new Image("/Resources/toolcard_3.png");
-		break;
+			break;
 		case 4:
 			toolcard = new Image("/Resources/toolcard_4.png");
-		break;
+			break;
 		case 5:
 			toolcard = new Image("/Resources/toolcard_5.png");
-		break;
-		case 6: 
+			break;
+		case 6:
 			toolcard = new Image("/Resources/toolcard_6.png");
-		break;
-		case 7: 
+			break;
+		case 7:
 			toolcard = new Image("/Resources/toolcard_7.png");
-		break;
-		case 8: 
+			break;
+		case 8:
 			toolcard = new Image("/Resources/toolcard_8.png");
-		break;
-		case 9: 
+			break;
+		case 9:
 			toolcard = new Image("/Resources/toolcard_9.png");
-		break;
+			break;
 		case 10:
 			toolcard = new Image("/Resources/toolcard_10.png");
-		break;
-		case 11: 
+			break;
+		case 11:
 			toolcard = new Image("/Resources/toolcard_11.png");
-		break;
-		case 12: 
+			break;
+		case 12:
 			toolcard = new Image("/Resources/toolcard_12.png");
-		break;
+			break;
 		}
-
+		BuyAlignment = new HBox();
 		cardPropertiesAlignment = new VBox();
 		button = new Button("Koop");
 		button.setOnAction(e -> handleButton());
 		setCard();
 		setPrice();
 		toolcards = new ImageView(toolcard);
-		cardPropertiesAlignment.getChildren().add(toolcards);
-		cardPropertiesAlignment.setAlignment(Pos.TOP_LEFT);
-		getChildren().addAll(card, price, cardPropertiesAlignment);
-		
+		BuyAlignment.getChildren().addAll(button, price);
+		BuyAlignment.setSpacing(50);
+		cardPropertiesAlignment.getChildren().addAll(toolcards, BuyAlignment);
+		cardPropertiesAlignment.setAlignment(Pos.CENTER);
+		getChildren().addAll(cardPropertiesAlignment);
+
 	}
 
 	public void handleButton() {
-		if(price.getText().equals("1")) {
+		setPlayerTokens();
+		if (price.getText().equals("1")) {
 			changePrice("2");
 		}
 		toolcardController.toolcardClicked(toolCardId);
@@ -93,14 +97,21 @@ public class ToolCardPane extends Pane {
 
 	private void setPrice() {
 		price = new Label("1");
-		price.setLayoutX(10);
-		price.setLayoutY(10);
+
 	}
 
 	public void changePrice(String value) {
 		price.setText(value);
 
 	}
+
+	public int getPricetag() {
+		int value = Integer.parseInt(price.getText());
+		System.out.println(value);
+		return value;
+	}
 	
-	
+	public void setPlayerTokens() {
+		toolcardController.setPlayerTokens(getPricetag());
+	}
 }

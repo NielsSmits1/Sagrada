@@ -19,6 +19,8 @@ public class Game {
 	private int idgame;
 	private int yourself;
 	private Random r;
+	private Player self;
+	private ArrayList<Gamefavortoken> token;
 
 	// private Random r;
 
@@ -30,11 +32,14 @@ public class Game {
 
 	public ArrayList<Player> getPlayers() {
 		return this.players;
+
 	}
+	
 
 	public Game() {
 		r = new Random();
 		diceArray = new ArrayList<>();
+		token = new ArrayList<Gamefavortoken>();
 		database = new db();
 		idgame = (int) createNewGameId();
 		insertDicesIntoDatabase();
@@ -42,7 +47,22 @@ public class Game {
 		setDiceArray();
 		// buildGameTurns();
 		checkIfGameHasStarted();
+		fillTokenArrayList();
 
+	}
+
+	// public void addPlayer(Player param) {
+	// 	insertPlayer(param);
+
+	// }
+
+	// public void addPlayer(Player param, String status) {
+	// 	insertPlayer(param, status);
+
+	// }
+
+	public ArrayList<Player> getPlayers() {
+		return this.players;
 	}
 
 	public boolean alreadyInGame(Player player) {
@@ -61,6 +81,7 @@ public class Game {
 		idgame = (int) createNewGameId();
 	}
 
+
 	public void insertPlayer(Player p, String status, String color) {
 		database.CUD(
 				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
@@ -70,6 +91,8 @@ public class Game {
 																										// colors
 	}
 
+
+
 	private void buildGameTurns() {
 		forwardPlayer = database
 				.Select("select idplayer, username, seqnr from player where game_idgame = " + this.idgame);
@@ -78,9 +101,7 @@ public class Game {
 			forwardPlayer.add(a);
 		}
 
-		/*for (int i = 0; i < forwardPlayer.size(); i++) {
 
-		}*/
 	}
 	public ArrayList<ArrayList<Object>> getColorsFromGame(int idgame) {
 		return database.Select("SELECT private_objectivecard_color FROM player WHERE game_idgame ='"+ idgame + "'");
@@ -103,6 +124,7 @@ public class Game {
 			colors = (String) a.get(0);
 			takenColors.add(colors);
 	
+
 		}
 		allColors.removeAll(takenColors);
 		Collections.shuffle(allColors);
@@ -155,8 +177,8 @@ public class Game {
 	}
 
 	private long createNewGameId() {
-		return (int) database
-				.Select("SELECT (idgame) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
+		return (long) database
+				.Select("SELECT (idgame+1) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
 				.get(0);
 	}
 
@@ -254,7 +276,7 @@ public class Game {
 
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
+		while (playableDices.size() < 9) {
 			int randomDie = r.nextInt(18) + 1;
 			String[] colors = { "blauw", "groen", "geel", "rood", "paars" };
 			String color = colors[r.nextInt(5)];
@@ -281,6 +303,7 @@ public class Game {
 	public int getOwnId() {
 		return yourself;
 	}
+
 
 	public ArrayList<ArrayList<Object>> getAvailableGames(String u) {
 		return database.Select(
@@ -324,4 +347,39 @@ public class Game {
 
 	}
 
+	public void fillTokenArrayList() {
+		for (int i = 1; i < 25; i++) {
+			token.add(new Gamefavortoken(i));
+			database.CUD("INSERT INTO gamefavortoken (idfavortoken, idgame) VALUES (" + i + "," + idgame + ")");
+		}
+	}
+	
+	public void updateTokenArrayList(int difficulty) {
+		for (int i = 1; i <= difficulty; i++) {
+			database.CUD("UPDATE gamefavortoken SET idplayer = " + yourself + " WHERE idFavortoken = " + i +" AND idgame = " + idgame + ";");
+		}
+	}
+	
+	public void updatePlayedTokens(int amountPlayed) {
+		
+	}
+	
+	public void addGametoolcard(int id) {
+		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + id + ", " + idgame + ");");
+	}
+	
+	public void addTokensToGametoolcard(int amount, int toolcardid) {
+		if(getLeftoverTokens() >= amount) {
+			database.CUD("UPDATE gamefavortoken SET gametoolcard = " + getGametoolcard(toolcardid) + " WHERE idgame = " + idgame +"");
+		}
+	}
+	
+	public int getLeftoverTokens() {
+		return (int)database.Select("SELECT count(*) FROM gamefavortoken WHERE idgame = " + idgame + " AND idplayer = " + yourself + " AND round is null;").get(0).get(0);
+	}
+	
+	public int getGametoolcard(int toolcardid) {
+		return (int)database.Select("SELECT gametoolcard from gametoolcard WHERE idgame = " + idgame +" AND idtoolcard = " + toolcardid + "").get(0).get(0);
+	}
+	
 }

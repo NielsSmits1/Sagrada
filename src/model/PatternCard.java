@@ -23,7 +23,7 @@ public class PatternCard {
 	private BoardController controller;
 
 	public PatternCard(int number, int idgame, int ownId, BoardController bc) {
-//		patternfield = new ArrayList<Space>();
+		// patternfield = new ArrayList<Space>();
 		patternfield = new ArrayList<>();
 		controller = bc;
 		this.idgame = idgame;
@@ -33,8 +33,8 @@ public class PatternCard {
 		p = getSelect();
 		setpatternfield();
 		addCard();
-//		generateRandomPatternCard();
-//		insertRandomPatternCardIntoDB();
+		// generateRandomPatternCard();
+		// insertRandomPatternCardIntoDB();
 		hasColorExamption = false;
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
@@ -43,12 +43,12 @@ public class PatternCard {
 	public PatternCard() {
 		random = new Random();
 		patternfield = new ArrayList<>();
-		//TODO aanpassen naar de size van de list van beschikbare kaarten
+		// TODO aanpassen naar de size van de list van beschikbare kaarten
 		setPatternId(random.nextInt(24) + 1);
 		p = getSelect();
 		setpatternfield();
 	}
-	
+
 	public PatternCard(int ownId, int idgame, BoardController bc) {
 		random = new Random();
 		yourself = ownId;
@@ -63,7 +63,7 @@ public class PatternCard {
 		hasColorExamption = false;
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
-//		setpatternfield();
+		// setpatternfield();
 	}
 
 	public ArrayList<ArrayList<Object>> getSelect() {
@@ -534,12 +534,9 @@ public class PatternCard {
 		hasNextToDiceExamption = true;
 	}
 
-
-
 	public void generateRandomPatternCard() {
 		boolean wantToFill = false;
 		boolean colorOrNumber = false;
-		int amountPlaced = 0;
 		for (int x = 1; x <= 5; x++) {
 			for (int y = 1; y <= 4; y++) {
 				patternfield.add(new Space(x, y));
@@ -554,17 +551,21 @@ public class PatternCard {
 				if (colorOrNumber) {
 					patternfield.get(i).setColor(getRandomColor());
 					for (int j = 0; j < patternfield.size(); j++) {
-						//Left
-						if(patternfield.get(i).getXPos() - 1 > 0 && patternfield.get(i).getXPos() - 1 == patternfield.get(j).getXPos() && patternfield.get(i).getYPos() == patternfield.get(j).getYPos()) {
-							if(patternfield.get(i).getColor().equals(patternfield.get(j).getColor())) {
+						// Left
+						if (patternfield.get(i).getXPos() - 1 > 0
+								&& patternfield.get(i).getXPos() - 1 == patternfield.get(j).getXPos()
+								&& patternfield.get(i).getYPos() == patternfield.get(j).getYPos()) {
+							if (patternfield.get(i).getColor().equals(patternfield.get(j).getColor())) {
 								patternfield.get(i).setColor("");
 								break;
 							}
 						}
 
-						//Up
-						if(patternfield.get(i).getYPos() - 1 > 0 &&patternfield.get(i).getYPos() - 1 == patternfield.get(j).getYPos() && patternfield.get(i).getXPos() == patternfield.get(j).getXPos()) {
-							if(patternfield.get(i).getColor().equals(patternfield.get(j).getColor())) {
+						// Up
+						if (patternfield.get(i).getYPos() - 1 > 0
+								&& patternfield.get(i).getYPos() - 1 == patternfield.get(j).getYPos()
+								&& patternfield.get(i).getXPos() == patternfield.get(j).getXPos()) {
+							if (patternfield.get(i).getColor().equals(patternfield.get(j).getColor())) {
 								patternfield.get(i).setColor("");
 								break;
 							}
@@ -574,20 +575,24 @@ public class PatternCard {
 
 				}
 
-				if(!colorOrNumber) {
-					patternfield.get(i).setEyes(random.nextInt(6)+1);
+				if (!colorOrNumber) {
+					patternfield.get(i).setEyes(random.nextInt(6) + 1);
 					for (int j = 0; j < patternfield.size(); j++) {
-						//Left
-						if(patternfield.get(i).getXPos() - 1 > 0 && patternfield.get(i).getXPos() - 1 == patternfield.get(j).getXPos() && patternfield.get(i).getYPos() == patternfield.get(j).getYPos()) {
-							if(patternfield.get(i).getEyes() == patternfield.get(j).getEyes()) {
+						// Left
+						if (patternfield.get(i).getXPos() - 1 > 0
+								&& patternfield.get(i).getXPos() - 1 == patternfield.get(j).getXPos()
+								&& patternfield.get(i).getYPos() == patternfield.get(j).getYPos()) {
+							if (patternfield.get(i).getEyes() == patternfield.get(j).getEyes()) {
 								patternfield.get(i).setEyes(0);
 								break;
 							}
 						}
 
-						//Up
-						if(patternfield.get(i).getYPos() - 1 > 0 &&patternfield.get(i).getYPos() - 1 == patternfield.get(j).getYPos() && patternfield.get(i).getXPos() == patternfield.get(j).getXPos()) {
-							if(patternfield.get(i).getEyes() == patternfield.get(j).getEyes()) {
+						// Up
+						if (patternfield.get(i).getYPos() - 1 > 0
+								&& patternfield.get(i).getYPos() - 1 == patternfield.get(j).getYPos()
+								&& patternfield.get(i).getXPos() == patternfield.get(j).getXPos()) {
+							if (patternfield.get(i).getEyes() == patternfield.get(j).getEyes()) {
 								patternfield.get(i).setEyes(0);
 								break;
 							}
@@ -600,30 +605,30 @@ public class PatternCard {
 		}
 	}
 
-	public int getDifficulty() {
+	public int getRandomDifficulty() {
 		int amountPlaced = 0;
 		for (int i = 0; i < patternfield.size(); i++) {
-			if(patternfield.get(i).getEyes() != 0 || !patternfield.get(i).getColor().equals("")) {
+			if (patternfield.get(i).getEyes() != 0 || !patternfield.get(i).getColor().equals("")) {
 				amountPlaced++;
 			}
 		}
 
-		if(amountPlaced < 3) {
+		if (amountPlaced < 3) {
 			return 1;
 		}
-		if(amountPlaced > 2 && amountPlaced <= 5) {
+		if (amountPlaced > 2 && amountPlaced <= 5) {
 			return 2;
 		}
-		if(amountPlaced > 5 && amountPlaced <= 6) {
+		if (amountPlaced > 5 && amountPlaced <= 6) {
 			return 3;
 		}
-		if(amountPlaced > 6 && amountPlaced < 10) {
+		if (amountPlaced > 6 && amountPlaced < 10) {
 			return 4;
 		}
-		if(amountPlaced > 9 && amountPlaced < 14) {
+		if (amountPlaced > 9 && amountPlaced < 14) {
 			return 5;
 		}
-		if(amountPlaced > 13) {
+		if (amountPlaced > 13) {
 			return 6;
 		}
 
@@ -631,48 +636,50 @@ public class PatternCard {
 	}
 
 	public void insertRandomPatternCardIntoDB() {
-		database.CUD("INSERT INTO patterncard (idpatterncard, difficulty, standard) VALUES(" + (int)getNewPatternId() +"," + getDifficulty() + ", 0);");
+		database.CUD("INSERT INTO patterncard (idpatterncard, difficulty, standard) VALUES(" + (int) getNewPatternId()
+				+ "," + getRandomDifficulty() + ", 0);");
 		insertRandomPatternCardSpaces();
 	}
 
 	public void insertRandomPatternCardSpaces() {
 		for (int i = 0; i < patternfield.size(); i++) {
-			database.CUD("INSERT INTO patterncardfield (patterncard_idpatterncard, position_x, position_y) VALUES(" + getHighestPatternId() +"," + patternfield.get(i).getXPos() + ", " + patternfield.get(i).getYPos() +");");
-			if(!patternfield.get(i).getColor().equals("")) {
-				database.CUD("UPDATE patterncardfield SET color = '" + patternfield.get(i).getColor() + "' WHERE patterncard_idpatterncard = " + getHighestPatternId() + " AND position_x = " + patternfield.get(i).getXPos() + " AND position_y = " + patternfield.get(i).getYPos() + "");
+			database.CUD("INSERT INTO patterncardfield (patterncard_idpatterncard, position_x, position_y) VALUES("
+					+ getHighestPatternId() + "," + patternfield.get(i).getXPos() + ", " + patternfield.get(i).getYPos()
+					+ ");");
+			if (!patternfield.get(i).getColor().equals("")) {
+				database.CUD("UPDATE patterncardfield SET color = '" + patternfield.get(i).getColor()
+						+ "' WHERE patterncard_idpatterncard = " + getHighestPatternId() + " AND position_x = "
+						+ patternfield.get(i).getXPos() + " AND position_y = " + patternfield.get(i).getYPos() + "");
 			}
 
-			if(patternfield.get(i).getEyes() != 0) {
-				database.CUD("UPDATE patterncardfield SET value = " + patternfield.get(i).getEyes() + " WHERE patterncard_idpatterncard = " + getHighestPatternId() + " AND position_x = " + patternfield.get(i).getXPos() + " AND position_y = " + patternfield.get(i).getYPos() + "");
+			if (patternfield.get(i).getEyes() != 0) {
+				database.CUD("UPDATE patterncardfield SET value = " + patternfield.get(i).getEyes()
+						+ " WHERE patterncard_idpatterncard = " + getHighestPatternId() + " AND position_x = "
+						+ patternfield.get(i).getXPos() + " AND position_y = " + patternfield.get(i).getYPos() + "");
 			}
 		}
 	}
 
-
 	public long getNewPatternId() {
-		return (long) database.Select("SELECT idpatterncard+1 FROM tjpmsalt_db2.patterncard ORDER BY idpatterncard DESC LIMIT 1").get(0).get(0);
+		return (long) database
+				.Select("SELECT idpatterncard+1 FROM tjpmsalt_db2.patterncard ORDER BY idpatterncard DESC LIMIT 1")
+				.get(0).get(0);
 	}
 
 	public int getHighestPatternId() {
-		return (int) database.Select("SELECT idpatterncard FROM tjpmsalt_db2.patterncard ORDER BY idpatterncard DESC LIMIT 1").get(0).get(0);
+		return (int) database
+				.Select("SELECT idpatterncard FROM tjpmsalt_db2.patterncard ORDER BY idpatterncard DESC LIMIT 1").get(0)
+				.get(0);
 	}
 
-
-
 	public String getRandomColor() {
-		String[] color = {"blauw", "groen", "rood", "geel", "paars"};
+		String[] color = { "blauw", "groen", "rood", "geel", "paars" };
 		return color[random.nextInt(color.length)];
 	}
 
-
-//	private boolean allowsColorPlacement(int x, int y) {
-//
-//		if (x + 1 >= 6) {
-//		}else if(){
-//
-//		}
-//
-//		return false;
-//	}
+	public int getDifficulty() {
+		return (int) database.Select("SELECT difficulty FROM patterncard WHERE idpatterncard = " + getPatternId() + ";")
+				.get(0).get(0);
+	}
 
 }

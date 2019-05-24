@@ -3,9 +3,11 @@ package View;
 import java.util.ArrayList;
 
 import controller.BoardController;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 import model.Space;
@@ -13,17 +15,14 @@ import model.Space;
 public class BoardPane extends Pane {
 	private QuadCurve top;
 	private Rectangle square;
-	// private ArrayList<DicePane> board;
+	private Circle tokenPlaceholder;
 	private ArrayList<PatternPane> board;
-	// private DicePane selected;
 	private GridPane field;
 	private BoardController controller;
 	private PatternPane selected;
 	private int patternid;
-	private boolean transparent;
 	private boolean allowsMovement;
-	// private Board b;
-
+	private Label label;
 	/// *
 	// This constructor requires a rootPane to return the selected DicePane. It also
 	/// asks for an int that it can give to the BoardController. This number stands
@@ -31,28 +30,18 @@ public class BoardPane extends Pane {
 	/// **
 	public BoardPane(BoardController bc) {
 		allowsMovement = false;
-		// setPrefSize(s.getWidth()/4, s.getHeight() - 200);
-		// transparent = true;
-		// setPatternId(pattern);
 		controller = bc;
-		// controller.setPatternId(patternid);
 		setShape();
 		setGrid();
-		// b = be;
-		getChildren().addAll(top, square);
+		getChildren().addAll(top, square, tokenPlaceholder, label);
+		setLabelValue(controller.getDifficulty());
 		setBoard();
 	}
 
 	public BoardPane(ArrayList<Space> opponentBoard) {
-		// setPrefSize(s.getWidth()/4, s.getHeight() - 200);
-		// transparent = true;
-		// setPatternId(pattern);
-		// controller = bc;
-		// controller.setPatternId(patternid);
 		setShape();
 		setGrid();
-		// b = be;
-		getChildren().addAll(top, square);
+		getChildren().addAll(top, square, tokenPlaceholder, label);
 		setOpponentBoard(opponentBoard);
 	}
 
@@ -83,12 +72,22 @@ public class BoardPane extends Pane {
 
 	// TODO THOSE NUMBERS MIGHT BE MOVED TO A NEW MODEL
 	private void setShape() {
-		top = new QuadCurve(0, 200, 200, -150, 400, 200);
+		label = new Label("1");
+		label.setLayoutX(195);
+		label.setLayoutY(240);
+		top = new QuadCurve(0, 300, 200, 0, 400, 300);
+		tokenPlaceholder = new Circle();
+		tokenPlaceholder.setRadius(25);
+		tokenPlaceholder.setCenterX(200);
+		tokenPlaceholder.setCenterY(250);
+		tokenPlaceholder.setFill(Color.TRANSPARENT);
+		tokenPlaceholder.setStroke(Color.BLACK);
+		
 		square = new Rectangle();
 		square.setX(0);
-		square.setY(200);
+		square.setY(300);
 		square.setWidth(400);
-		square.setHeight(500);
+		square.setHeight(320);
 		square.setFill(Color.WHITE);
 		square.setStroke(Color.BLACK);
 		top.setStroke(Color.BLACK);
@@ -103,19 +102,10 @@ public class BoardPane extends Pane {
 	private void setGrid() {
 		field = new GridPane();
 		field.setLayoutX(square.getX());
-		field.setLayoutY(square.getY() + 70);
+		field.setLayoutY(square.getY());
 		field.setVgap(8);
 		field.setHgap(8);
 	}
-
-	// public void setDice(DicePane p) {
-	// board.get(2).setDice(p);
-	// field.add(p, 2, 2);
-	// }
-
-	// public void setEye(int value, int numberOfEyes) {
-	// board.get(value).addPatternEyes(numberOfEyes);
-	// }
 
 	/// *
 	// Sets the color of the PatternPane on the board.
@@ -161,8 +151,6 @@ public class BoardPane extends Pane {
 		getChildren().add(field);
 		// System.out.println("Should have worked");
 	}
-	
-	
 
 	private void setOpponentBoard(ArrayList<Space> opponentBoard) {
 		int counter = 0;
@@ -177,7 +165,6 @@ public class BoardPane extends Pane {
 			}
 		}
 		getChildren().add(field);
-		// System.out.println("Should have worked");
 	}
 
 	/// *
@@ -187,16 +174,6 @@ public class BoardPane extends Pane {
 	public ArrayList<Space> getPatternField() {
 		return controller.getPatternCard();
 	}
-
-	// public void getClicked(PatternPane p) {
-	// System.out.println("" + field.getRowIndex(p) + " " +
-	// field.getColumnIndex(p));
-	// }
-
-	// public void setSelected(DicePane p, boolean onOff) {
-	// selected = p;
-	// System.out.println("" + selected);
-	// }
 
 	/// *
 	// This is what rootPane is used for, to get the selected DicePane and to delete
@@ -222,16 +199,6 @@ public class BoardPane extends Pane {
 	public void giveCords(int x, int y) {
 		controller.validateMove(x, y);
 	}
-	//
-	// public void deleteSelected() {
-	// rootPane.deleteSelected();
-	//
-	// }
-
-	// public void switchTransparent() {
-	// transparent = !transparent;
-	// setMouseTransparent(transparent);
-	// }
 
 	public void getTurns() {
 		controller.getTurns();
@@ -242,13 +209,13 @@ public class BoardPane extends Pane {
 			patternPane.setMouseTransparent(false);
 		}
 	}
-	
+
 	public void disableDiceMovement(int x, int y) {
 		for (PatternPane patternPane : board) {
-			if(patternPane.getDice() != null) {
+			if (patternPane.getDice() != null) {
 				patternPane.setMouseTransparent(true);
 			}
-			if(patternPane.getX() == x && patternPane.getY() == y) {
+			if (patternPane.getX() == x && patternPane.getY() == y) {
 				patternPane.setMouseTransparent(false);
 			}
 		}
@@ -257,7 +224,7 @@ public class BoardPane extends Pane {
 	public void allowMovement() {
 		allowsMovement = true;
 	}
-	
+
 	public void disableMovement(int x, int y) {
 		allowsMovement = false;
 		disableDiceMovement(x, y);
@@ -283,15 +250,21 @@ public class BoardPane extends Pane {
 			if (board.get(i).getDice() != null) {
 				if (board.get(i).getDiceNumber() == dieNumber && board.get(i).getDiceColor().equals(color)) {
 					selected = null;
-//					board.get(i).setDiceNull();
 				}
 			}
-			
 		}
 	}
-	
+
 	public void setSelectedToNull() {
 		selected = null;
+	}
+	
+	public void setLabelValue(int value) {
+		label.setText("" + value);
+	}
+	
+	public void decreaseLabelValue(int minus) {
+		label.setText("" + (Integer.parseInt(label.getText()) - minus));
 	}
 
 }

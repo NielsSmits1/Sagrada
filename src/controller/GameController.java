@@ -181,8 +181,6 @@ public class GameController {
 		return gamePane;
 	}
 
-	
-
 	public ArrayList<ToolCardPane> getToolCards() {
 		return toolcardcontroller.getToolCards();
 	}
@@ -211,6 +209,22 @@ public class GameController {
 	public GamePane getGameStage() {
 		return this.gamePane;
 		
+	}
+	
+//	public int getDifficulty() {
+//		return boardcontroller.getDifficulty();
+//	}
+	
+	public void updateTokens(int difficulty) {
+		game.updateTokenArrayList(difficulty);
+	}
+
+	public void setPlayerTokens(int minus) {
+		boardcontroller.setPlayerTokens(minus);
+	}
+	
+	public void setGameCard(int id) {
+		game.addGametoolcard(id);
 	}
 	
 	
