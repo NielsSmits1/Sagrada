@@ -19,7 +19,6 @@ public class InlogController {
 	private MyScene scene;
 	private MenubarController menu;
 
-	private Runnable multi;
 
 	public InlogController(MyScene myScene) {
 		scene = myScene;
