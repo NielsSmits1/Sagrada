@@ -1,8 +1,8 @@
 package View;
 
+import controller.ChatBoxController;
 import controller.GameController;
 import controller.InlogController;
-import controller.ChatBoxController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
@@ -13,10 +13,10 @@ public class MyScene extends Scene {
 
 	public MyScene() {
 		super(new Pane());
-		setRoot(chat.getScreen());
+//		setRoot(chat.getScreen());
 //		setRoot(game.showOptions());
-//         inlog.showInlog();
-//        setRoot(inlog.show());
+         inlog.showInlog();
+        setRoot(inlog.showInlog());
 // 
 
 	}
@@ -36,4 +36,3 @@ public class MyScene extends Scene {
 	}
 
     }
-}

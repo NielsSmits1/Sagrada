@@ -75,9 +75,9 @@ public class GamePane extends BorderPane {
 
 
 		this.controller = gameController;
-		setBoard();
-		addDice();
-		finish();
+//		setBoard();
+//		addDice();
+//		finish();
 	}
 
 	/// *
