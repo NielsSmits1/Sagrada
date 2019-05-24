@@ -376,5 +376,5 @@ public class Game {
 	public int getGametoolcard(int toolcardid) {
 		return (int)database.Select("SELECT gametoolcard from gametoolcard WHERE idgame = " + idgame +" AND idtoolcard = " + toolcardid + "").get(0).get(0);
 	}
-	
+
 }

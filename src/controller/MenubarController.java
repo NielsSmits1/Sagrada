@@ -1,8 +1,8 @@
 package controller;
 
-
 import View.Menubar;
 import View.MyScene;
+import View.ChatBox;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -11,10 +11,12 @@ import model.Game;
 import model.MenuBarModel;
 import model.Player;
 
-
 public class MenubarController {
-	
+
 	private Menubar menu;
+	private MenuBarModel menuModel;
+	private PlayerController self;
+	private Pane pane;
 	private MyScene scene;
 	private InlogController inlog;
 	private Player self;
@@ -26,6 +28,7 @@ public class MenubarController {
 		this.self = player;
 		this.inlog = ic;
 		menu = new Menubar();
+
 
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());
@@ -47,6 +50,7 @@ public class MenubarController {
 				+ self.getMostPlacedDiceEyes() + "\nAantal verschillende tegenstanders waartegen gespeeld is: "
 				+ self.getAmountOfUniquePlayers();
 		return stats;
+
 	}
 
 	public void exit() {

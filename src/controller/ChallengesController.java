@@ -46,7 +46,9 @@ public class ChallengesController{
 			p.getDecline().setOnAction(e -> setPlayerStatusToDeclined(a));
 			challengesPL.add(p);
 		}
-		challengesPane.setPlayerLine(challengesPL);
+//		challengesPane.setLayout();
+//		challengesPane.setPlayerLines(challenges);
+//		challengesPane.setLayout();
 	}
 	
 	
