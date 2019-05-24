@@ -31,7 +31,7 @@ public class ChallengerController {
 			ChallengesPlayerLinePane p = new ChallengesPlayerLinePane(a.getUsername(), a.getStatus(),a.getGameId());
 			challengesPL.add(p);
 		}
-		challengerPane.showPlayerLines(challengesPL);
+		challengerPane.setPlayerLines(challengesPL);
 		
 		
 	}

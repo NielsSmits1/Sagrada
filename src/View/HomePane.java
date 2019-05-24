@@ -41,7 +41,7 @@ public class HomePane extends Pane{
 		
 		x += 400;
 		
-		setPanes("Wie u heeft uitgedaagt", challenger);
+		setPanes("Wie u heeft uitgedaagd", challenger);
 		
 		x += 400;
 		
