@@ -67,7 +67,6 @@ public class Challenge {
 	}
 	public ArrayList<Player> playersYouChallenged() {
 		ArrayList<Player> players = new ArrayList<Player>();
-
 		for (ArrayList<Object> a : this.GetPlayerWithChallengedStatus()) {
 			Player p = new Player((String) a.get(0));
 			p.setStatus((String) a.get(1));
