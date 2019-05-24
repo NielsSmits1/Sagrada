@@ -2,7 +2,6 @@ package controller;
 
 import View.Menubar;
 import View.MyScene;
-import View.ChatBox;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -15,7 +14,6 @@ public class MenubarController {
 
 	private Menubar menu;
 	private MenuBarModel menuModel;
-	private PlayerController self;
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlog;
@@ -28,6 +26,7 @@ public class MenubarController {
 		this.self = player;
 		this.inlog = ic;
 		menu = new Menubar();
+		this.inlogController = controller;
 
 
 		menu.getExit().setOnAction(e -> exit());
