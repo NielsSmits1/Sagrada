@@ -2,7 +2,6 @@ package controller;
 
 import View.Menubar;
 import View.MyScene;
-import View.ChatBox;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import model.Game;
@@ -13,9 +12,6 @@ public class MenubarController {
 
 	private Menubar menu;
 	private MenuBarModel menuModel;
-
-	private PlayerController self;
-
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlogController;
@@ -30,7 +26,7 @@ public class MenubarController {
 
 		this.scene = scene;
 		this.inlogController = controller;
-		this.controller = player;
+		//this.controller = player;
 		
 		game = new GameController(scene);
 		menu = new Menubar(scene);
