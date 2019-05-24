@@ -319,4 +319,12 @@ public class Player {
 	private long countPlayersGame(int gameId) {
 		return (long)database.Select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
 	}
+	
+	public int getPlayerId() {
+		return idplayer;
+	}
+	
+	public boolean getSelf() {
+		return self;
+	}
 }

@@ -21,15 +21,15 @@ public class GamePane extends BorderPane {
 	/// **
 	private Button close;
 
-	private BoardPane player1;
-	private BoardPane player2;
-	private BoardPane player3;
-	private BoardPane player4;
+//	private BoardPane player1;
+//	private BoardPane player2;
+//	private BoardPane player3;
+//	private BoardPane player4;
+	private ArrayList<BoardPane> playField;
 	private HBox boards;
 	private HBox diceRow1;
 	private HBox diceRow2;
 	private HBox diceRow3;
-
 	private DicePane selected;
 	private ArrayList<ToolCardPane> toolcards;
 	private PrivateCardPane pc;
@@ -40,7 +40,7 @@ public class GamePane extends BorderPane {
 	private HeaderPane toolCard;
 	private BorderPane bottom;
 	private GameController controller;
-	private ArrayList<Dice> diceArray;
+//	private ArrayList<Dice> diceArray;
 	private boolean toolcardIsActiveOne;
 	private boolean toolcardIsActiveSix;
 	private boolean toolcardIsActiveTen;
@@ -58,6 +58,7 @@ public class GamePane extends BorderPane {
 
 	public GamePane(GameController gameController) {
 		r = new Random();
+		playField = new ArrayList<>();
 		toolcardIsActiveOne = false;
 		toolcardIsActiveSix = false;
 		toolcardIsActiveTen = false;
@@ -89,15 +90,18 @@ public class GamePane extends BorderPane {
 		// The the number in the constructor from BoardPane stands for the number of the
 		/// windowpattern in the DB.
 		
-		player1 = controller.returnBoardPane();
-		setBoardPlayerOne();
+		playField = controller.getPlayers();
+		
+//		player1 = controller.returnBoardPane();
+//		setBoardPlayerOne();
+//
+//		player2 = controller.getOpponentBoard().get(0);
+////		
+//		player3 = controller.getOpponentBoard().get(1);
+//		player4 = controller.getOpponentBoard().get(2);
 
-		player2 = controller.getOpponentBoard().get(0);
-//		
-		player3 = controller.getOpponentBoard().get(1);
-		player4 = controller.getOpponentBoard().get(2);
-
-		boards = new HBox(player1, player2, player3, player4);
+		boards = new HBox();
+		boards.getChildren().addAll(playField);
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 50));
 	}
@@ -380,10 +384,10 @@ public class GamePane extends BorderPane {
 	}
 
 	public void setBoardPlayerOne() {
-		player1 = controller.returnBoardPane();
-		player2 = controller.getOpponentBoard().get(0);
-		player3 = controller.getOpponentBoard().get(1);
-		player4 = controller.getOpponentBoard().get(2);
+//		player1 = controller.returnBoardPane();
+//		player2 = controller.getOpponentBoard().get(0);
+//		player3 = controller.getOpponentBoard().get(1);
+//		player4 = controller.getOpponentBoard().get(2);
 	}
 
 	public Button getClose() {

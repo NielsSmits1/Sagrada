@@ -19,13 +19,9 @@ public class PatternCardOptions {
 		}
 	}
 	
-	private void addIdsToDatabase(int amount) {
-		for (int i = 0; i < amount/4; i++) {
-			for(int j = 0; j < 4; j++) {
-				
-			}
-		}
-		
-//		database.CUD();
+	public ArrayList<Integer> getOptions(){
+		return idpatterncards;
 	}
+	
+	
 }

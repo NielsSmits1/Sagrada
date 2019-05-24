@@ -6,6 +6,7 @@ import View.BoardPane;
 import View.DicePane;
 import model.Opponent;
 import model.PatternCard;
+import model.PatternCardOptions;
 import model.Space;
 
 public class BoardController {
@@ -15,17 +16,19 @@ public class BoardController {
 	private BoardPane boardpane = new BoardPane();
 	private ArrayList<BoardPane> opponentBoard;
 	private GameController gameController;
+	private PatternCardOptions allOptions;
+	private ArrayList<BoardPane> players;
 
 	public BoardController(GameController gameController) {
 		this.gameController = gameController;
+		players = new ArrayList<>();
+		allOptions = new PatternCardOptions();
+		setOptions();
+		this.gameController.addOptions(allOptions.getOptions());
 		opponentBoard = new ArrayList<>();
 		patternCardOptions = new ArrayList<>();
-		for (int i = 0; i < 4; i++) {
-			patternCardOptions.add(new PatternCard());
-		}
-		checkDuplicatePatternCard();
-		for (int i = 0; i < patternCardOptions.size(); i++) {
-			patternCardOptions.get(i).addOptionToDB();
+		for (int i = 0; i < this.gameController.getOwnOptions().size(); i++) {
+			patternCardOptions.add(new PatternCard(this.gameController.getOwnOptions().get(i)));
 		}
 
 	}
@@ -55,15 +58,10 @@ public class BoardController {
 	}
 
 	public void setBoard() {
-		boardpane = new BoardPane(this);
-	}
-
-	public void setOpponentBoard() {
-		opponent = new Opponent(getIdGame(), getOwnId());
-		for (int i = 0; i < getOpponentCords().size(); i++) {
-			opponentBoard.add(new BoardPane(getOpponentCords().get(i)));
+//		players.add(new BoardPane(this, finalCard));
+		for (int i = 0; i < getGamemode(); i++) {
+			players.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
 		}
-
 	}
 
 	public BoardPane returnBoardPane() {
@@ -75,9 +73,8 @@ public class BoardController {
 	}
 
 	public void setPatternCard(int id) {
-		finalCard = new PatternCard(id, getIdGame(), getOwnId(), this);
+//		finalCard = new PatternCard(id, getIdGame(), getOwnId(), this);
 		setBoard();
-		setOpponentBoard();
 		//gameController.setRootpane();
 	}
 
@@ -85,34 +82,11 @@ public class BoardController {
 		finalCard = new PatternCard(getOwnId(), getIdGame(), this);
 		setBoard();
 		updateToken();
-		setOpponentBoard();
 		//gameController.setRootpane();
 	}
 
 	public ArrayList<Space> getPatternCard() {
 		return finalCard.getPatternField();
-	}
-
-	public void checkDuplicatePatternCard() {
-		// hoort hier eik niet maar kan nergens anders
-		while (patternCardOptions.get(1).getPatternId() == patternCardOptions.get(0).getPatternId()
-				|| patternCardOptions.get(1).getPatternId() == patternCardOptions.get(2).getPatternId()
-				|| patternCardOptions.get(1).getPatternId() == patternCardOptions.get(3).getPatternId()) {
-			patternCardOptions.get(1).randomNumber();
-			patternCardOptions.get(1).changeField();
-		}
-		while (patternCardOptions.get(2).getPatternId() == patternCardOptions.get(0).getPatternId()
-				|| patternCardOptions.get(2).getPatternId() == patternCardOptions.get(1).getPatternId()
-				|| patternCardOptions.get(2).getPatternId() == patternCardOptions.get(3).getPatternId()) {
-			patternCardOptions.get(2).randomNumber();
-			patternCardOptions.get(2).changeField();
-		}
-		while (patternCardOptions.get(3).getPatternId() == patternCardOptions.get(0).getPatternId()
-				|| patternCardOptions.get(3).getPatternId() == patternCardOptions.get(2).getPatternId()
-				|| patternCardOptions.get(3).getPatternId() == patternCardOptions.get(1).getPatternId()) {
-			patternCardOptions.get(3).randomNumber();
-			patternCardOptions.get(3).changeField();
-		}
 	}
 
 	public void getTurns() {
@@ -149,11 +123,6 @@ public class BoardController {
 		boardpane.disableMovement(x, y);
 	}
 
-	public void calculatePatterncardNeeded() {
-		// TODO maak 3 var.
-		int x = (3 + 1) * 4;
-
-	}
 
 	public int getDifficulty() {
 		return finalCard.getDifficulty();
@@ -165,6 +134,18 @@ public class BoardController {
 	
 	public void setPlayerTokens(int minus) {
 		boardpane.decreaseLabelValue(minus);
+	}
+	
+	public void setOptions() {
+		allOptions.getAllPatternCards(getGamemode()*4);
+	}
+	
+	public int getGamemode() {
+		return gameController.getGamemode();
+	}
+	
+	public ArrayList<BoardPane> getPlayers(){
+		return players;
 	}
 
 }

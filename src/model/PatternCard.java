@@ -33,18 +33,20 @@ public class PatternCard {
 		p = getSelect();
 		setpatternfield();
 		addCard();
+		insertChosenCardToDB();
 		// generateRandomPatternCard();
 		// insertRandomPatternCardIntoDB();
 		hasColorExamption = false;
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
 	}
+	
+	
 
-	public PatternCard() {
-		random = new Random();
+	public PatternCard(int number) {
 		patternfield = new ArrayList<>();
 		// TODO aanpassen naar de size van de list van beschikbare kaarten
-		setPatternId(random.nextInt(24) + 1);
+		setPatternId(number);
 		p = getSelect();
 		setpatternfield();
 	}
@@ -681,5 +683,14 @@ public class PatternCard {
 		return (int) database.Select("SELECT difficulty FROM patterncard WHERE idpatterncard = " + getPatternId() + ";")
 				.get(0).get(0);
 	}
+	
+	public void insertChosenCardToDB() {
+		database.CUD("UPDATE player SET patterncard_idpatterncard = " + patternId + " WHERE idplayer = " + yourself + ";");
+	}
+	
+	
+
+	
+	
 
 }

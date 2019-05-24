@@ -46,13 +46,20 @@ public class GameController {
 
 		game = new Game();
 		game.setPlayableDices();
+		
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
 
 	}
 	public GameController(Game g) {
 		this.game = g;
+		game.setPlayableDices();
+		game.setSelf();
+		boardcontroller = new BoardController(this);
+		toolcardcontroller = new ToolcardController(this);
 	}
+	
+	
 	public void addOpponets(Opponent op) {
 		for(int x = 0; x<opponents.length; x++) {
 			if(opponents[x] == null) {
@@ -153,13 +160,14 @@ public class GameController {
 	}
 
 	public void setPatternCard(int id) {
-		game.setOwnId(id);
 		boardcontroller.setPatternCard(id);
 	}
 
 	public void buildGame() {
-
-		gamePane = new GamePane(this);
+		if(game.hasChosen()) {
+			gamePane = new GamePane(this);
+		}
+		
 //		scene.setRoot(rootpane);
 		//this.scene.setRoot(gamePane);
 
@@ -203,12 +211,15 @@ public class GameController {
 	}
 	
 	public void setRandomCard() {
-		game.setOwnId();
 		boardcontroller.setRandomCard();
 	}
 	public GamePane getGameStage() {
 		return this.gamePane;
 		
+	}
+	
+	public int getGamemode() {
+		return game.getGamemode();
 	}
 	
 //	public int getDifficulty() {
@@ -225,6 +236,22 @@ public class GameController {
 	
 	public void setGameCard(int id) {
 		game.addGametoolcard(id);
+	}
+	
+	public void addOptions(ArrayList<Integer> randomIDS){
+		game.addOptionsToDB(randomIDS);
+	}
+	
+	public ArrayList<Integer> getOwnOptions(){
+		return game.getOwnOptions();
+	}
+	
+	public ArrayList<Integer> getChosenIds(){
+		return game.getChosenIds();
+	}
+	
+	public ArrayList<BoardPane> getPlayers(){
+		return boardcontroller.getPlayers();
 	}
 	
 	
