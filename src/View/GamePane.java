@@ -89,16 +89,13 @@ public class GamePane extends BorderPane {
 		// The the number in the constructor from BoardPane stands for the number of the
 		/// windowpattern in the DB.
 		
-		/player1 = new BoardPane(this,5);
+		player1 = controller.returnBoardPane();
 		setBoardPlayerOne();
 
-		player2 = new BoardPane(this, 7);
-		player2.switchTransparent();
-		
-		player3 = new BoardPane(this, 12);
-		player3.switchTransparent();
-		player4 = new BoardPane(this, 3);
-		player4.switchTransparent();
+		player2 = controller.getOpponentBoard().get(0);
+//		
+		player3 = controller.getOpponentBoard().get(1);
+		player4 = controller.getOpponentBoard().get(2);
 
 		boards = new HBox(player1, player2, player3, player4);
 		boards.setSpacing(20);
