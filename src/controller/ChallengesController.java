@@ -67,8 +67,7 @@ public class ChallengesController {
 		
 		for (Player a: challenge.playersChallengedYou()) {
 			ChallengesPlayerLinePane p = new ChallengesPlayerLinePane(a.getUsername());
-			System.out.println();
-			System.out.println("test");
+
 			p.getAccept().setOnAction(e -> setPlayerStatusToAccepted(a));
 			p.getDecline().setOnAction(e -> setPlayerStatusToDeclined(a));
 			challengesPL.add(p);
@@ -81,7 +80,7 @@ public class ChallengesController {
 			challengesPane.addChallengesLine(a);
 			challengesPane.setButtonzooi()*/
 		}
-		challengesPane.setLayout();
+//		challengesPane.setLayout();
 //		challengesPane.setPlayerLines(challenges);
 //		challengesPane.setLayout();
 	}

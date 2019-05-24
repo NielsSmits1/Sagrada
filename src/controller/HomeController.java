@@ -129,6 +129,11 @@ public class HomeController {
 	public HomePane getHome() {
 		return home;
 	}
+
+	public MyScene getScene() {
+		return scene;
+	}
+	
 	
 	
 

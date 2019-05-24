@@ -17,7 +17,6 @@ public class InlogController{
 	private GameController game;
 	private ChallengesController challenges;
 	
-	private Runnable multi;
 
 	public InlogController(MyScene myScene) {
 		
