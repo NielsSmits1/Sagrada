@@ -12,7 +12,7 @@ public class BoardController {
 	private ArrayList<PatternCard> patternCardOptions;
 	private PatternCard finalCard;
 	private Opponent opponent;
-	private BoardPane boardpane;
+	private BoardPane boardpane = new BoardPane();
 	private ArrayList<BoardPane> opponentBoard;
 	private GameController gameController;
 
@@ -78,7 +78,7 @@ public class BoardController {
 		finalCard = new PatternCard(id, getIdGame(), getOwnId(), this);
 		setBoard();
 		setOpponentBoard();
-		gameController.setRootpane();
+		//gameController.setRootpane();
 	}
 
 	public void setRandomCard() {
@@ -86,7 +86,7 @@ public class BoardController {
 		setBoard();
 		updateToken();
 		setOpponentBoard();
-		gameController.setRootpane();
+		//gameController.setRootpane();
 	}
 
 	public ArrayList<Space> getPatternCard() {

@@ -31,12 +31,9 @@ public class Challenge {
 	
 	public void changePlayerStatusToAccepted() {
 		database.CUD("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
-		System.out.println("PlayerAccepted");
 	}
 
 	public void changePlayerStatusToDeclined() {
-
-		System.out.println("PlayerDeclined");
 		database.CUD("UPDATE player SET playstatus_playstatus = 'Geweigerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
 
 	}
@@ -106,8 +103,8 @@ public class Challenge {
 	
 	public void buildGame() {
 		game = new Game();
-		game.addPlayer(self);
-		game.addPlayer(challenger);
+		game.addPlayer(self,"Uitdager",game.getRandomColor());
+		game.addPlayer(challenger, "Uitgedaagde",game.getRandomColor());
 	}
 
 

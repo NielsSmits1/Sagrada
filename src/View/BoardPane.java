@@ -49,6 +49,10 @@ public class BoardPane extends Pane {
 	// Sets the patternId.
 	/// **
 
+	public BoardPane() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setPatternId(int i) {
 		patternid = i;
 	}

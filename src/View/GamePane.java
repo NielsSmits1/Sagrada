@@ -47,7 +47,7 @@ public class GamePane extends BorderPane {
 	private boolean toolcardIsActiveEleven;
 	private DecisionPane decisionpane;
 	private Random r;
-	private RoundTrack track;
+	//private RoundTrack track;
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -64,6 +64,7 @@ public class GamePane extends BorderPane {
 		toolcardIsActiveEleven = false;
 
 		decisionpane = new DecisionPane(this);
+
 		diceRow1 = new HBox();
 		diceRow2 = new HBox();
 		diceRow3 = new HBox();
@@ -71,6 +72,7 @@ public class GamePane extends BorderPane {
 		diceRow1.setSpacing(20);
 		diceRow2.setSpacing(20);
 		diceRow3.setSpacing(20);
+
 
 		this.controller = gameController;
 		setBoard();
@@ -83,20 +85,20 @@ public class GamePane extends BorderPane {
 	/// **
 
 	private void setBoard() {
-		/// *
+		/// 
 		// The the number in the constructor from BoardPane stands for the number of the
 		/// windowpattern in the DB.
-		/// **
-		// player1 = new BoardPane(this,5);
+		
+		/player1 = new BoardPane(this,5);
 		setBoardPlayerOne();
 
-		// player2 = new BoardPane(this, 7);
-		// player2.switchTransparent();
-		//
-		// player3 = new BoardPane(this, 12);
-		// player3.switchTransparent();
-		// player4 = new BoardPane(this, 3);
-		// player4.switchTransparent();
+		player2 = new BoardPane(this, 7);
+		player2.switchTransparent();
+		
+		player3 = new BoardPane(this, 12);
+		player3.switchTransparent();
+		player4 = new BoardPane(this, 3);
+		player4.switchTransparent();
 
 		boards = new HBox(player1, player2, player3, player4);
 		boards.setSpacing(20);

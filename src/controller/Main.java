@@ -20,8 +20,4 @@ public class Main extends Application {
 	     stage.show();
 	}
 
-	private void check() {
-		System.out.println("test");
-	}
-
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import controller.HomeController;
 import controller.InlogController;
-import controller.PlayerController;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -15,7 +14,7 @@ import javafx.scene.control.MenuItem;
 public class Menubar extends MenuBar {
 
 	private Menu options;
-	private Menu games;
+	private Menu games = new Menu();
 	private MenuItem logout;
 	private MenuItem exit;
 	private MenuItem filter;
@@ -24,18 +23,15 @@ public class Menubar extends MenuBar {
 	private MyScene main;
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
-	private PlayerController self;
-	private HomeController home;
-    private gameRules rules = new gameRules();
+	private gameRules rules = new gameRules();
 	
 	
 	private ArrayList<Menu> gameList = new ArrayList<>();
 	private int x = 0;
 	
-	public Menubar(MyScene main, PlayerController self){
+	public Menubar(MyScene main){
 		this.main = main;
-		this.self = self;
-		home = new HomeController(main, self.getPlayer());
+		//home = new HomeController(main, self.getPlayer());
 	
 
 		creatMenu();
@@ -68,12 +64,15 @@ public class Menubar extends MenuBar {
 	}
 
 	private void showStats() {
-		alert.setHeaderText(home.getStats());
+		/*alert.setHeaderText(home.getStats());
 		// test
-		alert.showAndWait();
+		alert.showAndWait();*/
 
 	}
 
+	public void showGame(GamePane gamePane) {
+		
+	}
 		
 	
 
@@ -106,6 +105,13 @@ public class Menubar extends MenuBar {
 		this.getMenus().add(gamex);
 		gameList.add(gamex);
 		x ++;
+	}
+
+	public void addGameItem(GamePane gamePane, int id) {
+		Menu m = new Menu("Gamenummer : " + id);
+		this.getMenus().add(m);
+		
+		
 	}
 	
 	

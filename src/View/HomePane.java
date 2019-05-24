@@ -1,7 +1,6 @@
 package View;
 
 import controller.HomeController;
-import controller.PlayerController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -29,24 +28,14 @@ public class HomePane extends Pane{
 	private VBox boxie;
 	private Font f = new Font(20);
 	private int x = 50;   //250;
-	private Alert alert = new Alert(AlertType.INFORMATION);
-	private PlayerController self;
-	private MyScene scene;
-	
-	private HomeController home;
 	
 	
 	// just to test the gametabs.
 	private Button gametab;
 	//
 	
-	public void  createHomePane(PlayerController self, MyScene scene) {
-		this.self = self;
-		this.scene = scene;
-		
+	public void  createHomePane() {
 		this.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
-		home = new HomeController(self);
-//		leaderboard = new LeaderboardPane();
 		
 		setPanes("Uw uitdagingen", challenges);
 		
@@ -82,7 +71,7 @@ public class HomePane extends Pane{
 		challenger = challengerPane;
 		leaderboard = leaderboardPane;
 
-		createHomePane(self, scene);
+		createHomePane();
 	}
 
 

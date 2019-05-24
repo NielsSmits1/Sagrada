@@ -7,10 +7,12 @@ import View.MyScene;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
+import model.Game;
 import model.Player;
 
 public class HomeController {
@@ -19,8 +21,10 @@ public class HomeController {
 	private ChallengerController cpp;
 	private ChallengesController cp;
 	private LeaderboardController lc;
-	private PlayerController pc;
 	private MyScene scene;
+
+
+	private MenubarController mbc;
 
 
 
@@ -30,14 +34,14 @@ public class HomeController {
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 
-	public HomeController(MyScene scene, Player self) {
+	public HomeController(Player self, MenubarController mbc) {
+		this.mbc = mbc;
 		this.self = self;
-		this.scene = scene;
-		pc = new PlayerController(self.getUsername());
 		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
 		sp = new SearchPlayerController(this, cpp);
+	
 		
 		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
 		
@@ -45,21 +49,33 @@ public class HomeController {
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
-		Timeline timeline = new Timeline(
-			    new KeyFrame(Duration.seconds(500), e -> {
-			        check();
-			    })
-			);
-			timeline.play();
+		
+		
+		
+
+		openGames();
+		startTimeline();
 
 	}
 
-	private void check() {
-		System.out.println("uhjrjnmejm");
+	private void startTimeline() {
+		Timeline timeline = new Timeline();
+		timeline.setCycleCount(timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e-> test()));
+		timeline.play();
 	}
 
-	public HomeController(PlayerController self2) {
-		// TODO Auto-generated constructor stub
+	private void test() {
+		cpp.refresh();
+		cp.refresh();
+	}
+
+	private void openGames() {
+		// open the games that are being played, or are ready to be played
+		for(Game g : self.getOpenGames()) {
+			mbc.addGame(g);
+		}
+		
 	}
 
 	public String getUsername() {
@@ -74,10 +90,10 @@ public class HomeController {
 		player = new Player(u, pw);
 	}
 
-	public boolean isInGame(String username, PlayerController self) {
+	public boolean isInGame(String username, Player self) {
 		String u;
 		this.player = new Player(username);
-		for (ArrayList<Object> a : self.getPlayer().checkPlayerInGame()) {
+		for (ArrayList<Object> a : self.checkPlayerInGame()) {
 			u = (String) a.get(0);
 			if (u.equals(username)) {
 				return true;

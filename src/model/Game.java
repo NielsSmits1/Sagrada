@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import Database.db;
@@ -21,9 +22,19 @@ public class Game {
 	private Player self;
 	private ArrayList<Gamefavortoken> token;
 
-	public Game(Player self) {
+	// private Random r;
+
+
+	public void addPlayer(Player param, String status, String color) {
+		insertPlayer(param, status, color);
 
 	}
+
+	public ArrayList<Player> getPlayers() {
+		return this.players;
+
+	}
+	
 
 	public Game() {
 		r = new Random();
@@ -40,15 +51,15 @@ public class Game {
 
 	}
 
-	public void addPlayer(Player param) {
-		insertPlayer(param);
+	// public void addPlayer(Player param) {
+	// 	insertPlayer(param);
 
-	}
+	// }
 
-	public void addPlayer(Player param, String status) {
-		insertPlayer(param, status);
+	// public void addPlayer(Player param, String status) {
+	// 	insertPlayer(param, status);
 
-	}
+	// }
 
 	public ArrayList<Player> getPlayers() {
 		return this.players;
@@ -70,50 +81,17 @@ public class Game {
 		idgame = (int) createNewGameId();
 	}
 
-	public void insertPlayer(Player p) {
-		database.CUD(
-				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
-						+ p.getUsername() + "', " + this.idgame + " , 'Uitgedaagde', 0, 'rood')"); // rood has to be
-																									// variable between
-																									// all colors
-	}
 
-	public void insertPlayer(Player p, String status) {
+	public void insertPlayer(Player p, String status, String color) {
 		database.CUD(
 				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
-						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, 'rood')"); // rood has to be
+						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, '"+ color +"')"); // rood has to be
 																										// variable
 																										// between all
 																										// colors
-		System.out.println(this.idgame);
 	}
 
-	// private int getLastRound() {
-	// ArrayList<ArrayList<Object>> maxRound = database.Select("select round,
-	// roundtrack from gamedie where idgame = " + this.idgame + " and round =
-	// (select max(round) from gamedie"
-	// + " where idgame = " + this.idgame +")");
-	// if(maxRound.isEmpty()) {
-	// // nog geen rondes geweest
-	// return 0;
-	// }else {
-	// // check of de laatst gespeelde ronde voorbij is
-	// if(maxRound.get(maxRound.size()).get(1) == maxRound.get(0).get(0)) {
-	// // laatste ronde gespeeld
-	// return (int)maxRound.get(0).get(0) + 1;
-	// }else {
-	// return (int)maxRound.get(0).get(0);
-	// }
-	//
-	// }
-	// }
-	// private void buildRounds() {
-	// // als lastround() 6 is moet ie nog 5 rondes spelen
-	// for(int i = getLastRound(); i < 11; i++) {
-	// Round r = new Round(i);
-	// r.buildTurnes(self);
-	// }
-	// }
+
 
 	private void buildGameTurns() {
 		forwardPlayer = database
@@ -123,9 +101,34 @@ public class Game {
 			forwardPlayer.add(a);
 		}
 
-		for (int i = 0; i < forwardPlayer.size(); i++) {
+
+	}
+	public ArrayList<ArrayList<Object>> getColorsFromGame(int idgame) {
+		return database.Select("SELECT private_objectivecard_color FROM player WHERE game_idgame ='"+ idgame + "'");
+	}
+	public String getRandomColor() {
+		return checkColor().get(0);
+	}
+	
+	public ArrayList<String> checkColor() {
+		ArrayList<String> allColors = new ArrayList<String>();
+		allColors.add("rood");
+		allColors.add("blauw");
+		allColors.add("groen");
+		allColors.add("paars");
+		allColors.add("geel");
+		
+		ArrayList<String> takenColors = new ArrayList<String>();
+		String colors;
+		for (ArrayList<Object> a : getColorsFromGame(idgame)) {
+			colors = (String) a.get(0);
+			takenColors.add(colors);
+	
 
 		}
+		allColors.removeAll(takenColors);
+		Collections.shuffle(allColors);
+		return allColors;
 	}
 
 	private void checkIfGameHasStarted() {
@@ -145,8 +148,9 @@ public class Game {
 				+ " AND p.isCurrentPlayer = 1");
 	}
 
-	private ArrayList<ArrayList<Object>> getPlayersInGame() {
-		return database.Select("select username from player where game_idgame = " + this.idgame);
+	public ArrayList<ArrayList<Object>> getPlayersInGame() {
+		return database.Select("select idplayer, username, seqnr, private_objectivecard_color, score, patterncard_idpatterncard from player where game_idgame = " + this.idgame);
+
 	}
 
 	public void checkofso() {
@@ -171,14 +175,6 @@ public class Game {
 			return true;
 		}
 	}
-	// private void buildRounds() {
-	// for(int x = 0; x < 10; x++) {
-	// Round r = new Round();
-	// r.buildTurnes(this.idgame);
-	// rounds.add(r);
-	// }
-	// }
-	// creates a new gameId based on the highest current gameId + 1.
 
 	private long createNewGameId() {
 		return (long) database
@@ -308,15 +304,46 @@ public class Game {
 		return yourself;
 	}
 
-	public ArrayList<ArrayList<Object>> countOpenChallenges(String u) {
+
+	public ArrayList<ArrayList<Object>> getAvailableGames(String u) {
 		return database.Select(
-				"SELECT game_idgame, count(game_idgame) as amountPlayers FROM player where game_idgame in (select game_idgame from player where username ='"
-						+ u
-						+ "') AND playstatus_playstatus = 'Uitgedaagde' group by game_idgame having amountPlayers < 4");
+				"SELECT game_idgame, COUNT(game_idgame) AS amountPlayers FROM player WHERE game_idgame IN (SELECT game_idgame FROM player where username = '"
+						+ u	+ "' AND playstatus_playstatus = 'Uitdager') GROUP BY game_idgame HAVING amountPlayers < 4");
+	}
+
+	public ArrayList<ArrayList<Object>> getRejectedGames(String u) {
+		return database
+				.Select("SELECT game_idgame FROM player WHERE game_idgame in (SELECT game_idgame FROM player where username = '"
+						+ u + "' AND playstatus_playstatus = 'Uitdager') AND playstatus_playstatus = 'geweigerd'");
+	}
+
+	public ArrayList<Integer> availableGames(String u) {
+		ArrayList<Integer> availableGames = new ArrayList<Integer>();
+		ArrayList<Integer> rejectedGames = new ArrayList<Integer>();
+		int gameid = 0;
+		for (ArrayList<Object> a : getAvailableGames(u)) {
+			gameid = (int) a.get(0);
+			availableGames.add(gameid);
+	
+		}
+		int rejectid = 0;
+		for (ArrayList<Object> b : getRejectedGames(u)) {
+			rejectid = (int) b.get(0);
+			rejectedGames.add(rejectid);
+
+		}
+		availableGames.removeAll(rejectedGames);
+
+		return availableGames;
 	}
 
 	public void setGameId(int gid) {
 		this.idgame = gid;
+
+	}
+
+	public void insertPlayers(ArrayList<Player> players) {
+		this.players = players;
 
 	}
 
