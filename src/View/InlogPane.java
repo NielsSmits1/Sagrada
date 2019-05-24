@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -27,30 +28,32 @@ public class InlogPane extends BorderPane {
 	private Button loginButton;
 	private Button registerButton;
 	private VBox layout;
-	private TextArea usernameField;
-	private TextArea passwordField;
+	private TextField usernameField;
+	private TextField passwordField;
 	private HBox buttonAlignment;
 	private Label gameTitle;
 	private BorderPane textAlignment;
 
 
-	public InlogPane(MyScene scene) {
+	public InlogPane() {
 
 		//sets background_image
 		this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
 				new BackgroundSize(0, 0, false, false, false, true))));
 
-		usernameField = new TextArea();
+		usernameField = new TextField();
 		usernameField.setPromptText("Username...");
 		usernameField.setPrefHeight(50);
+		usernameField.setMaxWidth(400);
 		usernameField.setBorder(
 				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 
 		
-		passwordField = new TextArea();
+		passwordField = new TextField();
 		passwordField.setPromptText("Password...");
 		passwordField.setPrefHeight(50);
+		passwordField.setMaxWidth(400);
 		passwordField.setBorder(
 				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 

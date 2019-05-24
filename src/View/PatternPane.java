@@ -149,6 +149,7 @@ public class PatternPane extends StackPane{
 			}
 			
 		}
+//		boardPane.setSelectedToNull();
 		giveCords();
 	}
 	

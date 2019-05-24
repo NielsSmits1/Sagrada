@@ -1,8 +1,12 @@
 package View;
 
+import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -11,6 +15,7 @@ import javafx.scene.text.Font;
 public class SearchPlayerPane extends VBox  {
 	private TextField online = new TextField();
 	private Button challenge = new Button("Uitdagen");
+	private ChoiceBox choice;
 	private Label user = new Label();
 	private Button search = new Button("Zoeken");
 	private Button stats = new Button("Statistieken");
@@ -22,12 +27,22 @@ public class SearchPlayerPane extends VBox  {
 
 
 	public SearchPlayerPane(){		
-
+		
 //		search.setOnAction(E -> search());
 		online.setFont(Font.font(14));
 		online.setMaxWidth(120);
-
+		
 		this.getChildren().setAll(online,search);
+		
+	}
+	
+	public void setChoiceBox(ArrayList<String> op) {
+		this.getChildren().remove(choice);
+		choice = new ChoiceBox(FXCollections.observableArrayList(op));
+		this.getChildren().add(choice);
+	}
+	public String getChoice() {
+		return choice.getValue().toString();
 	}
 
 	public void alert(String message) {

@@ -1,7 +1,6 @@
 package model;
 
 import View.InlogPane;
-import controller.PlayerController;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -9,7 +8,7 @@ import javafx.scene.layout.Pane;
 
 public class MenuBarModel {
 	
-	private Pane pane;
+	/*private Pane pane;
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	
 	public void showStats(PlayerController self) {
@@ -20,7 +19,7 @@ public class MenuBarModel {
 	
 	public void Exit() {
 		Platform.exit();
-	}
+	}*/
 	
 //	public Pane logOut() {
 //		pane = new InlogPane();

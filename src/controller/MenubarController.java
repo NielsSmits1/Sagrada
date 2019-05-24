@@ -5,7 +5,9 @@ import View.MyScene;
 import View.ChatBox;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
+import model.Game;
 import model.MenuBarModel;
+import model.Player;
 
 public class MenubarController {
 
@@ -17,20 +19,21 @@ public class MenubarController {
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlogController;
-	private PlayerController controller;
+	private HomeController home;
+	private Player self;
 
 	private GameController game;
 	
 	
 
-	public MenubarController(MyScene scene, InlogController controller, PlayerController player) {
+	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
 		this.scene = scene;
 		this.inlogController = controller;
 		this.controller = player;
 		
 		game = new GameController(scene);
-		menu = new Menubar(scene, this.controller);
+		menu = new Menubar(scene);
 
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());
@@ -54,6 +57,13 @@ public class MenubarController {
 	public Pane logOut() {
 		scene.setRoot(inlogController.getInlog());
 		return pane;
+	}
+
+	public void addGame(Game g) {
+		GameController gc = new GameController(g);
+		gc.buildGame();
+		menu.addGameItem(gc.getGameStage(), gc.getIdGame());
+		
 	}
 
 }

@@ -7,6 +7,7 @@ public class multiThreads extends Thread {
 	private HomePane home;
 	private InlogController controller;
 	private long refreshRate;
+	private boolean run = true;
 	
 
 	public multiThreads(ChallengesController challenge, long refreshRate) {
@@ -16,11 +17,19 @@ public class multiThreads extends Thread {
 
 	@Override
 	public void run() {
-		while (true) {
+		System.out.println("IM RUNNING");
+		runChallenges();
+		runChallenger();
+	}
+	
+	public void runChallenges() {
+
 			try {
 				challenge.refresh();
 				System.out.println("facking gay");
-				Thread.sleep(refreshRate);
+				Thread.sleep(50);
+	
+				
 			} catch (InterruptedException e) {
 				System.out.println("gay");
 			}

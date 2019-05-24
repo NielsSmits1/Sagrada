@@ -12,18 +12,40 @@ public class Player {
 	private int score;
 	private int seqnr;
 	private int lastgame;
+	private int gameId;
+	private String status;
+	private Boolean self = false;
+	private String objective_color;
+	private int patternCardId;
 
 	
 //	private String differendPlayer;
 
+	public void setSelf(Boolean s) {
+		this.self = s;
+	}
+	public void setPatternCardId(int i) {
+		this.patternCardId = i;
+		
+	}
+	public void setObjective_color(String o) {
+		this.objective_color = o;
+	}
 	public Player(String u, String p) {
 		this.username = u;
 		this.password = p;
+	}
+	public void setStatus(String s) {
+		this.status = s;
+	}
+	public String getStatus() {
+		return this.status;
 	}
 	
 	public Player(String username) {
 		this.username = username;
 	}
+	
 	//selects and returns the username and password.
     public ArrayList<ArrayList<Object>> getSelect() {
         return database.Select("SELECT * FROM account WHERE username = '" + username + "' AND password = '" + password + "';");
@@ -34,8 +56,9 @@ public class Player {
     }
     //selects and returns arraylist of usernames.
     public ArrayList<ArrayList<Object>> checkPlayerInGame(){
-    	return database.Select("select username from player where game_idgame = (select game_idgame from player where username ='" + username + "') ");
-   }
+    	return database.Select("select username from player where game_idgame in (select game_idgame from player where username ='" + username + "') ");
+    }
+    
     
     public ArrayList<ArrayList<Object>> playerWonList(){
     	return database.Select("SELECT p1.username,count(p1.username) as games_won FROM player p1 LEFT JOIN player p2 ON p1.game_idgame = p2.game_idgame AND p1.score < p2.score where p2.score is null AND p1.playstatus_playstatus = 'Uitgespeeld' group by p1.username");
@@ -61,15 +84,11 @@ public class Player {
     public ArrayList<ArrayList<Object>> lastGamePlayers(){
     	return database.Select("SELECT username FROM player where game_idgame = '"+ getLastGame() +"'");
     }
-    public void createNewGame() {
-    	database.CUD("INSERT INTO GAME(creationdate) VALUES (now())");
+    public ArrayList<ArrayList<Object>> getPlayedGames(){
+    	return database.Select("SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '" + this.username +"') GROUP BY p1.game_idgame");
     }
-    public void addSelf() {
-    	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + username +"', " + getLastGame() + " , 'Uitdager', 0, 'rood')"); // rood has to be variable between all colors
-    }
-    public void addChallenger() {
-    	database.CUD("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('" + username +"', " + getLastGame() + " , 'Uitgedaagde', 0, 'rood')");  // rood has to be variable between all colors
-    }
+   
+    
    
     
        //adds new user to the database.
@@ -87,9 +106,9 @@ public class Player {
     
     public boolean checkUsernameExists() {
     	if(this.checkUsername().isEmpty()) {
-    		return true;
-    	}else {
     		return false;
+    	}else {
+    		return true;
     	}
     }
     String getPassword() {
@@ -97,20 +116,6 @@ public class Player {
 	}
 	public String getUsername() {
 		return username;
-	}
-
-	public void challenge() {
-		/*
-		 *eerst bouw nieuw game
-		 *dan bouw spelers jezelf
-		 *dan bouw speler ander
-		 *update game zet jezelf als startspeler 
-		 * database.CUD("");
-		 */
-		
-	}
-	public void buildNewGame() {
-		database.CUD("insert into game ()");
 	}
 
 	public int getTimesWon() {
@@ -183,14 +188,8 @@ public class Player {
 		return w;
 	}
 
-//		int w = (int) lastGameMade().get(0);
-////		int w = ((Number)lastGameMade().get(0)).intValue();
-//		
-//		return w;
-//  }
 	public boolean checkGameSize() {
-		System.out.println(lastGamePlayers().size());
-		if(lastGamePlayers().size() >= 4) {
+		if(lastGamePlayers().size() == 4) {
 			return false;
 		}
 		return true;
@@ -257,38 +256,73 @@ public class Player {
 	private void updateSeqNr() {
 		database.Select("update player set seqnr = " + this.seqnr + " where idplayer = " + this.idplayer);
 	}
-	
-	
-//	public int getTimesWonPlayer() {
-//		int amount = 0;
-//		for(ArrayList<Object> a: database.Select("select username from games_won")) {
-//			if(a.get(0).equals(this.username)) {
-//				amount +=1;
-//			}
-//		}
-//		return amount;
-//	}
-//	
-//
-//	public int getTimesLostPlayer() {
-//		int amount = 0;
-//		for(ArrayList<Object> a: database.Select("select username from games_won")) {
-//			if(!a.get(0).equals(this.username)) {
-//				amount +=1;
-//			}
-//		}
-//		return amount;
-//	}
 
-//
-//	public void setDifferendPlayer(String differendPlayer) {
-//		this.differendPlayer = differendPlayer;
-//	}
-	
-	
-	
-	
+	public boolean checkIfGame(String username) {
+		for(ArrayList<Object> a: this.checkPlayerInGame()) {
+			String u = (String)a.get(0);
+			if(u.equals(username)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
+	public void addGameId(int gameId) {
+		this.gameId = gameId;
+	}
 
-
+	public int getGameId() {
+		return this.gameId;
+	}
+	public ArrayList<Game> getOpenGames() {
+		ArrayList<Game> games = new ArrayList<Game>();
+		for(ArrayList<Object> a: this.getPlayedGames()) {
+			if((long)a.get(0)==(countPlayersGame((int)a.get(1))-1)) {
+				setChallengerToAccepted();
+				}
+				if((long)a.get(0)==countPlayersGame((int)a.get(1))) { // if all players accepted
+				Game g = new Game();
+				g.setGameId((int)a.get(1));
+				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
+				games.add(g);
+			}
+		}
+		return games;
+	}
+	private ArrayList<Player> buildPlayersForGame(ArrayList<ArrayList<Object>> players) {
+		ArrayList<Player> P = new ArrayList<Player>();
+		for(ArrayList<Object> pl: players) {
+			Player pop = new Player((String)pl.get(1));
+			pop.setId((int)pl.get(0));
+			if(pl.get(2)!=null) {
+				pop.setSeqnr((int)pl.get(2));
+			}else {
+				pop.setSeqnr(0);
+			}
+			if(pl.get(4)==null) {
+				pop.setScore(0);
+			}else {
+				pop.setScore((int)pl.get(4));
+			}
+			pop.setObjective_color((String)pl.get(3));
+			if(pl.get(5) == null) {
+				pop.setPatternCardId(0);
+			}else {
+				pop.setPatternCardId((int)pl.get(5));
+			}
+			
+			if(pl.get(1)==this.username) {
+				pop.setSelf(true);
+			}
+			P.add(pop);
+		}
+		return P;
+		
+	}
+	private long countPlayersGame(int gameId) {
+		return (long)database.Select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
+	}
+	public void setChallengerToAccepted(){
+		database.CUD("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitdager' and game_idgame in (select game_idgame from (select * FROM player) as playerr )"); // idplayer needs to be variabel
+}
 }

@@ -9,7 +9,7 @@ import Database.db;
 public class Challenge {
 	private Player self;
 	private Player challenger;
-	private int gameId;
+	private Game game;
 	private String playerStatus;
 	private db database = new db();
 
@@ -23,28 +23,30 @@ public class Challenge {
 		this.self = self;
 		this.challenger = challenger;
 	}
+	public Game getGame() {
+		return this.game;
+	}
+	
 
+	
 	public void changePlayerStatusToAccepted() {
 		database.CUD("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
-		System.out.println("PlayerAccepted");
 	}
 
 	public void changePlayerStatusToDeclined() {
-
-		System.out.println("PlayerDeclined");
 		database.CUD("UPDATE player SET playstatus_playstatus = 'Geweigerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
 
 	}
 
-	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus() {
-		return database.Select("select username from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"' and playstatus_playstatus !='Geaccepteerd' and playstatus_playstatus != 'Geweigerd') AND playstatus_playstatus = 'Uitdager'"); //Change "Johan" To self.username 
-		
+	public ArrayList<ArrayList<Object>> GetPlayerWithChallengeeStatus() {
+
+		return database.Select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() + "' and playstatus_playstatus = 'Uitgedaagde') AND playstatus_playstatus = 'Uitdager'");
 	}	
 		//  returns :niels
 		//	         teun
-	public ArrayList<ArrayList<Object>> GetPlayerWithChallengeeStatus() {
-		return database.Select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"') AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
-		
+	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus() {
+	
+		return database.Select("SELECT username, playstatus_playstatus, game_idgame FROM player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"' AND playstatus_playstatus = 'Uitdager')");
 		// returns :johan
 		// 			teun
 		//			niels
@@ -53,62 +55,26 @@ public class Challenge {
 	public ArrayList<Player> playersChallengedYou() {
 		ArrayList<Player> challengedPlayerNames = new ArrayList<Player>();
 		String u;
-
-		for (ArrayList<Object> a : this.GetPlayerWithChallengedStatus()) {
-			u = (String) a.get(0);
-			if (!self.getUsername().equals(u)) {
-				challengedPlayerNames.add(new Player(u));
-				System.out.println(challengedPlayerNames.size());
-			} 
-		}
-		return challengedPlayerNames;
-	}
-	public LinkedHashMap<String, String> playersYouChallenged() {
-		LinkedHashMap<String, String> challengedPlayerNames = new LinkedHashMap<String, String>();
-		String u;
-		String s;
-
+		
 		for (ArrayList<Object> a : this.GetPlayerWithChallengeeStatus()) {
 			u = (String) a.get(1);
-			s = (String) a.get(3);
-			System.out.println(u+s);
 			if (!self.getUsername().equals(u)) {
-				challengedPlayerNames.put(u, s);
+				Player p = new Player(u);
+				challengedPlayerNames.add(p);
 			} 
 		}
 		return challengedPlayerNames;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public ArrayList<Player> playersYouChallenged() {
+		ArrayList<Player> players = new ArrayList<Player>();
+		for (ArrayList<Object> a : this.GetPlayerWithChallengedStatus()) {
+			Player p = new Player((String) a.get(0));
+			p.setStatus((String) a.get(1));
+			p.addGameId((int)a.get(2));
+			players.add(p);
+		}
+		return players;
+	}
 	
 	
 	public Player getSelf() {
@@ -126,6 +92,20 @@ public class Challenge {
 	public void setChallengerUsername(String challengerUsername){
 		challenger.setUsername(challengerUsername);
 		
+	}
+	public void addChallenger(Player self2) {
+		this.self = self;
+		
+	}
+	public void addChallengee(Player challenger) {
+		this.challenger = challenger;
+		
+	}
+	
+	public void buildGame() {
+		game = new Game();
+		game.addPlayer(self,"Uitdager",game.getRandomColor());
+		game.addPlayer(challenger, "Uitgedaagde",game.getRandomColor());
 	}
 
 

@@ -1,6 +1,7 @@
 package View;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import controller.GameController;
 import javafx.geometry.Insets;
@@ -19,13 +20,16 @@ public class GamePane extends BorderPane {
 	/// later on.
 	/// **
 	private Button close;
-	
+
 	private BoardPane player1;
 	private BoardPane player2;
 	private BoardPane player3;
 	private BoardPane player4;
 	private HBox boards;
-	private HBox dices;
+	private HBox diceRow1;
+	private HBox diceRow2;
+	private HBox diceRow3;
+
 	private DicePane selected;
 	private ArrayList<ToolCardPane> toolcards;
 	private PrivateCardPane pc;
@@ -37,8 +41,14 @@ public class GamePane extends BorderPane {
 	private BorderPane bottom;
 	private GameController controller;
 	private ArrayList<Dice> diceArray;
-	private boolean toolcardIsActive;
+	private boolean toolcardIsActiveOne;
+	private boolean toolcardIsActiveSix;
+	private boolean toolcardIsActiveTen;
+	private boolean toolcardIsActiveEleven;
 	private DecisionPane decisionpane;
+	private Random r;
+	//private RoundTrack track;
+
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
 	/// 90 dices.
@@ -47,10 +57,23 @@ public class GamePane extends BorderPane {
 	/// **
 
 	public GamePane(GameController gameController) {
-		toolcardIsActive = false;
+		r = new Random();
+		toolcardIsActiveOne = false;
+		toolcardIsActiveSix = false;
+		toolcardIsActiveTen = false;
+		toolcardIsActiveEleven = false;
+
 		decisionpane = new DecisionPane(this);
-		dices = new HBox();
-		dices.setSpacing(20);
+
+		diceRow1 = new HBox();
+		diceRow2 = new HBox();
+		diceRow3 = new HBox();
+
+		diceRow1.setSpacing(20);
+		diceRow2.setSpacing(20);
+		diceRow3.setSpacing(20);
+
+
 		this.controller = gameController;
 		setBoard();
 		addDice();
@@ -62,20 +85,17 @@ public class GamePane extends BorderPane {
 	/// **
 
 	private void setBoard() {
-		/// *
+		/// 
 		// The the number in the constructor from BoardPane stands for the number of the
 		/// windowpattern in the DB.
-		/// **
-		// player1 = new BoardPane(this,5);
+		
+		player1 = controller.returnBoardPane();
 		setBoardPlayerOne();
 
-		// player2 = new BoardPane(this, 7);
-		// player2.switchTransparent();
-		//
-		// player3 = new BoardPane(this, 12);
-		// player3.switchTransparent();
-		// player4 = new BoardPane(this, 3);
-		// player4.switchTransparent();
+		player2 = controller.getOpponentBoard().get(0);
+//		
+		player3 = controller.getOpponentBoard().get(1);
+		player4 = controller.getOpponentBoard().get(2);
 
 		boards = new HBox(player1, player2, player3, player4);
 		boards.setSpacing(20);
@@ -88,11 +108,32 @@ public class GamePane extends BorderPane {
 	// This model contains the amount of eyes and the color that the dice should be.
 	/// **
 
-	private void addDice() {
+	public void addDice() {
+
+		diceRow1.getChildren().clear();
 		for (int i = 0; i < getPlayableDices().size(); i++) {
-			dices.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
-					getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
-				
+			if (diceRow1.getChildren().size() < 4) {
+				diceRow1.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
+						getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
+			}
+		}
+
+		diceRow2.getChildren().clear();
+		for (int i = 4; i < getPlayableDices().size(); i++) {
+			if (diceRow2.getChildren().size() < 4) {
+
+				diceRow2.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
+						getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
+			}
+		}
+
+		diceRow3.getChildren().clear();
+		for (int i = 8; i < getPlayableDices().size(); i++) {
+			if (diceRow3.getChildren().size() < 4) {
+
+				diceRow3.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
+						getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
+			}
 		}
 
 	}
@@ -107,6 +148,8 @@ public class GamePane extends BorderPane {
 		pc = new PrivateCardPane();
 		ocp = new ObjectiveCardPane();
 		ocp2 = new ObjectiveCardPane();
+		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
+		allDiceRows.setSpacing(8);
 
 		toolcards = controller.getToolCards();
 		// Creates new headers
@@ -121,7 +164,7 @@ public class GamePane extends BorderPane {
 		// tcp1.changePrice("2");
 		bottom = new BorderPane();
 		bottom.setPadding(new Insets(0, 130, 50, 50));
-		bottom.setLeft(dices);
+		bottom.setLeft(allDiceRows);
 
 		HBox oc = new HBox(ocp, ocp2);
 		oc.setSpacing(5);
@@ -134,13 +177,12 @@ public class GamePane extends BorderPane {
 		tcp1.setSpacing(5);
 		VBox finalTcp = new VBox(toolCard, tcp1);
 		finalTcp.setSpacing(5);
-		HBox toolCards = new HBox(finalOc, finalPc, finalTcp,close);
+		HBox toolCards = new HBox(finalOc, finalPc, finalTcp, close);
 		toolCards.setSpacing(5);
 		bottom.setRight(toolCards);
-		
 
-//		close.setOnAction(e -> controller.getProgress().closeGame());
-	
+		// close.setOnAction(e -> controller.getProgress().closeGame());
+
 	}
 
 	/// *
@@ -175,67 +217,156 @@ public class GamePane extends BorderPane {
 
 	public void setSelected(DicePane p) {
 		selected = p;
-		if(toolcardIsActive) {
+		if (toolcardIsActiveOne) {
+			decisionpane.showInfoBoxToolcardOne();
+			setRight(decisionpane);
+		}
+		if (toolcardIsActiveSix) {
+			randomSelected();
+		}
+		if (toolcardIsActiveTen) {
+			flipDice();
+		}
+		if (toolcardIsActiveEleven) {
+			decisionpane.showInfoBoxToolcardEleven();
 			setRight(decisionpane);
 		}
 	}
+
 	public void downSelected() {
-		
-		for (int i = 0; i < dices.getChildren().size(); i++) {
-            DicePane temporarilyDice = (DicePane)dices.getChildren().get(i);
-            if(selected.getDieNumber() == temporarilyDice.getDieNumber() && selected.getColor().equals(temporarilyDice.getColor())) {
-            	if(selected.getValue() == 1) {
-            		decisionpane.giveError();
-            		return;
-            	}
-                temporarilyDice.removeEyes();
-                temporarilyDice.setValue(temporarilyDice.getValue()-1);
-                temporarilyDice.addDiceEyes(temporarilyDice.getValue());
-                disableToolcard();
-                setRight(null);
-                controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
-                
-            }
-            
-        }
+
+		for (int i = 0; i < diceRow1.getChildren().size(); i++) {
+			DicePane temporarilyDice = (DicePane) diceRow1.getChildren().get(i);
+			if (selected.getDieNumber() == temporarilyDice.getDieNumber()
+					&& selected.getColor().equals(temporarilyDice.getColor())) {
+				if (selected.getValue() == 1) {
+					decisionpane.giveError();
+					return;
+				}
+				temporarilyDice.removeEyes();
+				temporarilyDice.setValue(temporarilyDice.getValue() - 1);
+				temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+				disableToolcard();
+				setRight(null);
+				controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
+
+			}
+
+		}
 	}
-	
+
 	public void upSelected() {
-		
-		for (int i = 0; i < dices.getChildren().size(); i++) {
-            DicePane temporarilyDice = (DicePane)dices.getChildren().get(i);
-            if(selected.getDieNumber() == temporarilyDice.getDieNumber() && selected.getColor().equals(temporarilyDice.getColor())) {
-            	if(selected.getValue() == 6) {
-            		decisionpane.giveError();
-            		return;
-            	}
-                temporarilyDice.removeEyes();
-                temporarilyDice.setValue(temporarilyDice.getValue()+1);
-                temporarilyDice.addDiceEyes(temporarilyDice.getValue());
-                disableToolcard();
-                setRight(null);
-                controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
-            }
-           
-        }
+
+		for (int i = 0; i < diceRow1.getChildren().size(); i++) {
+			DicePane temporarilyDice = (DicePane) diceRow1.getChildren().get(i);
+			if (selected.getDieNumber() == temporarilyDice.getDieNumber()
+					&& selected.getColor().equals(temporarilyDice.getColor())) {
+				if (selected.getValue() == 6) {
+					decisionpane.giveError();
+					return;
+				}
+				temporarilyDice.removeEyes();
+				temporarilyDice.setValue(temporarilyDice.getValue() + 1);
+				temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+				disableToolcard();
+				setRight(null);
+				controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
+			}
+
+		}
 	}
-	
+
+	public void randomSelected() {
+
+		for (int i = 0; i < diceRow1.getChildren().size(); i++) {
+			DicePane temporarilyDice = (DicePane) diceRow1.getChildren().get(i);
+			if (selected.getDieNumber() == temporarilyDice.getDieNumber()
+					&& selected.getColor().equals(temporarilyDice.getColor())) {
+				temporarilyDice.removeEyes();
+				temporarilyDice.setValue(r.nextInt(6) + 1);
+				temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+				disableToolcard();
+				controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
+
+			}
+
+		}
+	}
+
+	public void flipDice() {
+
+		for (int i = 0; i < diceRow1.getChildren().size(); i++) {
+			DicePane temporarilyDice = (DicePane) diceRow1.getChildren().get(i);
+			if (selected.getDieNumber() == temporarilyDice.getDieNumber()
+					&& selected.getColor().equals(temporarilyDice.getColor())) {
+				temporarilyDice.removeEyes();
+				switch (temporarilyDice.getValue()) {
+				case 1:
+					temporarilyDice.setValue(6);
+					break;
+				case 2:
+					temporarilyDice.setValue(5);
+					break;
+				case 3:
+					temporarilyDice.setValue(4);
+					break;
+				case 4:
+					temporarilyDice.setValue(3);
+					break;
+				case 5:
+					temporarilyDice.setValue(2);
+					break;
+				case 6:
+					temporarilyDice.setValue(1);
+					break;
+				}
+				temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+				disableToolcard();
+				controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
+
+			}
+
+		}
+	}
+
 	public void SelectedStaysEqual() {
 		disableToolcard();
 		setRight(null);
 	}
-	
-	public void setToolCardActive() {
-		toolcardIsActive = true;
+
+	public void setToolCardOneActive() {
+		toolcardIsActiveOne = true;
 	}
-	
+
+	public void setToolCardSixActive() {
+		toolcardIsActiveSix = true;
+	}
+
+	public void setToolCardTenActive() {
+		toolcardIsActiveTen = true;
+	}
+
+	public void setToolCardElevenActive() {
+		toolcardIsActiveEleven = true;
+	}
+
+	public void swapDice(int chosenEyes) {
+		controller.swapDice(selected.getDieNumber(), selected.getColor(), selected.getValue(), chosenEyes);
+		disableToolcard();
+		setRight(null);
+	}
+
 	public void disableToolcard() {
-		toolcardIsActive = false;
+		toolcardIsActiveOne = false;
+		toolcardIsActiveSix = false;
+		toolcardIsActiveTen = false;
+		toolcardIsActiveEleven = false;
+
 	}
-	
-//	public void enableDiceMovement() {
-//		player1.enableDiceMovement();
-//	}
+
+	// public void enableDiceMovement() {
+	// player1.enableDiceMovement();
+	// }
 
 	/// *
 	// Returns selected, will be used in the class patternPane.
@@ -254,7 +385,6 @@ public class GamePane extends BorderPane {
 		player3 = controller.getOpponentBoard().get(1);
 		player4 = controller.getOpponentBoard().get(2);
 	}
-
 
 	public Button getClose() {
 		return close;

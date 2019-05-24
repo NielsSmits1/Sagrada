@@ -50,7 +50,9 @@ public class GameController {
 		toolcardcontroller = new ToolcardController(this);
 
 	}
-	
+	public GameController(Game g) {
+		this.game = g;
+	}
 	public void addOpponets(Opponent op) {
 		for(int x = 0; x<opponents.length; x++) {
 			if(opponents[x] == null) {
@@ -87,7 +89,7 @@ public class GameController {
 	
 	public void builtGameStage() {
 		scene = new MyScene();
-		scene.builtNewGame();
+		//scene.builtNewGame();
 		
 		gameStage = new Stage();
 		gameStage.setTitle("Sagrada");
@@ -101,9 +103,21 @@ public class GameController {
 		return scene;
 	}
 
-	public void setToolcardActive() {
-		gamePane.setToolCardActive();
+	public void setToolcardOneActive() {
+		gamePane.setToolCardOneActive();
 
+	}
+	
+	public void setToolcardSixActive() {
+		gamePane.setToolCardSixActive();
+	}
+	
+	public void setToolcardTenActive() {
+		gamePane.setToolCardTenActive();
+	}
+	
+	public void setToolcardElevenActive() {
+		gamePane.setToolCardElevenActive();
 	}
 
 	public Parent showOptions() {
@@ -143,11 +157,11 @@ public class GameController {
 		boardcontroller.setPatternCard(id);
 	}
 
-	public void setRootpane() {
+	public void buildGame() {
 
 		gamePane = new GamePane(this);
 //		scene.setRoot(rootpane);
-		this.scene.setRoot(gamePane);
+		//this.scene.setRoot(gamePane);
 
 	}
 
@@ -167,8 +181,6 @@ public class GameController {
 		return gamePane;
 	}
 
-	
-
 	public ArrayList<ToolCardPane> getToolCards() {
 		return toolcardcontroller.getToolCards();
 	}
@@ -179,6 +191,40 @@ public class GameController {
 	
 	public void enableDiceMovement(int i) {
 		boardcontroller.setAllowsMovement(i);
+	}
+	
+	public void swapDice(int dienumber, String color, int value, int chosenvalue) {
+		game.getDiceWithChosenValue(dienumber, color, value, chosenvalue);
+		gamePane.addDice();
+	}
+	
+	public int returnAmountOfOpponents() {
+		return opponents.length;
+	}
+	
+	public void setRandomCard() {
+		game.setOwnId();
+		boardcontroller.setRandomCard();
+	}
+	public GamePane getGameStage() {
+		return this.gamePane;
+		
+	}
+	
+//	public int getDifficulty() {
+//		return boardcontroller.getDifficulty();
+//	}
+	
+	public void updateTokens(int difficulty) {
+		game.updateTokenArrayList(difficulty);
+	}
+
+	public void setPlayerTokens(int minus) {
+		boardcontroller.setPlayerTokens(minus);
+	}
+	
+	public void setGameCard(int id) {
+		game.addGametoolcard(id);
 	}
 	
 	
