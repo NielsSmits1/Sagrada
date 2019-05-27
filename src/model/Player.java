@@ -19,7 +19,7 @@ public class Player {
 	private String status;
 	private Boolean self = false;
 	private String objective_color;
-	private int patternCardId;
+	private int patternCardId = 1;
 	private PatternCard pc;
 
 	// private String differendPlayer;
@@ -33,6 +33,7 @@ public class Player {
 	
 	public Player(String username) {
 		this.username = username;
+		setPc();
 	}
 	
 	public PatternCard getPc() {
@@ -54,10 +55,6 @@ public class Player {
 		this.objective_color = o;
 	}
 
-	public Player(String u, String p) {
-		this.username = u;
-		this.password = p;
-	}
 
 	public void setStatus(String s) {
 		this.status = s;
@@ -67,9 +64,6 @@ public class Player {
 		return this.status;
 	}
 
-	public Player(String username) {
-		this.username = username;
-	}
 
 	// selects and returns the username and password.
 	public ArrayList<ArrayList<Object>> getSelect() {
