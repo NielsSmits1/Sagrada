@@ -21,6 +21,7 @@ public class LeaderboardPane extends ScrollPane {
 
 		setLayout();
 	}
+	
 
 	public void addPlayerNameLine(String name) {
 		playerLine.add(new LeaderboardPlayerLinePane(name));

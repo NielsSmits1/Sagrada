@@ -10,6 +10,7 @@ public class LeaderboardController {
 	private Leaderboard leaderboard;
 	private HomeController home;
 	private LeaderboardPane leaderboardPane;
+	
 
 	public LeaderboardController(HomeController home) {
 		this.home = home;
@@ -58,7 +59,21 @@ public class LeaderboardController {
 			leaderboardPane.addPlayerNameLine(playerName);
 		}
 		leaderboardPane.setLayout();
-//		System.out.println("at least this works");
+
+	}
+	public void setGames1() {
+		leaderboardPane.setPlayersName();
+		for (Integer games : leaderboard.getGames()) {
+			leaderboardPane.addPlayerNameLine(games);
+		}
+		leaderboardPane.setLayout();
+	}
+	public void setGames2() {
+		leaderboardPane.setPlayersName();
+		for (Integer games : leaderboard.getGamesDate()) {
+			leaderboardPane.addPlayerNameLine(games);
+		}
+		leaderboardPane.setLayout();
 	}
 	public LeaderboardPane getLeaderboardPane() {
 		LeaderboardPane lp = leaderboardPane;

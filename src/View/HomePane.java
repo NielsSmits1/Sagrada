@@ -24,6 +24,8 @@ public class HomePane extends Pane{
 	private Button players;
 	private Button playersPlayed;
 	private Button playersWins;
+	private Button allGames;
+	private Button allGamesDate;
 	private Label lb;
 	private VBox boxie;
 	private Font f = new Font(20);
@@ -52,7 +54,7 @@ public class HomePane extends Pane{
 	
 		x += 100;
 		
-		setPanes("Spelers", leaderboard);
+		setPanes("Spelers/Games", leaderboard);
 		
 		x += 300;
 		
@@ -103,15 +105,36 @@ public class HomePane extends Pane{
 		players = new Button("Spelers");
 		playersPlayed = new Button("Aantal gespeeld");
 		playersWins = new Button("Aantal gewonnen");
-		
+		allGames = new Button("Alle spellen");
+		allGamesDate = new Button("Speldatum");
 		
 		players.setPrefSize(200, 30);
 		playersPlayed.setPrefSize(200, 30);
 		playersWins.setPrefSize(200, 30);
-		boxie.getChildren().addAll(lb, players, playersPlayed, playersWins);
+		boxie.getChildren().addAll(lb, players, playersPlayed, playersWins, allGames, allGamesDate);
 		this.getChildren().add(boxie);
 	}
 	
+
+	public Button getAllGames() {
+		return allGames;
+	}
+
+
+	public void setAllGames(Button allGames) {
+		this.allGames = allGames;
+	}
+
+
+	public Button getAllGamesDate() {
+		return allGamesDate;
+	}
+
+
+	public void setAllGamesDate(Button allGamesDate) {
+		this.allGamesDate = allGamesDate;
+	}
+
 
 	private void setPanes(String text, ScrollPane scr) {
 		Label lb = new Label(text);

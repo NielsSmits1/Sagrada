@@ -9,6 +9,8 @@ public class LeaderboardPlayerLinePane extends HBox{
 	private Label playerText;
 	private Label playerWins;
 	private Label playerGames;
+	private Label gameId;
+	private Label gameText;
 	
 	
 
@@ -19,6 +21,19 @@ public class LeaderboardPlayerLinePane extends HBox{
 		playerName.setText(name);
 		
 		this.getChildren().setAll(playerName);
+	}
+	public LeaderboardPlayerLinePane(int game) {
+//		cp = new ChallengesPane();
+		gameText = new Label();
+		gameId = new Label();
+	
+	
+		
+		this.setPrefSize(300, 30);
+		gameText.setText("Gamenummer: ");
+		gameId.setText(""+ game +"");
+		
+		this.getChildren().setAll(gameText, gameId);
 	}
 	public LeaderboardPlayerLinePane (String name,String amountGames) {
 		playerName = new Label();
