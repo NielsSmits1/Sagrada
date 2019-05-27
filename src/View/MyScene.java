@@ -1,8 +1,8 @@
 package View;
 
+import controller.ChatBoxController;
 import controller.GameController;
 import controller.InlogController;
-import controller.ChatBoxController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 

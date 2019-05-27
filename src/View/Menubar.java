@@ -13,14 +13,10 @@ import model.Game;
 public class Menubar extends MenuBar {
 
 	private Menu options;
-	private Menu games = new Menu();
 	private MenuItem logout;
 	private MenuItem exit;
 	private MenuItem stats;
 	private MenuItem help;
-	private MyScene main;
-
-	private Alert alert = new Alert(AlertType.INFORMATION);
 	private gameRules rules = new gameRules();
 	
 	
@@ -37,18 +33,10 @@ public class Menubar extends MenuBar {
 
 		creatMenu();
 	}
-	
-	public Menubar() {
-		// TODO Auto-generated constructor stub
-	}
 
 	private void creatMenu() {
-		
-
 		options = new Menu("opties");
-
 		logout = new MenuItem("Log-out");
-//		logout.setOnAction(E -> logOut());
 		exit = new MenuItem("Afsluiten");
 //		exit.setOnAction(E -> exit());
 
@@ -63,19 +51,6 @@ public class Menubar extends MenuBar {
 		options.getItems().addAll(logout, stats,help, exit);
 		this.getMenus().add(options);
 	}
-
-	private void showStats() {
-		/*alert.setHeaderText(home.getStats());
-		// test
-		alert.showAndWait();*/
-
-	}
-
-	public void showGame(GamePane gamePane) {
-		
-	}
-		
-	
 
 	public MenuItem getExit() {
 		return exit;
@@ -93,8 +68,6 @@ public class Menubar extends MenuBar {
 	public MenuItem getHelp() {
 		return help;
 	}
-	
-	
 
 	public gameRules getRules() {
 		return rules;

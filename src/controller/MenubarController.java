@@ -20,9 +20,9 @@ public class MenubarController {
 
 	private Pane pane;
 	private MyScene scene;
-	private InlogController inlogController;
-	private HomeController home;
+	private InlogController inlog;
 	private Player self;
+	private Alert alert = new Alert(AlertType.INFORMATION);
 
 	private GameController game;
 	private ChatBoxController chat;
@@ -50,8 +50,19 @@ public class MenubarController {
 	}
 
 	public Menubar getMenubar() {
-
 		return menu;
+	}
+	public void showStats() {
+		alert.setHeaderText(getStatsSelf());		
+		alert.showAndWait();
+	}
+	public String getStatsSelf() {
+		String stats = "Aantal gewonnen en verloren potjes: " + self.getTimesWon() + " : " + self.getTimesLost()
+				+ "\nHoogst behaalde score: " + self.getHighScore() + "\nMeest geplaatste dobbelsteenkleur: "
+				+ self.getMostPlacedDiceColor() + "\nMeest geplaatste dobbelsteenwaarde: "
+				+ self.getMostPlacedDiceEyes() + "\nAantal verschillende tegenstanders waartegen gespeeld is: "
+				+ self.getAmountOfUniquePlayers();
+		return stats;
 
 	}
 
@@ -59,9 +70,8 @@ public class MenubarController {
 		Platform.exit();
 	}
 
-	public Pane logOut() {
-		scene.setRoot(inlogController.getInlog());
-		return pane;
+	public void logOut() {
+		scene.setRoot(inlog.getInlog());
 	}
 
 	public void addGame(Game g) {
