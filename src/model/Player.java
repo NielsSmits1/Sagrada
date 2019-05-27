@@ -351,7 +351,7 @@ public class Player {
 			}
 			pop.setObjective_color((String) pl.get(3));
 			if (pl.get(5) == null) {
-				pop.setPatternCardId(1);
+				pop.setPatternCardId(0);
 			} else {
 				pop.setPatternCardId((int) pl.get(5));
 			}
@@ -395,5 +395,9 @@ public class Player {
 	
 	public int getPatternIdFromDB() {
 		return (int) database.Select("SELECT patterncard_idpatterncard FROM player WHERE idplayer = " + idplayer + ";").get(0).get(0);
+	}
+	
+	public int getPatternId() {
+		return patternCardId;
 	}
 }

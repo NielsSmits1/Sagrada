@@ -82,6 +82,12 @@ public class GameController {
 		toolcardcontroller = new ToolcardController(this);
 		for(Player p : game.getPlayers()) {
 			// look elke speler in spel
+			if(game.hasChosen()) {
+				//check of game kan beginnen
+				if(p.getSelf()) {
+					//open kies patterncard
+				}
+			}
 			p.setPc();
 			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
 		}

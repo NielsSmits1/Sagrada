@@ -413,11 +413,14 @@ public class Game {
 	}
 	
 	public boolean hasChosen() {
-		if(database.Select("SELECT patterncard_idpatterncard FROM player WHERE idgame = " + idgame + ", AND patterncard_idpatterncard IS NULL").get(0).get(0) == null) {
-			return true;
+		for (Player p : players) {
+			if(p.getPatternId() == 0) {
+				return true;
+		}
 		}
 		return false;
 	}
+	
 	
 	public ArrayList<Integer> getChosenIds(){
 		ArrayList<Integer> chosenId = new ArrayList<Integer>();
@@ -427,5 +430,7 @@ public class Game {
 		return chosenId;
 	}
 	
+	}
 	
-}
+	
+
