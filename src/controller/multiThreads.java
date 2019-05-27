@@ -19,7 +19,7 @@ public class multiThreads extends Thread {
 	public void run() {
 		System.out.println("IM RUNNING");
 		runChallenges();
-		runChallenger();
+//		runChallenger();
 	}
 	
 	public void runChallenges() {
@@ -36,6 +36,5 @@ public class multiThreads extends Thread {
 
 		}
 
-	}
 
 }

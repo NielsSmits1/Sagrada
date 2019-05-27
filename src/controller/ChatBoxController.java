@@ -21,14 +21,6 @@ public class ChatBoxController {
 
 	}
 
-	public void setPlayerName() {
-		model.playerUserName();
-		model.playerUsername();
-
-		// geef de menutab een gameid mee om op te controleren zodat de tab enkel de
-		// juiste zinnen laat zien
-		// eerste pane laat alle chat zien met spel erbij
-	}
 
 	public void getChat() {
 		DateFormat chatTime = new SimpleDateFormat("dd-MM-YYYY HH:mm:ss");

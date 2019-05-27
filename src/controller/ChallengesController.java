@@ -70,7 +70,6 @@ public class ChallengesController{
 		refresh();
 	}
 	public void refresh() {
-		System.out.println("=)");
 		setChallengers();
 
 		challengesPane.setPlayerLine(challengesPL);

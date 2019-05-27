@@ -13,10 +13,10 @@ public class MyScene extends Scene {
 
 	public MyScene() {
 		super(new Pane());
-		setRoot(chat.getScreen());
+//		setRoot(chat.getScreen());
 //		setRoot(game.showOptions());
-//         inlog.showInlog();
-//        setRoot(inlog.show());
+         inlog.showInlog();
+        setRoot(inlog.showInlog());
 // 
 
 	}
@@ -35,5 +35,4 @@ public class MyScene extends Scene {
 
 	}
 
-    }
 }
