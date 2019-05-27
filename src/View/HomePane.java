@@ -111,6 +111,8 @@ public class HomePane extends Pane{
 		players.setPrefSize(200, 30);
 		playersPlayed.setPrefSize(200, 30);
 		playersWins.setPrefSize(200, 30);
+		allGames.setPrefSize(200, 30);
+		allGamesDate.setPrefSize(200, 30);
 		boxie.getChildren().addAll(lb, players, playersPlayed, playersWins, allGames, allGamesDate);
 		this.getChildren().add(boxie);
 	}

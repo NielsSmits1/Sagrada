@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 
 public class LeaderboardPlayerLinePane extends HBox{
 	
+	
 	private Label playerName;
 	private Label playerText;
 	private Label playerWins;
@@ -23,7 +24,6 @@ public class LeaderboardPlayerLinePane extends HBox{
 		this.getChildren().setAll(playerName);
 	}
 	public LeaderboardPlayerLinePane(int game) {
-//		cp = new ChallengesPane();
 		gameText = new Label();
 		gameId = new Label();
 	
@@ -61,6 +61,42 @@ public class LeaderboardPlayerLinePane extends HBox{
 		
 		this.getChildren().setAll(playerName, playerText, playerWins);
 	}
-		
+	public Label getPlayerName() {
+		return playerName;
+	}
+	public void setPlayerName(Label playerName) {
+		this.playerName = playerName;
+	}
+	public Label getPlayerText() {
+		return playerText;
+	}
+	public void setPlayerText(Label playerText) {
+		this.playerText = playerText;
+	}
+	public Label getPlayerWins() {
+		return playerWins;
+	}
+	public void setPlayerWins(Label playerWins) {
+		this.playerWins = playerWins;
+	}
+	public Label getPlayerGames() {
+		return playerGames;
+	}
+	public void setPlayerGames(Label playerGames) {
+		this.playerGames = playerGames;
+	}
+	public Label getGameId() {
+		return gameId;
+	}
+	public void setGameId(Label gameId) {
+		this.gameId = gameId;
+	}
+	public Label getGameText() {
+		return gameText;
+	}
+	public void setGameText(Label gameText) {
+		this.gameText = gameText;
+	}
+
 
 }
