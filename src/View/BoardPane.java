@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
+import model.PatternCard;
 import model.Space;
 
 public class BoardPane extends Pane {
@@ -23,27 +24,52 @@ public class BoardPane extends Pane {
 	private int patternid;
 	private boolean allowsMovement;
 	private Label label;
+	private PatternCard chosenCard;
+	private Label username;
+	private boolean self;
+	
+	
+
 	/// *
 	// This constructor requires a rootPane to return the selected DicePane. It also
 	/// asks for an int that it can give to the BoardController. This number stands
 	/// for the number of the windowPattern.
 	/// **
-	public BoardPane(BoardController bc) {
+	public BoardPane(BoardController bc, PatternCard pc, String username, boolean f) {
 		allowsMovement = false;
 		controller = bc;
+		chosenCard = pc;
+		self = f;
+		this.username = new Label(username);
+		this.username.setLayoutX(175);
+		this.username.setLayoutY(170);
 		setShape();
 		setGrid();
-		getChildren().addAll(top, square, tokenPlaceholder, label);
-		setLabelValue(controller.getDifficulty());
+		getChildren().addAll(top, square, tokenPlaceholder, label, this.username);
+//		setLabelValue(controller.getDifficulty());
 		setBoard();
 	}
-
-	public BoardPane(ArrayList<Space> opponentBoard) {
+	
+	public BoardPane(BoardController bc, PatternCard pc) {
+		allowsMovement = false;
+		controller = bc;
+		chosenCard = pc;
 		setShape();
 		setGrid();
 		getChildren().addAll(top, square, tokenPlaceholder, label);
-		setOpponentBoard(opponentBoard);
+//		setLabelValue(controller.getDifficulty());
+		setBoard();
 	}
+	
+	public void setChosenCard(PatternCard chosenCard) {
+		this.chosenCard = chosenCard;
+	}
+
+//	public BoardPane(ArrayList<Space> opponentBoard) {
+//		setShape();
+//		setGrid();
+//		getChildren().addAll(top, square, tokenPlaceholder, label);
+//	}
 
 	/// *
 	// Sets the patternId.
@@ -140,11 +166,11 @@ public class BoardPane extends Pane {
 		for (int c = 1; c <= 5; c++) {
 			for (int i = 0; i < 4; i++) {
 				board.add(new PatternPane(this,
-						new DicePane(getPatternField().get(counter).getEyes(),
-								getPatternField().get(counter).getColor()),
-						getPatternField().get(counter).getXPos(), getPatternField().get(counter).getYPos()));
-				field.add(board.get(board.size() - 1), getPatternField().get(counter).getXPos(),
-						getPatternField().get(counter).getYPos());
+						new DicePane(chosenCard.getPatternField().get(counter).getEyes(),
+								chosenCard.getPatternField().get(counter).getColor()),
+						chosenCard.getPatternField().get(counter).getXPos(), chosenCard.getPatternField().get(counter).getYPos()));
+				field.add(board.get(board.size() - 1), chosenCard.getPatternField().get(counter).getXPos(),
+						chosenCard.getPatternField().get(counter).getYPos());
 				counter++;
 			}
 		}
@@ -152,20 +178,6 @@ public class BoardPane extends Pane {
 		// System.out.println("Should have worked");
 	}
 
-	private void setOpponentBoard(ArrayList<Space> opponentBoard) {
-		int counter = 0;
-		board = new ArrayList<>();
-		for (int c = 1; c <= 5; c++) {
-			for (int i = 0; i < 4; i++) {
-				board.add(new PatternPane(this,
-						new DicePane(opponentBoard.get(counter).getEyes(), opponentBoard.get(counter).getColor())));
-				field.add(board.get(board.size() - 1), opponentBoard.get(counter).getXPos(),
-						opponentBoard.get(counter).getYPos());
-				counter++;
-			}
-		}
-		getChildren().add(field);
-	}
 
 	/// *
 	// Returns the ArrayList with Spaces.
@@ -265,6 +277,10 @@ public class BoardPane extends Pane {
 	
 	public void decreaseLabelValue(int minus) {
 		label.setText("" + (Integer.parseInt(label.getText()) - minus));
+	}
+	
+	public boolean getSelf() {
+		return self;
 	}
 
 }

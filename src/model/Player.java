@@ -20,9 +20,27 @@ public class Player {
 	private Boolean self = false;
 	private String objective_color;
 	private int patternCardId;
+	private PatternCard pc;
 
 	// private String differendPlayer;
 
+	
+	public Player(String u, String p) {
+		this.username = u;
+		this.password = p;
+		
+	}
+	
+	public Player(String username) {
+		this.username = username;
+	}
+	
+	public PatternCard getPc() {
+		return pc;
+	}
+	public void setPc() {
+		pc = new PatternCard(idplayer, gameId, patternCardId);
+	}
 	public void setSelf(Boolean s) {
 		this.self = s;
 	}
@@ -376,15 +394,23 @@ public class Player {
 																																																		// be
 																																																		// variabel
 	}
-	
-	public boolean usedInvalidCharacters() {
-		Pattern pattern = Pattern.compile("[:?!@#$%^&*()]");
-		Matcher m1 = pattern.matcher(username);
-		Matcher m2 = pattern.matcher(password);
 
-		if (m1.find() || m2.find()) {
-			return true;
+	public boolean usedInvalidCharacters() {
+		if (username.matches("[a-zA-Z0-9]+") && password.matches("[a-zA-Z0-9]+")) {
+			return false;
 		}
-		return false;
+		return true;
+	}
+	
+	public int getPlayerId() {
+		return idplayer;
+	}
+	
+	public boolean getSelf() {
+		return self;
+	}
+	
+	public int getPatternIdFromDB() {
+		return (int) database.Select("SELECT patterncard_idpatterncard FROM player WHERE idplayer = " + idplayer + ";").get(0).get(0);
 	}
 }

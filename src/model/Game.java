@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import Database.db;
+import controller.GameController;
 
 public class Game {
 	private db database = new db();
@@ -21,8 +22,9 @@ public class Game {
 	private Random r;
 	private Player self;
 	private ArrayList<Gamefavortoken> token;
+	private int gamemode;
+	private GameController controller;
 
-	// private Random r;
 
 
 	public void addPlayer(Player param, String status, String color) {
@@ -45,9 +47,10 @@ public class Game {
 		insertDicesIntoDatabase();
 		diceData = getSelect();
 		setDiceArray();
-		// buildGameTurns();
 		checkIfGameHasStarted();
 		fillTokenArrayList();
+//		controller = new GameController(this);
+		
 
 	}
 
@@ -177,20 +180,20 @@ public class Game {
 				.get(0);
 	}
 
-	public void setOwnId(int chosenPatternId) {
-		yourself = (int) getNewId();
-		database.CUD(
-				"INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color, patterncard_idpatterncard ) "
-						+ "VALUES(" + yourself + ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw' , "
-						+ chosenPatternId + ")");
-	}
-
-	public void setOwnId() {
-		yourself = (int) getNewId();
-		database.CUD(
-				"INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color) "
-						+ "VALUES(" + yourself + ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw')");
-	}
+//	public void setOwnId(int chosenPatternId) {
+//		yourself = (int) getNewId();
+//		database.CUD(
+//				"INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color, patterncard_idpatterncard ) "
+//						+ "VALUES(" + yourself + ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw' , "
+//						+ chosenPatternId + ")");
+//	}
+//
+//	public void setOwnId() {
+//		yourself = (int) getNewId();
+//		database.CUD(
+//				"INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color) "
+//						+ "VALUES(" + yourself + ",'niels'," + idgame + ", 'geaccepteerd', 0, 'blauw')");
+//	}
 
 	public long getNewId() {
 		return (long) database.Select(
@@ -376,5 +379,53 @@ public class Game {
 	public int getGametoolcard(int toolcardid) {
 		return (int)database.Select("SELECT gametoolcard from gametoolcard WHERE idgame = " + idgame +" AND idtoolcard = " + toolcardid + "").get(0).get(0);
 	}
-
+	
+	public void setGamemode() {
+		gamemode = players.size();
+	}
+	
+	public int getGamemode() {
+		return gamemode;
+	}
+	
+	public void addOptionsToDB(ArrayList<Integer> randomIDS) {
+		for (int i = 0; i < randomIDS.size(); i++) {
+			for (int j = 0; j < gamemode; j++) {
+				database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(j).getPlayerId() + ")");
+			}
+		}
+	}
+	
+	public void setSelf() {
+		for (int i = 0; i < players.size(); i++) {
+			if(players.get(i).getSelf()) {
+				self = players.get(i);
+			}
+		}
+	}
+	
+	public ArrayList<Integer> getOwnOptions(){
+		ArrayList<Integer> ownOptions = new ArrayList<>();
+		for (int i = 0; i < 4; i++) {
+			ownOptions.add((int)database.Select("SELECT patterncard_idpatterncard FROM patterncardoption WHERE player_idplayer = " + self.getPlayerId() +";").get(i).get(0));
+		}
+		return ownOptions;
+	}
+	
+	public boolean hasChosen() {
+		if(database.Select("SELECT patterncard_idpatterncard FROM player WHERE idgame = " + idgame + ", AND patterncard_idpatterncard IS NULL").get(0).get(0) == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public ArrayList<Integer> getChosenIds(){
+		ArrayList<Integer> chosenId = new ArrayList<Integer>();
+		for (int i = 0; i < controller.getGamemode(); i++) {
+			chosenId.add((int)database.Select("SELECT patterncard_idpatterncard FROM player WHERE idgame = " + idgame + ";").get(i).get(0));
+		}
+		return chosenId;
+	}
+	
+	
 }

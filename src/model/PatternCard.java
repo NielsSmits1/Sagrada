@@ -33,18 +33,20 @@ public class PatternCard {
 		p = getSelect();
 		setpatternfield();
 		addCard();
+		insertChosenCardToDB();
 		// generateRandomPatternCard();
 		// insertRandomPatternCardIntoDB();
 		hasColorExamption = false;
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
 	}
+	
+	
 
-	public PatternCard() {
-		random = new Random();
+	public PatternCard(int number) {
 		patternfield = new ArrayList<>();
 		// TODO aanpassen naar de size van de list van beschikbare kaarten
-		setPatternId(random.nextInt(24) + 1);
+		setPatternId(number);
 		p = getSelect();
 		setpatternfield();
 	}
@@ -60,6 +62,19 @@ public class PatternCard {
 		setPatternId(getHighestPatternId());
 		p = getSelect();
 		addCard();
+		hasColorExamption = false;
+		hasNumberExamption = false;
+		hasNextToDiceExamption = false;
+		// setpatternfield();
+	}
+	
+	public PatternCard(int ownId, int idgame, int patternid) {
+		yourself = ownId;
+		this.idgame = idgame;
+		patternfield = new ArrayList<>();
+		setPatternId(patternid);
+		p = getSelect();
+		setpatternfield();
 		hasColorExamption = false;
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
@@ -145,6 +160,10 @@ public class PatternCard {
 		database.CUD(
 				"insert into tjpmsalt_db2.playerframefield (player_idplayer, position_x,position_y, idgame) VALUES ("
 						+ yourself + "," + xPos + "," + yPos + "," + idgame + ");");
+	}
+	
+	public ArrayList<ArrayList<Object>> getPlayerframeField(int idplayer, int idgame){
+		return database.Select("SELECT * FROM playerframefield WHERE player_idplayer = " + idplayer + ", idgame = " + idgame + "");
 	}
 
 	public void moveDie(int dienumber, String diecolor, int xPos, int yPos) {
@@ -681,5 +700,14 @@ public class PatternCard {
 		return (int) database.Select("SELECT difficulty FROM patterncard WHERE idpatterncard = " + getPatternId() + ";")
 				.get(0).get(0);
 	}
+	
+	public void insertChosenCardToDB() {
+		database.CUD("UPDATE player SET patterncard_idpatterncard = " + patternId + " WHERE idplayer = " + yourself + ";");
+	}
+	
+	
+
+	
+	
 
 }
