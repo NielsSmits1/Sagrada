@@ -65,9 +65,9 @@ public class GameController {
 		for(Player p : game.getPlayers()) {
 			// look elke speler in spel
 			if(p.getSelf()) {
-				boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
+				boardcontroller.addBoard(p.getPc(),p);
 			}else {
-				boardcontroller.addBoard(p.getPc(), p.getUsername(), false);
+				boardcontroller.addBoard(p.getPc(),p);
 			}
 			
 		}
@@ -80,20 +80,22 @@ public class GameController {
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
+		
+	}
+	
+	public void buildGame() {
 		for(Player p : game.getPlayers()) {
-			// look elke speler in spel
-			if(game.hasChosen()) {
-				//check of game kan beginnen
-				if(p.getSelf()) {
-					//open kies patterncard
-				}
-			}
 			p.setPc();
-			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
+			System.out.println(p.getSelf());
+			boardcontroller.addBoard(p.getPc(), p);
+			
 		}
 		gamePane = new GamePane(this);
 	}
 	
+	public Game getGame() {
+		return this.game;
+	}
 	
 	public void addOpponets(Opponent op) {
 		for(int x = 0; x<opponents.length; x++) {

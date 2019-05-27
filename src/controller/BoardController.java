@@ -7,6 +7,7 @@ import View.DicePane;
 import model.Opponent;
 import model.PatternCard;
 import model.PatternCardOptions;
+import model.Player;
 import model.Space;
 
 public class BoardController {
@@ -148,8 +149,8 @@ public class BoardController {
 		return boards;
 	}
 	
-	public void addBoard(PatternCard pc, String username, boolean f) {
-		boards.add(new BoardPane(this, pc, username, f));
+	public void addBoard(PatternCard pc, Player p) {
+		boards.add(new BoardPane(this, pc, p));
 	}
 
 }

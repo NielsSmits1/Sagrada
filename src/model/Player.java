@@ -39,7 +39,6 @@ public class Player {
 		return pc;
 	}
 	public void setPc() {
-		System.out.println(patternCardId);
 		pc = new PatternCard(idplayer, gameId, patternCardId);
 	}
 	public void setSelf(Boolean s) {
@@ -356,7 +355,7 @@ public class Player {
 				pop.setPatternCardId((int) pl.get(5));
 			}
 
-			if (pl.get(1) == this.username) {
+			if (this.username.equals((String)pl.get(1))) {
 				pop.setSelf(true);
 			}
 			P.add(pop);
@@ -367,6 +366,10 @@ public class Player {
 
 	private long countPlayersGame(int gameId) {
 		return (long) database.Select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
+	}
+	
+	public int getScore() {
+		return score;
 	}
 
 	public void setChallengerToAccepted() {

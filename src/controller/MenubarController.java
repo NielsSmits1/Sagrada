@@ -28,13 +28,13 @@ public class MenubarController {
 	
 	
 	
-	private HashMap <MenuItem, GamePane> gamepanes = new HashMap<>();
+	private HashMap <MenuItem, GameController> gamepanes = new HashMap<>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
 		this.scene = scene;
 		this.inlog = controller;
-		
+		this.self = player;
 //		game = new GameController(scene);
 		menu = new Menubar(scene);
 
@@ -77,14 +77,28 @@ public class MenubarController {
 		MenuItem mi = new MenuItem("open game");
 		m.getItems().add(mi);
 		menu.addGameItem(m);
-		gamepanes.put(mi, gc.getGamepane());
+		gamepanes.put(mi, gc);
 		mi.setOnAction(e-> setRoot(mi));
 
 	
 	}
 	
 	public void setRoot(MenuItem mi) {
-		scene.setRoot(new VBox(this.getMenubar(),gamepanes.get(mi)));
+		gc = gamepanes.get(mi);
+		if(!gc.getGame().hasChosen()) {
+			if(gc.getGame().checkIfIPickedPatternCard(self.getUsername())) {
+				this.showWait();
+			}else {
+
+			}
+		}else {
+			gc.buildGame();
+			scene.setRoot(new VBox(this.getMenubar(),gamepanes.get(mi).getGamepane()));
+		}
+	}
+	public void showWait() {
+		alert.setHeaderText("Er worden nog patroonkaarten gekozen");		
+		alert.showAndWait();
 	}
 	
 	

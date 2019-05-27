@@ -35,7 +35,7 @@ public class PatterncardSelect extends Pane {
 	private ArrayList<GridPane> choice;
 	private Button button;
 	private GameController controller;
-	final private Border peru = new Border(
+	private Border peru = new Border(
 			new BorderStroke(Color.PERU, BorderStrokeStyle.SOLID, null, new BorderWidths(10.0)));
 
 	public PatterncardSelect(GameController gc) {

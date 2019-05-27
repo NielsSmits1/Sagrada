@@ -54,6 +54,7 @@ public class Game {
 
 	}
 
+
 	// public void addPlayer(Player param) {
 	// 	insertPlayer(param);
 
@@ -415,10 +416,11 @@ public class Game {
 	public boolean hasChosen() {
 		for (Player p : players) {
 			if(p.getPatternId() == 0) {
-				return true;
+				
+				return false;
+			}
 		}
-		}
-		return false;
+		return true;
 	}
 	
 	
@@ -429,8 +431,26 @@ public class Game {
 		}
 		return chosenId;
 	}
-	
+
+	public boolean checkIfSelf() {
+		// TODO Auto-generated method stub
+		return false;
 	}
+
+	public boolean checkIfIPickedPatternCard(String username) {
+		for(Player p : players) {
+			if(p.getUsername().equals(username)) {
+				if(p.getPatternId()!=0) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+	
+}
 	
 	
 

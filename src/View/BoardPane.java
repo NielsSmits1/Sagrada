@@ -11,6 +11,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 import model.PatternCard;
+import model.Player;
 import model.Space;
 
 public class BoardPane extends Pane {
@@ -26,6 +27,7 @@ public class BoardPane extends Pane {
 	private Label label;
 	private PatternCard chosenCard;
 	private Label username;
+	private Label score;
 	private boolean self;
 	
 	
@@ -35,17 +37,18 @@ public class BoardPane extends Pane {
 	/// asks for an int that it can give to the BoardController. This number stands
 	/// for the number of the windowPattern.
 	/// **
-	public BoardPane(BoardController bc, PatternCard pc, String username, boolean f) {
+	public BoardPane(BoardController bc, PatternCard pc, Player p) {
 		allowsMovement = false;
 		controller = bc;
 		chosenCard = pc;
-		self = f;
-		this.username = new Label(username);
+		self = p.getSelf();
+		score = new Label("" + p.getScore());
+		this.username = new Label(p.getUsername());
 		this.username.setLayoutX(175);
 		this.username.setLayoutY(170);
 		setShape();
 		setGrid();
-		getChildren().addAll(top, square, tokenPlaceholder, label, this.username);
+		getChildren().addAll(top, square, tokenPlaceholder, label, this.username, score);
 //		setLabelValue(controller.getDifficulty());
 		setBoard();
 	}
@@ -101,6 +104,8 @@ public class BoardPane extends Pane {
 		label = new Label("1");
 		label.setLayoutX(195);
 		label.setLayoutY(240);
+		score.setLayoutX(245);
+		score.setLayoutY(240);
 		top = new QuadCurve(0, 300, 200, 0, 400, 300);
 		tokenPlaceholder = new Circle();
 		tokenPlaceholder.setRadius(25);
