@@ -19,6 +19,7 @@ import model.Dice;
 import model.Game;
 import model.Opponent;
 import model.PatternCard;
+import model.Player;
 //import model.Round;
 import model.Round;
 import model.Space;
@@ -46,13 +47,51 @@ public class GameController {
 
 		game = new Game();
 		game.setPlayableDices();
+		
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
+		game.setGameId(609);
+		ArrayList<Player> players = new ArrayList<Player>();
+		for(int i = 0; i < 4; i++) {
+			Player p = new Player("Speler " + i );
+			p.setId(i + 991);
+			p.setPatternCardId(p.getPatternIdFromDB());
+			p.setPc();
+			players.add(p);
+		}
+		game.insertPlayers(players);
+//		}
+		players.get(3).setSelf(true);
+		for(Player p : game.getPlayers()) {
+			// look elke speler in spel
+			if(p.getSelf()) {
+				boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
+			}else {
+				boardcontroller.addBoard(p.getPc(), p.getUsername(), false);
+			}
+			
+		}
+		
+		gamePane = new GamePane(this);
 
 	}
 	public GameController(Game g) {
 		this.game = g;
+		game.setPlayableDices();
+		boardcontroller = new BoardController(this);
+		toolcardcontroller = new ToolcardController(this);
+		
+//		if(game.hasChosen()) {
+			gamePane = new GamePane(this);
+//		}
+		for(Player p : game.getPlayers()) {
+			// look elke speler in spel
+			p.getPc().getPatternField();
+			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
+		}
 	}
+	
+	
 	public void addOpponets(Opponent op) {
 		for(int x = 0; x<opponents.length; x++) {
 			if(opponents[x] == null) {
@@ -153,13 +192,19 @@ public class GameController {
 	}
 
 	public void setPatternCard(int id) {
-		game.setOwnId(id);
 		boardcontroller.setPatternCard(id);
 	}
 
 	public void buildGame() {
-
-		gamePane = new GamePane(this);
+//		if(game.hasChosen()) {
+			gamePane = new GamePane(this);
+//		}
+		for(Player p : game.getPlayers()) {
+			// look elke speler in spel
+			p.getPc().getPatternField();
+			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
+		}
+		
 //		scene.setRoot(rootpane);
 		//this.scene.setRoot(gamePane);
 
@@ -177,7 +222,7 @@ public class GameController {
 		return boardcontroller.getOpponentBoard();
 	}
 
-	public GamePane getRootpane() {
+	public GamePane getGamepane() {
 		return gamePane;
 	}
 
@@ -203,12 +248,15 @@ public class GameController {
 	}
 	
 	public void setRandomCard() {
-		game.setOwnId();
 		boardcontroller.setRandomCard();
 	}
 	public GamePane getGameStage() {
 		return this.gamePane;
 		
+	}
+	
+	public int getGamemode() {
+		return game.getGamemode();
 	}
 	
 //	public int getDifficulty() {
@@ -225,6 +273,22 @@ public class GameController {
 	
 	public void setGameCard(int id) {
 		game.addGametoolcard(id);
+	}
+	
+	public void addOptions(ArrayList<Integer> randomIDS){
+		game.addOptionsToDB(randomIDS);
+	}
+	
+	public ArrayList<Integer> getOwnOptions(){
+		return game.getOwnOptions();
+	}
+	
+	public ArrayList<Integer> getChosenIds(){
+		return game.getChosenIds();
+	}
+	
+	public ArrayList<BoardPane> getBoards(){
+		return boardcontroller.getBoards();
 	}
 	
 	
