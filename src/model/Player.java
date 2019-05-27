@@ -19,7 +19,7 @@ public class Player {
 	private String status;
 	private Boolean self = false;
 	private String objective_color;
-	private int patternCardId = 1;
+	private int patternCardId;
 	private PatternCard pc;
 
 	// private String differendPlayer;
@@ -33,13 +33,13 @@ public class Player {
 	
 	public Player(String username) {
 		this.username = username;
-		setPc();
 	}
 	
 	public PatternCard getPc() {
 		return pc;
 	}
 	public void setPc() {
+		System.out.println(patternCardId);
 		pc = new PatternCard(idplayer, gameId, patternCardId);
 	}
 	public void setSelf(Boolean s) {
@@ -351,7 +351,7 @@ public class Player {
 			}
 			pop.setObjective_color((String) pl.get(3));
 			if (pl.get(5) == null) {
-				pop.setPatternCardId(0);
+				pop.setPatternCardId(1);
 			} else {
 				pop.setPatternCardId((int) pl.get(5));
 			}

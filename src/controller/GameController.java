@@ -80,7 +80,12 @@ public class GameController {
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
-		
+		for(Player p : game.getPlayers()) {
+			// look elke speler in spel
+			p.setPc();
+			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
+		}
+		gamePane = new GamePane(this);
 	}
 	
 	
@@ -187,20 +192,6 @@ public class GameController {
 		boardcontroller.setPatternCard(id);
 	}
 
-	public void buildGame() {
-//		if(game.hasChosen()) {
-			gamePane = new GamePane(this);
-//		}
-		for(Player p : game.getPlayers()) {
-			// look elke speler in spel
-			p.getPc().getPatternField();
-			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
-		}
-		
-//		scene.setRoot(rootpane);
-		//this.scene.setRoot(gamePane);
-
-	}
 
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();

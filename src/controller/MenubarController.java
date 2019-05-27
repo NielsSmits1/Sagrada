@@ -27,7 +27,7 @@ public class MenubarController {
 	
 	
 	
-	private HashMap <Menu, GamePane> gamepanes = new HashMap<>();
+	private HashMap <MenuItem, GamePane> gamepanes = new HashMap<>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
@@ -76,16 +76,14 @@ public class MenubarController {
 		MenuItem mi = new MenuItem();
 		m.getItems().add(mi);
 		menu.addGameItem(m);
-		gc.buildGame();
-		gamepanes.put(m, gc.getGamepane());
-		mi.setOnAction(e-> setRoot(m, gc.getGamepane()));
+		gamepanes.put(mi, gc.getGamepane());
+		mi.setOnAction(e-> setRoot(mi));
 
 	
 	}
 	
-	public void setRoot(Menu m, GamePane gp) {
-		System.out.println("Game geopend");
-		scene.setRoot(gp);
+	public void setRoot(MenuItem mi) {
+		scene.setRoot(gamepanes.get(mi));
 	}
 	
 	
