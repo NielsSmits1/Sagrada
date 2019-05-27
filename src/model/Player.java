@@ -365,15 +365,11 @@ public class Player {
 																																																		// be
 																																																		// variabel
 	}
-	
-	public boolean usedInvalidCharacters() {
-		Pattern pattern = Pattern.compile("[:?!@#$%^&*()]");
-		Matcher m1 = pattern.matcher(username);
-		Matcher m2 = pattern.matcher(password);
 
-		if (m1.find() || m2.find()) {
-			return true;
+	public boolean usedInvalidCharacters() {
+		if (username.matches("[a-zA-Z0-9]+") && password.matches("[a-zA-Z0-9]+")) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 }
