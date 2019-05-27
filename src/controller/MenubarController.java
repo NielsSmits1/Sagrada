@@ -6,27 +6,23 @@ import View.GamePane;
 import View.Menubar;
 import View.MyScene;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import model.Game;
-import model.MenuBarModel;
 import model.Player;
 
 public class MenubarController {
 
 	private Menubar menu;
-	private MenuBarModel menuModel;
-
-
 	private Pane pane;
 	private MyScene scene;
 	private InlogController inlog;
 	private Player self;
 	private Alert alert = new Alert(AlertType.INFORMATION);
-
-	private GameController game;
 	private ChatBoxController chat;
-	
 	private GameController gc;
 	
 	
@@ -36,9 +32,9 @@ public class MenubarController {
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
 		this.scene = scene;
-		this.inlogController = controller;
+		this.inlog = controller;
 		
-		game = new GameController(scene);
+//		game = new GameController(scene);
 		menu = new Menubar(scene);
 
 		menu.getExit().setOnAction(e -> exit());
@@ -77,15 +73,19 @@ public class MenubarController {
 	public void addGame(Game g) {
 		gc = new GameController(g); 
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
+		MenuItem mi = new MenuItem();
+		m.getItems().add(mi);
 		menu.addGameItem(m);
-		gamepanes.put(m, gc.getGameStage());
-		m.setOnShowing(e-> setRoot(m));
+		gc.buildGame();
+		gamepanes.put(m, gc.getGamepane());
+		mi.setOnAction(e-> setRoot(m, gc.getGamepane()));
 
 	
 	}
 	
-	public void setRoot(Menu m) {
-		scene.setRoot(gamepanes.get(m));
+	public void setRoot(Menu m, GamePane gp) {
+		System.out.println("Game geopend");
+		scene.setRoot(gp);
 	}
 	
 	

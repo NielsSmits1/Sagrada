@@ -81,14 +81,6 @@ public class GameController {
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
 		
-//		if(game.hasChosen()) {
-			gamePane = new GamePane(this);
-//		}
-		for(Player p : game.getPlayers()) {
-			// look elke speler in spel
-			p.getPc().getPatternField();
-			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
-		}
 	}
 	
 	
@@ -250,10 +242,7 @@ public class GameController {
 	public void setRandomCard() {
 		boardcontroller.setRandomCard();
 	}
-	public GamePane getGameStage() {
-		return this.gamePane;
-		
-	}
+
 	
 	public int getGamemode() {
 		return game.getGamemode();

@@ -26,8 +26,7 @@ public class Menubar extends MenuBar {
 	
 	
 	
-	public Menubar(MyScene main){
-		this.main = main;
+	public Menubar(MyScene main) {
 		//home = new HomeController(main, self.getPlayer());
 	
 
@@ -43,7 +42,7 @@ public class Menubar extends MenuBar {
 
 		help = new MenuItem("spelregels");
 		stats = new MenuItem("Statistieken");
-		stats.setOnAction(E -> showStats());
+//		stats.setOnAction(E -> showStats());
 		
 		//menu.getExit().setOnAction(e -> model.Exit());
 		//menu.getLogout().setOnAction(e -> model.logout());
