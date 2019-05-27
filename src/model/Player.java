@@ -93,7 +93,7 @@ public class Player {
 	}
 
 	public ArrayList<ArrayList<Object>> maxPlayerScore() {
-		return database.Select("select username , max(score) as max from player group by username");
+		return database.Select("select username , max(score) as max from player group by username having max is not null");
 	}
 
 	public ArrayList<ArrayList<Object>> maxColor() {

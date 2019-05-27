@@ -26,6 +26,10 @@ public class LeaderboardPane extends ScrollPane {
 		playerLine.add(new LeaderboardPlayerLinePane(name));
 	
 	}
+	public void addPlayerNameLine(int number) {
+		playerLine.add(new LeaderboardPlayerLinePane(number));
+	
+	}
 
 	public void addPlayerNameLineWithAmountOfGamesPlayed(String name, String amountPlayed) {
 		playerLine.add(new LeaderboardPlayerLinePane(name, amountPlayed));
