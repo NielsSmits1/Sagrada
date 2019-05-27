@@ -53,17 +53,30 @@ public class LeaderboardController {
 		leaderboardPane.setPlayersName(lplp);
 
 	}
-	public void setGames1() {
+	public void setGames3() {
 		lplp = new ArrayList<LeaderboardPlayerLinePane>();
 		
 		for (Integer games : leaderboard.getGames()) {
 			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane(games);
 			lplp.add(p);
 			
-			leaderboardPane.addPlayerNameLine(games);
+	//		leaderboardPane.addPlayerNameLine(games);
 		}
 		leaderboardPane.setPlayersName(lplp);
 	}
+	public void setGames1() {
+		lplp = new ArrayList<LeaderboardPlayerLinePane>();
+		
+		for (Map.Entry games : leaderboard.checkSelfGames().entrySet()) {
+			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane((int)games.getKey(),(boolean)games.getValue());
+			lplp.add(p);
+			System.out.println(p.getGameId() + String.valueOf(p.isHighlight()));
+			
+//			leaderboardPane.addPlayerNameLine(games);
+		}
+		leaderboardPane.setPlayersName(lplp);
+	}
+	
 	public void setGames2() {
 		lplp = new ArrayList<LeaderboardPlayerLinePane>();
 		
@@ -71,7 +84,7 @@ public class LeaderboardController {
 			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane(games);
 			lplp.add(p);
 			
-			leaderboardPane.addPlayerNameLine(games);
+	//		leaderboardPane.addPlayerNameLine(games);
 		}
 		leaderboardPane.setPlayersName(lplp);
 	}

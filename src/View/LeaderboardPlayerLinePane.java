@@ -1,7 +1,10 @@
 package View;
 
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 public class LeaderboardPlayerLinePane extends HBox{
 	
@@ -12,8 +15,10 @@ public class LeaderboardPlayerLinePane extends HBox{
 	private Label playerGames;
 	private Label gameId;
 	private Label gameText;
+	private boolean highlight;
 	
 	
+
 
 	public LeaderboardPlayerLinePane (String name) {
 		playerName = new Label();
@@ -26,6 +31,23 @@ public class LeaderboardPlayerLinePane extends HBox{
 	public LeaderboardPlayerLinePane(int game) {
 		gameText = new Label();
 		gameId = new Label();
+	
+	
+		
+		this.setPrefSize(300, 30);
+		gameText.setText("Gamenummer: ");
+		gameId.setText(""+ game +"");
+		
+		this.getChildren().setAll(gameText, gameId);
+	}
+	public LeaderboardPlayerLinePane(int game, boolean self) {
+		gameText = new Label();
+		gameId = new Label();
+		highlight = self;
+		if (highlight==true) {
+			this.setBackground(new Background(new BackgroundFill(Color.HOTPINK, null, null)));
+		}
+
 	
 	
 		
@@ -96,6 +118,12 @@ public class LeaderboardPlayerLinePane extends HBox{
 	}
 	public void setGameText(Label gameText) {
 		this.gameText = gameText;
+	}
+	public boolean isHighlight() {
+		return highlight;
+	}
+	public void setHighlight(boolean highlight) {
+		this.highlight = highlight;
 	}
 
 

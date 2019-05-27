@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import Database.db;
@@ -63,6 +64,9 @@ public class Leaderboard {
 		}
 		return games;
 	}
+	public ArrayList<ArrayList<Object>> getSelfGames() {
+		return database.Select("SELECT game_idgame FROM player WHERE username = '"+self+"'");
+	}
 
 	public ArrayList<ArrayList<Object>> getAllGames() {
 		return database.Select("SELECT * FROM GAME");
@@ -72,6 +76,40 @@ public class Leaderboard {
 		return database.Select("SELECT * FROM GAME ORDER BY creationdate ASC");
 	}
 
+	public LinkedHashMap<Integer, Boolean> checkSelfGames() {
+		ArrayList<Integer> gameList = new ArrayList<Integer>();
+		ArrayList<Integer> selfList = new ArrayList<Integer>();
+		LinkedHashMap<Integer, Boolean> highlightGames = new LinkedHashMap<Integer,Boolean>();
+		int gameId = 0;
+		boolean self = false;
+		for (ArrayList<Object> a : getAllGames()) {
+			gameId = (int) a.get(0);
+			gameList.add(gameId);
+	
+		}
+		int selfId = 0;
+		for (ArrayList<Object> b : getSelfGames()) {
+			selfId = (int) b.get(0);
+			selfList.add(selfId);
+
+		}
+
+		for(int i = 0; i < gameList.size(); i++)
+		{
+		    for(int j = 0; j < selfList.size(); j++)
+		    {
+		        if(gameList.get(i) == selfList.get(j))
+			self = true;
+			
+		    }
+		    highlightGames.put(gameId, self);
+		}
+
+		return highlightGames;
+	}
+	
+	
+	
 	public LinkedHashMap<String, String> getPlayersFilteredByAmountOfGames() {
 		LinkedHashMap<String, String> PlayerNamesWithGames = new LinkedHashMap<String, String>();
 		String u;
