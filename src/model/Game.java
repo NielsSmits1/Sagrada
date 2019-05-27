@@ -49,7 +49,7 @@ public class Game {
 		setDiceArray();
 		checkIfGameHasStarted();
 		fillTokenArrayList();
-		controller = new GameController(this);
+//		controller = new GameController(this);
 		
 
 	}
@@ -431,4 +431,6 @@ public class Game {
 		}
 		return chosenId;
 	}
+	
+	
 }

@@ -17,10 +17,28 @@ public class Player {
 	private Boolean self = false;
 	private String objective_color;
 	private int patternCardId;
+	private PatternCard pc;
 
 	
 //	private String differendPlayer;
 
+	
+	public Player(String u, String p) {
+		this.username = u;
+		this.password = p;
+		
+	}
+	
+	public Player(String username) {
+		this.username = username;
+	}
+	
+	public PatternCard getPc() {
+		return pc;
+	}
+	public void setPc() {
+		pc = new PatternCard(idplayer, gameId, patternCardId);
+	}
 	public void setSelf(Boolean s) {
 		this.self = s;
 	}
@@ -31,10 +49,7 @@ public class Player {
 	public void setObjective_color(String o) {
 		this.objective_color = o;
 	}
-	public Player(String u, String p) {
-		this.username = u;
-		this.password = p;
-	}
+	
 	public void setStatus(String s) {
 		this.status = s;
 	}
@@ -42,9 +57,7 @@ public class Player {
 		return this.status;
 	}
 	
-	public Player(String username) {
-		this.username = username;
-	}
+	
 	
 	//selects and returns the username and password.
     public ArrayList<ArrayList<Object>> getSelect() {
@@ -326,5 +339,9 @@ public class Player {
 	
 	public boolean getSelf() {
 		return self;
+	}
+	
+	public int getPatternIdFromDB() {
+		return (int) database.Select("SELECT patterncard_idpatterncard FROM player WHERE idplayer = " + idplayer + ";").get(0).get(0);
 	}
 }

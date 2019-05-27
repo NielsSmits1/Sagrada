@@ -67,6 +67,19 @@ public class PatternCard {
 		hasNextToDiceExamption = false;
 		// setpatternfield();
 	}
+	
+	public PatternCard(int ownId, int idgame, int patternid) {
+		yourself = ownId;
+		this.idgame = idgame;
+		patternfield = new ArrayList<>();
+		setPatternId(patternid);
+		p = getSelect();
+		setpatternfield();
+		hasColorExamption = false;
+		hasNumberExamption = false;
+		hasNextToDiceExamption = false;
+		// setpatternfield();
+	}
 
 	public ArrayList<ArrayList<Object>> getSelect() {
 		return database
@@ -147,6 +160,10 @@ public class PatternCard {
 		database.CUD(
 				"insert into tjpmsalt_db2.playerframefield (player_idplayer, position_x,position_y, idgame) VALUES ("
 						+ yourself + "," + xPos + "," + yPos + "," + idgame + ");");
+	}
+	
+	public ArrayList<ArrayList<Object>> getPlayerframeField(int idplayer, int idgame){
+		return database.Select("SELECT * FROM playerframefield WHERE player_idplayer = " + idplayer + ", idgame = " + idgame + "");
 	}
 
 	public void moveDie(int dienumber, String diecolor, int xPos, int yPos) {

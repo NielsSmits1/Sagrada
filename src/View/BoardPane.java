@@ -25,11 +25,31 @@ public class BoardPane extends Pane {
 	private boolean allowsMovement;
 	private Label label;
 	private PatternCard chosenCard;
+	private Label username;
+	private boolean self;
+	
+	
+
 	/// *
 	// This constructor requires a rootPane to return the selected DicePane. It also
 	/// asks for an int that it can give to the BoardController. This number stands
 	/// for the number of the windowPattern.
 	/// **
+	public BoardPane(BoardController bc, PatternCard pc, String username, boolean f) {
+		allowsMovement = false;
+		controller = bc;
+		chosenCard = pc;
+		self = f;
+		this.username = new Label(username);
+		this.username.setLayoutX(175);
+		this.username.setLayoutY(170);
+		setShape();
+		setGrid();
+		getChildren().addAll(top, square, tokenPlaceholder, label, this.username);
+//		setLabelValue(controller.getDifficulty());
+		setBoard();
+	}
+	
 	public BoardPane(BoardController bc, PatternCard pc) {
 		allowsMovement = false;
 		controller = bc;
@@ -37,8 +57,12 @@ public class BoardPane extends Pane {
 		setShape();
 		setGrid();
 		getChildren().addAll(top, square, tokenPlaceholder, label);
-		setLabelValue(controller.getDifficulty());
+//		setLabelValue(controller.getDifficulty());
 		setBoard();
+	}
+	
+	public void setChosenCard(PatternCard chosenCard) {
+		this.chosenCard = chosenCard;
 	}
 
 //	public BoardPane(ArrayList<Space> opponentBoard) {
@@ -253,6 +277,10 @@ public class BoardPane extends Pane {
 	
 	public void decreaseLabelValue(int minus) {
 		label.setText("" + (Integer.parseInt(label.getText()) - minus));
+	}
+	
+	public boolean getSelf() {
+		return self;
 	}
 
 }

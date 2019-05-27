@@ -17,19 +17,19 @@ public class BoardController {
 	private ArrayList<BoardPane> opponentBoard;
 	private GameController gameController;
 	private PatternCardOptions allOptions;
-	private ArrayList<BoardPane> players;
+	private ArrayList<BoardPane> boards;
 
 	public BoardController(GameController gameController) {
 		this.gameController = gameController;
-		players = new ArrayList<>();
-		allOptions = new PatternCardOptions();
-		setOptions();
-		this.gameController.addOptions(allOptions.getOptions());
+		boards = new ArrayList<>();
+//		allOptions = new PatternCardOptions();
+//		setOptions();
+//		this.gameController.addOptions(allOptions.getOptions());
 		opponentBoard = new ArrayList<>();
-		patternCardOptions = new ArrayList<>();
-		for (int i = 0; i < this.gameController.getOwnOptions().size(); i++) {
-			patternCardOptions.add(new PatternCard(this.gameController.getOwnOptions().get(i)));
-		}
+//		patternCardOptions = new ArrayList<>();
+//		for (int i = 0; i < this.gameController.getOwnOptions().size(); i++) {
+//			patternCardOptions.add(new PatternCard(this.gameController.getOwnOptions().get(i)));
+//		}
 
 	}
 	/// *
@@ -60,7 +60,7 @@ public class BoardController {
 	public void setBoard() {
 //		players.add(new BoardPane(this, finalCard));
 		for (int i = 0; i < getGamemode(); i++) {
-			players.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
+			boards.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
 		}
 	}
 
@@ -144,8 +144,12 @@ public class BoardController {
 		return gameController.getGamemode();
 	}
 	
-	public ArrayList<BoardPane> getPlayers(){
-		return players;
+	public ArrayList<BoardPane> getBoards(){
+		return boards;
+	}
+	
+	public void addBoard(PatternCard pc, String username, boolean f) {
+		boards.add(new BoardPane(this, pc, username, f));
 	}
 
 }

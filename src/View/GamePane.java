@@ -90,7 +90,13 @@ public class GamePane extends BorderPane {
 		// The the number in the constructor from BoardPane stands for the number of the
 		/// windowpattern in the DB.
 		
-		playField = controller.getPlayers();
+		playField = controller.getBoards();
+		
+		for (int i = 0; i < playField.size(); i++) {
+			if(playField.get(i).getSelf() == false) {
+				playField.get(i).setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+			}
+		}
 		
 //		player1 = controller.returnBoardPane();
 //		setBoardPlayerOne();
