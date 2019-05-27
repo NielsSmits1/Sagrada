@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import View.InlogPane;
 import View.MyScene;
 import javafx.event.ActionEvent;
@@ -9,14 +12,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import model.Player;
 
-public class InlogController{
+public class InlogController {
 	private InlogPane inlog;
 	private HomeController home;
 	private Player player;
 	private MyScene scene;
 	private MenubarController menu;
-	
-	private Runnable multi;
+
 
 	public InlogController(MyScene myScene) {
 		scene = myScene;
@@ -24,7 +26,7 @@ public class InlogController{
 	}
 
 	private void keyPress(KeyEvent e) {
-		if(e.getCode() == KeyCode.ENTER) {
+		if (e.getCode() == KeyCode.ENTER) {
 			login();
 		}
 	}
@@ -38,9 +40,9 @@ public class InlogController{
 
 	public EventHandler<ActionEvent> register() {
 		player = new Player(inlog.getUsernameText(), inlog.getPasswordText());
-		if(inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("") || player.checkUsernameExists()) {
+		if (inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("") || player.checkUsernameExists() || player.usedInvalidCharacters()) {
 			inlog.giveErrorBox();
-		}else {
+		} else {
 			player.addUser();
 			buildHome();
 		}
@@ -48,25 +50,26 @@ public class InlogController{
 	}
 
 	public EventHandler<ActionEvent> login() {
-		if(inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("")) {
+		if (inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("")) {
 			inlog.giveErrorBox();
-		}else {
+		} else {
 			player = new Player(inlog.getUsernameText(), inlog.getPasswordText());
-			if(player.checkLogin()) {
+			if (player.checkLogin()) {
 				buildHome();
-			}else {
+			} else {
 				inlog.giveErrorBox();
 			}
 		}
 		return null;
 	}
+
 	public void buildHome() {
 		menu = new MenubarController(scene, this, player);
 		home = new HomeController(player, menu);
-		scene.setRoot(new VBox(menu.getMenubar(),home.showHome()));
-		
+		scene.setRoot(new VBox(menu.getMenubar(), home.showHome()));
+
 	}
-	
+
 	public InlogPane getInlog() {
 		return inlog;
 	}
@@ -86,5 +89,7 @@ public class InlogController{
 	public MenubarController getMenu() {
 		return menu;
 	}
-	
+
+
+
 }

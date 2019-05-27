@@ -1,25 +1,38 @@
 package View;
 
+import controller.ChatBoxController;
 import controller.GameController;
 import controller.InlogController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class MyScene extends Scene {
-//    private InlogController inlog = new InlogController(this);
-    private GameController game = new GameController(this);
+	private InlogController inlog = new InlogController(this);
+	private GameController game = new GameController(this);
+	private ChatBoxController chat = new ChatBoxController();
 
-    public MyScene() {
-        super(new Pane());
-//        
-//        setRoot(rules);
-        
-         //inlog.showInlog();
+	public MyScene() {
+		super(new Pane());
+//		setRoot(chat.getScreen());
+//		setRoot(game.showOptions());
+         inlog.showInlog();
+        setRoot(inlog.showInlog());
+// 
 
-        
-//        setRoot(inlog.showInlog());
-    	setRoot(game.getGamepane());
+	}
 
+	public void builtNewGame() {
 
-    }
+		setRoot(game.showOptions());
+
+	}
+
+	public GameController getGame() {
+		return game;
+	}
+
+	public void closeThis() {
+
+	}
+
 }

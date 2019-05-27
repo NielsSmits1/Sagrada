@@ -10,9 +10,6 @@ public class ChallengesPane extends ScrollPane {
 	private ArrayList<ChallengesPlayerLinePane> playerLine = new ArrayList<ChallengesPlayerLinePane>();
 	private VBox playerColumn = new VBox();
 
-	public void copyArraylist(ArrayList<ChallengesPlayerLinePane> playerArray) {
-		this.playerLine = playerArray;
-	}
 
 	public void addChallengesLine(String name) {
 
@@ -32,6 +29,7 @@ public class ChallengesPane extends ScrollPane {
 
 	public void setPlayerLine(ArrayList<ChallengesPlayerLinePane> playerLine) {
 		this.playerLine = playerLine;
+		this.setLayout();
 	}
 }
 

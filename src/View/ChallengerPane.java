@@ -28,7 +28,7 @@ public class ChallengerPane extends ScrollPane{
 		this.setVbarPolicy(getVbarPolicy().AS_NEEDED);
 
 	}
-	public void showPlayerLines(ArrayList<ChallengesPlayerLinePane> challengesPL) {
+	public void setPlayerLines(ArrayList<ChallengesPlayerLinePane> challengesPL) {
 		this.playerLine = challengesPL;
 		this.setLayout();
 	}

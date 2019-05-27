@@ -43,7 +43,7 @@ public class Game {
 		diceArray = new ArrayList<>();
 		token = new ArrayList<Gamefavortoken>();
 		database = new db();
-		idgame = (int) createNewGameId();
+		idgame = createNewGameId();
 		insertDicesIntoDatabase();
 		diceData = getSelect();
 		setDiceArray();
@@ -70,7 +70,7 @@ public class Game {
 
 	public boolean alreadyInGame(Player player) {
 		for (ArrayList<Object> a : getPlayersInGame()) {
-			String s = (String) a.get(0);
+			String s = (String) a.get(1);
 			if (s.equals(player.getUsername())) {
 				return true;
 			}
@@ -88,17 +88,12 @@ public class Game {
 	public void insertPlayer(Player p, String status, String color) {
 		database.CUD(
 				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
-						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, '"+ color +"')"); // rood has to be
-																										// variable
-																										// between all
-																										// colors
+						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, '"+ color +"')"); 
 	}
-
-
 
 	private void buildGameTurns() {
 		forwardPlayer = database
-				.Select("select idplayer, username, seqnr from player where game_idgame = " + this.idgame);
+				.Select("select username,idplayer, seqnr from player where game_idgame = " + this.idgame);
 		for (ArrayList<Object> a : database.Select("select idplayer, username, seqnr from player where game_idgame = "
 				+ this.idgame + " order by idplayer desc")) {
 			forwardPlayer.add(a);
@@ -179,9 +174,9 @@ public class Game {
 		}
 	}
 
-	private long createNewGameId() {
-		return (long) database
-				.Select("SELECT (idgame+1) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
+	private int createNewGameId() {
+		return (int) database
+				.Select("SELECT (idgame) AS newGameId FROM tjpmsalt_db2.game ORDER BY idgame DESC LIMIT 1;").get(0)
 				.get(0);
 	}
 

@@ -1,29 +1,31 @@
 package controller;
 
-public class multiThreads extends Thread implements Runnable{
-	private ChallengesController challengeS;
-	private ChallengerController challengeR;
-	private HomeController home;
+import View.HomePane;
+
+public class multiThreads extends Thread {
+	private ChallengesController challenge;
+	private HomePane home;
 	private InlogController controller;
 	private long refreshRate;
 	private boolean run = true;
 	
-	public multiThreads(long refreshRate, ChallengesController cc, ChallengerController ccr) {
-		this.challengeR = ccr;
-		this.challengeS = cc;
+
+	public multiThreads(ChallengesController challenge, long refreshRate) {
+		this.challenge = challenge;
 		this.refreshRate = Math.max(refreshRate, 10000L);
 	}
+
 	@Override
 	public void run() {
 		System.out.println("IM RUNNING");
 		runChallenges();
-		runChallenger();
+//		runChallenger();
 	}
 	
 	public void runChallenges() {
 
 			try {
-				this.challengeS.refresh();
+				challenge.refresh();
 				System.out.println("facking gay");
 				Thread.sleep(50);
 	
@@ -31,25 +33,8 @@ public class multiThreads extends Thread implements Runnable{
 			} catch (InterruptedException e) {
 				System.out.println("gay");
 			}
-			
+
 		}
-		
-	
-	public void runChallenger() {
-
-			try {
-				this.challengeR.refresh();
-				System.out.println("facking gay2");
-				Thread.sleep(refreshRate);
-
-			} catch (InterruptedException e) {
-				System.out.println("gay2");
-			}
-			
-		}
-		
-	
-	
 
 
-}
+

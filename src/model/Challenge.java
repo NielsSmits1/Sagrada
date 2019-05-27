@@ -39,11 +39,13 @@ public class Challenge {
 	}
 
 	public ArrayList<ArrayList<Object>> GetPlayerWithChallengeeStatus() {
+
 		return database.Select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() + "' and playstatus_playstatus = 'Uitgedaagde') AND playstatus_playstatus = 'Uitdager'");
 	}	
 		//  returns :niels
 		//	         teun
 	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus() {
+	
 		return database.Select("SELECT username, playstatus_playstatus, game_idgame FROM player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"' AND playstatus_playstatus = 'Uitdager')");
 		// returns :johan
 		// 			teun
@@ -53,7 +55,7 @@ public class Challenge {
 	public ArrayList<Player> playersChallengedYou() {
 		ArrayList<Player> challengedPlayerNames = new ArrayList<Player>();
 		String u;
-
+		
 		for (ArrayList<Object> a : this.GetPlayerWithChallengeeStatus()) {
 			u = (String) a.get(1);
 			if (!self.getUsername().equals(u)) {
@@ -65,7 +67,6 @@ public class Challenge {
 	}
 	public ArrayList<Player> playersYouChallenged() {
 		ArrayList<Player> players = new ArrayList<Player>();
-
 		for (ArrayList<Object> a : this.GetPlayerWithChallengedStatus()) {
 			Player p = new Player((String) a.get(0));
 			p.setStatus((String) a.get(1));

@@ -9,8 +9,11 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Game;
 import model.Player;
@@ -22,15 +25,12 @@ public class HomeController {
 	private ChallengesController cp;
 	private LeaderboardController lc;
 	private MyScene scene;
-
+	private ChatBoxController chat;
 
 	private MenubarController mbc;
 
-
-
 	private Player player;
 	private Player self;
-
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 
@@ -41,17 +41,22 @@ public class HomeController {
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
 		sp = new SearchPlayerController(this, cpp);
-	
-		
-		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
-		
-		
+
+		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(),
+				lc.getLeaderboardPane());
+
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
 		
-		
-		
+		home.getGameTab().setOnAction(e -> {
+			Stage stage = new Stage();
+			Scene scene = new Scene(new Pane());
+			ChatBoxController chat = new ChatBoxController();
+			scene.setRoot(chat.getScreen());
+			stage.setScene(scene);
+			stage.show();
+		});
 
 		openGames();
 		startTimeline();
@@ -61,7 +66,7 @@ public class HomeController {
 	private void startTimeline() {
 		Timeline timeline = new Timeline();
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e-> test()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e -> test()));
 		timeline.play();
 	}
 
@@ -72,10 +77,10 @@ public class HomeController {
 
 	private void openGames() {
 		// open the games that are being played, or are ready to be played
-		for(Game g : self.getOpenGames()) {
+		for (Game g : self.getOpenGames()) {
 			mbc.addGame(g);
 		}
-		
+
 	}
 
 	public String getUsername() {
@@ -123,8 +128,6 @@ public class HomeController {
 		return stats;
 	}
 
-
-
 	public Parent showHome() {
 
 		return home;
@@ -136,7 +139,9 @@ public class HomeController {
 	public HomePane getHome() {
 		return home;
 	}
-	
-	
+
+	public MyScene getScene() {
+		return scene;
+	}
 
 }
