@@ -77,16 +77,7 @@ public class GameController {
 	}
 	public GameController(Game g) {
 		this.game = g;
-		game.setGameId(3);
-		ArrayList<Player> players = new ArrayList<Player>();
-		for(int i = 0; i < 4; i++) {
-			Player p = new Player("Speler " + i );
-			p.setId(i + 6);
-			players.add(p);
-		}
-		game.insertPlayers(players);
 		game.setPlayableDices();
-		game.setSelf();
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
 		
@@ -210,7 +201,6 @@ public class GameController {
 //		}
 		for(Player p : game.getPlayers()) {
 			// look elke speler in spel
-			p.setPatternCardId(5);
 			p.getPc().getPatternField();
 			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
 		}
