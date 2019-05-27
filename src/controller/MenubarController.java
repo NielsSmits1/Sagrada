@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import model.Game;
 import model.Player;
 
@@ -73,7 +74,7 @@ public class MenubarController {
 	public void addGame(Game g) {
 		gc = new GameController(g); 
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
-		MenuItem mi = new MenuItem();
+		MenuItem mi = new MenuItem("open game");
 		m.getItems().add(mi);
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc.getGamepane());
@@ -83,7 +84,7 @@ public class MenubarController {
 	}
 	
 	public void setRoot(MenuItem mi) {
-		scene.setRoot(gamepanes.get(mi));
+		scene.setRoot(new VBox(this.getMenubar(),gamepanes.get(mi)));
 	}
 	
 	
