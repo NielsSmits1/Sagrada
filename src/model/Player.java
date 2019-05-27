@@ -89,6 +89,11 @@ public class Player {
 				"select username, diecolor , count(diecolor) as amount_color from player join playerframefield on player.idplayer = playerframefield.player_idplayer where username = '"
 						+ username + "' group by username,diecolor order by amount_color DESC limit 1");
 	}
+	public ArrayList<ArrayList<Object>> maxDieNumber() {
+		return database.Select("SELECT username, COUNT(g.eyes) amount_eyes, g.eyes FROM player p JOIN playerframefield pf ON p.idplayer = pf.player_idplayer JOIN (SELECT eyes, dienumber FROM gamedie WHERE round is not null) as g ON g.dienumber = pf.dienumber WHERE username = '"+ username +"' GROUP BY p.username, g.eyes ORDER BY amount_eyes desc LIMIT 1");
+
+	}
+	
 
 	public ArrayList<ArrayList<Object>> maxPlayedAgainst() {
 		return database.Select(
@@ -198,7 +203,13 @@ public class Player {
 
 	public int getMostPlacedDiceEyes() {
 		int w = 0;
+		for (ArrayList<Object> a : maxDieNumber()) {
+			if (a.get(0).equals(this.username)) {
+				w = (int) a.get(2);
+			}
+		}
 		return w;
+
 	}
 
 	public int getAmountOfUniquePlayers() {
