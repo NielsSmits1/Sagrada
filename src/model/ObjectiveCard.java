@@ -19,13 +19,19 @@ public class ObjectiveCard {
 		random = new Random();
 		database = new db();
 		generateRandomInts();
-
 	}
 	
-	
+	public int getCard1() {
+		return card1;
+	}
+
+	public int getCard2() {
+		return card2;
+	}
+
 	public ArrayList<ArrayList<Object>> getObjectivecardsFromDatabase() {
-		String query = ("SELECT idtoolcard, description FROM tjpmsalt_db2.toolcard WHERE idtoolcard = " + card1
-				+ " OR idtoolcard = " + card2 + "");
+		String query = ("SELECT idpublic_objectivecard FROM tjpmsalt_db2.public_objectivecard WHERE idpublic_objectivecard = " + card1
+				+ " OR idpublic_objectivecard = " + card2 + "");
 		return database.Select(query);
 	}
 	

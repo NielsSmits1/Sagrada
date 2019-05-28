@@ -32,6 +32,7 @@ public class GamePane extends BorderPane {
 	private HBox diceRow3;
 	private DicePane selected;
 	private ArrayList<ToolCardPane> toolcards;
+	private ArrayList<ObjectiveCardPane> objectiveCards;
 	private PrivateCardPane pc;
 	private ObjectiveCardPane ocp;
 	private ObjectiveCardPane ocp2;
@@ -58,6 +59,7 @@ public class GamePane extends BorderPane {
 
 	public GamePane(GameController gameController) {
 		r = new Random();
+		objectiveCards = new ArrayList<>();
 		playField = new ArrayList<>();
 		toolcardIsActiveOne = false;
 		toolcardIsActiveSix = false;
@@ -156,12 +158,13 @@ public class GamePane extends BorderPane {
 		// Creates new cards
 		this.close = new Button("opgeven");
 		pc = new PrivateCardPane();
-		ocp = new ObjectiveCardPane(1);
-		ocp2 = new ObjectiveCardPane(2);
+//		ocp = new ObjectiveCardPane(1);
+//		ocp2 = new ObjectiveCardPane(2);
 		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
 		allDiceRows.setSpacing(8);
 
 		toolcards = controller.getToolCards();
+		objectiveCards = controller.getObjectiveCardPanes();
 		// Creates new headers
 		objectiveCard = new HeaderPane();
 		privateCard = new HeaderPane();
@@ -176,8 +179,9 @@ public class GamePane extends BorderPane {
 		bottom.setPadding(new Insets(0, 130, 50, 50));
 		bottom.setLeft(allDiceRows);
 
-		HBox oc = new HBox(ocp, ocp2);
+		HBox oc = new HBox();
 		oc.setSpacing(5);
+		oc.getChildren().addAll(objectiveCards);
 		VBox finalOc = new VBox(objectiveCard, oc);
 		finalOc.setSpacing(5);
 
