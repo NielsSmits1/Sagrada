@@ -47,7 +47,7 @@ public class GamePane extends BorderPane {
 	private boolean toolcardIsActiveEleven;
 	private DecisionPane decisionpane;
 	private Random r;
-	//private RoundTrack track;
+	private RoundTrack track;
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -73,10 +73,13 @@ public class GamePane extends BorderPane {
 		diceRow1.setSpacing(20);
 		diceRow2.setSpacing(20);
 		diceRow3.setSpacing(20);
+		
+		track = new RoundTrack();
 
 
 		this.controller = gameController;
 		setBoard();
+		addTrack();
 		addDice();
 		finish();
 	}
@@ -118,6 +121,15 @@ public class GamePane extends BorderPane {
 	// This model contains the amount of eyes and the color that the dice should be.
 	/// **
 
+	public void addTrack() {
+		setTop(track);
+		//setAlignment(track, Pos.CENTER);
+	}
+	
+	public void getLeftover() {
+		
+	}
+	
 	public void addDice() {
 
 		diceRow1.getChildren().clear();
