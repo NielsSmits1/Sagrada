@@ -156,8 +156,8 @@ public class GamePane extends BorderPane {
 		// Creates new cards
 		this.close = new Button("opgeven");
 		pc = new PrivateCardPane();
-		ocp = new ObjectiveCardPane();
-		ocp2 = new ObjectiveCardPane();
+		ocp = new ObjectiveCardPane(1);
+		ocp2 = new ObjectiveCardPane(2);
 		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
 		allDiceRows.setSpacing(8);
 
@@ -180,6 +180,7 @@ public class GamePane extends BorderPane {
 		oc.setSpacing(5);
 		VBox finalOc = new VBox(objectiveCard, oc);
 		finalOc.setSpacing(5);
+
 		VBox finalPc = new VBox(privateCard, pc);
 		finalPc.setSpacing(5);
 		HBox tcp1 = new HBox();

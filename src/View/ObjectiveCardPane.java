@@ -1,36 +1,54 @@
 package View;
 
-import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class ObjectiveCardPane extends Pane{
-	private Rectangle card;
-	private TextArea description;
-	
-	public ObjectiveCardPane() {
-		setCard();
-		setTextArea();
-		getChildren().addAll(card, description);
+	private ImageView publicObjectiveCards;
+	private Image publicObjectiveCard;
+
+
+	public ObjectiveCardPane(int id) {
+		
+		switch (id) {
+		case 1:
+			publicObjectiveCard = new Image("/Resources/tintvariëteit.png");
+			break;
+		case 2:
+			publicObjectiveCard = new Image("/Resources/halfdonkere_tinten.png");
+			break;
+		case 3:
+			publicObjectiveCard = new Image("/Resources/tintenvariëteit_per_kolom.png");
+			break;
+		case 4:
+			publicObjectiveCard = new Image("/Resources/kleurenvariëteit_per_kolom.png");
+			break;
+		case 5:
+			publicObjectiveCard = new Image("/Resources/donkere_tinten.png");
+			break;
+		case 6:
+			publicObjectiveCard = new Image("/Resources/kleurenvariëteit.png");
+			break;
+		case 7:
+			publicObjectiveCard = new Image("/Resources/kleurenvariëteit_per_rij.png");
+			break;
+		case 8:
+			publicObjectiveCard = new Image("/Resources/kleurendiagonalen.png");
+			break;
+		case 9:
+			publicObjectiveCard = new Image("/Resources/lichte_tinten.png");
+			break;
+		case 10:
+			publicObjectiveCard = new Image("/Resources/tintenvariëteit_per_rij.png");
+			break;
+		}
+		
+		publicObjectiveCards = new ImageView(publicObjectiveCard);
+		publicObjectiveCards.setFitHeight(280);
+		publicObjectiveCards.setFitWidth(200);
+			
+		getChildren().addAll(publicObjectiveCards);
 	}
 	
-	private void setCard() {
-		card = new Rectangle(0,0, 200, 275);
-		card.setStroke(Color.BLACK);
-		card.setFill(Color.DARKSLATEGREY);
-	}
-	
-	private void setTextArea() {
-		description = new TextArea("Dit is een textarea die niet aan te passen is maar die wel binnen de objectivecard blijft, dit is dus ideaal voor de beschrijving van een kaart");
-		description.setEditable(false);
-		description.setWrapText(true);
-		description.setPrefSize(130, 100);
-		description.setLayoutX(10);
-		description.setLayoutY(80);
-	}
-	
-	public void changeText(String text) {
-		description.setText(text);
-	}
 }
