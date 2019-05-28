@@ -14,7 +14,6 @@ public class TurnsController_MoetMetMergeWeggegooidWorden {
 	 * 		Dus gewoon in de GameController/Game-model douwen
 	 */
 	private db database = new db();
-	ArrayList<Round> rounds = new ArrayList<Round>();
 	private int gameId = 3;//test enzo
 	private int roundNumber;
 	private int turnNumber;
