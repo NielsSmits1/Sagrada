@@ -2,19 +2,26 @@ package controller;
 
 import java.util.ArrayList;
 
+import View.ObjectiveCardPane;
 import View.ToolCardPane;
+import model.ObjectiveCard;
 import model.Toolcard;
 
 public class ToolcardController {
 	private Toolcard toolcard;
 	private GameController gamecontroller;
 	private ArrayList<ToolCardPane> toolcardpanes;
+	private ArrayList<ObjectiveCardPane> objectiveCards;
+	private ObjectiveCard objectiveCard;
 
 	public ToolcardController(GameController gc) {
 		gamecontroller = gc;
 		toolcard = new Toolcard(this);
+		objectiveCard = new ObjectiveCard();
 		toolcardpanes = new ArrayList<>();
+		objectiveCards = new ArrayList<>();
 		setToolcardsDescription();
+		setObjectiveCards();
 	}
 
 	public void setToolcardOneActive() {
@@ -44,10 +51,20 @@ public class ToolcardController {
 		toolcardpanes.add(new ToolCardPane(toolcard.getCardThreeId(), toolcard.getCardThreeDescription(), this));
 		setGameCards();
 	}
-
+	
 	public ArrayList<ToolCardPane> getToolCards() {
 		return toolcardpanes;
 	}
+	
+	private void setObjectiveCards() {
+		objectiveCards.add(new ObjectiveCardPane(objectiveCard.getCard1()));
+		objectiveCards.add(new ObjectiveCardPane(objectiveCard.getCard2()));
+	}
+
+	public ArrayList<ObjectiveCardPane> getObjectiveCards() {
+		return objectiveCards;
+	}
+
 
 	public void toolcardClicked(int id) {
 		toolcard.activateToolcard(id);
