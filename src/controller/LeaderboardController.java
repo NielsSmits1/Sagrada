@@ -17,6 +17,7 @@ public class LeaderboardController {
 	public LeaderboardController(HomeController home) {
 		this.home = home;
 		leaderboard = new Leaderboard();
+		leaderboard.setSelf(home.getSelf());
 		leaderboardPane = new LeaderboardPane();
 		this.setPlayers1();
 
@@ -67,10 +68,10 @@ public class LeaderboardController {
 	public void setGames1() {
 		lplp = new ArrayList<LeaderboardPlayerLinePane>();
 		
-		for (Map.Entry games : leaderboard.checkSelfGames().entrySet()) {
+		for (Map.Entry games : leaderboard.allGames().entrySet()) {
 			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane((int)games.getKey(),(boolean)games.getValue());
 			lplp.add(p);
-			System.out.println(p.getGameId() + String.valueOf(p.isHighlight()));
+
 			
 //			leaderboardPane.addPlayerNameLine(games);
 		}
@@ -80,8 +81,8 @@ public class LeaderboardController {
 	public void setGames2() {
 		lplp = new ArrayList<LeaderboardPlayerLinePane>();
 		
-		for (Integer games : leaderboard.getGamesDate()) {
-			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane(games);
+		for (Map.Entry games : leaderboard.allGamesDate().entrySet()) {
+			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane((int)games.getKey(),(boolean)games.getValue());
 			lplp.add(p);
 			
 	//		leaderboardPane.addPlayerNameLine(games);
