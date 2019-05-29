@@ -21,10 +21,10 @@ public class GamePane extends BorderPane {
 	/// **
 	private Button close;
 
-//	private BoardPane player1;
-//	private BoardPane player2;
-//	private BoardPane player3;
-//	private BoardPane player4;
+	// private BoardPane player1;
+	// private BoardPane player2;
+	// private BoardPane player3;
+	// private BoardPane player4;
 	private ArrayList<BoardPane> playField;
 	private HBox boards;
 	private HBox diceRow1;
@@ -33,15 +33,13 @@ public class GamePane extends BorderPane {
 	private DicePane selected;
 	private ArrayList<ToolCardPane> toolcards;
 	private ArrayList<ObjectiveCardPane> objectiveCards;
-	private PrivateCardPane pc;
-	private ObjectiveCardPane ocp;
-	private ObjectiveCardPane ocp2;
-	private HeaderPane objectiveCard;
-	private HeaderPane privateCard;
-	private HeaderPane toolCard;
+	private PrivateCardPane privateObjectiveCard;
+	private HeaderPane objectiveCardTitle;
+	private HeaderPane privateCardTitle;
+	private HeaderPane toolCardTitle;
 	private BorderPane bottom;
 	private GameController controller;
-//	private ArrayList<Dice> diceArray;
+	// private ArrayList<Dice> diceArray;
 	private boolean toolcardIsActiveOne;
 	private boolean toolcardIsActiveSix;
 	private boolean toolcardIsActiveTen;
@@ -76,7 +74,7 @@ public class GamePane extends BorderPane {
 		diceRow1.setSpacing(20);
 		diceRow2.setSpacing(20);
 		diceRow3.setSpacing(20);
-		
+
 		track = new RoundTrack();
 
 		setBoard();
@@ -90,30 +88,30 @@ public class GamePane extends BorderPane {
 	/// **
 
 	private void setBoard() {
-		/// 
+		///
 		// The the number in the constructor from BoardPane stands for the number of the
 		/// windowpattern in the DB.
-		
+
 		playField = controller.getBoards();
-		
+
 		for (int i = 0; i < playField.size(); i++) {
-			if(playField.get(i).getSelf() == false) {
+			if (playField.get(i).getSelf() == false) {
 				playField.get(i).setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 			}
 		}
-		
-//		player1 = controller.returnBoardPane();
-//		setBoardPlayerOne();
-//
-//		player2 = controller.getOpponentBoard().get(0);
-////		
-//		player3 = controller.getOpponentBoard().get(1);
-//		player4 = controller.getOpponentBoard().get(2);
+
+		// player1 = controller.returnBoardPane();
+		// setBoardPlayerOne();
+		//
+		// player2 = controller.getOpponentBoard().get(0);
+		////
+		// player3 = controller.getOpponentBoard().get(1);
+		// player4 = controller.getOpponentBoard().get(2);
 
 		boards = new HBox();
 		boards.getChildren().addAll(playField);
 		boards.setSpacing(20);
-		boards.setPadding(new Insets(0, 0, 0, 50));
+		boards.setPadding(new Insets(0, 0, 0, 5));
 	}
 
 	/// *
@@ -124,26 +122,26 @@ public class GamePane extends BorderPane {
 
 	public void addTrack() {
 		setTop(track);
-		//setAlignment(track, Pos.CENTER);
+		// setAlignment(track, Pos.CENTER);
 	}
-	
+
 	public void getLeftover() {
-		
+
 	}
-	
+
 	public void addDice() {
 
 		diceRow1.getChildren().clear();
 		for (int i = 0; i < getPlayableDices().size(); i++) {
-			if (diceRow1.getChildren().size() < 4) {
+			if (diceRow1.getChildren().size() < 3) {
 				diceRow1.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
 						getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
 			}
 		}
 
 		diceRow2.getChildren().clear();
-		for (int i = 4; i < getPlayableDices().size(); i++) {
-			if (diceRow2.getChildren().size() < 4) {
+		for (int i = 3; i < getPlayableDices().size(); i++) {
+			if (diceRow2.getChildren().size() < 3) {
 
 				diceRow2.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
 						getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
@@ -151,8 +149,8 @@ public class GamePane extends BorderPane {
 		}
 
 		diceRow3.getChildren().clear();
-		for (int i = 8; i < getPlayableDices().size(); i++) {
-			if (diceRow3.getChildren().size() < 4) {
+		for (int i = 6; i < getPlayableDices().size(); i++) {
+			if (diceRow3.getChildren().size() < 3) {
 
 				diceRow3.getChildren().add(new DicePane(getPlayableDices().get(i).getEyes(),
 						getPlayableDices().get(i).getDieColor(), getPlayableDices().get(i).getDieNumber(), this));
@@ -167,48 +165,58 @@ public class GamePane extends BorderPane {
 
 	private void setCards() {
 		// Creates new cards
-		this.close = new Button("opgeven");
-		
-		pc = new PrivateCardPane();
-//		ocp = new ObjectiveCardPane(1);
-//		ocp2 = new ObjectiveCardPane(2);
+		privateObjectiveCard = new PrivateCardPane();
+
+		// sets dice in rows
 		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
 		allDiceRows.setSpacing(8);
-
-		toolcards = controller.getToolCards();
-		objectiveCards = controller.getObjectiveCardPanes();
-		// Creates new headers
-		objectiveCard = new HeaderPane();
-		privateCard = new HeaderPane();
-		toolCard = new HeaderPane();
-		// Changes the text of the labels
-		objectiveCard.changeLabel("Objective Cards");
-		privateCard.changeLabel("Private Card");
-		toolCard.changeLabel("Toolcards");
-		// changes the price labels
-		// tcp1.changePrice("2");
 		bottom = new BorderPane();
-		bottom.setPadding(new Insets(0, 130, 50, 50));
 		bottom.setLeft(allDiceRows);
 
-		HBox oc = new HBox();
-		oc.setSpacing(5);
-		oc.getChildren().addAll(objectiveCards);
-		VBox finalOc = new VBox(objectiveCard, oc);
-		finalOc.setSpacing(5);
+		// gets cards information
+		toolcards = controller.getToolCards();
+		objectiveCards = controller.getObjectiveCardPanes();
 
-		VBox finalPc = new VBox(privateCard, pc);
-		finalPc.setSpacing(5);
-		HBox tcp1 = new HBox();
-		tcp1.getChildren().addAll(toolcards);
-		tcp1.setSpacing(5);
-		VBox finalTcp = new VBox(toolCard, tcp1);
-		finalTcp.setSpacing(5);
-		HBox toolCards = new HBox(finalOc, finalPc, finalTcp, new VBox(controller.getChatBox().getScreen(), close));
-		toolCards.setSpacing(5);
-		bottom.setRight(toolCards);
+		// Creates new headers
+		objectiveCardTitle = new HeaderPane();
+		privateCardTitle = new HeaderPane();
+		toolCardTitle = new HeaderPane();
 
-		// close.setOnAction(e -> controller.getProgress().closeGame());
+		// Changes the text of the labels
+		objectiveCardTitle.changeLabel("Objective Cards");
+		privateCardTitle.changeLabel("Private Card");
+		toolCardTitle.changeLabel("Toolcards");
+
+		// aligns objective cards horizontally
+		HBox objectiveCardHBox = new HBox();
+		objectiveCardHBox.setSpacing(5);
+		objectiveCardHBox.getChildren().addAll(objectiveCards);
+		
+		//aligns objectivecards with the header text "objectivecard"
+		VBox alignObjectiveCardWithHeaderText = new VBox(objectiveCardTitle, objectiveCardHBox);
+		alignObjectiveCardWithHeaderText.setSpacing(5);
+
+		// aligns privateObjectiveCards with the header text "privateObjectiveCard"
+		VBox alignPrivateObjectiveCardWithHeaderText = new VBox(privateCardTitle, privateObjectiveCard);
+		alignPrivateObjectiveCardWithHeaderText.setSpacing(5);
+		
+		//aligns the toolcards horizontally
+		HBox toolcardHBox = new HBox();
+		toolcardHBox.getChildren().addAll(toolcards);
+		toolcardHBox.setSpacing(5);
+		
+		//aligns the toolcards with the header text "toolcards"
+		VBox alignToolCardWithHeaderText = new VBox(toolCardTitle, toolcardHBox);
+		alignToolCardWithHeaderText.setSpacing(5);
+		
+		//aligns all key cards horizontally
+		HBox allKeyCards = new HBox(alignObjectiveCardWithHeaderText, alignPrivateObjectiveCardWithHeaderText, alignToolCardWithHeaderText);
+		allKeyCards.setPadding(new Insets(0,0,0,10));
+		//, new VBox(controller.getChatBox().getScreen(), close 
+		//uit de bovenstaande hbox gehaald, gaf nullpointer.
+		
+		allKeyCards.setSpacing(5);
+		bottom.setCenter(allKeyCards);
 
 	}
 
@@ -407,10 +415,10 @@ public class GamePane extends BorderPane {
 	}
 
 	public void setBoardPlayerOne() {
-//		player1 = controller.returnBoardPane();
-//		player2 = controller.getOpponentBoard().get(0);
-//		player3 = controller.getOpponentBoard().get(1);
-//		player4 = controller.getOpponentBoard().get(2);
+		// player1 = controller.returnBoardPane();
+		// player2 = controller.getOpponentBoard().get(0);
+		// player3 = controller.getOpponentBoard().get(1);
+		// player4 = controller.getOpponentBoard().get(2);
 	}
 
 	public Button getClose() {
