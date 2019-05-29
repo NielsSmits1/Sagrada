@@ -49,8 +49,6 @@ public class Game {
 		setDiceArray();
 		fillTokenArrayList();
 
-		
-
 	}
 	public int getTurn() {
 		return this.turnNumber;
@@ -68,7 +66,6 @@ public class Game {
 		turnPlayer = setWhoseTurnItIs();
 	}
 	public void buildRounds() {
-
 		roundNumber = getLastRound();
 		
 	}
@@ -264,6 +261,7 @@ public class Game {
 				break;
 			}
 			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
+			
 		}
 	}
 
@@ -274,9 +272,7 @@ public class Game {
 
 	// inserts standard values for dices for a new game.
 	public void insertDicesIntoDatabase() {
-		database.CUD("insert into game(idgame, creationdate) VALUES(" + idgame + ", CURRENT_TIME());");
-		database.CUD(
-				"INSERT INTO gamedie (idgame, dienumber, diecolor) SELECT " + idgame + ", number, color FROM die;");
+		database.CUD("INSERT INTO gamedie (idgame, dienumber, diecolor) SELECT " + idgame + ", number, color FROM die;");
 	}
 
 	public void updateEyes(int eyes, int dienumber, String color) {
@@ -309,31 +305,33 @@ public class Game {
 
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
-		while (playableDices.size() < 9) {
-			int randomDie = r.nextInt(18) + 1;
-			String[] colors = { "blauw", "groen", "geel", "rood", "paars" };
-			String color = colors[r.nextInt(5)];
-			for (int j = 0; j < diceArray.size(); j++) {
 				// TODO Make sure the same combination can't be added multiple times, a solution
 				// might be the random function in SQL, and also update the round.
-				if (diceArray.get(j).getDieNumber() == randomDie && diceArray.get(j).getDieColor() == color) {
-					playableDices.add(diceArray.get(j));
-					diceArray.remove(j);
+				ArrayList<ArrayList<Object>> randomDice = database.Select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size()*2)+1) +"");
+				for (int i = 0; i < randomDice.size(); i++) {
+					playableDices.add(new Dice((int)randomDice.get(i).get(0), (String)randomDice.get(i).get(1), (int)randomDice.get(i).get(2)));
+					database.CUD("UPDATE gamedie SET round = 1 WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieNumber() +"'");
 				}
-			}
+					
+				
+			
 			// if(database.Select("SELECT FROM gamedie WHERE dieumber = " + randomDie + "
 			// AND diecolor = '" + color + "'"))
 			// }
 			// System.out.println("" + diceArray.get(randomDie).getDieNumber());
 
 		}
-	}
 
 	public int getIdGame() {
 		return idgame;
 	}
 
 	public int getOwnId() {
+		for(Player p : players) {
+			if(p.getSelf()) {
+				yourself = p.getPlayerId();
+			}
+		}
 		return yourself;
 	}
 
@@ -422,10 +420,27 @@ public class Game {
 	
 	public void addOptionsToDB(ArrayList<Integer> randomIDS) {
 		for (int i = 0; i < randomIDS.size(); i++) {
-			for (int j = 0; j < players.size(); j++) {
-				System.out.println("waarde: " + randomIDS.get(i));
-				database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(j).getPlayerId() + ")");
-			}
+				if(i >= 12) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(3).getPlayerId() + ")");
+					continue;
+				}
+				if(i >= 8) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(2).getPlayerId() + ")");
+					continue;
+				}
+				if(i >= 4) {
+					System.out.println("Speler 2");
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(1).getPlayerId() + ")");
+					continue;
+				}
+				if(i >= 0) {
+					System.out.println("Speler 1");
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(0).getPlayerId() + ")");
+					continue;
+				}
+//				System.out.println("waarde: " + randomIDS.get(i));
+//				database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(j).getPlayerId() + ")");
+			
 		}
 	}
 	
@@ -463,7 +478,7 @@ public class Game {
 	public ArrayList<Integer> getChosenIds(){
 		ArrayList<Integer> chosenId = new ArrayList<Integer>();
 		for (int i = 0; i < players.size(); i++) {
-			chosenId.add((int)database.Select("SELECT patterncard_idpatterncard FROM player WHERE game_idgame = " +  this.idgame + ";").get(i).get(0));
+			chosenId.add((int)database.Select("SELECT patterncard_idpatterncard FROM player WHERE game_idgame = " + idgame + ";").get(i).get(0));
 		}
 		return chosenId;
 	}
@@ -503,6 +518,26 @@ public class Game {
 		database.CUD("insert into game(creationdate) values (now())");
 		this.idgame = (int)database.Select("select max(idgame) from game").get(0).get(0);
 		
+	}
+	
+	public void insertChosenID(int id) {
+		for (Player p : players) {
+			if(p.getSelf()) {
+				p.setPatternCardId(id);
+				database.CUD("UPDATE player SET patterncard_idpatterncard = " + id + " WHERE idplayer = " + p.getPlayerId() +";");
+			}
+		}
+		
+	}
+	
+	public int getOwnPatternId() {
+		for (Player p : players) {
+			if(p.getSelf()) {
+				return p.getPatternId();
+			}
+		}
+		
+		return 0;
 	}
 	
 }

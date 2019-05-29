@@ -1,5 +1,6 @@
 package View;
 
+import controller.ChatBoxController;
 import controller.GameController;
 import controller.InlogController;
 import javafx.scene.Scene;

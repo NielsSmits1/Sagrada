@@ -59,8 +59,8 @@ public class GameController {
 			p.setPatternCardId(p.getPatternIdFromDB());
 			p.setPc();
 			players.add(p);
-			getOwnPlayerId();
-			getOwnGameIdSelf();
+//			getOwnPlayerId();
+//			getOwnGameIdSelf();
 
 		}
 		game.insertPlayers(players);
@@ -219,6 +219,7 @@ public class GameController {
 	}
 
 	public void setPatternCard(int id) {
+		game.insertChosenID(id);
 		boardcontroller.setPatternCard(id);
 	}
 
@@ -312,6 +313,10 @@ public class GameController {
 		if(game.getSelf().checkSelf() == true) {
 			chatBox.getModel().setGameId(game.getSelf().getGameId());
 		}
+	}
+	
+	public int getOwnPatternId() {
+		return game.getOwnPatternId();
 	}
 		
 	

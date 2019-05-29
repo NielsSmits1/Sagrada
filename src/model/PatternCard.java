@@ -33,7 +33,6 @@ public class PatternCard {
 		p = getSelect();
 		setpatternfield();
 		addCard();
-		insertChosenCardToDB();
 		// generateRandomPatternCard();
 		// insertRandomPatternCardIntoDB();
 		hasColorExamption = false;
@@ -79,6 +78,17 @@ public class PatternCard {
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
 		// setpatternfield();
+	}
+	
+	public PatternCard(BoardController bc, int ownId, int idgame, int patternid) {
+		yourself = ownId;
+		this.idgame = idgame;
+		controller = bc;
+		setPatternId(patternid);
+		p = getSelect();
+		hasColorExamption = false;
+		hasNumberExamption = false;
+		hasNextToDiceExamption = false;
 	}
 
 	public ArrayList<ArrayList<Object>> getSelect() {
@@ -243,7 +253,7 @@ public class PatternCard {
 			return true;
 		}
 		ArrayList<ArrayList<Object>> getQuery = database
-				.Select("SELECT color FROM tjpmsalt_db2.patterncardfield WHERE patterncard_idpatterncard = " + patternId
+				.Select("SELECT color FROM patterncardfield WHERE patterncard_idpatterncard = " + patternId
 						+ " && position_x = " + x + " && position_y = " + y);
 		if (getQuery.get(0).get(0) == null) {
 			return true;
@@ -701,9 +711,6 @@ public class PatternCard {
 				.get(0).get(0);
 	}
 	
-	public void insertChosenCardToDB() {
-		database.CUD("UPDATE player SET patterncard_idpatterncard = " + patternId + " WHERE idplayer = " + yourself + ";");
-	}
 	
 	
 
