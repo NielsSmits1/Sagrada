@@ -483,6 +483,12 @@ public class Game {
 		}
 		return false;
 	}
+
+	public Player getSelf() {
+		return self;
+	}
+	
+	
 	
 }
 	

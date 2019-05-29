@@ -7,8 +7,8 @@ import Database.db;
 public class ChatBoxModel {
 
 	private db database;
-	private int gameId = 1;
-	private int playerId = 1;
+	private int gameId;
+	private int playerId;
 	
 	public ChatBoxModel() {
 		database = new db();

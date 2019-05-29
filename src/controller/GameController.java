@@ -42,7 +42,7 @@ public class GameController {
 	private Stage gameStage;
 
 	public GameController(MyScene s) {
-		
+
 		scene = s;
 
 		game = new Game();
@@ -58,9 +58,9 @@ public class GameController {
 			p.setPatternCardId(p.getPatternIdFromDB());
 			p.setPc();
 			players.add(p);
-			chatBox.getModel().setGameId(game.getIdGame());
-			chatBox.getModel().setPlayerId(game.getOwnId());
-			
+			getOwnPlayerId();
+			getOwnGameIdSelf();
+
 		}
 		game.insertPlayers(players);
 		// }
@@ -84,7 +84,7 @@ public class GameController {
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
-		
+
 	}
 
 	public void buildGame() {
@@ -95,13 +95,13 @@ public class GameController {
 		}
 		gamePane = new GamePane(this);
 	}
-	
+
 	public PatterncardSelect buildPatterncardoptions() {
 		boardcontroller.setOwnOptions();
 		option = new PatterncardSelect(this);
 		return option;
 	}
-	
+
 	public Game getGame() {
 		return this.game;
 	}
@@ -283,11 +283,22 @@ public class GameController {
 	public ArrayList<BoardPane> getBoards() {
 		return boardcontroller.getBoards();
 	}
+
 	public ChatBoxController getChatBox() {
 		return chatBox;
 	}
-	
-	
+
+	public void getOwnPlayerId() {
+		if(game.getSelf().checkSelf() == true) {
+			chatBox.getModel().setPlayerId(game.getSelf().getPlayerId());
+		}
+	}
+	public void getOwnGameIdSelf() {
+		if(game.getSelf().checkSelf() == true) {
+			chatBox.getModel().setGameId(game.getSelf().getGameId());
+		}
+	}
+		
 	
 
 }
