@@ -79,8 +79,6 @@ public class MenubarController {
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
 		mi.setOnAction(e-> setRoot(mi));
-
-	
 	}
 	
 	public void setRoot(MenuItem mi) {
@@ -89,7 +87,8 @@ public class MenubarController {
 			if(gc.getGame().checkIfIPickedPatternCard(self.getUsername())) {
 				this.showWait();
 			}else {
-
+				//Set selectPatterncardpane
+				scene.setRoot(gc.buildPatterncardoptions());
 			}
 		}else {
 			gc.buildGame();
@@ -100,8 +99,4 @@ public class MenubarController {
 		alert.setHeaderText("Er worden nog patroonkaarten gekozen");		
 		alert.showAndWait();
 	}
-	
-	
-	
-
 }

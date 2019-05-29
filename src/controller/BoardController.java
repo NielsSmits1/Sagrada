@@ -27,15 +27,21 @@ public class BoardController {
 //		setOptions();
 //		this.gameController.addOptions(allOptions.getOptions());
 		opponentBoard = new ArrayList<>();
-//		patternCardOptions = new ArrayList<>();
-//		for (int i = 0; i < this.gameController.getOwnOptions().size(); i++) {
-//			patternCardOptions.add(new PatternCard(this.gameController.getOwnOptions().get(i)));
-//		}
-
 	}
 	/// *
 	// Asks for the ArrayList of spaces.
 	/// **
+	
+	public void setOwnOptions() {
+		patternCardOptions = new ArrayList<>();
+		for (int i = 0; i < this.gameController.getOwnOptions().size(); i++) {
+			patternCardOptions.add(new PatternCard(this.gameController.getOwnOptions().get(i)));
+		}
+	}
+	
+	public ArrayList<PatternCard> getOptions(){
+		return patternCardOptions;
+	}
 
 	public int getIdGame() {
 		return gameController.getIdGame();
