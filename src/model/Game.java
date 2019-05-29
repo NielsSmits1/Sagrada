@@ -21,11 +21,9 @@ public class Game {
 	private ArrayList<Gamefavortoken> token;
 	private int gamemode;
 	private GameController controller;
-	private int roundNumber;
-	private int turnNumber;
-	private Player turnPlayer;
-
-
+	private int roundNumber; // ronde van de game 
+	private int turnNumber; // de hoeveelste turn
+	private Player turnPlayer; // de player die aan de beurt is
 
 	public void addPlayer(Player param, String status, String color) {
 		insertPlayer(param, status, color);
@@ -49,10 +47,29 @@ public class Game {
 		setDiceArray();
 		fillTokenArrayList();
 		roundNumber = getLastRound();
-		turnNumber = getTurnNumber();
-		turnPlayer = setWhoseTurnItIs();
+		//turnNumber = getTurnNumber();
+		//turnPlayer = setWhoseTurnItIs();
 		
 
+	}
+	public int getRoundNumber() {
+		return roundNumber;
+	}
+
+	public void setRoundNumber(int roundNumber) {
+		this.roundNumber = roundNumber;
+	}
+
+	public Player getTurnPlayer() {
+		return turnPlayer;
+	}
+
+	public void setTurnPlayer(Player turnPlayer) {
+		this.turnPlayer = turnPlayer;
+	}
+
+	public void setTurnNumber(int turnNumber) {
+		this.turnNumber = turnNumber;
 	}
 	private Player setWhoseTurnItIs() {
 		String turnplayer = (String)database.Select("select username from player where isCurrentPlayer = 1 and game_idgame = " +this.idgame).get(0).get(0);
@@ -112,7 +129,7 @@ public class Game {
 	
 	
 
-	private int getTurnNumber() {
+	public int getTurnNumber() {
 		return (int)database.Select("select seqnr from player where isCurrentPlayer = 1 and game_idgame = " + this.idgame).get(0).get(0);
 	}
 
