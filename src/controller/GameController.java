@@ -32,7 +32,6 @@ public class GameController {
 	private GamePane gamePane;
 	private BoardController boardcontroller;
 	private ToolcardController toolcardcontroller;
-	private Round round;
 
 	private Button cancel;
 	private Alert cancelGame;
@@ -81,7 +80,7 @@ public class GameController {
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
-
+		
 	}
 
 	public void buildGame() {
@@ -189,10 +188,6 @@ public class GameController {
 
 	public int getIdGame() {
 		return game.getIdGame();
-	}
-
-	public int getTurns() {
-		return round.calculateTurns(getIdGame());
 	}
 
 	public ArrayList<Space> getPatternCard() {
