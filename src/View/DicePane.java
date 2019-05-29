@@ -97,6 +97,8 @@ public class DicePane extends Pane {
 					 break;
 		case "paars":dice.setFill(Color.PURPLE);
 					 break;
+		case "transparant":dice.setFill(Color.TRANSPARENT);
+					 break;
 		default: dice.setFill(Color.WHITE);
 		}
 		
@@ -104,6 +106,10 @@ public class DicePane extends Pane {
 
 	public void setWhite() {
 		setColor("");
+	}
+	
+	public void setTransparent() {
+		setColor("transparant");
 	}
 
 	/// *

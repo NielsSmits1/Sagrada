@@ -13,7 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class ToolCardPane extends Pane {
-	private Rectangle card;
 	private Label price;
 	private int toolCardId;
 	private Button button;
@@ -27,7 +26,6 @@ public class ToolCardPane extends Pane {
 	public ToolCardPane(int id, String description, ToolcardController toolcardController) {
 		this.toolcardController = toolcardController;
 		this.toolCardId = id;
-		// toolCardId = 3;
 		switch (id) {
 		case 1:
 			toolcard = new Image("/Resources/toolcard_1.png");
@@ -70,7 +68,6 @@ public class ToolCardPane extends Pane {
 		cardPropertiesAlignment = new VBox();
 		button = new Button("Koop");
 		button.setOnAction(e -> handleButton());
-		setCard();
 		setPrice();
 		toolcards = new ImageView(toolcard);
 		BuyAlignment.getChildren().addAll(button, price);
@@ -89,12 +86,6 @@ public class ToolCardPane extends Pane {
 		toolcardController.toolcardClicked(toolCardId);
 	}
 
-	private void setCard() {
-		card = new Rectangle(0, 0, 200, 275);
-		card.setStroke(Color.BLACK);
-		card.setFill(Color.GOLD);
-	}
-
 	private void setPrice() {
 		price = new Label("1");
 
@@ -110,7 +101,7 @@ public class ToolCardPane extends Pane {
 		System.out.println(value);
 		return value;
 	}
-	
+
 	public void setPlayerTokens() {
 		toolcardController.setPlayerTokens(getPricetag());
 	}

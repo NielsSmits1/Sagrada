@@ -1,31 +1,50 @@
 package View;
 
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 
 public class RoundTrack extends Pane {
 	private ImageView roundTrack;
-	
 	private Image track;
-	private HBox diceTrack;
-	private Rectangle dice;
-
+	private Button nextDice;
+	
+	private Pane pane;
+	private RoundPane round;
+	private HBox roundBox;
 	
 	public RoundTrack() {
-		track = new Image("/Resources/sagradaRonde.jpg");
-		diceTrack = new HBox();
+		pane = new Pane();
+		round = new RoundPane();
+		roundBox = new HBox();
 		
-		roundTrack = new ImageView();
-		this.getChildren().addAll(roundTrack);
-		
-		
-		
+		buildButton();
+		buildTrack();
 		
 		
-//		dice = new Rectangle(0, 0, 70, 70);
-//		dice.setStroke(Color.BLACK);
+		pane.getChildren().addAll(round);
+		roundBox.getChildren().addAll(pane);
+		this.getChildren().addAll(roundBox);
+		
 	}
+	
+	public void buildButton() {
+		nextDice = new Button("Volgende");
+		nextDice.setPrefHeight(70);
+		nextDice.setOnAction(e -> round.getNextDice());
+		roundBox.getChildren().addAll(nextDice);
+	}
+	
+	public void buildTrack() {
+		track = new Image("/Resources/RondeTrack.jpg");
+		
+		roundTrack = new ImageView(track);
+		roundTrack.setFitHeight(70);
+		roundTrack.setFitWidth(780);
+		pane.getChildren().addAll(roundTrack);
+	}
+	
+	
 }

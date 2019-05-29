@@ -7,6 +7,7 @@ import View.BoardPane;
 import View.DicePane;
 import View.GamePane;
 import View.MyScene;
+import View.ObjectiveCardPane;
 import View.PatterncardSelect;
 import View.ToolCardPane;
 import javafx.scene.Parent;
@@ -32,8 +33,7 @@ public class GameController {
 	private BoardController boardcontroller;
 	private ToolcardController toolcardcontroller;
 	private Round round;
-	
-	
+
 	private Button cancel;
 	private Alert cancelGame;
 	private String cancelText = "Sorry iemand heeft geweigerd, het spel kan dus niet doorgaan.";
@@ -47,47 +47,48 @@ public class GameController {
 
 		game = new Game();
 		game.setPlayableDices();
-		
+
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
 		game.setGameId(609);
 		ArrayList<Player> players = new ArrayList<Player>();
-		for(int i = 0; i < 4; i++) {
-			Player p = new Player("Speler " + i );
+		for (int i = 0; i < 4; i++) {
+			Player p = new Player("Speler " + i);
 			p.setId(i + 991);
 			p.setPatternCardId(p.getPatternIdFromDB());
 			p.setPc();
 			players.add(p);
 		}
 		game.insertPlayers(players);
-//		}
+		// }
 		players.get(3).setSelf(true);
-		for(Player p : game.getPlayers()) {
+		for (Player p : game.getPlayers()) {
 			// look elke speler in spel
-			if(p.getSelf()) {
-				boardcontroller.addBoard(p.getPc(),p);
-			}else {
-				boardcontroller.addBoard(p.getPc(),p);
+			if (p.getSelf()) {
+				boardcontroller.addBoard(p.getPc(), p);
+			} else {
+				boardcontroller.addBoard(p.getPc(), p);
 			}
-			
+
 		}
-		
+
 		gamePane = new GamePane(this);
 
 	}
+
 	public GameController(Game g) {
 		this.game = g;
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		toolcardcontroller = new ToolcardController(this);
-		
+
 	}
-	
+
 	public void buildGame() {
-		for(Player p : game.getPlayers()) {
+		for (Player p : game.getPlayers()) {
 			p.setPc();
 			boardcontroller.addBoard(p.getPc(), p);
-			
+
 		}
 		gamePane = new GamePane(this);
 	}
@@ -101,70 +102,72 @@ public class GameController {
 	public Game getGame() {
 		return this.game;
 	}
-	
+
 	public void addOpponets(Opponent op) {
-		for(int x = 0; x<opponents.length; x++) {
-			if(opponents[x] == null) {
+		for (int x = 0; x < opponents.length; x++) {
+			if (opponents[x] == null) {
 				opponents[x] = op;
-			}else {
+			} else {
 				// alert spel is al vol;
 			}
 		}
 	}
-	
+
 	public double updateScore() {
 		return playerScore;
 	}
-	
-	
+
 	public void cancelGame() {
-		
+
 	}
-	
+
 	public void builtAlerBox() {
 		cancelGame = new Alert(AlertType.CONFIRMATION, cancelText, ButtonType.OK);
 		cancelGame.setHeaderText("");
 		cancelGame.setTitle("Sorry!");
 		Optional<ButtonType> action = cancelGame.showAndWait();
-		if(action.get() == ButtonType.OK) {
-//			closeGame();
+		if (action.get() == ButtonType.OK) {
+			// closeGame();
 		}
 	}
-	
+
 	public void closeGame() {
-//		this.gameStage.close();
+		// this.gameStage.close();
 	}
-	
-	
+
 	public void builtGameStage() {
 		scene = new MyScene();
-		//scene.builtNewGame();
-		
+		// scene.builtNewGame();
+
 		gameStage = new Stage();
 		gameStage.setTitle("Sagrada");
 		gameStage.setScene(scene);
 		gameStage.setFullScreen(true);
 		gameStage.show();
 	}
-	
+
 	public MyScene getScene() {
 		builtGameStage();
 		return scene;
+	}
+
+	public ArrayList<ObjectiveCardPane> getObjectiveCardPanes() {
+		return toolcardcontroller.getObjectiveCards();
 	}
 
 	public void setToolcardOneActive() {
 		gamePane.setToolCardOneActive();
 
 	}
-	
+
 	public void setToolcardSixActive() {
 		gamePane.setToolCardSixActive();
 	}
-	
+
 	public void setToolcardTenActive() {
 		gamePane.setToolCardTenActive();
 	}
-	
+
 	public void setToolcardElevenActive() {
 		gamePane.setToolCardElevenActive();
 	}
@@ -205,7 +208,6 @@ public class GameController {
 		boardcontroller.setPatternCard(id);
 	}
 
-
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();
 	}
@@ -229,33 +231,32 @@ public class GameController {
 	public void updateEyes(int eyes, int dienumber, String color) {
 		game.updateEyes(eyes, dienumber, color);
 	}
-	
+
 	public void enableDiceMovement(int i) {
 		boardcontroller.setAllowsMovement(i);
 	}
-	
+
 	public void swapDice(int dienumber, String color, int value, int chosenvalue) {
 		game.getDiceWithChosenValue(dienumber, color, value, chosenvalue);
 		gamePane.addDice();
 	}
-	
+
 	public int returnAmountOfOpponents() {
 		return opponents.length;
 	}
-	
+
 	public void setRandomCard() {
 		boardcontroller.setRandomCard();
 	}
 
-	
 	public int getGamemode() {
 		return game.getGamemode();
 	}
-	
-//	public int getDifficulty() {
-//		return boardcontroller.getDifficulty();
-//	}
-	
+
+	// public int getDifficulty() {
+	// return boardcontroller.getDifficulty();
+	// }
+
 	public void updateTokens(int difficulty) {
 		game.updateTokenArrayList(difficulty);
 	}
@@ -263,27 +264,25 @@ public class GameController {
 	public void setPlayerTokens(int minus) {
 		boardcontroller.setPlayerTokens(minus);
 	}
-	
+
 	public void setGameCard(int id) {
 		game.addGametoolcard(id);
 	}
-	
-	public void addOptions(ArrayList<Integer> randomIDS){
+
+	public void addOptions(ArrayList<Integer> randomIDS) {
 		game.addOptionsToDB(randomIDS);
 	}
-	
-	public ArrayList<Integer> getOwnOptions(){
+
+	public ArrayList<Integer> getOwnOptions() {
 		return game.getOwnOptions();
 	}
-	
-	public ArrayList<Integer> getChosenIds(){
+
+	public ArrayList<Integer> getChosenIds() {
 		return game.getChosenIds();
 	}
-	
-	public ArrayList<BoardPane> getBoards(){
+
+	public ArrayList<BoardPane> getBoards() {
 		return boardcontroller.getBoards();
 	}
-	
-	
 
 }
