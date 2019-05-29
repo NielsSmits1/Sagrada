@@ -94,7 +94,7 @@ public class BoardController {
 	}
 
 	public void getTurns() {
-		gameController.getTurns();
+//		gameController.getTurns();
 	}
 
 	public int getOwnId() {

@@ -7,8 +7,8 @@ import Database.db;
 public class ChatBoxModel {
 
 	private db database;
-	private int gameId = 2;
-	private int playerId = 1;
+	private int gameId;
+	private int playerId;
 	
 	public ChatBoxModel() {
 		database = new db();
@@ -23,6 +23,16 @@ public class ChatBoxModel {
 	public void sendCUD(String input) {
 		database.CUD("INSERT INTO chatline (player_idplayer, time, message) values(" + playerId +  " , now(),'" + input + "');");
 	}
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
+	}
+	
+	
 
 	
 }

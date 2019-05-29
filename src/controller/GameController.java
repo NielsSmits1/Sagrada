@@ -30,6 +30,7 @@ public class GameController {
 	private MyScene scene;
 	private PatterncardSelect option;
 	private GamePane gamePane;
+	private ChatBoxController chatBox = new ChatBoxController();
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
 	private Round round;
@@ -58,6 +59,9 @@ public class GameController {
 			p.setPatternCardId(p.getPatternIdFromDB());
 			p.setPc();
 			players.add(p);
+			getOwnPlayerId();
+			getOwnGameIdSelf();
+
 		}
 		game.insertPlayers(players);
 		// }
@@ -94,7 +98,7 @@ public class GameController {
 		cardcontroller.setObjectiveCards();
 		gamePane = new GamePane(this);
 	}
-	
+
 	public PatterncardSelect buildPatterncardoptions() {
 		if(!game.checkIfFilled()) {
 			System.out.println("hoi");
@@ -105,7 +109,7 @@ public class GameController {
 		option = new PatterncardSelect(this);
 		return option;
 	}
-	
+
 	public Game getGame() {
 		return this.game;
 	}
@@ -203,10 +207,6 @@ public class GameController {
 		return game.getIdGame();
 	}
 
-	public int getTurns() {
-		return round.calculateTurns(getIdGame());
-	}
-
 	public ArrayList<Space> getPatternCard() {
 		return boardcontroller.getPatternCard();
 	}
@@ -291,5 +291,22 @@ public class GameController {
 	public ArrayList<BoardPane> getBoards() {
 		return boardcontroller.getBoards();
 	}
+
+	public ChatBoxController getChatBox() {
+		return chatBox;
+	}
+
+	public void getOwnPlayerId() {
+		if(game.getSelf().checkSelf() == true) {
+			chatBox.getModel().setPlayerId(game.getSelf().getPlayerId());
+		}
+	}
+	public void getOwnGameIdSelf() {
+		if(game.getSelf().checkSelf() == true) {
+			chatBox.getModel().setGameId(game.getSelf().getGameId());
+		}
+	}
+		
+	
 
 }

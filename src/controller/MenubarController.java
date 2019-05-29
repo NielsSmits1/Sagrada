@@ -79,8 +79,6 @@ public class MenubarController {
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
 		mi.setOnAction(e-> setRoot(mi));
-
-	
 	}
 	
 	public void setRoot(MenuItem mi) {
@@ -101,8 +99,4 @@ public class MenubarController {
 		alert.setHeaderText("Er worden nog patroonkaarten gekozen");		
 		alert.showAndWait();
 	}
-	
-	
-	
-
 }

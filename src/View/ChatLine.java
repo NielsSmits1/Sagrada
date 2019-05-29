@@ -20,6 +20,8 @@ public class ChatLine extends HBox {
 	VBox Message = new VBox();
 	VBox time = new VBox();
 	
+	private static final int WIDTH = 280;
+	
 	public ChatLine() {
 		
 		
@@ -30,17 +32,17 @@ public class ChatLine extends HBox {
 		this.Time = new Label();
 
 		username.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
-		this.username.setPrefSize((500/3), 500);
-		this.username.setMaxSize((500/3), 500);
+		this.username.setPrefSize((WIDTH/3), 500);
+		this.username.setMaxSize((WIDTH/3), 500);
 		this.username.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 		
-		this.Message.setPrefSize((500/3), 500);
-		this.Message.setMaxSize((500/3), 500);
+		this.Message.setPrefSize((WIDTH/3), 500);
+		this.Message.setMaxSize((WIDTH/3), 500);
 		Message.setBackground(new Background(new BackgroundFill(Color.HOTPINK, null, null)));
 		this.Message.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 		
-		this.time.setPrefSize((500/3), 500);
-		this.time.setMaxSize((500/3), 500);
+		this.time.setPrefSize((WIDTH/3), 500);
+		this.time.setMaxSize((WIDTH/3), 500);
 		time.setBackground(new Background(new BackgroundFill(Color.CRIMSON, null, null)));
 		this.time.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 		username.getChildren().add(this.userName);

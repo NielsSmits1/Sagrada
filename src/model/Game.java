@@ -11,9 +11,6 @@ public class Game {
 	private db database = new db();
 	private ArrayList<ArrayList<Object>> diceData;
 	private ArrayList<Round> rounds;
-	private ArrayList<ArrayList<Object>> forwardPlayer;
-	private ArrayList<ArrayList<Object>> backwardPlayer;
-	private ArrayList<ArrayList<Object>> normalTurnes;
 	private ArrayList<Dice> diceArray;
 	private ArrayList<Dice> playableDices;
 	private ArrayList<Player> players = new ArrayList<Player>();
@@ -23,6 +20,9 @@ public class Game {
 	private Player self;
 	private ArrayList<Gamefavortoken> token;
 	private GameController controller;
+	private int roundNumber;
+	private int turnNumber;
+	private Player turnPlayer;
 
 
 
@@ -46,18 +46,96 @@ public class Game {
 		insertDicesIntoDatabase();
 		diceData = getSelect();
 		setDiceArray();
-		checkIfGameHasStarted();
 		fillTokenArrayList();
-//		controller = new GameController(this);
+		roundNumber = getLastRound();
+		turnNumber = getTurnNumber();
+		turnPlayer = setWhoseTurnItIs();
 		
 
+	}
+	private Player setWhoseTurnItIs() {
+		String turnplayer = (String)database.Select("select username from player where isCurrentPlayer = 1 and game_idgame = " +this.idgame).get(0).get(0);
+		for(Player p: players) {
+			if(p.getUsername().equals(turnplayer)) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	private void updateCurrentPlayer() {
+		database.CUD("update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame + " and username = " + turnPlayer.getUsername());
+	}
+	
+	private void setNewCurrentPlayer() {
+		int numberOfPlayers = players.size();
+		if(turnNumber == numberOfPlayers ) {// 2-3-4
+			// dan is de eerste loop voorbij
+			backwartsSeqNr();
+			setNewCurrentPlayerDB();
+			
+		}else if(turnNumber == numberOfPlayers * 2) {// 4-6-8
+			// dan is een ronde voorbij
+			newRound();
+		}else {
+			setNewCurrentPlayerDB();
+		}
+	}
+	private void forwardSeqNr() {
+		int maxNumber = 1;
+		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame)) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
+			database.CUD("update player set seqnr = " + maxNumber+ " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
+			maxNumber+=1;
+		}
+		database.CUD("update player set isCurrentPlayer = 1 where game_idgame = " + this.idgame + " and seqnr = 1");
+	}
+
+	private void backwartsSeqNr() {
+		
+		int maxNumber = roundNumber;
+		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame + " order by idplayer desc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
+			database.CUD("update player set seqnr = " + (maxNumber + 1) + " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
+			maxNumber+=1;
+		}
+	}
+
+	private void setNewCurrentPlayerDB() {
+		database.CUD("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = 2");
+	}
+	private void newRound() {
+		// doe iets met de overgebleven dice(s)
+		// en ook iets met roundtrack
+		// this.addRoundTrack(gamePane.getRemainingDices());
+		forwardSeqNr();
+	}
+	
+	
+
+	private int getTurnNumber() {
+		return (int)database.Select("select seqnr from player where isCurrentPlayer = 1 and game_idgame = " + this.idgame).get(0).get(0);
+	}
+
+	
+	private int getLastRound(){
+		ArrayList<ArrayList<Object>> round = database.Select("Select max(roundtrack) from gamedie where idgame = " + this.idgame);
+		if(round.get(0).get(0)==null) {
+			// als null - geen rondes: begin bij ronde 1
+			return 1;
+		}else if((long)round.get(0).get(0) == 10) {
+			// als 10 game voorbij duuuh
+			// hoezo opent hij dit scherm
+			return 10;
+		}else {
+			return (int)round.get(0).get(0) + 1;
+			// anders + 1 is de ronde waar ze in zitten
+		}
 	}
 
 
 	// public void addPlayer(Player param) {
 	// 	insertPlayer(param);
 
-	// }
+	// }o
 
 	// public void addPlayer(Player param, String status) {
 	// 	insertPlayer(param, status);
@@ -91,16 +169,6 @@ public class Game {
 						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, '"+ color +"')"); 
 	}
 
-	private void buildGameTurns() {
-		forwardPlayer = database
-				.Select("select username,idplayer, seqnr from player where game_idgame = " + this.idgame);
-		for (ArrayList<Object> a : database.Select("select idplayer, username, seqnr from player where game_idgame = "
-				+ this.idgame + " order by idplayer desc")) {
-			forwardPlayer.add(a);
-		}
-
-
-	}
 	public ArrayList<ArrayList<Object>> getColorsFromGame(int idgame) {
 		return database.Select("SELECT private_objectivecard_color FROM player WHERE game_idgame ='"+ idgame + "'");
 	}
@@ -129,49 +197,11 @@ public class Game {
 		return allColors;
 	}
 
-	private void checkIfGameHasStarted() {
-		// check met select of game begonnen
-		// als dat niet so is build de game
-		if (gameStarted()) {
 
-		} else {
-
-		}
-	}
-
-	private ArrayList<ArrayList<Object>> getLastRound() {
-		return database.Select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd "
-				+ "LEFT JOIN playerframefield AS pff ON gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor LEFT JOIN player AS "
-				+ "p ON pff.player_idplayer = p.idplayer " + "WHERE gd.idgame = " + this.idgame
-				+ " AND p.isCurrentPlayer = 1");
-	}
 
 	public ArrayList<ArrayList<Object>> getPlayersInGame() {
 		return database.Select("select idplayer, username, seqnr, private_objectivecard_color, score, patterncard_idpatterncard from player where game_idgame = " + this.idgame);
 
-	}
-
-	public void checkofso() {
-		ArrayList<ArrayList<Object>> pl = this.getPlayersInGame();
-		ArrayList<ArrayList<Object>> la = this.getLastRound();
-		ArrayList<Object> rn = new ArrayList<Object>();
-		boolean check = false;
-		for (ArrayList<Object> a : pl) {
-			if (a.get(0) == la.get(0).get(1)) {
-				check = true;
-			}
-			if (check) {
-				rn.add(a);
-			}
-		}
-	}
-
-	private boolean gameStarted() {
-		if (getLastRound().get(0).get(0) == null) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	private int createNewGameId() {
@@ -450,6 +480,12 @@ public class Game {
 		}
 		return false;
 	}
+
+	public Player getSelf() {
+		return self;
+	}
+	
+	
 	
 	public boolean checkIfFilled() {
 		if(database.Select("SELECT patterncardoption.patterncard_idpatterncard FROM tjpmsalt_db2.patterncardoption LEFT JOIN player ON player_idplayer = idplayer WHERE game_idgame = " + idgame + ";").isEmpty()) {
