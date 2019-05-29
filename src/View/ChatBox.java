@@ -14,9 +14,12 @@ public class ChatBox extends ScrollPane {
 	private TextField inPut;
 	private Button send;
 	private ArrayList<ChatLine> chatline;
+	
+	private static final int WIDTH = 300;
+	private static final int HEIGHT = 300;
 
 	public ChatBox() {
-		this.setPrefSize(500, 500);
+		this.setPrefSize(WIDTH, HEIGHT);
 	}
 
 	public void setChat(ArrayList<ChatLine> lines) {
@@ -25,7 +28,7 @@ public class ChatBox extends ScrollPane {
 		VBox chat = new VBox();
 		inPut = new TextField();
 		send = new Button("verstuur");
-		chat.setPrefSize(500, 500);
+		chat.setPrefSize(WIDTH, HEIGHT);
 		chat.setBackground(new Background(new BackgroundFill(Color.HOTPINK, null, null)));
 
 		chat.getChildren().addAll(chatline);

@@ -30,6 +30,7 @@ public class GameController {
 	private MyScene scene;
 	private PatterncardSelect option;
 	private GamePane gamePane;
+	private ChatBoxController chatBox = new ChatBoxController();
 	private BoardController boardcontroller;
 	private ToolcardController toolcardcontroller;
 
@@ -41,7 +42,7 @@ public class GameController {
 	private Stage gameStage;
 
 	public GameController(MyScene s) {
-
+		
 		scene = s;
 
 		game = new Game();
@@ -57,6 +58,9 @@ public class GameController {
 			p.setPatternCardId(p.getPatternIdFromDB());
 			p.setPc();
 			players.add(p);
+			chatBox.getModel().setGameId(game.getIdGame());
+			chatBox.getModel().setPlayerId(game.getOwnId());
+			
 		}
 		game.insertPlayers(players);
 		// }
@@ -279,5 +283,11 @@ public class GameController {
 	public ArrayList<BoardPane> getBoards() {
 		return boardcontroller.getBoards();
 	}
+	public ChatBoxController getChatBox() {
+		return chatBox;
+	}
+	
+	
+	
 
 }

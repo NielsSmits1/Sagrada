@@ -23,7 +23,7 @@ public class ChatBoxController {
 
 
 	public void getChat() {
-		DateFormat chatTime = new SimpleDateFormat("dd-MM-YYYY HH:mm:ss");
+		DateFormat chatTime = new SimpleDateFormat("HH:mm:ss dd-MM-YYYY ");
 
 		ArrayList<ChatLine> chatbox = new ArrayList<>();
 
@@ -49,12 +49,19 @@ public class ChatBoxController {
 		input = chat.getInPut().getText();
 		model.sendCUD(input);
 		chat.getInPut().clear();
-		getChat();//dit in de refresh
+		getChat();//dit is de refresh
 	}
 	
 	public void refresh() {
 		getChat();
 	}
+
+
+	public ChatBoxModel getModel() {
+		return model;
+	}
+	
+	
 	
 
 }
