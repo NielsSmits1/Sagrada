@@ -48,8 +48,8 @@ public class Game {
 		setDiceArray();
 		fillTokenArrayList();
 		roundNumber = getLastRound();
-		turnNumber = getTurnNumber();
-		turnPlayer = setWhoseTurnItIs();
+//		turnNumber = getTurnNumber();
+//		turnPlayer = setWhoseTurnItIs();
 		
 
 	}
@@ -418,8 +418,24 @@ public class Game {
 	public void addOptionsToDB(ArrayList<Integer> randomIDS) {
 		for (int i = 0; i < randomIDS.size(); i++) {
 			for (int j = 0; j < players.size(); j++) {
-				System.out.println("waarde: " + randomIDS.get(i));
-				database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(j).getPlayerId() + ")");
+				if(i > 11) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(3).getPlayerId() + ")");
+					continue;
+				}
+				if(i > 7) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(2).getPlayerId() + ")");
+					continue;
+				}
+				if(i > 3) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(1).getPlayerId() + ")");
+					continue;
+				}
+				if(i > 0) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(0).getPlayerId() + ")");
+					continue;
+				}
+//				System.out.println("waarde: " + randomIDS.get(i));
+//				database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(j).getPlayerId() + ")");
 			}
 		}
 	}
