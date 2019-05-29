@@ -89,7 +89,8 @@ public class MenubarController {
 			if(gc.getGame().checkIfIPickedPatternCard(self.getUsername())) {
 				this.showWait();
 			}else {
-
+				//Set selectPatterncardpane
+				scene.setRoot(gc.buildPatterncardoptions());
 			}
 		}else {
 			gc.buildGame();

@@ -407,8 +407,12 @@ public class Game {
 	
 	public ArrayList<Integer> getOwnOptions(){
 		ArrayList<Integer> ownOptions = new ArrayList<>();
-		for (int i = 0; i < 4; i++) {
-			ownOptions.add((int)database.Select("SELECT patterncard_idpatterncard FROM patterncardoption WHERE player_idplayer = " + self.getPlayerId() +";").get(i).get(0));
+		for (Player p : players) {
+		if(p.getSelf()) {
+			for (int i = 0; i < 4; i++) {
+				ownOptions.add((int)database.Select("SELECT patterncard_idpatterncard FROM patterncardoption WHERE player_idplayer = " + p.getPlayerId() +";").get(i).get(0));
+				}
+			}
 		}
 		return ownOptions;
 	}
