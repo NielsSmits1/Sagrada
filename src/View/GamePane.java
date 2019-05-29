@@ -79,8 +79,6 @@ public class GamePane extends BorderPane {
 		
 		track = new RoundTrack();
 
-
-		
 		setBoard();
 		addTrack();
 		addDice();
