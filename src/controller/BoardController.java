@@ -96,8 +96,8 @@ public class BoardController {
 		return finalCard.getPatternField();
 	}
 
-	public void getTurns() {
-		gameController.getTurns();
+	public int getTurns() {
+		return gameController.getGame().getTurnNumber();
 	}
 
 	public int getOwnId() {
