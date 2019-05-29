@@ -76,7 +76,7 @@ public class HomeController {
 	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
-		mbc.refresh(game);
+		
 	}
 
 	private Game openGames() {

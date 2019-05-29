@@ -24,8 +24,6 @@ public class MenubarController {
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private ChatBoxController chat;
 	private GameController gc;
-	private Menu m;
-	private MenuItem mi;
 
 	private HashMap<Menu, GamePane> gamepanes = new HashMap<>();
 
@@ -74,25 +72,10 @@ public class MenubarController {
 
 	public void addGame(Game g) {
 		gc = new GameController(g);
-		this.m = new Menu("Gamenummer : " + gc.getIdGame());
-		this.mi = new MenuItem("open");
+		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
+		MenuItem mi = new MenuItem("open");
 		m.getItems().add(mi);
 		menu.addGameItem(m);
-		refresh(g);
-
-	}
-
-	public void refresh(Game g) {
-		if (gamepanes.containsKey(m)) {
-			buildMenuItem();
-
-		} else {
-	
-		addGame(g);
-		}
-	}
-	
-	public void buildMenuItem() {
 		gc.buildGame();
 		gamepanes.put(m, gc.getGamepane());
 		mi.setOnAction(e -> setRoot(m, gc.getGamepane()));
