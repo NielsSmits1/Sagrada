@@ -259,6 +259,7 @@ public class Game {
 				break;
 			}
 			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
+			diceArray = null;
 		}
 	}
 
@@ -508,6 +509,15 @@ public class Game {
 			return false;
 		}
 		return true;
+	}
+	
+	public void insertChosenID(int id) {
+		for (Player p : players) {
+			if(p.getSelf()) {
+				database.CUD("UPDATE player SET patterncard_idpatterncard = " + id + " WHERE idplayer = " + p.getPlayerId() +";");
+			}
+		}
+		
 	}
 	
 }
