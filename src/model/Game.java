@@ -474,7 +474,7 @@ public class Game {
 	public ArrayList<Integer> getChosenIds(){
 		ArrayList<Integer> chosenId = new ArrayList<Integer>();
 		for (int i = 0; i < players.size(); i++) {
-			chosenId.add((int)database.Select("SELECT patterncard_idpatterncard FROM player WHERE idgame = " + idgame + ";").get(i).get(0));
+			chosenId.add((int)database.Select("SELECT patterncard_idpatterncard FROM player WHERE game_idgame = " + idgame + ";").get(i).get(0));
 		}
 		return chosenId;
 	}
