@@ -80,7 +80,6 @@ public class MenubarController {
 		m.getItems().add(mi);
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
-		mi.setToggleGroup(toggle);
 		mi.setOnAction(e -> setRoot(mi));
 		
 
@@ -104,7 +103,7 @@ public class MenubarController {
 				}
 				mi.setDisable(true);
 				
-			}
+			
 		}else {
 			gc.buildGame();
 			scene.setRoot(new VBox(this.getMenubar(),gamepanes.get(mi).getGamepane()));

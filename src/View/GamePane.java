@@ -130,11 +130,6 @@ public class GamePane extends BorderPane {
 	// This model contains the amount of eyes and the color that the dice should be.
 	/// **
 
-	public void addTrack() {
-		setTop(track);
-		// setAlignment(track, Pos.CENTER);
-	}
-
 	public void getLeftover() {
 
 	}

@@ -323,18 +323,20 @@ public class Player {
 	public ArrayList<Game> getOpenGames() {
 		ArrayList<Game> games = new ArrayList<Game>();
 		for (ArrayList<Object> a : this.getPlayedGames()) {
-			if ((long) a.get(0) == (long)(countPlayersGame((int) a.get(1)) - 1)) {
-				setChallengerToAccepted();
-			}
+			if ((long) a.get(0) == ((long)countPlayersGame((int) a.get(1)) - 1)) {
+				setChallengerToAccepted((int) a.get(1));
+				
 			if ((long) a.get(0) == (long)countPlayersGame((int) a.get(1))) { // if all players accepted
 				Game g = new Game();
 				g.setGameId((int) a.get(1));
 				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
 				games.add(g);
+				}
 			}
 		}
 		return games;
 	}
+
 
 	private ArrayList<Player> buildPlayersForGame(ArrayList<ArrayList<Object>> players) {
 		ArrayList<Player> P = new ArrayList<Player>();
@@ -375,9 +377,9 @@ public class Player {
 		return score;
 	}
 
-	public void setChallengerToAccepted() {
+	public void setChallengerToAccepted(int idgame) {
 		database.CUD(
-				"UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitdager' and game_idgame in (select game_idgame from (select * FROM player) as playerr )"); // idplayer
+				"UPDATE player set playstatus_playstatus = 'geaccepteerd' WHERE playstatus_playstatus = 'uitdager' and game_idgame = '"+idgame +"'"); // idplayer
 																																																		// needs
 																																																		// to
 																																																		// be
