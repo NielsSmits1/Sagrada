@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Database.db;
-import controller.ToolcardController;
+import controller.CardController;
 
 public class Toolcard {
 	private Random random;
@@ -12,12 +12,16 @@ public class Toolcard {
 	private int card2;
 	private int card3;
 	private db database;
-	private ToolcardController toolcardController;
+	private CardController cardController;
 
-	public Toolcard(ToolcardController toolcardController) {
-		this.toolcardController = toolcardController;
+	public Toolcard(CardController cc) {
+		this.cardController = cc;
 		random = new Random();
 		database = new db();
+		
+	}
+	
+	public void insertToolcards() {
 		generateRandomInts();
 	}
 
@@ -25,6 +29,15 @@ public class Toolcard {
 		String query = ("SELECT idtoolcard, description FROM tjpmsalt_db2.toolcard WHERE idtoolcard = " + card1
 				+ " OR idtoolcard = " + card2 + " OR idtoolcard = " + card3 + "");
 		return database.Select(query);
+	}
+	
+	public ArrayList<Integer> getIds(){
+		ArrayList<Integer> Ids = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			Ids.add((int)database.Select("SELECT idtoolcard FROM gametoolcard WHERE idgame = " + cardController.getIdGame() + "").get(i).get(0));
+		}
+		return Ids;
+		
 	}
 
 	private void generateRandomInts() {
@@ -39,6 +52,10 @@ public class Toolcard {
 		while (card3 == card1 || card3 == card2) {
 			card3 = random.nextInt(12) + 1;
 		}
+		
+		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card1 + "," + cardController.getIdGame() + ");");
+		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card2 + "," + cardController.getIdGame() + ");");
+		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card3 + "," + cardController.getIdGame() + ");");
 
 	}
 
@@ -92,17 +109,17 @@ public class Toolcard {
 	}
 
 	private void activateToolCardOne() {
-		toolcardController.setToolcardOneActive();
+		cardController.setToolcardOneActive();
 
 	}
 
 	private void activateToolCardTwo() {
-		toolcardController.enableDiceMovement(2);
+		cardController.enableDiceMovement(2);
 
 	}
 
 	private void activateToolCardThree() {
-		toolcardController.enableDiceMovement(3);
+		cardController.enableDiceMovement(3);
 
 	}
 
@@ -117,7 +134,7 @@ public class Toolcard {
 	}
 
 	private void activateToolCardSix() {
-		toolcardController.setToolcardSixActive();
+		cardController.setToolcardSixActive();
 
 	}
 
@@ -133,16 +150,16 @@ public class Toolcard {
 
 	private void activateToolCardNine() {
 		// TODO Auto-generated method stub
-		toolcardController.enableDiceMovement(9);
+		cardController.enableDiceMovement(9);
 	}
 
 	private void activateToolCardTen() {
-		toolcardController.setToolcardTenActive();
+		cardController.setToolcardTenActive();
 
 	}
 
 	private void activateToolCardEleven() {
-		toolcardController.setToolcardElevenActive();
+		cardController.setToolcardElevenActive();
 
 	}
 

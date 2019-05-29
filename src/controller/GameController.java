@@ -31,7 +31,7 @@ public class GameController {
 	private PatterncardSelect option;
 	private GamePane gamePane;
 	private BoardController boardcontroller;
-	private ToolcardController toolcardcontroller;
+	private CardController cardcontroller;
 	private Round round;
 
 	private Button cancel;
@@ -49,7 +49,7 @@ public class GameController {
 		game.setPlayableDices();
 
 		boardcontroller = new BoardController(this);
-		toolcardcontroller = new ToolcardController(this);
+		cardcontroller = new CardController(this);
 		game.setGameId(609);
 		ArrayList<Player> players = new ArrayList<Player>();
 		for (int i = 0; i < 4; i++) {
@@ -80,7 +80,7 @@ public class GameController {
 		this.game = g;
 		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
-		toolcardcontroller = new ToolcardController(this);
+		cardcontroller = new CardController(this);
 
 	}
 
@@ -90,10 +90,17 @@ public class GameController {
 			boardcontroller.addBoard(p.getPc(), p);
 
 		}
+		cardcontroller.setToolcards();
+		cardcontroller.setObjectiveCards();
 		gamePane = new GamePane(this);
 	}
 	
 	public PatterncardSelect buildPatterncardoptions() {
+		if(!game.checkIfFilled()) {
+			System.out.println("hoi");
+			boardcontroller.setOptions();
+			cardcontroller.insertCards();
+		}
 		boardcontroller.setOwnOptions();
 		option = new PatterncardSelect(this);
 		return option;
@@ -152,7 +159,7 @@ public class GameController {
 	}
 
 	public ArrayList<ObjectiveCardPane> getObjectiveCardPanes() {
-		return toolcardcontroller.getObjectiveCards();
+		return cardcontroller.getObjectiveCards();
 	}
 
 	public void setToolcardOneActive() {
@@ -225,7 +232,7 @@ public class GameController {
 	}
 
 	public ArrayList<ToolCardPane> getToolCards() {
-		return toolcardcontroller.getToolCards();
+		return cardcontroller.getToolCards();
 	}
 
 	public void updateEyes(int eyes, int dienumber, String color) {
@@ -265,9 +272,9 @@ public class GameController {
 		boardcontroller.setPlayerTokens(minus);
 	}
 
-	public void setGameCard(int id) {
-		game.addGametoolcard(id);
-	}
+//	public void setGameCard(int id) {
+//		game.addGametoolcard(id);
+//	}
 
 	public void addOptions(ArrayList<Integer> randomIDS) {
 		game.addOptionsToDB(randomIDS);

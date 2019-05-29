@@ -23,9 +23,6 @@ public class BoardController {
 	public BoardController(GameController gameController) {
 		this.gameController = gameController;
 		boards = new ArrayList<>();
-//		allOptions = new PatternCardOptions();
-//		setOptions();
-//		this.gameController.addOptions(allOptions.getOptions());
 		opponentBoard = new ArrayList<>();
 	}
 	/// *
@@ -34,7 +31,7 @@ public class BoardController {
 	
 	public void setOwnOptions() {
 		patternCardOptions = new ArrayList<>();
-		for (int i = 0; i < this.gameController.getOwnOptions().size(); i++) {
+		for (int i = 0; i < 4; i++) {
 			patternCardOptions.add(new PatternCard(this.gameController.getOwnOptions().get(i)));
 		}
 	}
@@ -144,7 +141,9 @@ public class BoardController {
 	}
 	
 	public void setOptions() {
+		allOptions = new PatternCardOptions();
 		allOptions.getAllPatternCards(getGamemode()*4);
+		this.gameController.addOptions(allOptions.getOptions());
 	}
 	
 	public int getGamemode() {
