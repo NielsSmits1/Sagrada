@@ -73,6 +73,8 @@ public class MenubarController {
 
 	public void addGame(Game g) {
 		gc = new GameController(g); 
+		g.buildRounds();
+		g.buildTurns();
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
 		MenuItem mi = new MenuItem("open game");
 		m.getItems().add(mi);
@@ -93,6 +95,7 @@ public class MenubarController {
 		}else {
 			gc.buildGame();
 			scene.setRoot(new VBox(this.getMenubar(),gamepanes.get(mi).getGamepane()));
+			
 		}
 	}
 	public void showWait() {

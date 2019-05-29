@@ -49,6 +49,7 @@ public class GamePane extends BorderPane {
 	private DecisionPane decisionpane;
 	private Random r;
 	private RoundTrack track;
+	private Button turnSave = new Button("Beurt opslaan");
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -79,11 +80,10 @@ public class GamePane extends BorderPane {
 		
 		track = new RoundTrack();
 
-
 		
 		setBoard();
 		addTrack();
-		addDice();
+		//addDice();
 		finish();
 	}
 
@@ -209,9 +209,14 @@ public class GamePane extends BorderPane {
 		HBox toolCards = new HBox(finalOc, finalPc, finalTcp, new VBox(controller.getChatBox().getScreen(), close));
 		toolCards.setSpacing(5);
 		bottom.setRight(toolCards);
+		bottom.setLeft(turnSave);
+		
 
 		// close.setOnAction(e -> controller.getProgress().closeGame());
 
+	}
+	public Button getTurnSave() {
+		return this.turnSave;
 	}
 
 	/// *

@@ -82,7 +82,7 @@ public class GameController {
 
 	public GameController(Game g) {
 		this.game = g;
-		game.setPlayableDices();
+		//game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
 
@@ -97,6 +97,13 @@ public class GameController {
 		cardcontroller.setToolcards();
 		cardcontroller.setObjectiveCards();
 		gamePane = new GamePane(this);
+		gamePane.getTurnSave().setOnAction(E -> saveTurn());
+	}
+
+	private void saveTurn() {
+		game.buildTurns();
+		System.out.println(game.getRoundNumber() + "-" + game.getTurn() + ": " + game.getTurnPlayer().getUsername());
+		game.setNewCurrentPlayer();
 	}
 
 	public PatterncardSelect buildPatterncardoptions() {

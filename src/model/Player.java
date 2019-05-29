@@ -123,9 +123,12 @@ public class Player {
 	}
 
 	public ArrayList<ArrayList<Object>> getPlayedGames() {
+		System.out.println("SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '"
+				+ this.username + "') GROUP BY p1.game_idgame");
 		return database.Select(
 				"SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '"
 						+ this.username + "') GROUP BY p1.game_idgame");
+		
 	}
 
 	// adds new user to the database.
@@ -320,10 +323,10 @@ public class Player {
 	public ArrayList<Game> getOpenGames() {
 		ArrayList<Game> games = new ArrayList<Game>();
 		for (ArrayList<Object> a : this.getPlayedGames()) {
-			if ((long) a.get(0) == (countPlayersGame((int) a.get(1)) - 1)) {
+			if ((long) a.get(0) == (long)(countPlayersGame((int) a.get(1)) - 1)) {
 				setChallengerToAccepted();
 			}
-			if ((long) a.get(0) == countPlayersGame((int) a.get(1))) { // if all players accepted
+			if ((long) a.get(0) == (long)countPlayersGame((int) a.get(1))) { // if all players accepted
 				Game g = new Game();
 				g.setGameId((int) a.get(1));
 				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
