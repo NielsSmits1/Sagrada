@@ -323,15 +323,19 @@ public class Player {
 	public ArrayList<Game> getOpenGames() {
 		ArrayList<Game> games = new ArrayList<Game>();
 		for (ArrayList<Object> a : this.getPlayedGames()) {
-			if ((long) a.get(0) == ((long)countPlayersGame((int) a.get(1)) - 1)) {
+			System.out.println(a.get(0) + " " + countPlayersGame((int) a.get(1)));
+			if ((long) a.get(0) == (countPlayersGame((int) a.get(1)) - 1)) {
 				setChallengerToAccepted((int) a.get(1));
+
 				
-			if ((long) a.get(0) == (long)countPlayersGame((int) a.get(1))) { // if all players accepted
+			}
+			else if ((long) a.get(0) == countPlayersGame((int) a.get(1))) { // if all players accepted
+				System.out.println("test");
 				Game g = new Game();
 				g.setGameId((int) a.get(1));
 				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
 				games.add(g);
-				}
+				
 			}
 		}
 		return games;
