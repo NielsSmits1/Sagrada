@@ -506,7 +506,7 @@ public class Game {
 	
 	
 	public boolean checkIfFilled() {
-		if(database.Select("SELECT patterncardoption.patterncard_idpatterncard FROM tjpmsalt_db2.patterncardoption LEFT JOIN player ON player_idplayer = idplayer WHERE game_idgame = " + idgame + ";").isEmpty()) {
+		if(database.Select("SELECT patterncardoption.patterncard_idpatterncard FROM patterncardoption LEFT JOIN player ON player_idplayer = idplayer WHERE game_idgame = " + idgame + ";").isEmpty()) {
 			return false;
 		}
 		return true;

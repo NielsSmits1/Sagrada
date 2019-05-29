@@ -403,4 +403,8 @@ public class Player {
 	public int getPatternId() {
 		return patternCardId;
 	}
+	
+	public ArrayList<PlacedDice> getDiceField(){
+		return pc.getDiceField();
+	}
 }

@@ -32,7 +32,7 @@ public class ObjectiveCard {
 	}
 
 	public ArrayList<ArrayList<Object>> getObjectivecardsFromDatabase() {
-		String query = ("SELECT idpublic_objectivecard FROM tjpmsalt_db2.public_objectivecard WHERE idpublic_objectivecard = " + card1
+		String query = ("SELECT idpublic_objectivecard FROM public_objectivecard WHERE idpublic_objectivecard = " + card1
 				+ " OR idpublic_objectivecard = " + card2 + "");
 		return database.Select(query);
 	}

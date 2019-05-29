@@ -11,6 +11,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 import model.PatternCard;
+import model.PlacedDice;
 import model.Player;
 import model.Space;
 
@@ -51,6 +52,7 @@ public class BoardPane extends Pane {
 		getChildren().addAll(top, square, tokenPlaceholder, label, this.username, score);
 //		setLabelValue(controller.getDifficulty());
 		setBoard();
+		addPlacedDice(p.getDiceField());
 	}
 	
 	public BoardPane(BoardController bc, PatternCard pc) {
@@ -181,6 +183,17 @@ public class BoardPane extends Pane {
 		}
 		getChildren().add(field);
 		// System.out.println("Should have worked");
+	}
+	
+	private void addPlacedDice(ArrayList<PlacedDice> diceField) {
+		for(PlacedDice pd : diceField) {
+			for(int i = 0;i<board.size(); i++) {
+				if(board.get(i).getX() == pd.getXpos() && board.get(i).getY() == pd.getYpos()) {
+					DicePane temporary = new DicePane(pd.getEyes(), pd.getDieColor(), pd.getDieNumber());
+					board.get(i).setDice(temporary);
+				}
+			}
+		}
 	}
 
 
