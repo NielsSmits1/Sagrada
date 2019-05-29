@@ -2,7 +2,6 @@ package controller;
 
 import java.util.HashMap;
 
-import View.GamePane;
 import View.Menubar;
 import View.MyScene;
 import javafx.application.Platform;
@@ -10,6 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Game;
@@ -25,10 +26,8 @@ public class MenubarController {
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private ChatBoxController chat;
 	private GameController gc;
-	
-	
-	
-	private HashMap <MenuItem, GameController> gamepanes = new HashMap<>();
+
+	private HashMap<MenuItem, GameController> gamepanes = new HashMap<>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
@@ -43,16 +42,18 @@ public class MenubarController {
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 //		menu.getHelp().setOnAction(e -> game.builtAlertbox());
 //		inlogController.getHome().getHome().getGameTab().setOnAction(e ->game.builtGameStage());
-		
+
 	}
 
 	public Menubar getMenubar() {
 		return menu;
 	}
+
 	public void showStats() {
-		alert.setHeaderText(getStatsSelf());		
+		alert.setHeaderText(getStatsSelf());
 		alert.showAndWait();
 	}
+
 	public String getStatsSelf() {
 		String stats = "Aantal gewonnen en verloren potjes: " + self.getTimesWon() + " : " + self.getTimesLost()
 				+ "\nHoogst behaalde score: " + self.getHighScore() + "\nMeest geplaatste dobbelsteenkleur: "
@@ -72,31 +73,39 @@ public class MenubarController {
 	}
 
 	public void addGame(Game g) {
-		gc = new GameController(g); 
+		gc = new GameController(g);
+		ToggleGroup toggle = new ToggleGroup();
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
-		MenuItem mi = new MenuItem("open game");
+		RadioMenuItem mi = new RadioMenuItem("open game");
 		m.getItems().add(mi);
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
-		mi.setOnAction(e-> setRoot(mi));
+		mi.setToggleGroup(toggle);
+		mi.setOnAction(e -> setRoot(mi));
+		
+
 	}
-	
-	public void setRoot(MenuItem mi) {
+
+	public void setRoot(RadioMenuItem mi) {
 		gc = gamepanes.get(mi);
-		if(!gc.getGame().hasChosen()) {
-			if(gc.getGame().checkIfIPickedPatternCard(self.getUsername())) {
-				this.showWait();
-			}else {
-				//Set selectPatterncardpane
-				scene.setRoot(gc.buildPatterncardoptions());
+		if (!mi.isDisable())
+			if (!gc.getGame().hasChosen()) {
+				if (gc.getGame().checkIfIPickedPatternCard(self.getUsername())) {
+					this.showWait();
+				} else {
+					// Set selectPatterncardpane
+					scene.setRoot(gc.buildPatterncardoptions());
+				}
+			} else {
+				gc.buildGame();
+				scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamepane()));
+				mi.setSelected(true);
+				mi.setDisable(true);
 			}
-		}else {
-			gc.buildGame();
-			scene.setRoot(new VBox(this.getMenubar(),gamepanes.get(mi).getGamepane()));
-		}
 	}
+
 	public void showWait() {
-		alert.setHeaderText("Er worden nog patroonkaarten gekozen");		
+		alert.setHeaderText("Er worden nog patroonkaarten gekozen");
 		alert.showAndWait();
 	}
 }

@@ -59,8 +59,8 @@ public class GameController {
 			p.setPatternCardId(p.getPatternIdFromDB());
 			p.setPc();
 			players.add(p);
-			getOwnPlayerId();
-			getOwnGameIdSelf();
+//			getOwnPlayerId();
+//			getOwnGameIdSelf();
 
 		}
 		game.insertPlayers(players);
