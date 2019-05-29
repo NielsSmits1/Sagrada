@@ -31,6 +31,8 @@ public class Challenge {
 	
 	public void changePlayerStatusToAccepted() {
 		database.CUD("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
+		System.out.println("test");
+	
 	}
 
 	public void changePlayerStatusToDeclined() {
@@ -38,13 +40,13 @@ public class Challenge {
 
 	}
 
-	public ArrayList<ArrayList<Object>> GetPlayerWithChallengeeStatus() {
+	public ArrayList<ArrayList<Object>> getPlayerWithChallengeeStatus() {
 
 		return database.Select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() + "' and playstatus_playstatus = 'Uitgedaagde') AND playstatus_playstatus = 'Uitdager'");
 	}	
 		//  returns :niels
 		//	         teun
-	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus() {
+	public ArrayList<ArrayList<Object>> getPlayerWithChallengedStatus() {
 	
 		return database.Select("SELECT username, playstatus_playstatus, game_idgame FROM player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"' AND playstatus_playstatus = 'Uitdager')");
 		// returns :johan
@@ -56,7 +58,7 @@ public class Challenge {
 		ArrayList<Player> challengedPlayerNames = new ArrayList<Player>();
 		String u;
 		
-		for (ArrayList<Object> a : this.GetPlayerWithChallengeeStatus()) {
+		for (ArrayList<Object> a : this.getPlayerWithChallengeeStatus()) {
 			u = (String) a.get(1);
 			if (!self.getUsername().equals(u)) {
 				Player p = new Player(u);
@@ -67,7 +69,7 @@ public class Challenge {
 	}
 	public ArrayList<Player> playersYouChallenged() {
 		ArrayList<Player> players = new ArrayList<Player>();
-		for (ArrayList<Object> a : this.GetPlayerWithChallengedStatus()) {
+		for (ArrayList<Object> a : this.getPlayerWithChallengedStatus()) {
 			Player p = new Player((String) a.get(0));
 			p.setStatus((String) a.get(1));
 			p.addGameId((int)a.get(2));

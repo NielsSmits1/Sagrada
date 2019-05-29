@@ -123,9 +123,12 @@ public class Player {
 	}
 
 	public ArrayList<ArrayList<Object>> getPlayedGames() {
+		System.out.println("SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '"
+				+ this.username + "') GROUP BY p1.game_idgame");
 		return database.Select(
 				"SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '"
 						+ this.username + "') GROUP BY p1.game_idgame");
+		
 	}
 
 	// adds new user to the database.
@@ -320,18 +323,24 @@ public class Player {
 	public ArrayList<Game> getOpenGames() {
 		ArrayList<Game> games = new ArrayList<Game>();
 		for (ArrayList<Object> a : this.getPlayedGames()) {
+			System.out.println(a.get(0) + " " + countPlayersGame((int) a.get(1)));
 			if ((long) a.get(0) == (countPlayersGame((int) a.get(1)) - 1)) {
-				setChallengerToAccepted();
+				setChallengerToAccepted((int) a.get(1));
+
+				
 			}
-			if ((long) a.get(0) == countPlayersGame((int) a.get(1))) { // if all players accepted
+			else if ((long) a.get(0) == countPlayersGame((int) a.get(1))) { // if all players accepted
+				System.out.println("test");
 				Game g = new Game();
 				g.setGameId((int) a.get(1));
 				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
 				games.add(g);
+				
 			}
 		}
 		return games;
 	}
+
 
 	private ArrayList<Player> buildPlayersForGame(ArrayList<ArrayList<Object>> players) {
 		ArrayList<Player> P = new ArrayList<Player>();
@@ -372,9 +381,9 @@ public class Player {
 		return score;
 	}
 
-	public void setChallengerToAccepted() {
+	public void setChallengerToAccepted(int idgame) {
 		database.CUD(
-				"UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitdager' and game_idgame in (select game_idgame from (select * FROM player) as playerr )"); // idplayer
+				"UPDATE player set playstatus_playstatus = 'geaccepteerd' WHERE playstatus_playstatus = 'uitdager' and game_idgame = '"+idgame +"'"); // idplayer
 																																																		// needs
 																																																		// to
 																																																		// be

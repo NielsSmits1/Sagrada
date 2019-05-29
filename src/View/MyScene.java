@@ -9,7 +9,6 @@ import javafx.scene.layout.Pane;
 public class MyScene extends Scene {
 	private InlogController inlog = new InlogController(this);
 //	private GameController game = new GameController(this);
-	private ChatBoxController chat = new ChatBoxController();
 
 	public MyScene() {
 		super(new Pane());

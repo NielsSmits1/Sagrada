@@ -16,8 +16,8 @@ public class SearchPlayerController {
 	private Player self;
 	private Challenge ch;
 	private ChallengerController cp;
-	private Game game = new Game();
 	private Alert alert = new Alert(AlertType.INFORMATION);
+	private Game game = new Game();
 
 	public SearchPlayerController(HomeController hc, ChallengerController cp) {
 		this.cp = cp;

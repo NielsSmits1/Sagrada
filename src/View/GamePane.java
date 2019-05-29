@@ -49,6 +49,7 @@ public class GamePane extends BorderPane {
 	private DecisionPane decisionpane;
 	private Random r;
 	private RoundTrack track;
+	private Button turnSave = new Button("Beurt opslaan");
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -81,7 +82,7 @@ public class GamePane extends BorderPane {
 
 		setBoard();
 		addTrack();
-		addDice();
+		//addDice();
 		finish();
 	}
 
@@ -128,7 +129,6 @@ public class GamePane extends BorderPane {
 	/// the model Dice.
 	// This model contains the amount of eyes and the color that the dice should be.
 	/// **
-
 
 	public void getLeftover() {
 
@@ -231,6 +231,9 @@ public class GamePane extends BorderPane {
 		allKeyCards.setSpacing(5);
 		bottom.setCenter(allKeyCards);
 
+	}
+	public Button getTurnSave() {
+		return this.turnSave;
 	}
 
 	/// *
