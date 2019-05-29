@@ -19,7 +19,6 @@ public class Game {
 	private Random r;
 	private Player self;
 	private ArrayList<Gamefavortoken> token;
-	private int gamemode;
 	private GameController controller;
 	private int roundNumber;
 	private int turnNumber;
@@ -393,9 +392,9 @@ public class Game {
 		
 	}
 	
-	public void addGametoolcard(int id) {
-		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + id + ", " + idgame + ");");
-	}
+//	public void addGametoolcard(int id) {
+//		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + id + ", " + idgame + ");");
+//	}
 	
 	public void addTokensToGametoolcard(int amount, int toolcardid) {
 		if(getLeftoverTokens() >= amount) {
@@ -411,18 +410,32 @@ public class Game {
 		return (int)database.Select("SELECT gametoolcard from gametoolcard WHERE idgame = " + idgame +" AND idtoolcard = " + toolcardid + "").get(0).get(0);
 	}
 	
-	public void setGamemode() {
-		gamemode = players.size();
-	}
 	
 	public int getGamemode() {
-		return gamemode;
+		return players.size();
 	}
 	
 	public void addOptionsToDB(ArrayList<Integer> randomIDS) {
 		for (int i = 0; i < randomIDS.size(); i++) {
-			for (int j = 0; j < gamemode; j++) {
-				database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(j).getPlayerId() + ")");
+			for (int j = 0; j < players.size(); j++) {
+				if(i > 11) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(3).getPlayerId() + ")");
+					continue;
+				}
+				if(i > 7) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(2).getPlayerId() + ")");
+					continue;
+				}
+				if(i > 3) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(1).getPlayerId() + ")");
+					continue;
+				}
+				if(i > 0) {
+					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(0).getPlayerId() + ")");
+					continue;
+				}
+//				System.out.println("waarde: " + randomIDS.get(i));
+//				database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(j).getPlayerId() + ")");
 			}
 		}
 	}
@@ -460,7 +473,7 @@ public class Game {
 	
 	public ArrayList<Integer> getChosenIds(){
 		ArrayList<Integer> chosenId = new ArrayList<Integer>();
-		for (int i = 0; i < controller.getGamemode(); i++) {
+		for (int i = 0; i < players.size(); i++) {
 			chosenId.add((int)database.Select("SELECT patterncard_idpatterncard FROM player WHERE idgame = " + idgame + ";").get(i).get(0));
 		}
 		return chosenId;
@@ -489,6 +502,13 @@ public class Game {
 	}
 	
 	
+	
+	public boolean checkIfFilled() {
+		if(database.Select("SELECT patterncardoption.patterncard_idpatterncard FROM tjpmsalt_db2.patterncardoption LEFT JOIN player ON player_idplayer = idplayer WHERE game_idgame = " + idgame + ";").isEmpty()) {
+			return false;
+		}
+		return true;
+	}
 	
 }
 	

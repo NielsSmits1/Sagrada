@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Database.db;
+import controller.CardController;
 
 public class ObjectiveCard {
 
@@ -12,12 +13,13 @@ public class ObjectiveCard {
 	private int card1;
 	private int card2;
 	private db database;
-	
+	private CardController controller;
 	
 	//constructor
-	public ObjectiveCard() {
+	public ObjectiveCard(CardController tc) {
 		random = new Random();
 		database = new db();
+		controller = tc;
 		generateRandomInts();
 	}
 	
@@ -35,12 +37,26 @@ public class ObjectiveCard {
 		return database.Select(query);
 	}
 	
+	public ArrayList<Integer> getIds(){
+		ArrayList<Integer> Ids = new ArrayList<>();
+		for (int i = 0; i < 2; i++) {
+			Ids.add((int)database.Select("SELECT idpublic_objectivecard FROM sharedpublic_objectivecard WHERE idgame = " + controller.getIdGame() + "").get(i).get(0));
+		}
+		return Ids;
+		
+	}
+	
+	public void insertObjectivecard() {
+		generateRandomInts();
+		database.CUD("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card1 + "," + controller.getIdGame() + ");");
+		database.CUD("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card2 + "," + controller.getIdGame() + ");");
+	}
 	private void generateRandomInts() {
-		card1 = random.nextInt(12) + 1;
-		card2 = random.nextInt(12) + 1;
+		card1 = random.nextInt(10) + 1;
+		card2 = random.nextInt(10) + 1;
 
 		while (card2 == card1) {
-			card2 = random.nextInt(12) + 1;
+			card2 = random.nextInt(10) + 1;
 		}
 	}
 }

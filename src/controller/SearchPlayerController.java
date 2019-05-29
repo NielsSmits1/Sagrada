@@ -64,6 +64,7 @@ public class SearchPlayerController {
 			}
 			if(!g.alreadyInGame(self)) {
 				g.addPlayer(self, "Uitdager", g.getRandomColor());
+				//TODO set the toolcards, objectivecards and patterncards.
 			}
 			g.addPlayer(player, "Uitgedaagde", g.getRandomColor());
 			//games.add(g);
