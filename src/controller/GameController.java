@@ -212,7 +212,7 @@ public class GameController {
 	}
 
 	public void setPatternCard(int id) {
-		boardcontroller.setPatternCard(id);
+		game.insertChosenID(id);
 	}
 
 	public BoardPane returnBoardPane() {
