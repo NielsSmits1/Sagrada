@@ -1,6 +1,6 @@
 package View;
 
-import controller.ToolcardController;
+import controller.CardController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,14 +17,14 @@ public class ToolCardPane extends Pane {
 	private int toolCardId;
 	private Button button;
 	private VBox cardPropertiesAlignment;
-	private ToolcardController toolcardController;
+	private CardController controller;
 	private ImageView toolcards;
 	private HBox BuyAlignment;
 
 	private Image toolcard;
 
-	public ToolCardPane(int id, String description, ToolcardController toolcardController) {
-		this.toolcardController = toolcardController;
+	public ToolCardPane(int id, CardController cc) {
+		this.controller = cc;
 		this.toolCardId = id;
 		switch (id) {
 		case 1:
@@ -83,7 +83,7 @@ public class ToolCardPane extends Pane {
 		if (price.getText().equals("1")) {
 			changePrice("2");
 		}
-		toolcardController.toolcardClicked(toolCardId);
+		controller.toolcardClicked(toolCardId);
 	}
 
 	private void setPrice() {
@@ -103,6 +103,6 @@ public class ToolCardPane extends Pane {
 	}
 
 	public void setPlayerTokens() {
-		toolcardController.setPlayerTokens(getPricetag());
+		controller.setPlayerTokens(getPricetag());
 	}
 }
