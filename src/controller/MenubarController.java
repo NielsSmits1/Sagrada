@@ -24,16 +24,16 @@ public class MenubarController {
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private ChatBoxController chat;
 	private GameController gc;
-	
-	
-	
-	private HashMap <Menu, GamePane> gamepanes = new HashMap<>();
+	private Menu m;
+	private MenuItem mi;
+
+	private HashMap<Menu, GamePane> gamepanes = new HashMap<>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
 		this.scene = scene;
 		this.inlog = controller;
-		
+
 //		game = new GameController(scene);
 		menu = new Menubar(scene);
 
@@ -42,16 +42,18 @@ public class MenubarController {
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 //		menu.getHelp().setOnAction(e -> game.builtAlertbox());
 //		inlogController.getHome().getHome().getGameTab().setOnAction(e ->game.builtGameStage());
-		
+
 	}
 
 	public Menubar getMenubar() {
 		return menu;
 	}
+
 	public void showStats() {
-		alert.setHeaderText(getStatsSelf());		
+		alert.setHeaderText(getStatsSelf());
 		alert.showAndWait();
 	}
+
 	public String getStatsSelf() {
 		String stats = "Aantal gewonnen en verloren potjes: " + self.getTimesWon() + " : " + self.getTimesLost()
 				+ "\nHoogst behaalde score: " + self.getHighScore() + "\nMeest geplaatste dobbelsteenkleur: "
@@ -71,24 +73,34 @@ public class MenubarController {
 	}
 
 	public void addGame(Game g) {
-		gc = new GameController(g); 
-		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
-		MenuItem mi = new MenuItem();
+		gc = new GameController(g);
+		this.m = new Menu("Gamenummer : " + gc.getIdGame());
+		this.mi = new MenuItem("open");
 		m.getItems().add(mi);
 		menu.addGameItem(m);
-		gc.buildGame();
-		gamepanes.put(m, gc.getGamepane());
-		mi.setOnAction(e-> setRoot(m, gc.getGamepane()));
+		refresh(g);
 
+	}
+
+	public void refresh(Game g) {
+		if (gamepanes.containsKey(m)) {
+			buildMenuItem();
+
+		} else {
 	
+		addGame(g);
+		}
 	}
 	
+	public void buildMenuItem() {
+		gc.buildGame();
+		gamepanes.put(m, gc.getGamepane());
+		mi.setOnAction(e -> setRoot(m, gc.getGamepane()));
+	}
+
 	public void setRoot(Menu m, GamePane gp) {
 		System.out.println("Game geopend");
 		scene.setRoot(gp);
 	}
-	
-	
-	
 
 }

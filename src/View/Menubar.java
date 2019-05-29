@@ -73,12 +73,7 @@ public class Menubar extends MenuBar {
 	}
 
 	//done
-	public void creatNewTabs() {
-		Menu gamex = new Menu("game" + x);
-		this.getMenus().add(gamex);
-		gameList.add(gamex);
-		x ++;
-	}
+
 
 	public void addGameItem(Menu m) {
 

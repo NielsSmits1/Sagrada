@@ -33,6 +33,7 @@ public class HomeController {
 	private Player self;
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
+	private Game game;
 
 	public HomeController(Player self, MenubarController mbc) {
 		this.mbc = mbc;
@@ -68,21 +69,24 @@ public class HomeController {
 	private void startTimeline() {
 		Timeline timeline = new Timeline();
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e -> test()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e -> refresh()));
 		timeline.play();
 	}
 
-	private void test() {
+	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
+		mbc.refresh(game);
 	}
 
-	private void openGames() {
+	private Game openGames() {
 		// open the games that are being played, or are ready to be played
 		for (Game g : self.getOpenGames()) {
 			mbc.addGame(g);
+			game = g;
+			
 		}
-
+		return game;
 	}
 
 	public String getUsername() {
