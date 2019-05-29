@@ -333,7 +333,7 @@ public class Player {
 		ArrayList<Game> games = new ArrayList<Game>();
 		for (ArrayList<Object> a : this.getPlayedGames()) {
 			if ((long) a.get(0) == (countPlayersGame((int) a.get(1)) - 1)) {
-				setChallengerToAccepted();
+				setChallengerToAccepted((int) a.get(1));
 			}
 			if ((long) a.get(0) == countPlayersGame((int) a.get(1))) { // if all players accepted
 				Game g = new Game();
@@ -380,9 +380,8 @@ public class Player {
 		return (long) database.Select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
 	}
 
-	public void setChallengerToAccepted() {
-		database.CUD(
-				"UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitdager' and game_idgame in (select game_idgame from (select * FROM player) as playerr )"); // idplayer
+	public void setChallengerToAccepted(int idgame) {
+		database.CUD("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitdager' and game_idgame = '"+ idgame +"'"); // idplayer
 																																																		// needs
 																																																		// to
 																																																		// be
