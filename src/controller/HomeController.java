@@ -52,7 +52,7 @@ public class HomeController {
 		home.getGameTab().setOnAction(e -> {
 			Stage stage = new Stage();
 			Scene scene = new Scene(new Pane());
-			ChatBoxController chat = new ChatBoxController();
+//			ChatBoxController chat = new ChatBoxController();
 			scene.setRoot(chat.getScreen());
 			stage.setScene(scene);
 			stage.show();

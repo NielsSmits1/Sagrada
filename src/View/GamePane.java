@@ -57,6 +57,7 @@ public class GamePane extends BorderPane {
 	/// **
 
 	public GamePane(GameController gameController) {
+		this.controller = gameController;
 		r = new Random();
 		playField = new ArrayList<>();
 		toolcardIsActiveOne = false;
@@ -75,7 +76,7 @@ public class GamePane extends BorderPane {
 		diceRow3.setSpacing(20);
 
 
-		this.controller = gameController;
+		
 		setBoard();
 		addDice();
 		finish();
@@ -155,6 +156,7 @@ public class GamePane extends BorderPane {
 	private void setCards() {
 		// Creates new cards
 		this.close = new Button("opgeven");
+		
 		pc = new PrivateCardPane();
 		ocp = new ObjectiveCardPane();
 		ocp2 = new ObjectiveCardPane();
@@ -187,7 +189,7 @@ public class GamePane extends BorderPane {
 		tcp1.setSpacing(5);
 		VBox finalTcp = new VBox(toolCard, tcp1);
 		finalTcp.setSpacing(5);
-		HBox toolCards = new HBox(finalOc, finalPc, finalTcp, close);
+		HBox toolCards = new HBox(finalOc, finalPc, finalTcp, new VBox(controller.getChatBox().getScreen(), close));
 		toolCards.setSpacing(5);
 		bottom.setRight(toolCards);
 
