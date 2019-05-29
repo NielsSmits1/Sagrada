@@ -49,8 +49,8 @@ public class Game {
 		setDiceArray();
 		fillTokenArrayList();
 		roundNumber = getLastRound();
-		turnNumber = getTurnNumber();
-		turnPlayer = setWhoseTurnItIs();
+//		turnNumber = getTurnNumber();
+//		turnPlayer = setWhoseTurnItIs();
 		
 
 	}
