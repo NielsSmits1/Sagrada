@@ -86,13 +86,18 @@ public class GameController {
 	public void buildGame() {
 		for (Player p : game.getPlayers()) {
 			p.setPc();
-			System.out.println(p.getSelf());
 			boardcontroller.addBoard(p.getPc(), p);
 
 		}
 		gamePane = new GamePane(this);
 	}
-
+	
+	public PatterncardSelect buildPatterncardoptions() {
+		boardcontroller.setOwnOptions();
+		option = new PatterncardSelect(this);
+		return option;
+	}
+	
 	public Game getGame() {
 		return this.game;
 	}
