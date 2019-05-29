@@ -8,7 +8,6 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
@@ -27,7 +26,7 @@ public class MenubarController {
 	private ChatBoxController chat;
 	private GameController gc;
 
-	private HashMap<MenuItem, GameController> gamepanes = new HashMap<>();
+	private HashMap<RadioMenuItem, GameController> gamepanes = new HashMap<>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
@@ -99,8 +98,11 @@ public class MenubarController {
 			} else {
 				gc.buildGame();
 				scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamepane()));
-				mi.setSelected(true);
+				for(RadioMenuItem r : gamepanes.keySet()) {
+					r.setDisable(false);
+				}
 				mi.setDisable(true);
+				
 			}
 	}
 

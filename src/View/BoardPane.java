@@ -45,7 +45,7 @@ public class BoardPane extends Pane {
 		score = new Label("" + p.getScore());
 		this.username = new Label(p.getUsername());
 		this.username.setLayoutX(175);
-		this.username.setLayoutY(170);
+		this.username.setLayoutY(70);
 		setShape();
 		setGrid();
 		getChildren().addAll(top, square, tokenPlaceholder, label, this.username, score);
@@ -102,23 +102,23 @@ public class BoardPane extends Pane {
 	// TODO THOSE NUMBERS MIGHT BE MOVED TO A NEW MODEL
 	private void setShape() {
 		label = new Label("1");
-		label.setLayoutX(195);
-		label.setLayoutY(240);
-		score.setLayoutX(245);
-		score.setLayoutY(240);
-		top = new QuadCurve(0, 300, 200, 0, 400, 300);
+		label.setLayoutX(145);
+		label.setLayoutY(40);
+		score.setLayoutX(205);
+		score.setLayoutY(40);
+		top = new QuadCurve(0, 100, 200, -100, 300, 100);
 		tokenPlaceholder = new Circle();
 		tokenPlaceholder.setRadius(25);
-		tokenPlaceholder.setCenterX(200);
-		tokenPlaceholder.setCenterY(250);
+		tokenPlaceholder.setCenterX(150);
+		tokenPlaceholder.setCenterY(50);
 		tokenPlaceholder.setFill(Color.TRANSPARENT);
 		tokenPlaceholder.setStroke(Color.BLACK);
 		
 		square = new Rectangle();
 		square.setX(0);
-		square.setY(300);
-		square.setWidth(400);
-		square.setHeight(320);
+		square.setY(100);
+		square.setWidth(300);
+		square.setHeight(240);
 		square.setFill(Color.WHITE);
 		square.setStroke(Color.BLACK);
 		top.setStroke(Color.BLACK);
