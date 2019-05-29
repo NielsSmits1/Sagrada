@@ -259,6 +259,7 @@ public class Game {
 				break;
 			}
 			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
+			diceArray = null;
 		}
 	}
 
@@ -474,7 +475,7 @@ public class Game {
 	public ArrayList<Integer> getChosenIds(){
 		ArrayList<Integer> chosenId = new ArrayList<Integer>();
 		for (int i = 0; i < players.size(); i++) {
-			chosenId.add((int)database.Select("SELECT patterncard_idpatterncard FROM player WHERE idgame = " + idgame + ";").get(i).get(0));
+			chosenId.add((int)database.Select("SELECT patterncard_idpatterncard FROM player WHERE game_idgame = " + idgame + ";").get(i).get(0));
 		}
 		return chosenId;
 	}
@@ -508,6 +509,15 @@ public class Game {
 			return false;
 		}
 		return true;
+	}
+	
+	public void insertChosenID(int id) {
+		for (Player p : players) {
+			if(p.getSelf()) {
+				database.CUD("UPDATE player SET patterncard_idpatterncard = " + id + " WHERE idplayer = " + p.getPlayerId() +";");
+			}
+		}
+		
 	}
 	
 }

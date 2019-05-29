@@ -59,8 +59,8 @@ public class GameController {
 			p.setPatternCardId(p.getPatternIdFromDB());
 			p.setPc();
 			players.add(p);
-			getOwnPlayerId();
-			getOwnGameIdSelf();
+//			getOwnPlayerId();
+//			getOwnGameIdSelf();
 
 		}
 		game.insertPlayers(players);
@@ -212,7 +212,7 @@ public class GameController {
 	}
 
 	public void setPatternCard(int id) {
-		boardcontroller.setPatternCard(id);
+		game.insertChosenID(id);
 	}
 
 	public BoardPane returnBoardPane() {
