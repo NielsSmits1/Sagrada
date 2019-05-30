@@ -49,7 +49,7 @@ public class GamePane extends BorderPane {
 	private DecisionPane decisionpane;
 	private Random r;
 	private RoundTrack track;
-	private Button turnSave = new Button("Beurt opslaan");
+	private Button endTurn;
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -77,12 +77,15 @@ public class GamePane extends BorderPane {
 		diceRow1.setSpacing(20);
 		diceRow2.setSpacing(20);
 		diceRow3.setSpacing(20);
+		
+		endTurn = new Button("Beëindig beurt.");
+		endTurn.setOnAction(e -> handle());
 
 		track = new RoundTrack();
 
 		setBoard();
 		addTrack();
-		//addDice();
+		addDice();
 		finish();
 	}
 
@@ -113,6 +116,7 @@ public class GamePane extends BorderPane {
 
 		boards = new HBox();
 		boards.getChildren().addAll(playField);
+		boards.getChildren().add(endTurn);
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 5));
 	}
@@ -179,7 +183,7 @@ public class GamePane extends BorderPane {
 	private void setCards() {
 		// Creates new cards
 		privateObjectiveCard = new PrivateCardPane();
-
+		privateObjectiveCard.setDice(controller.getPrivateCardColor());
 		// sets dice in rows
 		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
 		allDiceRows.setSpacing(8);
@@ -233,7 +237,7 @@ public class GamePane extends BorderPane {
 
 	}
 	public Button getTurnSave() {
-		return this.turnSave;
+		return this.endTurn;
 	}
 
 	/// *
@@ -439,6 +443,10 @@ public class GamePane extends BorderPane {
 
 	public Button getClose() {
 		return close;
+	}
+	
+	public void handle() {
+		controller.endTurn();
 	}
 
 }

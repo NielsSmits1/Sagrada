@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Optional;
 
 import View.BoardPane;
@@ -82,10 +83,9 @@ public class GameController {
 
 	public GameController(Game g) {
 		this.game = g;
-		//game.setPlayableDices();
+		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
-
 	}
 
 	public void buildGame() {
@@ -108,7 +108,7 @@ public class GameController {
 
 	public PatterncardSelect buildPatterncardoptions() {
 		if(!game.checkIfFilled()) {
-			System.out.println("hoi");
+			game.startGame();
 			boardcontroller.setOptions();
 			cardcontroller.insertCards();
 		}
@@ -119,6 +119,15 @@ public class GameController {
 
 	public Game getGame() {
 		return this.game;
+	}
+	
+	public String getPrivateCardColor() {
+		for(Player p : game.getPlayers()) {
+			if(p.getSelf()) {
+				return p.getPrivateCardColor();
+			}
+		}
+		return null;
 	}
 
 	public void addOpponets(Opponent op) {
@@ -317,6 +326,20 @@ public class GameController {
 	
 	public int getOwnPatternId() {
 		return game.getOwnPatternId();
+	}
+	
+	public Player getTurnPlayer() {
+		return game.getTurnPlayer();
+	}
+	
+	public void endTurn() {
+		if(getTurnPlayer().getSelf()) {
+			for(BoardPane bp : boardcontroller.getBoards()) {
+				if(bp.getSelf()) {
+					bp.resetPlaced();
+				}
+			}
+		}
 	}
 		
 	

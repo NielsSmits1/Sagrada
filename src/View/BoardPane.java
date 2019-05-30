@@ -2,6 +2,7 @@ package View;
 
 import java.util.ArrayList;
 
+
 import controller.BoardController;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -30,7 +31,7 @@ public class BoardPane extends Pane {
 	private Label username;
 	private Label score;
 	private boolean self;
-	
+	private boolean placed;
 	
 
 	/// *
@@ -39,6 +40,7 @@ public class BoardPane extends Pane {
 	/// for the number of the windowPattern.
 	/// **
 	public BoardPane(BoardController bc, PatternCard pc, Player p) {
+		placed = false;
 		allowsMovement = false;
 		controller = bc;
 		chosenCard = pc;
@@ -224,10 +226,13 @@ public class BoardPane extends Pane {
 				board.get(i).setDice(selected);
 			}
 		}
+		placed = true;
 	}
 
 	public void giveCords(int x, int y) {
-		controller.validateMove(x, y);
+		if(!placed) {
+			controller.validateMove(x, y);
+		}
 	}
 
 	public void getTurns() {
@@ -299,6 +304,10 @@ public class BoardPane extends Pane {
 	
 	public boolean getSelf() {
 		return self;
+	}
+	
+	public void resetPlaced() {
+		placed = false;
 	}
 
 }

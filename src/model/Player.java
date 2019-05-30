@@ -389,6 +389,10 @@ public class Player {
 																																																		// be
 																																																		// variabel
 	}
+	
+	public String getPrivateCardColor() {
+		return objective_color;
+	}
 
 	public boolean usedInvalidCharacters() {
 		if (username.matches("[a-zA-Z0-9]+") && password.matches("[a-zA-Z0-9]+")) {

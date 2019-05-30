@@ -23,7 +23,7 @@ public class Game {
 	private int roundNumber;
 	private int turnNumber;
 	private Player turnPlayer;
-
+	
 
 
 	
@@ -44,11 +44,15 @@ public class Game {
 		diceArray = new ArrayList<>();
 		token = new ArrayList<Gamefavortoken>();
 		database = new db();
+		
+
+	}
+	
+	public void startGame() {
 		insertDicesIntoDatabase();
 		diceData = getSelect();
 		setDiceArray();
 		fillTokenArrayList();
-
 	}
 	public int getTurn() {
 		return this.turnNumber;
@@ -147,7 +151,7 @@ public class Game {
 		if(round.get(0).get(0)==null) {
 			// als null - geen rondes: begin bij ronde 1
 			return 1;
-		}else if((long)round.get(0).get(0) == 10) {
+		}else if((int)round.get(0).get(0) == 10) {
 			// als 10 game voorbij duuuh
 			// hoezo opent hij dit scherm
 			return 10;
@@ -305,12 +309,20 @@ public class Game {
 
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
+		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT gamedie.dienumber, gamedie.diecolor, gamedie.eyes FROM gamedie LEFT JOIN playerframefield ON gamedie.dienumber != playerframefield.dienumber AND gamedie.diecolor != playerframefield.diecolor AND gamedie.idgame = playerframefield.idgame WHERE round = 1 AND roundtrack IS NULL AND gamedie.idgame = " + idgame +";");
+		if(leftoverDices != null) {
+			//TODO PAK DE DOBBELSTENEN GEWOON DAN.
+			for (int i = 0; i < leftoverDices.size(); i++) {
+				playableDices.add(new Dice((int)leftoverDices.get(i).get(0), (String)leftoverDices.get(i).get(1), (int)leftoverDices.get(i).get(2)));
+			}
+			return;
+		}
 				// TODO Make sure the same combination can't be added multiple times, a solution
 				// might be the random function in SQL, and also update the round.
 				ArrayList<ArrayList<Object>> randomDice = database.Select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size()*2)+1) +"");
 				for (int i = 0; i < randomDice.size(); i++) {
 					playableDices.add(new Dice((int)randomDice.get(i).get(0), (String)randomDice.get(i).get(1), (int)randomDice.get(i).get(2)));
-					database.CUD("UPDATE gamedie SET round = 1 WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieNumber() +"'");
+					database.CUD("UPDATE gamedie SET round = 1 WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieColor() +"'");
 				}
 					
 				
@@ -379,6 +391,7 @@ public class Game {
 	}
 
 	public void fillTokenArrayList() {
+		System.out.println(idgame);
 		for (int i = 1; i < 25; i++) {
 			token.add(new Gamefavortoken(i));
 			database.CUD("INSERT INTO gamefavortoken (idfavortoken, idgame) VALUES (" + i + "," + idgame + ")");
