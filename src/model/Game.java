@@ -316,20 +316,11 @@ public class Game {
 			}
 			return;
 		}
-				// TODO Make sure the same combination can't be added multiple times, a solution
-				// might be the random function in SQL, and also update the round.
 				ArrayList<ArrayList<Object>> randomDice = database.Select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size()*2)+1) +"");
 				for (int i = 0; i < randomDice.size(); i++) {
 					playableDices.add(new Dice((int)randomDice.get(i).get(0), (String)randomDice.get(i).get(1), (int)randomDice.get(i).get(2)));
 					database.CUD("UPDATE gamedie SET round = 1 WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieColor() +"'");
 				}
-					
-				
-			
-			// if(database.Select("SELECT FROM gamedie WHERE dieumber = " + randomDie + "
-			// AND diecolor = '" + color + "'"))
-			// }
-			// System.out.println("" + diceArray.get(randomDie).getDieNumber());
 
 		}
 
