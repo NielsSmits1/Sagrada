@@ -310,8 +310,7 @@ public class Game {
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
 		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT gamedie.dienumber, gamedie.diecolor, gamedie.eyes FROM gamedie LEFT JOIN playerframefield ON gamedie.dienumber != playerframefield.dienumber AND gamedie.diecolor != playerframefield.diecolor AND gamedie.idgame = playerframefield.idgame WHERE round = 1 AND roundtrack IS NULL AND gamedie.idgame = " + idgame +";");
-		if(leftoverDices != null) {
-			//TODO PAK DE DOBBELSTENEN GEWOON DAN.
+		if(!leftoverDices.isEmpty()) {
 			for (int i = 0; i < leftoverDices.size(); i++) {
 				playableDices.add(new Dice((int)leftoverDices.get(i).get(0), (String)leftoverDices.get(i).get(1), (int)leftoverDices.get(i).get(2)));
 			}
