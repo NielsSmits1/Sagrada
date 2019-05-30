@@ -91,6 +91,7 @@ public class GameController {
 	public void buildGame() {
 		for (Player p : game.getPlayers()) {
 			p.setPc();
+			p.setTokenAmount();
 			boardcontroller.addBoard(p.getPc(), p);
 
 		}
@@ -229,6 +230,7 @@ public class GameController {
 
 	public void setPatternCard(int id) {
 		game.insertChosenID(id);
+		game.assignTokensToPlayer();
 		boardcontroller.setPatternCard(id);
 	}
 

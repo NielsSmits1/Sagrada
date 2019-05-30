@@ -398,6 +398,15 @@ public class Game {
 		}
 	}
 	
+	public void assignTokensToPlayer() {
+		for(Player p : players) {
+			if(p.getSelf()) {
+					p.setTokenAmount(p.getPc().getDifficulty());
+					database.CUD("UPDATE gamefavortoken SET idplayer = " + p.getPlayerId() + " WHERE idplayer is null AND idgame = " + idgame +" LIMIT " + p.getPc().getDifficulty() + ";");
+			}
+		}
+	}
+	
 	public void updateTokenArrayList(int difficulty) {
 		for (int i = 1; i <= difficulty; i++) {
 			database.CUD("UPDATE gamefavortoken SET idplayer = " + yourself + " WHERE idFavortoken = " + i +" AND idgame = " + idgame + ";");
@@ -407,10 +416,6 @@ public class Game {
 	public void updatePlayedTokens(int amountPlayed) {
 		
 	}
-	
-//	public void addGametoolcard(int id) {
-//		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + id + ", " + idgame + ");");
-//	}
 	
 	public void addTokensToGametoolcard(int amount, int toolcardid) {
 		if(getLeftoverTokens() >= amount) {
@@ -537,6 +542,7 @@ public class Game {
 		for (Player p : players) {
 			if(p.getSelf()) {
 				p.setPatternCardId(id);
+				p.setPc();
 				database.CUD("UPDATE player SET patterncard_idpatterncard = " + id + " WHERE idplayer = " + p.getPlayerId() +";");
 			}
 		}

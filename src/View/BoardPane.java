@@ -26,7 +26,7 @@ public class BoardPane extends Pane {
 	private PatternPane selected;
 	private int patternid;
 	private boolean allowsMovement;
-	private Label label;
+	private Label tokenAmount;
 	private PatternCard chosenCard;
 	private Label username;
 	private Label score;
@@ -46,27 +46,28 @@ public class BoardPane extends Pane {
 		chosenCard = pc;
 		self = p.getSelf();
 		score = new Label("" + p.getScore());
+		tokenAmount = new Label("" + p.getTokenAmount());
 		this.username = new Label(p.getUsername());
 		this.username.setLayoutX(175);
 		this.username.setLayoutY(70);
 		setShape();
 		setGrid();
-		getChildren().addAll(top, square, tokenPlaceholder, label, this.username, score);
+		getChildren().addAll(top, square, tokenPlaceholder, tokenAmount, this.username, score);
 //		setLabelValue(controller.getDifficulty());
 		setBoard();
 		addPlacedDice(p.getDiceField());
 	}
 	
-	public BoardPane(BoardController bc, PatternCard pc) {
-		allowsMovement = false;
-		controller = bc;
-		chosenCard = pc;
-		setShape();
-		setGrid();
-		getChildren().addAll(top, square, tokenPlaceholder, label);
-//		setLabelValue(controller.getDifficulty());
-		setBoard();
-	}
+//	public BoardPane(BoardController bc, PatternCard pc) {
+//		allowsMovement = false;
+//		controller = bc;
+//		chosenCard = pc;
+//		setShape();
+//		setGrid();
+//		getChildren().addAll(top, square, tokenPlaceholder, tokenAmount);
+////		setLabelValue(controller.getDifficulty());
+//		setBoard();
+//	}
 	
 	public void setChosenCard(PatternCard chosenCard) {
 		this.chosenCard = chosenCard;
@@ -105,9 +106,8 @@ public class BoardPane extends Pane {
 
 	// TODO THOSE NUMBERS MIGHT BE MOVED TO A NEW MODEL
 	private void setShape() {
-		label = new Label("1");
-		label.setLayoutX(145);
-		label.setLayoutY(40);
+		tokenAmount.setLayoutX(145);
+		tokenAmount.setLayoutY(40);
 		score.setLayoutX(205);
 		score.setLayoutY(40);
 		top = new QuadCurve(0, 100, 200, -100, 300, 100);
@@ -295,11 +295,11 @@ public class BoardPane extends Pane {
 	}
 	
 	public void setLabelValue(int value) {
-		label.setText("" + value);
+		tokenAmount.setText("" + value);
 	}
 	
 	public void decreaseLabelValue(int minus) {
-		label.setText("" + (Integer.parseInt(label.getText()) - minus));
+		tokenAmount.setText("" + (Integer.parseInt(tokenAmount.getText()) - minus));
 	}
 	
 	public boolean getSelf() {

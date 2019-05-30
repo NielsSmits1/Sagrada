@@ -68,12 +68,12 @@ public class BoardController {
 		return gameController.getSelected();
 	}
 
-	public void setBoard() {
-//		players.add(new BoardPane(this, finalCard));
-		for (int i = 0; i < getGamemode(); i++) {
-			boards.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
-		}
-	}
+//	public void setBoard() {
+////		players.add(new BoardPane(this, finalCard));
+//		for (int i = 0; i < getGamemode(); i++) {
+//			boards.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
+//		}
+//	}
 
 	public BoardPane returnBoardPane() {
 		return boardpane;
@@ -94,7 +94,6 @@ public class BoardController {
 
 	public void setRandomCard() {
 		finalCard = new PatternCard(getOwnId(), getIdGame(), this);
-		setBoard();
 		updateToken();
 		//gameController.setRootpane();
 	}

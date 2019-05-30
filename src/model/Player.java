@@ -21,6 +21,7 @@ public class Player {
 	private String objective_color;
 	private int patternCardId;
 	private PatternCard pc;
+	private int tokenAmount;
 
 	// private String differendPlayer;
 
@@ -30,6 +31,19 @@ public class Player {
 		this.password = p;
 		
 	}
+	
+	public void setTokenAmount(int amount) {
+		tokenAmount = amount;
+	}
+	
+	public void setTokenAmount() {
+		tokenAmount = pc.getDifficulty();
+	}
+	
+	public int getTokenAmount() {
+		return tokenAmount;	
+	}
+	
 	
 	public Player(String username) {
 		this.username = username;
