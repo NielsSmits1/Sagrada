@@ -71,10 +71,10 @@ public class MenubarController {
 		scene.setRoot(inlog.getInlog());
 	}
 
-	public void addGame(Game g) {
+	public void addGame(Game g, HomeController hc) {
 		gc = new GameController(g); 
 		g.buildRounds();
-//		g.buildTurns();
+        g.buildTurns();
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
 		RadioMenuItem mi = new RadioMenuItem("open game");
 		m.getItems().add(mi);

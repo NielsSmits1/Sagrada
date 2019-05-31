@@ -16,7 +16,6 @@ public class BoardController {
 	private PatternCard checkPlacement;
 	private Opponent opponent;
 	private BoardPane boardpane = new BoardPane();
-	private ArrayList<BoardPane> opponentBoard;
 	private GameController gameController;
 	private PatternCardOptions allOptions;
 	private ArrayList<BoardPane> boards;
@@ -24,7 +23,6 @@ public class BoardController {
 	public BoardController(GameController gameController) {
 		this.gameController = gameController;
 		boards = new ArrayList<>();
-		opponentBoard = new ArrayList<>();
 		checkPlacement = new PatternCard(this, this.gameController.getOwnId(), this.gameController.getIdGame(), this.gameController.getOwnPatternId());
 	}
 	/// *
@@ -114,10 +112,6 @@ public class BoardController {
 		return opponent.getOpponents();
 	}
 
-	public ArrayList<BoardPane> getOpponentBoard() {
-		return opponentBoard;
-	}
-
 	public void setAllowsMovement(int i) {
 		boardpane.enableDiceMovement();
 		boardpane.allowMovement();
@@ -165,6 +159,9 @@ public class BoardController {
 	
 	public void addBoard(PatternCard pc, Player p) {
 		boards.add(new BoardPane(this, pc, p));
+	}
+	public void emptyBoards() {
+		this.boards = new ArrayList<BoardPane>();
 	}
 
 }

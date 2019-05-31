@@ -73,6 +73,12 @@ public class Game {
 		roundNumber = getLastRound();
 		
 	}
+	public void refreshCurrentPlayer() {
+		roundNumber = getLastRound();
+		turnNumber = getTurnNumber();
+		turnPlayer = setWhoseTurnItIs();
+		
+	}
 	public Player setWhoseTurnItIs() {
 		String turnplayer = (String)database.Select("select username from player where isCurrentPlayer = 1 and game_idgame = " +this.idgame).get(0).get(0);
 		for(Player p: players) {
@@ -124,7 +130,6 @@ public class Game {
 	private void setNewCurrentPlayerDB() {
 		updateCurrentPlayer();
 		database.CUD("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = " + this.idgame);
-		System.out.println("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = " + this.idgame);
 		
 	}
 	private void newRound() {
@@ -312,15 +317,16 @@ public class Game {
 			for (int i = 0; i < leftoverDices.size(); i++) {
 				playableDices.add(new Dice((int)leftoverDices.get(i).get(0), (String)leftoverDices.get(i).get(1), (int)leftoverDices.get(i).get(2)));
 			}
-			return;
 		}
-				ArrayList<ArrayList<Object>> randomDice = database.Select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size()*2)+1) +"");
-				for (int i = 0; i < randomDice.size(); i++) {
-					playableDices.add(new Dice((int)randomDice.get(i).get(0), (String)randomDice.get(i).get(1), (int)randomDice.get(i).get(2)));
-					database.CUD("UPDATE gamedie SET round = 1 WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieColor() +"'");
-				}
+		else {
+		ArrayList<ArrayList<Object>> randomDice = database.Select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size()*2)+1) +"");
+		for (int i = 0; i < randomDice.size(); i++) {
+			playableDices.add(new Dice((int)randomDice.get(i).get(0), (String)randomDice.get(i).get(1), (int)randomDice.get(i).get(2)));
+			database.CUD("UPDATE gamedie SET round = 1 WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieColor() +"'");
+		}
+		}
 
-		}
+	}
 
 	public int getIdGame() {
 		return idgame;

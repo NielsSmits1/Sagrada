@@ -11,12 +11,15 @@ import View.MyScene;
 import View.ObjectiveCardPane;
 import View.PatterncardSelect;
 import View.ToolCardPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Dice;
 import model.Game;
 import model.Opponent;
@@ -43,44 +46,6 @@ public class GameController {
 	private double playerScore;
 	private Stage gameStage;
 
-	public GameController(MyScene s) {
-
-		scene = s;
-
-		game = new Game();
-		game.setPlayableDices();
-
-		boardcontroller = new BoardController(this);
-		cardcontroller = new CardController(this);
-		game.setGameId(609);
-		ArrayList<Player> players = new ArrayList<Player>();
-		for (int i = 0; i < 4; i++) {
-			Player p = new Player("Speler " + i);
-			p.setId(i + 991);
-			p.setPatternCardId(p.getPatternIdFromDB());
-			p.setPc();
-			players.add(p);
-//			getOwnPlayerId();
-//			getOwnGameIdSelf();
-
-		}
-		game.insertPlayers(players);
-		// }
-		players.get(3).setSelf(true);
-		for (Player p : game.getPlayers()) {
-			// look elke speler in spel
-			if (p.getSelf()) {
-				boardcontroller.addBoard(p.getPc(), p);
-			} else {
-				boardcontroller.addBoard(p.getPc(), p);
-			}
-
-		}
-
-		gamePane = new GamePane(this);
-
-	}
-
 	public GameController(Game g) {
 		this.game = g;
 		game.setPlayableDices();
@@ -99,6 +64,37 @@ public class GameController {
 		cardcontroller.setObjectiveCards();
 		gamePane = new GamePane(this);
 		gamePane.getTurnSave().setOnAction(E -> saveTurn());
+		startTimeline();
+	}
+
+	private void startTimeline() {
+		Timeline timeline = new Timeline();
+		timeline.setCycleCount(timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(6000), e -> refreshGame()));
+		timeline.play();
+	}
+
+	private void refreshGame() {
+		//refresh alles uit den game
+		/*
+		 * Beurt/rondes
+		 * Boards
+		 * Dices
+		 * Score
+		 */
+		game.refreshCurrentPlayer();
+		this.refreshBoards();
+		game.setPlayableDices();
+		gamePane.addDice();
+		
+		
+	}
+
+	private void refreshBoards() {
+		for (Player p : game.getPlayers()) {
+			boardcontroller.addBoard(p.getPc(), p);
+			p.setTokenAmount();
+		}
 	}
 
 	private void saveTurn() {
@@ -240,10 +236,6 @@ public class GameController {
 
 	public int getOwnId() {
 		return game.getOwnId();
-	}
-
-	public ArrayList<BoardPane> getOpponentBoard() {
-		return boardcontroller.getOpponentBoard();
 	}
 
 	public GamePane getGamepane() {
