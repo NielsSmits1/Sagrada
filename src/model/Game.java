@@ -263,7 +263,7 @@ public class Game {
 				break;
 			}
 			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
-			
+//			diceArray = null;
 		}
 	}
 
