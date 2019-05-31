@@ -336,7 +336,6 @@ public class Game {
 			database.CUD("UPDATE gamedie SET round = " + roundNumber + " WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieColor() +"'");
 		}
 		}
-
 	}
 
 	public int getIdGame() {
