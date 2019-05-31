@@ -37,7 +37,11 @@ public class Player {
 	}
 	
 	public void setTokenAmount() {
-		tokenAmount = pc.getDifficulty();
+		tokenAmount = (int) getTokens();
+	}
+	
+	public long getTokens() {
+		return (long)database.Select("SELECT COUNT(*) FROM gamefavortoken WHERE idplayer = " + idplayer +" AND gametoolcard is null;").get(0).get(0);
 	}
 	
 	public int getTokenAmount() {
