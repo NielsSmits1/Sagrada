@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import model.Dice;
 
 public class RoundPane extends StackPane {
 	private DicePane template;
@@ -26,7 +27,7 @@ public class RoundPane extends StackPane {
 		for (int i = 0; i < 10; i++) {
 			template = new DicePane();
 			dices = new ArrayList<>();
-			
+			//dices.add(new DicePane(3, "blauw", 8));
 			template.setTransparent();
 			template.getChildren().addAll(dices);
 			trackSpaces.getChildren().addAll(template);	
@@ -40,7 +41,8 @@ public class RoundPane extends StackPane {
 	}
 	
 	//TODO get roundnumber from model and add dice
-	public void addDice() {
+	public void addDice(int eyes, String color, int number) {
+		dices.add(new DicePane(eyes,color,number));
 		
 	}
 }

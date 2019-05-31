@@ -132,6 +132,10 @@ public class GamePane extends BorderPane {
 		setTop(roundTrack);
 		roundTrack.setAlignment(Pos.CENTER);
 	}
+	
+	public void addDiceTrack(Dice d) {
+		
+	}
 
 	/// *
 	// Add dices to the screen, this constructor of dicePane wants an instance of

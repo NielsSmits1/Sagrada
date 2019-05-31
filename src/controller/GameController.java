@@ -10,6 +10,7 @@ import View.GamePane;
 import View.MyScene;
 import View.ObjectiveCardPane;
 import View.PatterncardSelect;
+import View.RoundPane;
 import View.ToolCardPane;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -34,6 +35,7 @@ public class GameController {
 	private ChatBoxController chatBox = new ChatBoxController();
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
+	private RoundPane rp;
 	private Round round;
 
 	private Button cancel;
@@ -344,6 +346,12 @@ public class GameController {
 		}
 	}
 		
-	
+	public void setDicesTrack() {
+		for(Dice d: game.roundTrackDice()) {
+			rp.addDice(d.getEyes(), d.getDieColor(), d.getDieNumber());
+			
+			
+		}
+	}
 
 }
