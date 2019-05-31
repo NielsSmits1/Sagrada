@@ -335,6 +335,7 @@ public class Game {
 			playableDices.add(new Dice((int)randomDice.get(i).get(0), (String)randomDice.get(i).get(1), (int)randomDice.get(i).get(2)));
 			database.CUD("UPDATE gamedie SET round = " + roundNumber + " WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieColor() +"'");
 		}
+		}
 
 	}
 

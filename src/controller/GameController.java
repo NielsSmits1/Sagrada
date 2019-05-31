@@ -50,6 +50,7 @@ public class GameController {
 		this.game = g;
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
+		
 	}
 
 	public void buildGame() {
@@ -91,20 +92,17 @@ public class GameController {
 	}
 
 	private void refreshBoards() {
-		for (Player p : game.getPlayers()) {
-			boardcontroller.addBoard(p.getPc(), p);
-			p.setTokenAmount();
-		}
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+            boardcontroller.getBoards().get(i).setBoard();
+            boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
+            game.getPlayers().get(i).setTokenAmount();
+        }
 	}
 
 	private void saveTurn() {
-		System.out.println( "eerst: " + shoutCurrentPlayer());
 		game.setNewCurrentPlayer();
 		game.buildTurns();
-		System.out.println( " nu: " + shoutCurrentPlayer());
 		gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
-
-		
 	}
 	
 	public String shoutCurrentPlayer() {
