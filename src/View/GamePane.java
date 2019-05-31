@@ -77,7 +77,7 @@ public class GamePane extends BorderPane {
 		diceRow1.setSpacing(20);
 		diceRow2.setSpacing(20);
 		diceRow3.setSpacing(20);
-		
+
 		endTurn = new Button("Beëindig beurt.");
 		endTurn.setOnAction(e -> handle());
 
@@ -115,7 +115,12 @@ public class GamePane extends BorderPane {
 		// player4 = controller.getOpponentBoard().get(2);
 
 		boards = new HBox();
+		// sets dice in rows
+		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
+
 		boards.getChildren().addAll(playField);
+		boards.getChildren().addAll(allDiceRows);
+
 		boards.getChildren().add(endTurn);
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 5));
@@ -168,13 +173,13 @@ public class GamePane extends BorderPane {
 
 	}
 
-	//Dit kan pas gemaakt worden wanneer gameverloop werkt:
+	// Dit kan pas gemaakt worden wanneer gameverloop werkt:
 
-//	public void getLeftovers() {
-//		if (if (beurt overslaan = amount of players x 2) {
-//			getPlayableDices();
-//		}
-//	}
+	// public void getLeftovers() {
+	// if (if (beurt overslaan = amount of players x 2) {
+	// getPlayableDices();
+	// }
+	// }
 
 	/// *
 	// Sets all cards, also adds the labels above the cards.
@@ -184,11 +189,12 @@ public class GamePane extends BorderPane {
 		// Creates new cards
 		privateObjectiveCard = new PrivateCardPane();
 		privateObjectiveCard.setDice(controller.getPrivateCardColor());
+		
 		// sets dice in rows
-		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
-		allDiceRows.setSpacing(8);
+//		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
+//		allDiceRows.setSpacing(8);
 		bottom = new BorderPane();
-		bottom.setLeft(allDiceRows);
+//		bottom.setLeft(allDiceRows);
 
 		// gets cards information
 		toolcards = controller.getToolCards();
@@ -209,7 +215,7 @@ public class GamePane extends BorderPane {
 		objectiveCardHBox.setSpacing(5);
 		objectiveCardHBox.getChildren().addAll(objectiveCards);
 
-		//aligns objectivecards with the header text "objectivecard"
+		// aligns objectivecards with the header text "objectivecard"
 		VBox alignObjectiveCardWithHeaderText = new VBox(objectiveCardTitle, objectiveCardHBox);
 		alignObjectiveCardWithHeaderText.setSpacing(5);
 
@@ -217,25 +223,27 @@ public class GamePane extends BorderPane {
 		VBox alignPrivateObjectiveCardWithHeaderText = new VBox(privateCardTitle, privateObjectiveCard);
 		alignPrivateObjectiveCardWithHeaderText.setSpacing(5);
 
-		//aligns the toolcards horizontally
+		// aligns the toolcards horizontally
 		HBox toolcardHBox = new HBox();
 		toolcardHBox.getChildren().addAll(toolcards);
 		toolcardHBox.setSpacing(5);
 
-		//aligns the toolcards with the header text "toolcards"
+		// aligns the toolcards with the header text "toolcards"
 		VBox alignToolCardWithHeaderText = new VBox(toolCardTitle, toolcardHBox);
 		alignToolCardWithHeaderText.setSpacing(5);
 
-		//aligns all key cards horizontally
-		HBox allKeyCards = new HBox(alignObjectiveCardWithHeaderText, alignPrivateObjectiveCardWithHeaderText, alignToolCardWithHeaderText);
-		allKeyCards.setPadding(new Insets(0,0,0,10));
-		//, new VBox(controller.getChatBox().getScreen(), close
-		//uit de bovenstaande hbox gehaald, gaf nullpointer.
+		// aligns all key cards horizontally
+		HBox allKeyCards = new HBox(alignObjectiveCardWithHeaderText, alignPrivateObjectiveCardWithHeaderText,
+				alignToolCardWithHeaderText);
+		allKeyCards.setPadding(new Insets(0, 0, 0, 10));
+		// , new VBox(controller.getChatBox().getScreen(), close
+		// uit de bovenstaande hbox gehaald, gaf nullpointer.
 
 		allKeyCards.setSpacing(5);
 		bottom.setCenter(allKeyCards);
 
 	}
+
 	public Button getTurnSave() {
 		return this.endTurn;
 	}
@@ -444,7 +452,7 @@ public class GamePane extends BorderPane {
 	public Button getClose() {
 		return close;
 	}
-	
+
 	public void handle() {
 		controller.endTurn();
 	}
