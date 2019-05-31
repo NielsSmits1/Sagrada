@@ -83,7 +83,6 @@ public class GameController {
 
 	public GameController(Game g) {
 		this.game = g;
-		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
 	}
@@ -97,6 +96,7 @@ public class GameController {
 		}
 		cardcontroller.setToolcards();
 		cardcontroller.setObjectiveCards();
+		game.setPlayableDices();
 		gamePane = new GamePane(this);
 	}
 
@@ -237,6 +237,12 @@ public class GameController {
 		game.assignTokensToPlayer();
 		boardcontroller.setPatternCard(id);
 	}
+	
+	public void setRandomCard() {
+		boardcontroller.setRandomCard();
+		game.insertChosenID();
+		game.assignTokensToPlayer();
+	}
 
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();
@@ -275,9 +281,7 @@ public class GameController {
 		return opponents.length;
 	}
 
-	public void setRandomCard() {
-		boardcontroller.setRandomCard();
-	}
+	
 
 	public int getGamemode() {
 		return game.getGamemode();
