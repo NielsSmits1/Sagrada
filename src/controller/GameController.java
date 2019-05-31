@@ -98,9 +98,18 @@ public class GameController {
 	}
 
 	private void saveTurn() {
-		game.buildTurns();
-		System.out.println(game.getRoundNumber() + "-" + game.getTurn() + ": " + game.getTurnPlayer().getUsername());
+		System.out.println( "eerst: " + shoutCurrentPlayer());
 		game.setNewCurrentPlayer();
+		game.buildTurns();
+		System.out.println( " nu: " + shoutCurrentPlayer());
+		gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
+
+		
+	}
+	
+	public String shoutCurrentPlayer() {
+		return game.getRoundNumber() + "-" + game.getTurn() + ": " + game.getTurnPlayer().getUsername();
+
 	}
 
 	public PatterncardSelect buildPatterncardoptions() {
@@ -331,6 +340,7 @@ public class GameController {
 			for(BoardPane bp : boardcontroller.getBoards()) {
 				if(bp.getSelf()) {
 					bp.resetPlaced();
+					saveTurn();
 				}
 			}
 		}

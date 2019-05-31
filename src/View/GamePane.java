@@ -7,6 +7,7 @@ import controller.GameController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -50,6 +51,8 @@ public class GamePane extends BorderPane {
 	private Random r;
 	private RoundTrack track;
 	private Button endTurn;
+	private VBox userClickables;
+	private Label currentInfo;
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -78,8 +81,8 @@ public class GamePane extends BorderPane {
 		diceRow2.setSpacing(20);
 		diceRow3.setSpacing(20);
 
-		endTurn = new Button("Beëindig beurt.");
-		endTurn.setOnAction(e -> handle());
+		endTurn = new Button("Beï¿½indig beurt.");
+//		endTurn.setOnAction(e -> handle());
 
 		track = new RoundTrack();
 
@@ -106,29 +109,28 @@ public class GamePane extends BorderPane {
 			}
 		}
 
-		// player1 = controller.returnBoardPane();
-		// setBoardPlayerOne();
-		//
-		// player2 = controller.getOpponentBoard().get(0);
-		////
-		// player3 = controller.getOpponentBoard().get(1);
-		// player4 = controller.getOpponentBoard().get(2);
-
+		userClickables = new VBox();
 		boards = new HBox();
+
 		// sets dice in rows
 		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
+		allDiceRows.setSpacing(8);
+
+		// aligns dice with user buttons
+		userClickables.getChildren().add(allDiceRows);
+		userClickables.getChildren().add(endTurn);
 
 		boards.getChildren().addAll(playField);
-		boards.getChildren().addAll(allDiceRows);
+		boards.getChildren().addAll(userClickables);
 
-		boards.getChildren().add(endTurn);
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 5));
 	}
 
 	public void addTrack() {
+		currentInfo = new Label(controller.shoutCurrentPlayer());
 		roundTrack = new HBox();
-		roundTrack.getChildren().addAll(track);
+		roundTrack.getChildren().addAll(currentInfo, track);
 		setTop(roundTrack);
 		roundTrack.setAlignment(Pos.CENTER);
 	}
@@ -189,12 +191,9 @@ public class GamePane extends BorderPane {
 		// Creates new cards
 		privateObjectiveCard = new PrivateCardPane();
 		privateObjectiveCard.setDice(controller.getPrivateCardColor());
-		
+
 		// sets dice in rows
-//		VBox allDiceRows = new VBox(diceRow1, diceRow2, diceRow3);
-//		allDiceRows.setSpacing(8);
 		bottom = new BorderPane();
-//		bottom.setLeft(allDiceRows);
 
 		// gets cards information
 		toolcards = controller.getToolCards();
@@ -243,10 +242,9 @@ public class GamePane extends BorderPane {
 		bottom.setCenter(allKeyCards);
 
 	}
-
-	public Button getTurnSave() {
-		return this.endTurn;
-	}
+//	public Button getTurnSave() {
+//		return this.endTurn;
+//	}
 
 	/// *
 	// Gets all dices out of the DB. This means the size of the Array is 90.
@@ -282,7 +280,8 @@ public class GamePane extends BorderPane {
 		selected = p;
 		if (toolcardIsActiveOne) {
 			decisionpane.showInfoBoxToolcardOne();
-			setRight(decisionpane);
+			userClickables.getChildren().add(decisionpane);
+			;
 		}
 		if (toolcardIsActiveSix) {
 			randomSelected();
@@ -292,7 +291,7 @@ public class GamePane extends BorderPane {
 		}
 		if (toolcardIsActiveEleven) {
 			decisionpane.showInfoBoxToolcardEleven();
-			setRight(decisionpane);
+			userClickables.getChildren().add(decisionpane);
 		}
 	}
 
@@ -314,7 +313,6 @@ public class GamePane extends BorderPane {
 				controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
 
 			}
-
 		}
 	}
 
@@ -352,7 +350,6 @@ public class GamePane extends BorderPane {
 				controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
 
 			}
-
 		}
 	}
 
@@ -388,7 +385,6 @@ public class GamePane extends BorderPane {
 				controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
 
 			}
-
 		}
 	}
 
@@ -453,8 +449,14 @@ public class GamePane extends BorderPane {
 		return close;
 	}
 
-	public void handle() {
-		controller.endTurn();
+	public void setCurrentPlayerLabel(String string) {
+		currentInfo.setText(string);
 	}
+
+//	public void handle() {
+//		System.out.println("ja je druk de goeie knop inteunt");
+//		currentInfo.setText(controller.shoutCurrentPlayer());
+//		controller.endTurn();
+//	}
 
 }

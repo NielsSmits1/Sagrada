@@ -46,13 +46,13 @@ public class BoardController {
 
 	public void validateMove(int x, int y) {
 		if (getSelected() != null && checkPlacement.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor())) {
-			if(gameController.getTurnPlayer().getSelf()) {
+//			if(gameController.getTurnPlayer().getSelf()) {
 				for(BoardPane bp : boards) {
 					if(bp.getSelf()) {
 						bp.setSelected(getSelected(), x, y);
 					}
 				}	
-			}
+//			}
 		}
 	}
 
