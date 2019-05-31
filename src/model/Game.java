@@ -583,6 +583,17 @@ public class Game {
 		return (long)database.Select("select max(seqnr) + 1 from player where game_idgame = " + this.idgame).get(0).get(0);
 	}
 	
+	public ArrayList<ArrayList<Object>> getRoundTrackDice() {
+        return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ this.roundNumber);
+
+    }
+	public ArrayList<Dice> roundTrackDice() {
+		ArrayList<Dice> leftover = new ArrayList<Dice>();
+		for (int i = 0; i < getRoundTrackDice().size(); i++) {
+			leftover.add(new Dice((int)getRoundTrackDice().get(i).get(0), (String)getRoundTrackDice().get(i).get(1), (int)getRoundTrackDice().get(i).get(2)));
+		}
+		return leftover;
+	}
 }
 	
 	
