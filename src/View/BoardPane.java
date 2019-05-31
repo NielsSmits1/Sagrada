@@ -171,6 +171,8 @@ public class BoardPane extends Pane {
 	public void setBoard() {
 		int counter = 0;
 		board = new ArrayList<>();
+        this.getChildren().remove(field);
+		field.getChildren().clear();
 		for (int c = 1; c <= 5; c++) {
 			for (int i = 0; i < 4; i++) {
 				board.add(new PatternPane(this,
