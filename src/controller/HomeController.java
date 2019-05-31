@@ -57,11 +57,11 @@ public class HomeController {
 	private void startTimeline() {
 		Timeline timeline = new Timeline();
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e -> test()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e -> refresh()));
 		timeline.play();
 	}
 
-	private void test() {
+	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
 	}
