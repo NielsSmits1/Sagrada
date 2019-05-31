@@ -96,6 +96,7 @@ public class GameController {
 	private void refreshBoards() {
 		for (int i = 0; i < game.getPlayers().size(); i++) {
             boardcontroller.getBoards().get(i).setBoard();
+            game.getPlayers().get(i).getPc().setPlacedDice();
             boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
             game.getPlayers().get(i).setTokenAmount();
         }
