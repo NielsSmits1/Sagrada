@@ -109,7 +109,8 @@ public class PatternCard {
 		}
 	}
 	
-	private void setPlacedDice() {
+	public void setPlacedDice() {
+		diceField.clear();
 		ArrayList<ArrayList<Object>> placed = database.Select("SELECT position_x, position_y, playerframefield.dienumber, playerframefield.diecolor, gamedie.eyes FROM playerframefield RIGHT JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE player_idplayer = " + yourself + " AND playerframefield.dienumber IS NOT NULL;");
 		for (int i = 0; i < placed.size(); i++) {
 			diceField.add(new PlacedDice((int)placed.get(i).get(0), (int)placed.get(i).get(1), (int)placed.get(i).get(2), (String)placed.get(i).get(3), (int)placed.get(i).get(4)));

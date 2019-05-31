@@ -136,6 +136,9 @@ public class GamePane extends BorderPane {
 		setTop(roundTrack);
 		roundTrack.setAlignment(Pos.CENTER);
 	}
+	public void changeInfo(String lp) {
+		this.currentInfo.setText(lp);
+	}
 	
 	public void addDiceTrack(Dice d) {
 		
