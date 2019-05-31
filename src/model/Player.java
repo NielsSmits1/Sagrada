@@ -344,7 +344,6 @@ public class Player {
 				
 			}
 			else if ((long) a.get(0) == countPlayersGame((int) a.get(1))) { // if all players accepted
-				System.out.println("test");
 				Game g = new Game();
 				g.setGameId((int) a.get(1));
 				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));

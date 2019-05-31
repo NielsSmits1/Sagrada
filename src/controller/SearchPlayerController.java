@@ -63,10 +63,10 @@ public class SearchPlayerController {
 				g.setGameId(c);
 			}
 			if(!g.alreadyInGame(self)) {
-				g.addPlayer(self, "Uitdager", g.getRandomColor());
+				g.addPlayer(self, "Uitdager", g.getRandomColor(), 1,1);
 				//TODO set the toolcards, objectivecards and patterncards.
 			}
-			g.addPlayer(player, "Uitgedaagde", g.getRandomColor());
+			g.addPlayer(player, "Uitgedaagde", g.getRandomColor(), g.getHighestSeNumber() , 0);
 			//games.add(g);
 			cp.refresh();
 			RefreshChoiceBox();
