@@ -104,7 +104,7 @@ public class GameController {
 	}
 	
 	public String shoutCurrentPlayer() {
-		return game.getRoundNumber() + "-" + game.getTurn() + ": " + game.getTurnPlayer().getUsername();
+		return "ronde: " + game.getRoundNumber() + " - beurt: " + game.getTurn() + " - speler: " + game.getTurnPlayer().getUsername();
 
 	}
 

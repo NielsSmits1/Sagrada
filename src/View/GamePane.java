@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import model.Dice;
 
 public class GamePane extends BorderPane {
@@ -127,6 +128,9 @@ public class GamePane extends BorderPane {
 
 	public void addTrack() {
 		currentInfo = new Label(controller.shoutCurrentPlayer());
+		currentInfo.setFont(new Font("Arial", 30));
+		currentInfo.setTextFill(Color.WHITE);
+		currentInfo.setPadding(new Insets(0, 20,0,0));
 		roundTrack = new HBox();
 		roundTrack.getChildren().addAll(currentInfo, track);
 		setTop(roundTrack);
