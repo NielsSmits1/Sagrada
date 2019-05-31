@@ -74,7 +74,7 @@ public class Game {
 		
 	}
 	public void refreshCurrentPlayer() {
-		//roundNumber = getLastRound();
+		roundNumber = getLastRound();
 		turnNumber = getTurnNumber();
 		turnPlayer = setWhoseTurnItIs();
 		
@@ -292,7 +292,6 @@ public class Game {
 	}
 
 	public void updateEyes(int eyes, int dienumber, String color) {
-
 		database.CUD("UPDATE gamedie SET eyes = " + eyes + " WHERE idgame = " + idgame + " AND dienumber = " + dienumber
 				+ " AND diecolor = '" + color + "';");
 	}
@@ -302,23 +301,15 @@ public class Game {
 		return playableDices;
 	}
 
-	public void getDiceWithChosenValue(int dienumber, String color, int value, int chosenvalue) {
-		diceArray.add(new Dice(dienumber, color, value));
+	public void getDiceWithChosenValue(int dienumber, String color,int chosenvalue) {
 		for (int i = 0; i < playableDices.size(); i++) {
 			if (playableDices.get(i).getDieNumber() == dienumber && playableDices.get(i).getDieColor().equals(color)) {
 				playableDices.remove(i);
 			}
 		}
-		int index = r.nextInt(diceArray.size());
-		Dice newDice = diceArray.get(index);
-		while (newDice.getEyes() != chosenvalue) {
-			index = r.nextInt(diceArray.size());
-			newDice = diceArray.get(index);
-		}
-		diceArray.remove(index);
-		playableDices.add(newDice);
+		database.CUD("Update gamedie SET ROUND = null WHERE dienumber = " + dienumber +" AND diecolor = '"+color+"' AND idgame = " + idgame +""); 
+		database.CUD("update gamedie SET Round = " + roundNumber +" WHERE eyes = " + chosenvalue+" AND idgame = " + idgame+" AND ROUND IS NULL ORDER BY RAND() LIMIT 1");
 	}
-
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
 		System.out.println("r: " +roundNumber);
@@ -419,10 +410,8 @@ public class Game {
 		
 	}
 	
-	public void addTokensToGametoolcard(int amount, int toolcardid) {
-		if(getLeftoverTokens() >= amount) {
-			database.CUD("UPDATE gamefavortoken SET gametoolcard = " + getGametoolcard(toolcardid) + " WHERE idgame = " + idgame +"");
-		}
+	public void addTokensToGametoolcard(int tokensGone, int toolcardid, int playerid) {
+			database.CUD("UPDATE gamefavortoken SET gametoolcard = " + getGametoolcard(toolcardid) + ", round = " + roundNumber + " WHERE idgame = " + idgame +" AND idplayer = " + playerid +" AND gametoolcard is null LIMIT " + tokensGone +"");
 	}
 	
 	public int getLeftoverTokens() {

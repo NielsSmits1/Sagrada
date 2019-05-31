@@ -32,6 +32,7 @@ public class BoardPane extends Pane {
 	private Label score;
 	private boolean self;
 	private boolean placed = false;
+	private boolean toolCardActive = false;
 	
 
 	/// *
@@ -231,7 +232,7 @@ public class BoardPane extends Pane {
 	}
 
 	public void giveCords(int x, int y) {
-		if(!placed) {
+		if(!placed && !toolCardActive) {
 			controller.validateMove(x, y);
 		}
 	}
@@ -259,10 +260,12 @@ public class BoardPane extends Pane {
 
 	public void allowMovement() {
 		allowsMovement = true;
+		toolCardActive = true;
 	}
 
 	public void disableMovement(int x, int y) {
 		allowsMovement = false;
+		toolCardActive = false;
 		disableDiceMovement(x, y);
 	}
 
@@ -289,7 +292,9 @@ public class BoardPane extends Pane {
 				}
 			}
 		}
-	}
+		}
+	
+	
 
 	public void setSelectedToNull() {
 		selected = null;
@@ -299,12 +304,20 @@ public class BoardPane extends Pane {
 		tokenAmount.setText("" + value);
 	}
 	
-	public void decreaseLabelValue(int minus) {
-		tokenAmount.setText("" + (Integer.parseInt(tokenAmount.getText()) - minus));
+	public void changeTokenAmount(int value) {
+		tokenAmount.setText("" + value);
 	}
 	
 	public boolean getSelf() {
 		return self;
+	}
+	
+	public void setToolcardActiveFalse() {
+		toolCardActive = false;
+	}
+	
+	public void setToolcardActiveTrue() {
+		toolCardActive = true;
 	}
 	
 	public void resetPlaced() {

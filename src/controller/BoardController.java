@@ -15,7 +15,6 @@ public class BoardController {
 	private PatternCard finalCard;
 	private PatternCard checkPlacement;
 	private Opponent opponent;
-	private BoardPane boardpane = new BoardPane();
 	private GameController gameController;
 	private PatternCardOptions allOptions;
 	private ArrayList<BoardPane> boards;
@@ -55,8 +54,12 @@ public class BoardController {
 	}
 
 	public void validateToolcardTwo(int dieNumber, String color, int xPos, int yPos) {
-		if (finalCard.validateMove(xPos, yPos, dieNumber, color)) {
-			boardpane.moveDiceAccepted(dieNumber, color, xPos, yPos);
+		if (checkPlacement.validateMove(xPos, yPos, dieNumber, color)) {
+			for(BoardPane bp : boards) {
+				if(bp.getSelf()) {
+					bp.moveDiceAccepted(dieNumber, color, xPos, yPos);
+				}
+			}
 		}
 	}
 
@@ -71,9 +74,6 @@ public class BoardController {
 //		}
 //	}
 
-	public BoardPane returnBoardPane() {
-		return boardpane;
-	}
 
 	public ArrayList<PatternCard> getPatternCardOptions() {
 		return patternCardOptions;
@@ -109,30 +109,35 @@ public class BoardController {
 	}
 
 	public void setAllowsMovement(int i) {
-		boardpane.enableDiceMovement();
-		boardpane.allowMovement();
+		for(BoardPane bp : boards) {
+			if(bp.getSelf()) {
+				bp.enableDiceMovement();
+				bp.allowMovement();
+			}
+		}
+		
 		if (i == 2) {
-			finalCard.setColorExamption();
+			checkPlacement.setColorExamption();
 		}
 		if (i == 3) {
-			finalCard.setNumberExamption();
+			checkPlacement.setNumberExamption();
 		}
 		if (i == 9) {
-			finalCard.setNextToDiceExamption();
+			checkPlacement.setNextToDiceExamption();
 		}
 	}
 
 	public void disableMovement(int x, int y) {
-		boardpane.disableMovement(x, y);
+		for(BoardPane bp : boards) {
+			if(bp.getSelf()) {
+				bp.disableMovement(x, y);
+			}
+		}
 	}
 
 
 	public int getDifficulty() {
 		return finalCard.getDifficulty();
-	}
-	
-	public void setPlayerTokens(int minus) {
-		boardpane.decreaseLabelValue(minus);
 	}
 	
 	public void setOptions() {

@@ -253,6 +253,7 @@ public class PatternCard {
 			} else {
 				if (hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
 					moveDie(dienumber, diecolor, old_x, old_y);
+					controller.disableMovement(old_x, old_y);
 				}
 				return false;
 			}

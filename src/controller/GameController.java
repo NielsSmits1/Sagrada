@@ -183,6 +183,20 @@ public class GameController {
 	public ArrayList<ObjectiveCardPane> getObjectiveCardPanes() {
 		return cardcontroller.getObjectiveCards();
 	}
+	
+	public void setTokenAmount(int price, int toolcardid) {
+		for(Player p : game.getPlayers()) {
+			if(p.getSelf()) {
+				for(BoardPane bp : boardcontroller.getBoards()) {
+					if(bp.getSelf()) {
+						bp.setToolcardActiveTrue();
+						bp.changeTokenAmount(p.getTokenAmount());
+						game.addTokensToGametoolcard(price, toolcardid, p.getPlayerId());
+					}
+				}
+			}
+		}
+	}
 
 	public void setToolcardOneActive() {
 		gamePane.setToolCardOneActive();
@@ -241,9 +255,7 @@ public class GameController {
 		game.assignTokensToPlayer();
 	}
 
-	public BoardPane returnBoardPane() {
-		return boardcontroller.returnBoardPane();
-	}
+	
 
 	public int getOwnId() {
 		return game.getOwnId();
@@ -265,9 +277,8 @@ public class GameController {
 		boardcontroller.setAllowsMovement(i);
 	}
 
-	public void swapDice(int dienumber, String color, int value, int chosenvalue) {
-		game.getDiceWithChosenValue(dienumber, color, value, chosenvalue);
-		gamePane.addDice();
+	public void swapDice(int dienumber, String color, int chosenvalue) {
+		game.getDiceWithChosenValue(dienumber, color, chosenvalue);
 	}
 
 	public int returnAmountOfOpponents() {
@@ -288,9 +299,7 @@ public class GameController {
 		game.updateTokenArrayList(difficulty);
 	}
 
-	public void setPlayerTokens(int minus) {
-		boardcontroller.setPlayerTokens(minus);
-	}
+
 
 //	public void setGameCard(int id) {
 //		game.addGametoolcard(id);
