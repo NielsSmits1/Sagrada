@@ -82,7 +82,7 @@ public class GamePane extends BorderPane {
 		diceRow3.setSpacing(20);
 
 		endTurn = new Button("Beëindig beurt.");
-		endTurn.setOnAction(e -> handle());
+//		endTurn.setOnAction(e -> handle());
 
 		track = new RoundTrack();
 
@@ -449,9 +449,15 @@ public class GamePane extends BorderPane {
 	public Button getClose() {
 		return close;
 	}
-
-	public void handle() {
-		controller.endTurn();
+	
+	public void setCurrentPlayerLabel(String string) {
+		currentInfo.setText(string);
 	}
+
+//	public void handle() {
+//		System.out.println("ja je druk de goeie knop inteunt");
+//		currentInfo.setText(controller.shoutCurrentPlayer());	
+//		controller.endTurn();
+//	}
 
 }

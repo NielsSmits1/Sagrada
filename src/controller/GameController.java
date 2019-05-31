@@ -102,9 +102,13 @@ public class GameController {
 	}
 
 	private void saveTurn() {
-		game.buildTurns();
-		shoutCurrentPlayer();
+		System.out.println( "eerst: " + shoutCurrentPlayer());
 		game.setNewCurrentPlayer();
+		game.buildTurns();
+		System.out.println( " nu: " + shoutCurrentPlayer());
+		gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
+
+		
 	}
 	
 	public String shoutCurrentPlayer() {
