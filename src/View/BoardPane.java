@@ -31,7 +31,7 @@ public class BoardPane extends Pane {
 	private Label username;
 	private Label score;
 	private boolean self;
-	private boolean placed;
+	private boolean placed = false;
 	
 
 	/// *
@@ -40,7 +40,6 @@ public class BoardPane extends Pane {
 	/// for the number of the windowPattern.
 	/// **
 	public BoardPane(BoardController bc, PatternCard pc, Player p) {
-		placed = false;
 		allowsMovement = false;
 		controller = bc;
 		chosenCard = pc;
@@ -169,9 +168,11 @@ public class BoardPane extends Pane {
 	/// out of the DB.
 	/// **
 
-	private void setBoard() {
+	public void setBoard() {
 		int counter = 0;
 		board = new ArrayList<>();
+        this.getChildren().remove(field);
+		field.getChildren().clear();
 		for (int c = 1; c <= 5; c++) {
 			for (int i = 0; i < 4; i++) {
 				board.add(new PatternPane(this,
@@ -187,7 +188,7 @@ public class BoardPane extends Pane {
 		// System.out.println("Should have worked");
 	}
 	
-	private void addPlacedDice(ArrayList<PlacedDice> diceField) {
+	public void addPlacedDice(ArrayList<PlacedDice> diceField) {
 		for(PlacedDice pd : diceField) {
 			for(int i = 0;i<board.size(); i++) {
 				if(board.get(i).getX() == pd.getXpos() && board.get(i).getY() == pd.getYpos()) {

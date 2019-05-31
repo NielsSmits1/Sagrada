@@ -395,7 +395,6 @@ public class Game {
 	}
 
 	public void fillTokenArrayList() {
-		System.out.println(idgame);
 		for (int i = 1; i < 25; i++) {
 			token.add(new Gamefavortoken(i));
 			database.CUD("INSERT INTO gamefavortoken (idfavortoken, idgame) VALUES (" + i + "," + idgame + ")");
