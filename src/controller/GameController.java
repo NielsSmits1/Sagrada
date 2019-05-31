@@ -73,7 +73,7 @@ public class GameController {
 	private void startTimeline() {
 		Timeline timeline = new Timeline();
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(6000), e -> refreshGame()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(3000), e -> refreshGame()));
 		timeline.play();
 	}
 
@@ -342,7 +342,6 @@ public class GameController {
 					bp.resetPlaced();
 					game.setNewCurrentPlayer();
 					game.buildTurns();
-					gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
 				}
 			}
 		}

@@ -74,7 +74,7 @@ public class Game {
 		
 	}
 	public void refreshCurrentPlayer() {
-		roundNumber = getLastRound();
+		//roundNumber = getLastRound();
 		turnNumber = getTurnNumber();
 		turnPlayer = setWhoseTurnItIs();
 		
@@ -156,7 +156,6 @@ public class Game {
 	
 
 	private int getTurnNumber() {
-		System.out.println(idgame);
 		return (int)database.Select("select seqnr from player where isCurrentPlayer = 1 and game_idgame = " + this.idgame).get(0).get(0);
 	}
 
