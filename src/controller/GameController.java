@@ -103,8 +103,13 @@ public class GameController {
 
 	private void saveTurn() {
 		game.buildTurns();
-		System.out.println(game.getRoundNumber() + "-" + game.getTurn() + ": " + game.getTurnPlayer().getUsername());
+		shoutCurrentPlayer();
 		game.setNewCurrentPlayer();
+	}
+	
+	public String shoutCurrentPlayer() {
+		return game.getRoundNumber() + "-" + game.getTurn() + ": " + game.getTurnPlayer().getUsername();
+
 	}
 
 	public PatterncardSelect buildPatterncardoptions() {

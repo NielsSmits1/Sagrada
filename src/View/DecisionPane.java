@@ -16,6 +16,7 @@ public class DecisionPane extends BorderPane{
 	private GamePane gamepane;
 	private HBox buttons;
 	private int chosenNumber;
+	
 	public DecisionPane(GamePane gamepane) {
 		this.gamepane = gamepane;
 		chosenNumber = 1;
