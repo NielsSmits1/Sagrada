@@ -149,7 +149,7 @@ public class Game {
 		if(roundNumber>9) {
 			
 		}else {
-			this.roundNumber +=1;
+			this.roundNumber=getLastRound();
 		}
 	}
 	
