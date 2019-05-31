@@ -81,8 +81,7 @@ public class GamePane extends BorderPane {
 		diceRow2.setSpacing(20);
 		diceRow3.setSpacing(20);
 
-		endTurn = new Button("Beï¿½indig beurt.");
-
+		endTurn = new Button("Beëindig beurt.");
 		track = new RoundTrack();
 
 		setBoard();

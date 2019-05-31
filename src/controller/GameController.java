@@ -66,7 +66,7 @@ public class GameController {
 		cardcontroller.setObjectiveCards();
 		game.setPlayableDices();
 		gamePane = new GamePane(this);
-		gamePane.getTurnSave().setOnAction(E -> saveTurn());
+		gamePane.getTurnSave().setOnAction(E -> endTurn());
 		startTimeline();
 	}
 
@@ -99,12 +99,6 @@ public class GameController {
             boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
             game.getPlayers().get(i).setTokenAmount();
         }
-	}
-
-	private void saveTurn() {
-		game.setNewCurrentPlayer();
-		game.buildTurns();
-		gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
 	}
 	
 	public String shoutCurrentPlayer() {
@@ -344,7 +338,9 @@ public class GameController {
 			for(BoardPane bp : boardcontroller.getBoards()) {
 				if(bp.getSelf()) {
 					bp.resetPlaced();
-					saveTurn();
+					game.setNewCurrentPlayer();
+					game.buildTurns();
+					gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
 				}
 			}
 		}
