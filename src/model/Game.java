@@ -96,7 +96,7 @@ public class Game {
 	private void addToTrack() {
 		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT g.dienumber, g.diecolor FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = " + idgame +" AND g.roundtrack IS NULL AND g.round = " + roundNumber +" AND player_idplayer IS NULL;");
 		for (int i = 0; i < leftoverDices.size(); i++) {
-			database.CUD("UPDATE gameDie g SET roundtrack = 1 WHERE g.dienumber = " + leftoverDices.get(i).get(0) +" AND g.diecolor = '" + leftoverDices.get(i).get(1) + "' AND idgame = " + idgame +";");
+			database.CUD("UPDATE gameDie g SET roundtrack = " + roundNumber + " WHERE g.dienumber = " + leftoverDices.get(i).get(0) +" AND g.diecolor = '" + leftoverDices.get(i).get(1) + "' AND idgame = " + idgame +";");
 		}
 	}
 	
