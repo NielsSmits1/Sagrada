@@ -26,7 +26,7 @@ public class Toolcard {
 	}
 
 	public ArrayList<ArrayList<Object>> getToolcardsFromDatabase() {
-		String query = ("SELECT idtoolcard, description FROM tjpmsalt_db2.toolcard WHERE idtoolcard = " + card1
+		String query = ("SELECT idtoolcard, description FROM toolcard WHERE idtoolcard = " + card1
 				+ " OR idtoolcard = " + card2 + " OR idtoolcard = " + card3 + "");
 		return database.Select(query);
 	}

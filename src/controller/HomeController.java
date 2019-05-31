@@ -48,15 +48,6 @@ public class HomeController {
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
-		
-		home.getGameTab().setOnAction(e -> {
-			Stage stage = new Stage();
-			Scene scene = new Scene(new Pane());
-//			ChatBoxController chat = new ChatBoxController();
-			scene.setRoot(chat.getScreen());
-			stage.setScene(scene);
-			stage.show();
-		});
 
 		openGames();
 		startTimeline();

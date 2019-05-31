@@ -10,11 +10,4 @@ public class RoundTrackModel {
 	public void getRoundNr() {
 		
 	}
-	
-	
-	//TODO make query getting leftover dices
-	public void getLeftoverDice() {
-		
-	}
-	
 }

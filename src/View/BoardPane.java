@@ -2,6 +2,7 @@ package View;
 
 import java.util.ArrayList;
 
+
 import controller.BoardController;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -11,6 +12,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 import model.PatternCard;
+import model.PlacedDice;
 import model.Player;
 import model.Space;
 
@@ -24,12 +26,12 @@ public class BoardPane extends Pane {
 	private PatternPane selected;
 	private int patternid;
 	private boolean allowsMovement;
-	private Label label;
+	private Label tokenAmount;
 	private PatternCard chosenCard;
 	private Label username;
 	private Label score;
 	private boolean self;
-	
+	private boolean placed;
 	
 
 	/// *
@@ -38,31 +40,34 @@ public class BoardPane extends Pane {
 	/// for the number of the windowPattern.
 	/// **
 	public BoardPane(BoardController bc, PatternCard pc, Player p) {
+		placed = false;
 		allowsMovement = false;
 		controller = bc;
 		chosenCard = pc;
 		self = p.getSelf();
 		score = new Label("" + p.getScore());
+		tokenAmount = new Label("" + p.getTokenAmount());
 		this.username = new Label(p.getUsername());
 		this.username.setLayoutX(175);
-		this.username.setLayoutY(170);
+		this.username.setLayoutY(70);
 		setShape();
 		setGrid();
-		getChildren().addAll(top, square, tokenPlaceholder, label, this.username, score);
+		getChildren().addAll(top, square, tokenPlaceholder, tokenAmount, this.username, score);
 //		setLabelValue(controller.getDifficulty());
 		setBoard();
+		addPlacedDice(p.getDiceField());
 	}
 	
-	public BoardPane(BoardController bc, PatternCard pc) {
-		allowsMovement = false;
-		controller = bc;
-		chosenCard = pc;
-		setShape();
-		setGrid();
-		getChildren().addAll(top, square, tokenPlaceholder, label);
-//		setLabelValue(controller.getDifficulty());
-		setBoard();
-	}
+//	public BoardPane(BoardController bc, PatternCard pc) {
+//		allowsMovement = false;
+//		controller = bc;
+//		chosenCard = pc;
+//		setShape();
+//		setGrid();
+//		getChildren().addAll(top, square, tokenPlaceholder, tokenAmount);
+////		setLabelValue(controller.getDifficulty());
+//		setBoard();
+//	}
 	
 	public void setChosenCard(PatternCard chosenCard) {
 		this.chosenCard = chosenCard;
@@ -101,24 +106,23 @@ public class BoardPane extends Pane {
 
 	// TODO THOSE NUMBERS MIGHT BE MOVED TO A NEW MODEL
 	private void setShape() {
-		label = new Label("1");
-		label.setLayoutX(195);
-		label.setLayoutY(240);
-		score.setLayoutX(245);
-		score.setLayoutY(240);
-		top = new QuadCurve(0, 300, 200, 0, 400, 300);
+		tokenAmount.setLayoutX(145);
+		tokenAmount.setLayoutY(40);
+		score.setLayoutX(205);
+		score.setLayoutY(40);
+		top = new QuadCurve(0, 100, 200, -100, 300, 100);
 		tokenPlaceholder = new Circle();
 		tokenPlaceholder.setRadius(25);
-		tokenPlaceholder.setCenterX(200);
-		tokenPlaceholder.setCenterY(250);
+		tokenPlaceholder.setCenterX(150);
+		tokenPlaceholder.setCenterY(50);
 		tokenPlaceholder.setFill(Color.TRANSPARENT);
 		tokenPlaceholder.setStroke(Color.BLACK);
 		
 		square = new Rectangle();
 		square.setX(0);
-		square.setY(300);
-		square.setWidth(400);
-		square.setHeight(320);
+		square.setY(100);
+		square.setWidth(300);
+		square.setHeight(240);
 		square.setFill(Color.WHITE);
 		square.setStroke(Color.BLACK);
 		top.setStroke(Color.BLACK);
@@ -182,6 +186,17 @@ public class BoardPane extends Pane {
 		getChildren().add(field);
 		// System.out.println("Should have worked");
 	}
+	
+	private void addPlacedDice(ArrayList<PlacedDice> diceField) {
+		for(PlacedDice pd : diceField) {
+			for(int i = 0;i<board.size(); i++) {
+				if(board.get(i).getX() == pd.getXpos() && board.get(i).getY() == pd.getYpos()) {
+					DicePane temporary = new DicePane(pd.getEyes(), pd.getDieColor(), pd.getDieNumber());
+					board.get(i).setDice(temporary);
+				}
+			}
+		}
+	}
 
 
 	/// *
@@ -211,10 +226,13 @@ public class BoardPane extends Pane {
 				board.get(i).setDice(selected);
 			}
 		}
+		placed = true;
 	}
 
 	public void giveCords(int x, int y) {
-		controller.validateMove(x, y);
+		if(!placed) {
+			controller.validateMove(x, y);
+		}
 	}
 
 	public void getTurns() {
@@ -277,15 +295,19 @@ public class BoardPane extends Pane {
 	}
 	
 	public void setLabelValue(int value) {
-		label.setText("" + value);
+		tokenAmount.setText("" + value);
 	}
 	
 	public void decreaseLabelValue(int minus) {
-		label.setText("" + (Integer.parseInt(label.getText()) - minus));
+		tokenAmount.setText("" + (Integer.parseInt(tokenAmount.getText()) - minus));
 	}
 	
 	public boolean getSelf() {
 		return self;
+	}
+	
+	public void resetPlaced() {
+		placed = false;
 	}
 
 }

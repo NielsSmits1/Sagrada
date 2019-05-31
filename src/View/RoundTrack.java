@@ -14,6 +14,7 @@ public class RoundTrack extends Pane {
 	private Pane pane;
 	private RoundPane round;
 	private HBox roundBox;
+//	private GamePane game;
 	
 	public RoundTrack() {
 		pane = new Pane();
@@ -45,6 +46,10 @@ public class RoundTrack extends Pane {
 		roundTrack.setFitWidth(780);
 		pane.getChildren().addAll(roundTrack);
 	}
+	
+//	public void leftover() {
+//		game.getLeftovers;
+//	}
 	
 	
 }

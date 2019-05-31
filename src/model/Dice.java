@@ -48,4 +48,8 @@ public class Dice {
 		eyes = r.nextInt((6))+1;
 //		return eyes;
 	}
+	
+	public void setEyes(int eyes) {
+		this.eyes = eyes;
+	}
 }

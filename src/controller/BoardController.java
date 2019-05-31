@@ -13,6 +13,7 @@ import model.Space;
 public class BoardController {
 	private ArrayList<PatternCard> patternCardOptions;
 	private PatternCard finalCard;
+	private PatternCard checkPlacement;
 	private Opponent opponent;
 	private BoardPane boardpane = new BoardPane();
 	private ArrayList<BoardPane> opponentBoard;
@@ -24,6 +25,7 @@ public class BoardController {
 		this.gameController = gameController;
 		boards = new ArrayList<>();
 		opponentBoard = new ArrayList<>();
+		checkPlacement = new PatternCard(this, this.gameController.getOwnId(), this.gameController.getIdGame(), this.gameController.getOwnPatternId());
 	}
 	/// *
 	// Asks for the ArrayList of spaces.
@@ -45,9 +47,14 @@ public class BoardController {
 	}
 
 	public void validateMove(int x, int y) {
-		if (getSelected() != null
-				&& finalCard.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor())) {
-			boardpane.setSelected(getSelected(), x, y);
+		if (getSelected() != null && checkPlacement.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor())) {
+			if(gameController.getTurnPlayer().getSelf()) {
+				for(BoardPane bp : boards) {
+					if(bp.getSelf()) {
+						bp.setSelected(getSelected(), x, y);
+					}
+				}	
+			}
 		}
 	}
 
@@ -61,12 +68,12 @@ public class BoardController {
 		return gameController.getSelected();
 	}
 
-	public void setBoard() {
-//		players.add(new BoardPane(this, finalCard));
-		for (int i = 0; i < getGamemode(); i++) {
-			boards.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
-		}
-	}
+//	public void setBoard() {
+////		players.add(new BoardPane(this, finalCard));
+//		for (int i = 0; i < getGamemode(); i++) {
+//			boards.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
+//		}
+//	}
 
 	public BoardPane returnBoardPane() {
 		return boardpane;
@@ -75,16 +82,18 @@ public class BoardController {
 	public ArrayList<PatternCard> getPatternCardOptions() {
 		return patternCardOptions;
 	}
+	
+	public int getOwnPatternId() {
+		return gameController.getOwnPatternId();
+	}
 
 	public void setPatternCard(int id) {
-//		finalCard = new PatternCard(id, getIdGame(), getOwnId(), this);
-		setBoard();
+		finalCard = new PatternCard(id, getIdGame(), getOwnId(), this);
 		//gameController.setRootpane();
 	}
 
 	public void setRandomCard() {
 		finalCard = new PatternCard(getOwnId(), getIdGame(), this);
-		setBoard();
 		updateToken();
 		//gameController.setRootpane();
 	}

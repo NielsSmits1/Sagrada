@@ -56,6 +56,7 @@ public class CardController {
 	public void setObjectiveCards() {
 		objectiveCards.add(new ObjectiveCardPane(objectiveCard.getIds().get(0)));
 		objectiveCards.add(new ObjectiveCardPane(objectiveCard.getIds().get(1)));
+		objectiveCards.add(new ObjectiveCardPane(objectiveCard.getIds().get(2)));
 	}
 
 	public ArrayList<ObjectiveCardPane> getObjectiveCards() {

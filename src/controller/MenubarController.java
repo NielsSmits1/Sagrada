@@ -72,14 +72,14 @@ public class MenubarController {
 	}
 
 	public void addGame(Game g) {
-		gc = new GameController(g);
-		ToggleGroup toggle = new ToggleGroup();
+		gc = new GameController(g); 
+		g.buildRounds();
+//		g.buildTurns();
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
 		RadioMenuItem mi = new RadioMenuItem("open game");
 		m.getItems().add(mi);
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
-		mi.setToggleGroup(toggle);
 		mi.setOnAction(e -> setRoot(mi));
 		
 
@@ -105,7 +105,12 @@ public class MenubarController {
 				mi.setDisable(true);
 				System.out.println("hallo");
 				
-			}
+			
+		}else {
+			gc.buildGame();
+			scene.setRoot(new VBox(this.getMenubar(),gamepanes.get(mi).getGamepane()));
+			
+		}
 	}
 
 	public void showWait() {
