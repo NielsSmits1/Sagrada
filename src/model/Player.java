@@ -81,7 +81,6 @@ public class Player {
 		return this.status;
 	}
 
-
 	// selects and returns the username and password.
 	public ArrayList<ArrayList<Object>> getSelect() {
 		return database
