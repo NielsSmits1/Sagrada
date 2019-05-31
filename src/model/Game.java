@@ -28,8 +28,8 @@ public class Game {
 
 	
 
-	public void addPlayer(Player param, String status, String color) {
-		insertPlayer(param, status, color);
+	public void addPlayer(Player param, String status, String color, long senr, int cplayer) {
+		insertPlayer(param, status, color, senr, cplayer);
 
 	}
 
@@ -188,12 +188,10 @@ public class Game {
 	}
 
 
-	public void insertPlayer(Player p, String status, String color) {
+	public void insertPlayer(Player p, String status, String color, long senr, int cplayer) {
 		database.CUD(
-				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
-						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, '"+ color +"')");
-		System.out.println("INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color) VALUES ('"
-				+ p.getUsername() + "', " + this.idgame + " , '" + status + "', 0, '"+ color +"')");
+				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color, seqnr) VALUES ('"
+						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', " + cplayer + ", '"+ color +"', " + senr + ")");
 	}
 
 	public ArrayList<ArrayList<Object>> getColorsFromGame(int idgame) {
@@ -265,7 +263,7 @@ public class Game {
 				break;
 			}
 			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
-			
+//			diceArray = null;
 		}
 	}
 
@@ -547,6 +545,10 @@ public class Game {
 		}
 		
 		return 0;
+	}
+
+	public long getHighestSeNumber() {
+		return (long)database.Select("select max(seqnr) + 1 from player where game_idgame = " + this.idgame).get(0).get(0);
 	}
 	
 }
