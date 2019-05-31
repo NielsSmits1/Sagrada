@@ -236,9 +236,9 @@ public class GamePane extends BorderPane {
 		bottom.setCenter(allKeyCards);
 
 	}
-	public Button getTurnSave() {
-		return this.endTurn;
-	}
+//	public Button getTurnSave() {
+//		return this.endTurn;
+//	}
 
 	/// *
 	// Gets all dices out of the DB. This means the size of the Array is 90.

@@ -98,7 +98,6 @@ public class GameController {
 		cardcontroller.setToolcards();
 		cardcontroller.setObjectiveCards();
 		gamePane = new GamePane(this);
-		gamePane.getTurnSave().setOnAction(E -> saveTurn());
 	}
 
 	private void saveTurn() {
@@ -339,6 +338,7 @@ public class GameController {
 			for(BoardPane bp : boardcontroller.getBoards()) {
 				if(bp.getSelf()) {
 					bp.resetPlaced();
+					saveTurn();
 				}
 			}
 		}
