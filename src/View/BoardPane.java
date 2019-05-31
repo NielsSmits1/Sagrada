@@ -169,7 +169,7 @@ public class BoardPane extends Pane {
 	/// out of the DB.
 	/// **
 
-	private void setBoard() {
+	public void setBoard() {
 		int counter = 0;
 		board = new ArrayList<>();
 		for (int c = 1; c <= 5; c++) {
@@ -187,7 +187,7 @@ public class BoardPane extends Pane {
 		// System.out.println("Should have worked");
 	}
 	
-	private void addPlacedDice(ArrayList<PlacedDice> diceField) {
+	public void addPlacedDice(ArrayList<PlacedDice> diceField) {
 		for(PlacedDice pd : diceField) {
 			for(int i = 0;i<board.size(); i++) {
 				if(board.get(i).getX() == pd.getXpos() && board.get(i).getY() == pd.getYpos()) {

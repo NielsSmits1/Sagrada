@@ -63,7 +63,6 @@ public class GameController {
 		cardcontroller.setObjectiveCards();
 		game.setPlayableDices();
 		gamePane = new GamePane(this);
-		gamePane.getTurnSave().setOnAction(E -> saveTurn());
 		startTimeline();
 	}
 
@@ -91,9 +90,14 @@ public class GameController {
 	}
 
 	private void refreshBoards() {
-		for (Player p : game.getPlayers()) {
-			boardcontroller.addBoard(p.getPc(), p);
-			p.setTokenAmount();
+//		for (Player p : game.getPlayers()) {
+//			boardcontroller.addBoard(p.getPc(), p);
+//			p.setTokenAmount();
+//		}
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+			boardcontroller.getBoards().get(i).setBoard();
+			boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
+			game.getPlayers().get(i).setTokenAmount();
 		}
 	}
 
