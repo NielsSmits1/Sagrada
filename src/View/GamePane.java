@@ -82,7 +82,6 @@ public class GamePane extends BorderPane {
 		diceRow3.setSpacing(20);
 
 		endTurn = new Button("Be�indig beurt.");
-//		endTurn.setOnAction(e -> handle());
 
 		track = new RoundTrack();
 
@@ -133,6 +132,10 @@ public class GamePane extends BorderPane {
 		roundTrack.getChildren().addAll(currentInfo, track);
 		setTop(roundTrack);
 		roundTrack.setAlignment(Pos.CENTER);
+	}
+	
+	public void addDiceTrack(Dice d) {
+		
 	}
 
 	/// *
@@ -242,9 +245,9 @@ public class GamePane extends BorderPane {
 		bottom.setCenter(allKeyCards);
 
 	}
-//	public Button getTurnSave() {
-//		return this.endTurn;
-//	}
+	public Button getTurnSave() {
+		return this.endTurn;
+	}
 
 	/// *
 	// Gets all dices out of the DB. This means the size of the Array is 90.

@@ -31,7 +31,7 @@ public class BoardPane extends Pane {
 	private Label username;
 	private Label score;
 	private boolean self;
-	private boolean placed;
+	private boolean placed = false;
 	
 
 	/// *
@@ -40,7 +40,6 @@ public class BoardPane extends Pane {
 	/// for the number of the windowPattern.
 	/// **
 	public BoardPane(BoardController bc, PatternCard pc, Player p) {
-		placed = false;
 		allowsMovement = false;
 		controller = bc;
 		chosenCard = pc;

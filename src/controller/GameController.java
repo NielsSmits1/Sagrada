@@ -10,6 +10,7 @@ import View.GamePane;
 import View.MyScene;
 import View.ObjectiveCardPane;
 import View.PatterncardSelect;
+import View.RoundPane;
 import View.ToolCardPane;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -37,6 +38,7 @@ public class GameController {
 	private ChatBoxController chatBox = new ChatBoxController();
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
+	private RoundPane rp;
 	private Round round;
 
 	private Button cancel;
@@ -50,6 +52,7 @@ public class GameController {
 		this.game = g;
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
+		
 	}
 
 	public void buildGame() {
@@ -90,25 +93,17 @@ public class GameController {
 	}
 
 	private void refreshBoards() {
-//		for (Player p : game.getPlayers()) {
-//			boardcontroller.addBoard(p.getPc(), p);
-//			p.setTokenAmount();
-//		}
 		for (int i = 0; i < game.getPlayers().size(); i++) {
-			boardcontroller.getBoards().get(i).setBoard();
-			boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
-			game.getPlayers().get(i).setTokenAmount();
-		}
+            boardcontroller.getBoards().get(i).setBoard();
+            boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
+            game.getPlayers().get(i).setTokenAmount();
+        }
 	}
 
 	private void saveTurn() {
-		System.out.println( "eerst: " + shoutCurrentPlayer());
 		game.setNewCurrentPlayer();
 		game.buildTurns();
-		System.out.println( " nu: " + shoutCurrentPlayer());
 		gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
-
-		
 	}
 	
 	public String shoutCurrentPlayer() {
@@ -354,6 +349,12 @@ public class GameController {
 		}
 	}
 		
-	
+	public void setDicesTrack() {
+		for(Dice d: game.roundTrackDice()) {
+			rp.addDice(d.getEyes(), d.getDieColor(), d.getDieNumber());
+			
+			
+		}
+	}
 
 }

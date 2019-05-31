@@ -33,7 +33,7 @@ public class RoundTrack extends Pane {
 	
 	public void buildButton() {
 		nextDice = new Button("Volgende");
-		nextDice.setPrefHeight(70);
+		nextDice.setPrefHeight(50);
 		nextDice.setOnAction(e -> round.getNextDice());
 		roundBox.getChildren().addAll(nextDice);
 	}
@@ -42,8 +42,8 @@ public class RoundTrack extends Pane {
 		track = new Image("/Resources/RondeTrack.jpg");
 		
 		roundTrack = new ImageView(track);
-		roundTrack.setFitHeight(70);
-		roundTrack.setFitWidth(780);
+		roundTrack.setFitHeight(50);
+		roundTrack.setFitWidth(580);
 		pane.getChildren().addAll(roundTrack);
 	}
 	
