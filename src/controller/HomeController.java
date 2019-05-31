@@ -69,7 +69,7 @@ public class HomeController {
 	private void openGames() {
 		// open the games that are being played, or are ready to be played
 		for (Game g : self.getOpenGames()) {
-			mbc.addGame(g, this);
+			mbc.addGame(g);
 		}
 
 	}

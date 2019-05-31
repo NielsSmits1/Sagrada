@@ -86,6 +86,7 @@ public class GameController {
 		 * Score
 		 */
 		game.refreshCurrentPlayer();
+		gamePane.changeInfo(this.shoutCurrentPlayer());
 		this.refreshBoards();
 		game.setPlayableDices();
 		gamePane.addDice();
