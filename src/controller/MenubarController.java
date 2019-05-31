@@ -71,7 +71,7 @@ public class MenubarController {
 		scene.setRoot(inlog.getInlog());
 	}
 
-	public void addGame(Game g) {
+	public void addGame(Game g, HomeController hc) {
 		gc = new GameController(g); 
 		g.buildRounds();
 		g.buildTurns();

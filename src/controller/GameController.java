@@ -10,13 +10,17 @@ import View.GamePane;
 import View.MyScene;
 import View.ObjectiveCardPane;
 import View.PatterncardSelect;
+import View.RoundPane;
 import View.ToolCardPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Dice;
 import model.Game;
 import model.Opponent;
@@ -34,6 +38,7 @@ public class GameController {
 	private ChatBoxController chatBox = new ChatBoxController();
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
+	private RoundPane rp;
 	private Round round;
 
 	private Button cancel;
@@ -43,49 +48,11 @@ public class GameController {
 	private double playerScore;
 	private Stage gameStage;
 
-	public GameController(MyScene s) {
-
-		scene = s;
-
-		game = new Game();
-		game.setPlayableDices();
-
-		boardcontroller = new BoardController(this);
-		cardcontroller = new CardController(this);
-		game.setGameId(609);
-		ArrayList<Player> players = new ArrayList<Player>();
-		for (int i = 0; i < 4; i++) {
-			Player p = new Player("Speler " + i);
-			p.setId(i + 991);
-			p.setPatternCardId(p.getPatternIdFromDB());
-			p.setPc();
-			players.add(p);
-//			getOwnPlayerId();
-//			getOwnGameIdSelf();
-
-		}
-		game.insertPlayers(players);
-		// }
-		players.get(3).setSelf(true);
-		for (Player p : game.getPlayers()) {
-			// look elke speler in spel
-			if (p.getSelf()) {
-				boardcontroller.addBoard(p.getPc(), p);
-			} else {
-				boardcontroller.addBoard(p.getPc(), p);
-			}
-
-		}
-
-		gamePane = new GamePane(this);
-
-	}
-
 	public GameController(Game g) {
 		this.game = g;
-		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
+		
 	}
 
 	public void buildGame() {
@@ -97,17 +64,41 @@ public class GameController {
 		}
 		cardcontroller.setToolcards();
 		cardcontroller.setObjectiveCards();
+		game.setPlayableDices();
 		gamePane = new GamePane(this);
+		gamePane.getTurnSave().setOnAction(E -> endTurn());
+		startTimeline();
 	}
 
-	private void saveTurn() {
-		System.out.println( "eerst: " + shoutCurrentPlayer());
-		game.setNewCurrentPlayer();
-		game.buildTurns();
-		System.out.println( " nu: " + shoutCurrentPlayer());
-		gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
+	private void startTimeline() {
+		Timeline timeline = new Timeline();
+		timeline.setCycleCount(timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(6000), e -> refreshGame()));
+		timeline.play();
+	}
 
+	private void refreshGame() {
+		//refresh alles uit den game
+		/*
+		 * Beurt/rondes
+		 * Boards
+		 * Dices
+		 * Score
+		 */
+		game.refreshCurrentPlayer();
+		this.refreshBoards();
+		game.setPlayableDices();
+		gamePane.addDice();
 		
+		
+	}
+
+	private void refreshBoards() {
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+            boardcontroller.getBoards().get(i).setBoard();
+            boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
+            game.getPlayers().get(i).setTokenAmount();
+        }
 	}
 	
 	public String shoutCurrentPlayer() {
@@ -241,6 +232,12 @@ public class GameController {
 		game.assignTokensToPlayer();
 		boardcontroller.setPatternCard(id);
 	}
+	
+	public void setRandomCard() {
+		boardcontroller.setRandomCard();
+		game.insertChosenID();
+		game.assignTokensToPlayer();
+	}
 
 	public BoardPane returnBoardPane() {
 		return boardcontroller.returnBoardPane();
@@ -248,10 +245,6 @@ public class GameController {
 
 	public int getOwnId() {
 		return game.getOwnId();
-	}
-
-	public ArrayList<BoardPane> getOpponentBoard() {
-		return boardcontroller.getOpponentBoard();
 	}
 
 	public GamePane getGamepane() {
@@ -279,9 +272,7 @@ public class GameController {
 		return opponents.length;
 	}
 
-	public void setRandomCard() {
-		boardcontroller.setRandomCard();
-	}
+	
 
 	public int getGamemode() {
 		return game.getGamemode();
@@ -347,12 +338,20 @@ public class GameController {
 			for(BoardPane bp : boardcontroller.getBoards()) {
 				if(bp.getSelf()) {
 					bp.resetPlaced();
-					saveTurn();
+					game.setNewCurrentPlayer();
+					game.buildTurns();
+					gamePane.setCurrentPlayerLabel(shoutCurrentPlayer());
 				}
 			}
 		}
 	}
 		
-	
+	public void setDicesTrack() {
+		for(Dice d: game.roundTrackDice()) {
+			rp.addDice(d.getEyes(), d.getDieColor(), d.getDieNumber());
+			
+			
+		}
+	}
 
 }

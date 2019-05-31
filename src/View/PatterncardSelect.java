@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import controller.GameController;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -23,6 +25,8 @@ import model.PatternCard;
 public class PatterncardSelect extends Pane {
 	private ArrayList<PatternPane> board;
 	private Button randomButton;
+
+	private Alert alert = new Alert(AlertType.INFORMATION);
 
 	// private double textX = 175;
 	// private int fontSize = 20;
@@ -65,6 +69,8 @@ public class PatterncardSelect extends Pane {
 
 	private void handleRandomCard() {
 		controller.setRandomCard();
+		alert.setHeaderText("U heeft een patroonkaarten gekozen");
+		alert.showAndWait();
 	}
 
 	private void setGrid() {
