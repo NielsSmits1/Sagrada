@@ -65,7 +65,6 @@ public class GameController {
 		cardcontroller.setObjectiveCards();
 		game.setPlayableDices();
 		gamePane = new GamePane(this);
-		gamePane.getTurnSave().setOnAction(E -> saveTurn());
 		startTimeline();
 	}
 
