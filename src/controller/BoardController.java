@@ -16,7 +16,6 @@ public class BoardController {
 	private PatternCard checkPlacement;
 	private Opponent opponent;
 	private BoardPane boardpane = new BoardPane();
-	private ArrayList<BoardPane> opponentBoard;
 	private GameController gameController;
 	private PatternCardOptions allOptions;
 	private ArrayList<BoardPane> boards;
@@ -24,7 +23,6 @@ public class BoardController {
 	public BoardController(GameController gameController) {
 		this.gameController = gameController;
 		boards = new ArrayList<>();
-		opponentBoard = new ArrayList<>();
 		checkPlacement = new PatternCard(this, this.gameController.getOwnId(), this.gameController.getIdGame(), this.gameController.getOwnPatternId());
 	}
 	/// *
@@ -47,15 +45,13 @@ public class BoardController {
 	}
 
 	public void validateMove(int x, int y) {
-		if (getSelected() != null && checkPlacement.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor())) {
-			if(gameController.getTurnPlayer().getSelf()) {
+		if (gameController.getTurnPlayer().getSelf() && getSelected() != null && checkPlacement.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor())) {
 				for(BoardPane bp : boards) {
 					if(bp.getSelf()) {
 						bp.setSelected(getSelected(), x, y);
 					}
 				}	
 			}
-		}
 	}
 
 	public void validateToolcardTwo(int dieNumber, String color, int xPos, int yPos) {
@@ -94,8 +90,6 @@ public class BoardController {
 
 	public void setRandomCard() {
 		finalCard = new PatternCard(getOwnId(), getIdGame(), this);
-		updateToken();
-		//gameController.setRootpane();
 	}
 
 	public ArrayList<Space> getPatternCard() {
@@ -112,10 +106,6 @@ public class BoardController {
 
 	public ArrayList<ArrayList<Space>> getOpponentCords() {
 		return opponent.getOpponents();
-	}
-
-	public ArrayList<BoardPane> getOpponentBoard() {
-		return opponentBoard;
 	}
 
 	public void setAllowsMovement(int i) {
@@ -140,10 +130,6 @@ public class BoardController {
 	public int getDifficulty() {
 		return finalCard.getDifficulty();
 	}
-
-	public void updateToken() {
-		gameController.updateTokens(getDifficulty());
-	}
 	
 	public void setPlayerTokens(int minus) {
 		boardpane.decreaseLabelValue(minus);
@@ -165,6 +151,9 @@ public class BoardController {
 	
 	public void addBoard(PatternCard pc, Player p) {
 		boards.add(new BoardPane(this, pc, p));
+	}
+	public void emptyBoards() {
+		this.boards = new ArrayList<BoardPane>();
 	}
 
 }
