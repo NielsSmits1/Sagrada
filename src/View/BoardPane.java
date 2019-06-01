@@ -1,7 +1,7 @@
 package View;
 
 import java.util.ArrayList;
-
+import java.util.Random;
 
 import controller.BoardController;
 import javafx.scene.control.Label;
@@ -33,7 +33,7 @@ public class BoardPane extends Pane {
 	private boolean self;
 	private boolean placed = false;
 	private boolean toolCardActive = false;
-	
+	private Random random;
 
 	/// *
 	// This constructor requires a rootPane to return the selected DicePane. It also
@@ -41,9 +41,7 @@ public class BoardPane extends Pane {
 	/// for the number of the windowPattern.
 	/// **
 	public BoardPane(BoardController bc, PatternCard pc, Player p) {
-		
-	
-				
+		random = new Random();
 		allowsMovement = false;
 		controller = bc;
 		chosenCard = pc;
@@ -56,40 +54,18 @@ public class BoardPane extends Pane {
 		setShape();
 		setGrid();
 		getChildren().addAll(top, square, tokenPlaceholder, tokenAmount, this.username, score);
-//		setLabelValue(controller.getDifficulty());
 		setBoard();
 		addPlacedDice(p.getDiceField());
 		
 	}
 	
-//	public BoardPane(BoardController bc, PatternCard pc) {
-//		allowsMovement = false;
-//		controller = bc;
-//		chosenCard = pc;
-//		setShape();
-//		setGrid();
-//		getChildren().addAll(top, square, tokenPlaceholder, tokenAmount);
-////		setLabelValue(controller.getDifficulty());
-//		setBoard();
-//	}
-	
 	public void setChosenCard(PatternCard chosenCard) {
 		this.chosenCard = chosenCard;
 	}
 
-//	public BoardPane(ArrayList<Space> opponentBoard) {
-//		setShape();
-//		setGrid();
-//		getChildren().addAll(top, square, tokenPlaceholder, label);
-//	}
-
 	/// *
 	// Sets the patternId.
 	/// **
-
-	public BoardPane() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public void setPatternId(int i) {
 		patternid = i;
@@ -115,6 +91,11 @@ public class BoardPane extends Pane {
 		score.setLayoutX(205);
 		score.setLayoutY(40);
 		top = new QuadCurve(0, 100, 150, -100, 300, 100);
+		top.setFill(generateRandomColor());
+		top.setOpacity(50);
+		if(self) {
+			top.setFill(Color.LIGHTBLUE);
+		}
 		tokenPlaceholder = new Circle();
 		tokenPlaceholder.setRadius(25);
 		tokenPlaceholder.setCenterX(150);
@@ -130,7 +111,6 @@ public class BoardPane extends Pane {
 		square.setFill(Color.WHITE);
 		square.setStroke(Color.BLACK);
 		top.setStroke(Color.BLACK);
-		top.setFill(Color.CHARTREUSE);
 		top.setStrokeWidth(0.5);
 	}
 
@@ -326,6 +306,14 @@ public class BoardPane extends Pane {
 	
 	public void resetPlaced() {
 		placed = false;
+	}
+	
+	private Color generateRandomColor() {
+		int r = random.nextInt(255);
+		int g = random.nextInt(255);
+		int b = random.nextInt(255);
+		
+		return Color.rgb(r, g, b);
 	}
 
 }
