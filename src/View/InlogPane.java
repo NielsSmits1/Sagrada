@@ -43,7 +43,7 @@ public class InlogPane extends BorderPane {
 				new BackgroundSize(0, 0, false, false, false, true))));
 
 		usernameField = new TextField();
-		usernameField.setPromptText("Username...");
+		usernameField.setPromptText("Gebruikersnaam...");
 		usernameField.setPrefHeight(50);
 		usernameField.setMaxWidth(400);
 		usernameField.setBorder(
@@ -51,7 +51,7 @@ public class InlogPane extends BorderPane {
 
 		
 		passwordField = new TextField();
-		passwordField.setPromptText("Password...");
+		passwordField.setPromptText("Wachtwoord...");
 		passwordField.setPrefHeight(50);
 		passwordField.setMaxWidth(400);
 		passwordField.setBorder(
@@ -64,7 +64,7 @@ public class InlogPane extends BorderPane {
 		loginButton.setPrefWidth(100);
 
 		// Register Button
-		registerButton = new Button("Register");
+		registerButton = new Button("Registreren");
 		registerButton.setTextAlignment(TextAlignment.CENTER);
 		registerButton.setPrefHeight(50);
 		registerButton.setPrefWidth(100);
@@ -95,12 +95,6 @@ public class InlogPane extends BorderPane {
 		setTop(textAlignment);
 	}
 
-//	public InlogPane(EventHandler<ActionEvent> login, EventHandler<ActionEvent> register) {
-//		loginButton.setOnAction(login);
-//		registerButton.setOnAction(register);
-//	}
-
-
 	public String getUsernameText() {
 		return this.usernameField.getText();
 	}
@@ -114,6 +108,13 @@ public class InlogPane extends BorderPane {
 				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 		passwordField.setBorder(
 				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+	}
+	
+	public void acceptedLogin() {
+		usernameField.setBorder(
+				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+		passwordField.setBorder(
+				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 	}
 
 	public Button getLoginButton() {
