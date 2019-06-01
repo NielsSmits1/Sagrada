@@ -91,6 +91,7 @@ public class GameController {
 		game.refreshCurrentPlayer();
 		gamePane.changeInfo(this.shoutCurrentPlayer());
 		this.refreshBoards();
+		cardcontroller.updatePriceTag();
 		game.setPlayableDices();
 		gamePane.addDice();
 		setDicesTrack(); // shows current RoundTrack
@@ -103,8 +104,8 @@ public class GameController {
             game.getPlayers().get(i).getPc().setPlacedDice();
             boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
             game.getPlayers().get(i).setTokenAmount();
-          
-        }
+			boardcontroller.getBoards().get(i).changeTokenAmount(game.getPlayers().get(i).getTokenAmount());	
+		}
 	}
 	
 	public String shoutCurrentPlayer() {
@@ -353,13 +354,13 @@ public class GameController {
 	}
 	
 	public void endTurn() {
-		System.out.println("knop doet dingen");
 		if(getTurnPlayer().getSelf()) {
 			for(BoardPane bp : boardcontroller.getBoards()) {
 				if(bp.getSelf()) {
 					bp.resetPlaced();
 					game.setNewCurrentPlayer();
 					game.buildTurns();
+					cardcontroller.enableToolCards();
 				}
 			}
 		}
@@ -368,5 +369,9 @@ public class GameController {
 	public void setDicesTrack() {
 		gamePane.setRoundTrack(game.getLeftovers());
 		
+	}
+	
+	public BoardPane getOwnBoard() {
+		return boardcontroller.getOwnBoard();
 	}
 }

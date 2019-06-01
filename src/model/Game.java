@@ -588,7 +588,7 @@ public class Game {
 		 }
 		 dicePerRound.add(dices);
 	 }
-	
+//	 System.out.println(dicePerRound);
 	 return dicePerRound;
 	}
 	

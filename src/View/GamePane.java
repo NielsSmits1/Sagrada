@@ -30,11 +30,6 @@ public class GamePane extends BorderPane {
 	/// later on.
 	/// **
 	private Button close;
-
-	// private BoardPane player1;
-	// private BoardPane player2;
-	// private BoardPane player3;
-	// private BoardPane player4;
 	private ArrayList<BoardPane> playField;
 	private HBox boards;
 	private HBox diceRow1;
@@ -51,7 +46,6 @@ public class GamePane extends BorderPane {
 	private HeaderPane toolCardTitle;
 	private BorderPane bottom;
 	private GameController controller;
-	// private ArrayList<Dice> diceArray;
 	private boolean toolcardIsActiveOne;
 	private boolean toolcardIsActiveSix;
 	private boolean toolcardIsActiveTen;
@@ -72,7 +66,7 @@ public class GamePane extends BorderPane {
 	/// **
 
 	public GamePane(GameController gameController) {
-	
+
 		this.controller = gameController;
 		r = new Random();
 		objectiveCards = new ArrayList<>();
@@ -100,8 +94,6 @@ public class GamePane extends BorderPane {
 		addTrack();
 		addDice();
 		finish();
-		
-	
 	}
 
 	/// *
@@ -117,28 +109,21 @@ public class GamePane extends BorderPane {
 
 		for (int i = 0; i < playField.size(); i++) {
 			playField.get(i).setMaxHeight(340);
-
 			if (playField.get(i).getSelf() == false) {
 				playField.get(i).setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 			}
 		}
-
 		userClickables = new VBox();
 		boards = new HBox();
-
-		// sets dice in rows
-		
-		
 
 		// aligns dice with user buttons
 		userClickables.getChildren().add(allDiceRows);
 		userClickables.getChildren().add(endTurn);
 		userClickables.setAlignment(Pos.CENTER);
 		userClickables.setSpacing(10);
-
+		userClickables.setPadding(new Insets(20));
 
 		boards.getChildren().addAll(playField);
-		boards.getChildren().addAll(userClickables);
 
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 5));
@@ -157,12 +142,9 @@ public class GamePane extends BorderPane {
 		roundTrack.setSpacing(20);
 		setTop(roundTrack);
 	}
+
 	public void changeInfo(String lp) {
 		this.currentInfo.setText(lp);
-	}
-	
-	public void addDiceTrack(Dice d) {
-		
 	}
 
 	/// *
@@ -171,13 +153,9 @@ public class GamePane extends BorderPane {
 	// This model contains the amount of eyes and the color that the dice should be.
 	/// **
 
-	public void getLeftover() {
-
-	}
-
 	public void addDice() {
 		allDiceRows.getChildren().clear();
-		
+
 		diceRow1.getChildren().clear();
 		for (int i = 0; i < getPlayableDices().size(); i++) {
 			if (diceRow1.getChildren().size() < 3) {
@@ -272,8 +250,8 @@ public class GamePane extends BorderPane {
 
 		allKeyCards.setSpacing(5);
 		bottom.setCenter(allKeyCards);
-
 	}
+
 	public Button getTurnSave() {
 		return this.endTurn;
 	}
@@ -292,19 +270,19 @@ public class GamePane extends BorderPane {
 	private void finish() {
 		setCards();
 		setCenter(boards);
+		setRight(userClickables);
 		setBottom(bottom);
 
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-        //set boundaries to visible bounds of the main screen
-        this.setPrefWidth(primaryScreenBounds.getWidth());
-        this.setPrefHeight(primaryScreenBounds.getHeight()*1.1);
-        
-		//sets background_image
+		// set boundaries to visible bounds of the main screen
+		this.setPrefWidth(primaryScreenBounds.getWidth());
+		this.setPrefHeight(primaryScreenBounds.getHeight() * 1.1);
+
+		// sets background_image
 		this.setBackground(new Background(new BackgroundImage(new Image("/Resources/gameBackground.jpg"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
 				new BackgroundSize(0, 0, false, false, false, true))));
-
 	}
 
 	/// *
@@ -339,10 +317,10 @@ public class GamePane extends BorderPane {
 	}
 
 	public void downSelected() {
-		for(int i = 0; i < allDiceRows.getChildren().size();i++) {
+		for (int i = 0; i < allDiceRows.getChildren().size(); i++) {
 			HBox temporary = (HBox) allDiceRows.getChildren().get(i);
 			for (int j = 0; j < temporary.getChildren().size(); j++) {
-				//TODO Make it so that it will check all dicerows
+				// TODO Make it so that it will check all dicerows
 				DicePane temporarilyDice = (DicePane) temporary.getChildren().get(j);
 				if (selected.getDieNumber() == temporarilyDice.getDieNumber()
 						&& selected.getColor().equals(temporarilyDice.getColor())) {
@@ -354,23 +332,22 @@ public class GamePane extends BorderPane {
 					temporarilyDice.setValue(temporarilyDice.getValue() - 1);
 					temporarilyDice.addDiceEyes(temporarilyDice.getValue());
 					disableToolcard();
-					userClickables.getChildren().remove(userClickables.getChildren().size()-1);
-					boards.getChildren().remove(boards.getChildren().size()-1);
+					userClickables.getChildren().remove(userClickables.getChildren().size() - 1);
+					boards.getChildren().remove(boards.getChildren().size() - 1);
 					boards.getChildren().add(userClickables);
 					controller.updateEyes(temporarilyDice.getValue(), selected.getDieNumber(), selected.getColor());
-
 				}
 			}
 		}
-		
+
 	}
 
 	public void upSelected() {
 
-		for(int i = 0; i < allDiceRows.getChildren().size();i++) {
+		for (int i = 0; i < allDiceRows.getChildren().size(); i++) {
 			HBox temporary = (HBox) allDiceRows.getChildren().get(i);
 			for (int j = 0; j < temporary.getChildren().size(); j++) {
-				//TODO Make it so that it will check all dicerows
+				// TODO Make it so that it will check all dicerows
 				DicePane temporarilyDice = (DicePane) temporary.getChildren().get(j);
 				if (selected.getDieNumber() == temporarilyDice.getDieNumber()
 						&& selected.getColor().equals(temporarilyDice.getColor())) {
@@ -378,41 +355,41 @@ public class GamePane extends BorderPane {
 						decisionpane.giveError();
 						return;
 					}
-				temporarilyDice.removeEyes();
-				temporarilyDice.setValue(temporarilyDice.getValue() + 1);
-				temporarilyDice.addDiceEyes(temporarilyDice.getValue());
-				disableToolcard();
-				userClickables.getChildren().remove(userClickables.getChildren().size()-1);
-				boards.getChildren().remove(boards.getChildren().size()-1);
-				boards.getChildren().add(userClickables);
-				controller.updateEyes(temporarilyDice.getValue(), selected.getDieNumber(), selected.getColor());
-			}
+					temporarilyDice.removeEyes();
+					temporarilyDice.setValue(temporarilyDice.getValue() + 1);
+					temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+					disableToolcard();
+					userClickables.getChildren().remove(userClickables.getChildren().size() - 1);
+					boards.getChildren().remove(boards.getChildren().size() - 1);
+					boards.getChildren().add(userClickables);
+					controller.updateEyes(temporarilyDice.getValue(), selected.getDieNumber(), selected.getColor());
+				}
 
-		}
+			}
 		}
 	}
 
 	public void randomSelected() {
 
-		for(int i = 0; i < allDiceRows.getChildren().size();i++) {
+		for (int i = 0; i < allDiceRows.getChildren().size(); i++) {
 			HBox temporary = (HBox) allDiceRows.getChildren().get(i);
 			for (int j = 0; j < temporary.getChildren().size(); j++) {
 				DicePane temporarilyDice = (DicePane) temporary.getChildren().get(j);
-			if (selected.getDieNumber() == temporarilyDice.getDieNumber()
-					&& selected.getColor().equals(temporarilyDice.getColor())) {
-				temporarilyDice.removeEyes();
-				temporarilyDice.setValue(r.nextInt(6) + 1);
-				temporarilyDice.addDiceEyes(temporarilyDice.getValue());
-				disableToolcard();
-				controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
+				if (selected.getDieNumber() == temporarilyDice.getDieNumber()
+						&& selected.getColor().equals(temporarilyDice.getColor())) {
+					temporarilyDice.removeEyes();
+					temporarilyDice.setValue(r.nextInt(6) + 1);
+					temporarilyDice.addDiceEyes(temporarilyDice.getValue());
+					disableToolcard();
+					controller.updateEyes(selected.getValue(), selected.getDieNumber(), selected.getColor());
 
-			}
+				}
 			}
 		}
 	}
 
 	public void flipDice() {
-		for(int i = 0; i < allDiceRows.getChildren().size();i++) {
+		for (int i = 0; i < allDiceRows.getChildren().size(); i++) {
 			HBox temporary = (HBox) allDiceRows.getChildren().get(i);
 			for (int j = 0; j < temporary.getChildren().size(); j++) {
 				DicePane temporarilyDice = (DicePane) temporary.getChildren().get(j);
@@ -445,14 +422,14 @@ public class GamePane extends BorderPane {
 
 				}
 			}
-			
+
 		}
 	}
 
 	public void SelectedStaysEqual() {
 		disableToolcard();
-		userClickables.getChildren().remove(userClickables.getChildren().size()-1);
-		boards.getChildren().remove(boards.getChildren().size()-1);
+		userClickables.getChildren().remove(userClickables.getChildren().size() - 1);
+		boards.getChildren().remove(boards.getChildren().size() - 1);
 		boards.getChildren().add(userClickables);
 	}
 
@@ -475,8 +452,8 @@ public class GamePane extends BorderPane {
 	public void swapDice(int chosenEyes) {
 		controller.swapDice(selected.getDieNumber(), selected.getColor(), chosenEyes);
 		disableToolcard();
-		userClickables.getChildren().remove(userClickables.getChildren().size()-1);
-		boards.getChildren().remove(boards.getChildren().size()-1);
+		userClickables.getChildren().remove(userClickables.getChildren().size() - 1);
+		boards.getChildren().remove(boards.getChildren().size() - 1);
 		boards.getChildren().add(userClickables);
 	}
 
@@ -485,17 +462,13 @@ public class GamePane extends BorderPane {
 		toolcardIsActiveSix = false;
 		toolcardIsActiveTen = false;
 		toolcardIsActiveEleven = false;
-		for(BoardPane bp : controller.getBoards()) {
-			if(bp.getSelf()) {
+		for (BoardPane bp : controller.getBoards()) {
+			if (bp.getSelf()) {
 				bp.setToolcardActiveFalse();
 			}
 		}
 
 	}
-
-	// public void enableDiceMovement() {
-	// player1.enableDiceMovement();
-	// }
 
 	/// *
 	// Returns selected, will be used in the class patternPane.
@@ -508,13 +481,6 @@ public class GamePane extends BorderPane {
 		return controller.getPlayableDices();
 	}
 
-	public void setBoardPlayerOne() {
-		// player1 = controller.returnBoardPane();
-		// player2 = controller.getOpponentBoard().get(0);
-		// player3 = controller.getOpponentBoard().get(1);
-		// player4 = controller.getOpponentBoard().get(2);
-	}
-
 	public Button getClose() {
 		return close;
 	}
@@ -522,15 +488,10 @@ public class GamePane extends BorderPane {
 	public void setCurrentPlayerLabel(String string) {
 		currentInfo.setText(string);
 	}
+
 	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
 		
 		track.setRoundTrack(d);
 	}
-
-//	public void handle() {
-//		System.out.println("ja je druk de goeie knop inteunt");
-//		currentInfo.setText(controller.shoutCurrentPlayer());
-//		controller.endTurn();
-//	}
 
 }
