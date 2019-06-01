@@ -30,11 +30,6 @@ public class GamePane extends BorderPane {
 	/// later on.
 	/// **
 	private Button close;
-
-	// private BoardPane player1;
-	// private BoardPane player2;
-	// private BoardPane player3;
-	// private BoardPane player4;
 	private ArrayList<BoardPane> playField;
 	private HBox boards;
 	private HBox diceRow1;
@@ -51,7 +46,6 @@ public class GamePane extends BorderPane {
 	private HeaderPane toolCardTitle;
 	private BorderPane bottom;
 	private GameController controller;
-	// private ArrayList<Dice> diceArray;
 	private boolean toolcardIsActiveOne;
 	private boolean toolcardIsActiveSix;
 	private boolean toolcardIsActiveTen;
