@@ -348,6 +348,7 @@ public class GameController {
 	}
 	
 	public void endTurn() {
+		System.out.println("knop doet dingen");
 		if(getTurnPlayer().getSelf()) {
 			for(BoardPane bp : boardcontroller.getBoards()) {
 				if(bp.getSelf()) {
@@ -360,7 +361,6 @@ public class GameController {
 	}
 		
 	public void setDicesTrack() {
-		
 		gamePane.setRoundTrack(game.getLeftovers());
 	}
 }

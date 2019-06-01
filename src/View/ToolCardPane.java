@@ -84,6 +84,7 @@ public class ToolCardPane extends Pane {
 
 	private void setPrice() {
 		price = new Label();
+		price.setTextFill(Color.WHITE);
 		price.setText("" + controller.getPrice(toolCardId));
 
 	}

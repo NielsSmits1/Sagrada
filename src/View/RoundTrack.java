@@ -24,6 +24,7 @@ public class RoundTrack extends Pane {
 		pane = new Pane();
 		round = new RoundPane();
 		roundBox = new HBox();
+		roundBox.setSpacing(20);
 		
 		buildButton();
 		buildTrack();

@@ -6,15 +6,22 @@ import java.util.Random;
 import controller.GameController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import model.Dice;
 
 public class GamePane extends BorderPane {
@@ -64,6 +71,7 @@ public class GamePane extends BorderPane {
 	/// **
 
 	public GamePane(GameController gameController) {
+	
 		this.controller = gameController;
 		r = new Random();
 		objectiveCards = new ArrayList<>();
@@ -91,6 +99,8 @@ public class GamePane extends BorderPane {
 		addTrack();
 		addDice();
 		finish();
+		
+	
 	}
 
 	/// *
@@ -105,6 +115,8 @@ public class GamePane extends BorderPane {
 		playField = controller.getBoards();
 
 		for (int i = 0; i < playField.size(); i++) {
+			playField.get(i).setMaxHeight(340);
+
 			if (playField.get(i).getSelf() == false) {
 				playField.get(i).setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 			}
@@ -120,23 +132,29 @@ public class GamePane extends BorderPane {
 		// aligns dice with user buttons
 		userClickables.getChildren().add(allDiceRows);
 		userClickables.getChildren().add(endTurn);
+		userClickables.setAlignment(Pos.CENTER);
+		userClickables.setSpacing(10);
+
 
 		boards.getChildren().addAll(playField);
 		boards.getChildren().addAll(userClickables);
 
 		boards.setSpacing(20);
 		boards.setPadding(new Insets(0, 0, 0, 5));
+		boards.setAlignment(Pos.CENTER);
+
 	}
 
 	public void addTrack() {
 		currentInfo = new Label(controller.shoutCurrentPlayer());
 		currentInfo.setFont(new Font("Arial", 30));
 		currentInfo.setTextFill(Color.WHITE);
-		currentInfo.setPadding(new Insets(0, 20,0,0));
 		roundTrack = new HBox();
 		roundTrack.getChildren().addAll(currentInfo, track);
-		setTop(roundTrack);
 		roundTrack.setAlignment(Pos.CENTER);
+		roundTrack.setPadding(new Insets(20));
+		roundTrack.setSpacing(20);
+		setTop(roundTrack);
 	}
 	public void changeInfo(String lp) {
 		this.currentInfo.setText(lp);
@@ -247,6 +265,7 @@ public class GamePane extends BorderPane {
 		HBox allKeyCards = new HBox(alignObjectiveCardWithHeaderText, alignPrivateObjectiveCardWithHeaderText,
 				alignToolCardWithHeaderText);
 		allKeyCards.setPadding(new Insets(0, 0, 0, 10));
+		allKeyCards.setAlignment(Pos.CENTER);
 		// , new VBox(controller.getChatBox().getScreen(), close
 		// uit de bovenstaande hbox gehaald, gaf nullpointer.
 
@@ -273,7 +292,18 @@ public class GamePane extends BorderPane {
 		setCards();
 		setCenter(boards);
 		setBottom(bottom);
-		setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+
+        //set boundaries to visible bounds of the main screen
+        this.setPrefWidth(primaryScreenBounds.getWidth());
+        this.setPrefHeight(primaryScreenBounds.getHeight()*1.1);
+        
+		//sets background_image
+		this.setBackground(new Background(new BackgroundImage(new Image("/Resources/gameBackground.jpg"),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+				new BackgroundSize(0, 0, false, false, false, true))));
+
 	}
 
 	/// *

@@ -41,6 +41,9 @@ public class BoardPane extends Pane {
 	/// for the number of the windowPattern.
 	/// **
 	public BoardPane(BoardController bc, PatternCard pc, Player p) {
+		
+	
+				
 		allowsMovement = false;
 		controller = bc;
 		chosenCard = pc;
@@ -56,6 +59,7 @@ public class BoardPane extends Pane {
 //		setLabelValue(controller.getDifficulty());
 		setBoard();
 		addPlacedDice(p.getDiceField());
+		
 	}
 	
 //	public BoardPane(BoardController bc, PatternCard pc) {
@@ -110,7 +114,7 @@ public class BoardPane extends Pane {
 		tokenAmount.setLayoutY(40);
 		score.setLayoutX(205);
 		score.setLayoutY(40);
-		top = new QuadCurve(0, 100, 200, -100, 300, 100);
+		top = new QuadCurve(0, 100, 150, -100, 300, 100);
 		tokenPlaceholder = new Circle();
 		tokenPlaceholder.setRadius(25);
 		tokenPlaceholder.setCenterX(150);
