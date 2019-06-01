@@ -52,6 +52,7 @@ public class InlogController {
 		} else {
 			player = new Player(inlog.getUsernameText(), inlog.getPasswordText());
 			if (player.checkLogin()) {
+				inlog.acceptedLogin();
 				buildHome();
 			} else {
 				inlog.giveErrorBox();

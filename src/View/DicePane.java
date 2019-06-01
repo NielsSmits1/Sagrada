@@ -10,7 +10,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class DicePane extends Pane {
-
+	//constants
+	final static int CIRCLEDIA = 5;
+	final static Color STROKECOLOR = Color.BLACK;
+	final static Color DICEFILLCOLOR = Color.WHITE;
+	final static double STROKEWIDTH = 1.5;
+	
+	//instance variables
 	private Rectangle dice;
 	private Circle one;
 	private ArrayList<Circle> two;
@@ -18,7 +24,6 @@ public class DicePane extends Pane {
 	private ArrayList<Circle> four;
 	private ArrayList<Circle> five;
 	private ArrayList<Circle> six;
-	private BoardPane boardPane;
 	private GamePane gamePane;
 	private int value;
 	private String color;
@@ -30,9 +35,8 @@ public class DicePane extends Pane {
 
 	public DicePane() {
 		dice = new Rectangle(0, 0, 50, 50);
-		dice.setStroke(Color.BLACK);
+		dice.setStroke(STROKECOLOR);
 		getChildren().addAll(dice);
-
 	}
 
 	/// *
@@ -44,14 +48,14 @@ public class DicePane extends Pane {
 		color = c;
 		if (amount == 0) {
 			dice = new Rectangle(0, 0, 50, 50);
-			dice.setStroke(Color.BLACK);
+			dice.setStroke(STROKECOLOR);
 			getChildren().add(dice);
 			setColor(c);
 			return;
 		}
 		if (amount != 0) {
 			dice = new Rectangle(0, 0, 50, 50);
-			dice.setStroke(Color.BLACK);
+			dice.setStroke(STROKECOLOR);
 			getChildren().add(dice);
 			addDiceEyes(amount);
 			setColor(c);
@@ -69,7 +73,15 @@ public class DicePane extends Pane {
 		dieNumber = dienumber;
 		addDice(value, this.color);
 		gamePane = rp;
-		addEvent(this);
+		addEvent(this);	
+	}
+	
+	public DicePane(boolean isPrivateCard) {
+		if(isPrivateCard) {
+			dice = new Rectangle(0, 0, 100, 100);
+			dice.setStroke(STROKECOLOR);
+			getChildren().addAll(dice);
+		}
 		
 	}
 	
@@ -85,6 +97,8 @@ public class DicePane extends Pane {
 	// Sets the color of the rectangle called dice.
 	/// **
 
+
+
 	public void setColor(String c) {
 		switch(c) {
 		case "blauw":dice.setFill(Color.BLUE);
@@ -99,7 +113,7 @@ public class DicePane extends Pane {
 					 break;
 		case "transparant":dice.setFill(Color.TRANSPARENT);
 					 break;
-		default: dice.setFill(Color.WHITE);
+		default: dice.setFill(DICEFILLCOLOR);
 		}
 		
 	}
@@ -118,7 +132,7 @@ public class DicePane extends Pane {
 
 	public void addDice(int value, String c) {
 		dice = new Rectangle(0, 0, 50, 50);
-		dice.setStroke(Color.BLACK);
+		dice.setStroke(STROKECOLOR);
 		getChildren().add(dice);
 		addDiceEyes(value);
 		setColor(c);
@@ -131,81 +145,76 @@ public class DicePane extends Pane {
 	/// **
 	public void addDiceEyes(int value) {
 		if (value == 1) {
-			one = new Circle(25, 25, 5);
-			one.setFill(Color.WHITE);
-			one.setStroke(Color.BLACK);
-			one.setStrokeWidth(1.5);
+			one = new Circle(25, 25, CIRCLEDIA);
+			one.setFill(DICEFILLCOLOR);
+			one.setStroke(STROKECOLOR);
+			one.setStrokeWidth(STROKEWIDTH);
 			getChildren().addAll(one);
 		}
 		if (value == 2) {
 			two = new ArrayList<>();
-			two.add(new Circle(17.5, 17.5, 5));
-			two.add(new Circle(38.5, 35, 5));
+			two.add(new Circle(12.5, 12.5, CIRCLEDIA));
+			two.add(new Circle(37.5, 37.5, CIRCLEDIA));
 			for (int i = 0; i < two.size(); i++) {
-				two.get(i).setFill(Color.WHITE);
-				two.get(i).setStroke(Color.BLACK);
-				two.get(i).setStrokeWidth(1.5);
+				two.get(i).setFill(DICEFILLCOLOR);
+				two.get(i).setStroke(STROKECOLOR);
+				two.get(i).setStrokeWidth(STROKEWIDTH);
 			}
-			// getChildren().addAll(dice);
 			getChildren().addAll(two);
 		}
 		if (value == 3) {
 			three = new ArrayList<>();
-			three.add(new Circle(12.5, 12.5, 5));
-			three.add(new Circle(25, 25, 5));
-			three.add(new Circle(38.5, 38.5, 5));
+			three.add(new Circle(12.5, 12.5, CIRCLEDIA));
+			three.add(new Circle(25, 25, CIRCLEDIA));
+			three.add(new Circle(38.5, 38.5, CIRCLEDIA));
 			for (int i = 0; i < three.size(); i++) {
-				three.get(i).setFill(Color.WHITE);
-				three.get(i).setStroke(Color.BLACK);
-				three.get(i).setStrokeWidth(1.5);
+				three.get(i).setFill(DICEFILLCOLOR);
+				three.get(i).setStroke(STROKECOLOR);
+				three.get(i).setStrokeWidth(STROKEWIDTH);
 			}
-			// getChildren().addAll(dice);
 			getChildren().addAll(three);
 
 		}
 		if (value == 4) {
 			four = new ArrayList<>();
-			four.add(new Circle(12.5, 17.5, 5));
-			four.add(new Circle(38, 17.5, 5));
-			four.add(new Circle(12.5, 42.5, 5));
-			four.add(new Circle(38, 42.5, 5));
+			four.add(new Circle(12.5, 14, CIRCLEDIA));
+			four.add(new Circle(38, 14, CIRCLEDIA));
+			four.add(new Circle(12.5, 38, CIRCLEDIA));
+			four.add(new Circle(38, 38, CIRCLEDIA));
 			for (int i = 0; i < four.size(); i++) {
-				four.get(i).setFill(Color.WHITE);
-				four.get(i).setStroke(Color.BLACK);
-				four.get(i).setStrokeWidth(1.5);
+				four.get(i).setFill(DICEFILLCOLOR);
+				four.get(i).setStroke(STROKECOLOR);
+				four.get(i).setStrokeWidth(STROKEWIDTH);
 			}
-			// getChildren().addAll(dice);
 			getChildren().addAll(four);
 		}
 		if (value == 5) {
 			five = new ArrayList<>();
-			five.add(new Circle(10.5, 12.5, 5));
-			five.add(new Circle(35.5, 12.5, 5));
-			five.add(new Circle(10.5, 42.5, 5));
-			five.add(new Circle(35.5, 42.5, 5));
-			five.add(new Circle(22, 27, 5));
+			five.add(new Circle(12.5, 12, CIRCLEDIA));
+			five.add(new Circle(37.5, 12, CIRCLEDIA));
+			five.add(new Circle(12.5, 40, CIRCLEDIA));
+			five.add(new Circle(37.5, 40, CIRCLEDIA));
+			five.add(new Circle(24.5, 25, CIRCLEDIA));
 			for (int i = 0; i < five.size(); i++) {
-				five.get(i).setFill(Color.WHITE);
-				five.get(i).setStroke(Color.BLACK);
-				five.get(i).setStrokeWidth(1.5);
+				five.get(i).setFill(DICEFILLCOLOR);
+				five.get(i).setStroke(STROKECOLOR);
+				five.get(i).setStrokeWidth(STROKEWIDTH);
 			}
-			// getChildren().addAll(dice);
 			getChildren().addAll(five);
 		}
 		if (value == 6) {
 			six = new ArrayList<>();
-			six.add(new Circle(15, 10, 5));
-			six.add(new Circle(15, 25, 5));
-			six.add(new Circle(15, 40, 5));
-			six.add(new Circle(40, 10, 5));
-			six.add(new Circle(40, 25, 5));
-			six.add(new Circle(40, 40, 5));
+			six.add(new Circle(10, 10, CIRCLEDIA));
+			six.add(new Circle(10, 25, CIRCLEDIA));
+			six.add(new Circle(10, 40, CIRCLEDIA));
+			six.add(new Circle(40, 10, CIRCLEDIA));
+			six.add(new Circle(40, 25, CIRCLEDIA));
+			six.add(new Circle(40, 40, CIRCLEDIA));
 			for (int i = 0; i < six.size(); i++) {
-				six.get(i).setFill(Color.WHITE);
-				six.get(i).setStroke(Color.BLACK);
-				six.get(i).setStrokeWidth(1.5);
+				six.get(i).setFill(DICEFILLCOLOR);
+				six.get(i).setStroke(STROKECOLOR);
+				six.get(i).setStrokeWidth(STROKEWIDTH);
 			}
-			// getChildren().addAll(dice);
 			getChildren().addAll(six);
 		}
 	}
@@ -224,11 +233,8 @@ public class DicePane extends Pane {
 
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				gamePane.setSelected(p);
-				// System.out.println("" + p);
 			}
-
 		});
 	}
 
@@ -243,11 +249,5 @@ public class DicePane extends Pane {
 	public int getDieNumber() {
 		return dieNumber;
 	}
-	
-
-	// public DicePane getSelected() {
-	// return boardPane.getSelected();
-	// }
-	//
 
 }
