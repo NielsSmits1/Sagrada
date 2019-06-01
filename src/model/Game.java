@@ -576,6 +576,7 @@ public class Game {
 		
 		this.controller = controller;
 	}
+	
 	public ArrayList<ArrayList<Dice>> getLeftovers(){
 		ArrayList<ArrayList<Dice>> dicePerRound = new ArrayList<>();
 		
@@ -587,9 +588,10 @@ public class Game {
 		 }
 		 dicePerRound.add(dices);
 	 }
-	 System.out.println(dicePerRound);
+	
 	 return dicePerRound;
 	}
+	
 	public ArrayList<ArrayList<Object>> getRoundDice(int j) {
         return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
 

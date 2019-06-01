@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Optional;
 
 import View.BoardPane;
@@ -11,6 +10,7 @@ import View.MyScene;
 import View.ObjectiveCardPane;
 import View.PatterncardSelect;
 import View.RoundPane;
+import View.RoundTrack;
 import View.ToolCardPane;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -40,6 +40,7 @@ public class GameController {
 	private CardController cardcontroller;
 	private RoundPane rp;
 	private Round round;
+	private RoundTrack roundTrack;
 
 	private Button cancel;
 	private Alert cancelGame;
@@ -320,6 +321,10 @@ public class GameController {
 		return game.getChosenIds();
 	}
 
+	public RoundTrack getRoundTrack() {
+		return roundTrack;
+	}
+
 	public ArrayList<BoardPane> getBoards() {
 		return boardcontroller.getBoards();
 	}
@@ -362,5 +367,6 @@ public class GameController {
 		
 	public void setDicesTrack() {
 		gamePane.setRoundTrack(game.getLeftovers());
+		
 	}
 }

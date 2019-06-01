@@ -62,6 +62,7 @@ public class GamePane extends BorderPane {
 	private Button endTurn;
 	private VBox userClickables;
 	private Label currentInfo;
+	
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -93,7 +94,7 @@ public class GamePane extends BorderPane {
 		diceRow3.setSpacing(20);
 
 		endTurn = new Button("Beëindig beurt.");
-		track = new RoundTrack();
+		track = new RoundTrack(gameController, gameController.getGame(), gameController.getGame().getLeftovers());
 
 		setBoard();
 		addTrack();
@@ -522,6 +523,7 @@ public class GamePane extends BorderPane {
 		currentInfo.setText(string);
 	}
 	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
+		
 		track.setRoundTrack(d);
 	}
 
