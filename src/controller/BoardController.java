@@ -126,6 +126,15 @@ public class BoardController {
 			checkPlacement.setNextToDiceExamption();
 		}
 	}
+	
+	public BoardPane getOwnBoard() {
+		for (BoardPane bp : boards) {
+			if(bp.getSelf()) {
+				return bp;
+			}
+		}
+		return null;
+	}
 
 	public void disableMovement(int x, int y) {
 		for(BoardPane bp : boards) {

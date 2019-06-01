@@ -36,9 +36,16 @@ public class RoundPane extends StackPane {
 	}
 	
 	public void getNextDice() {
-		if (counter < dices.size()) {
-			dices.get(counter);
-		} counter++;
+		if (!dices.isEmpty() && counter < dices.size()) {
+			if(dice != null) {
+				getChildren().remove(dice);
+			}
+			dice = dices.get(counter);
+			getChildren().add(dice);
+		}else {
+			counter = 0;
+		}
+		counter++;
 	}
 	
 	//TODO get roundnumber from model and add dice

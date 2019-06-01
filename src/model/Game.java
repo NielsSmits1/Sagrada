@@ -587,7 +587,7 @@ public class Game {
 		 }
 		 dicePerRound.add(dices);
 	 }
-	 System.out.println(dicePerRound);
+//	 System.out.println(dicePerRound);
 	 return dicePerRound;
 	}
 	public ArrayList<ArrayList<Object>> getRoundDice(int j) {

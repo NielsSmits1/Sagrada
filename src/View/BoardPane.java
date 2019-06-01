@@ -298,7 +298,9 @@ public class BoardPane extends Pane {
 		}
 		}
 	
-	
+	public boolean getPlaced() {
+		return placed;
+	}
 
 	public void setSelectedToNull() {
 		selected = null;

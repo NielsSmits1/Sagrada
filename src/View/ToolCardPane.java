@@ -82,7 +82,7 @@ public class ToolCardPane extends Pane {
 		controller.buyToolCard(this);
 	}
 
-	private void setPrice() {
+	public void setPrice() {
 		price = new Label();
 		price.setTextFill(Color.WHITE);
 		price.setText("" + controller.getPrice(toolCardId));
@@ -96,6 +96,14 @@ public class ToolCardPane extends Pane {
 	
 	public int getToolCardId() {
 		return toolCardId;
+	}
+	
+	public void setButtonDisabled() {
+		button.setDisable(true);
+	}
+	
+	public void setButtonEnabled() {
+		button.setDisable(false);
 	}
 
 	public int getPricetag() {
