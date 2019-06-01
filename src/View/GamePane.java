@@ -491,6 +491,9 @@ public class GamePane extends BorderPane {
 	public void setCurrentPlayerLabel(String string) {
 		currentInfo.setText(string);
 	}
+	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
+		track.setRoundTrack(d);
+	}
 
 //	public void handle() {
 //		System.out.println("ja je druk de goeie knop inteunt");

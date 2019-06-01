@@ -1,10 +1,14 @@
 package View;
 
+import java.util.ArrayList;
+
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import model.Dice;
+
 
 public class RoundTrack extends Pane {
 	private ImageView roundTrack;
@@ -46,10 +50,8 @@ public class RoundTrack extends Pane {
 		roundTrack.setFitWidth(580);
 		pane.getChildren().addAll(roundTrack);
 	}
-	
-//	public void leftover() {
-//		game.getLeftovers;
-//	}
-	
+	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
+		round.setRoundTrack(d);
+	}
 	
 }

@@ -45,7 +45,7 @@ public class Game {
 		token = new ArrayList<Gamefavortoken>();
 		database = new db();
 		
-
+	
 	}
 	
 	public void startGame() {
@@ -109,6 +109,8 @@ public class Game {
 			
 		}else if(turnNumber == numberOfPlayers * 2) {// 4-6-8
 			// dan is een ronde voorbij
+			
+//			controller.setDicesTrack();
 			addToTrack();
 			newRound();
 			
@@ -569,17 +571,30 @@ public class Game {
 		return (long)database.Select("select max(seqnr) + 1 from player where game_idgame = " + this.idgame).get(0).get(0);
 	}
 	
-	public ArrayList<ArrayList<Object>> getRoundTrackDice() {
-        return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ this.roundNumber);
+
+	public void setController(GameController controller) {
+		
+		this.controller = controller;
+	}
+	public ArrayList<ArrayList<Dice>> getLeftovers(){
+		ArrayList<ArrayList<Dice>> dicePerRound = new ArrayList<>();
+		
+	 for (int j = 1; j<11;j++) {
+		 getRoundDice(j);
+		 ArrayList<Dice> dices= new ArrayList<Dice>();
+		 for (int i = 0; i < getRoundDice(j).size(); i++) {
+		 dices.add(new Dice((int)getRoundDice(j).get(i).get(0), (String)getRoundDice(j).get(i).get(1), (int)getRoundDice(j).get(i).get(2)));
+		 }
+		 dicePerRound.add(dices);
+	 }
+	 System.out.println(dicePerRound);
+	 return dicePerRound;
+	}
+	public ArrayList<ArrayList<Object>> getRoundDice(int j) {
+        return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
 
     }
-	public ArrayList<Dice> roundTrackDice() {
-		ArrayList<Dice> leftover = new ArrayList<Dice>();
-		for (int i = 0; i < getRoundTrackDice().size(); i++) {
-			leftover.add(new Dice((int)getRoundTrackDice().get(i).get(0), (String)getRoundTrackDice().get(i).get(1), (int)getRoundTrackDice().get(i).get(2)));
-		}
-		return leftover;
-	}
+
 }
 	
 	

@@ -49,9 +49,11 @@ public class GameController {
 	private Stage gameStage;
 
 	public GameController(Game g) {
+		
 		this.game = g;
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
+		game.setController(this);
 		
 	}
 
@@ -90,7 +92,7 @@ public class GameController {
 		this.refreshBoards();
 		game.setPlayableDices();
 		gamePane.addDice();
-		
+		setDicesTrack(); // shows current RoundTrack
 		
 	}
 
@@ -100,6 +102,7 @@ public class GameController {
             game.getPlayers().get(i).getPc().setPlacedDice();
             boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
             game.getPlayers().get(i).setTokenAmount();
+          
         }
 	}
 	
@@ -357,11 +360,7 @@ public class GameController {
 	}
 		
 	public void setDicesTrack() {
-		for(Dice d: game.roundTrackDice()) {
-			rp.addDice(d.getEyes(), d.getDieColor(), d.getDieNumber());
-			
-			
-		}
+		
+		gamePane.setRoundTrack(game.getLeftovers());
 	}
-
 }
