@@ -130,6 +130,7 @@ public class GameController {
 		gamePane.changeInfo(this.shoutCurrentPlayer());
 		this.refreshBoards();
 		cardcontroller.updatePriceTag();
+		gamePane.refreshToolcards();
 		game.setPlayableDices();
 		gamePane.addDice();
 		setDicesTrack(); // shows current RoundTrack

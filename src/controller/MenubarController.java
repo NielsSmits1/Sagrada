@@ -43,8 +43,7 @@ public class MenubarController {
 		menu.getLogout().setOnAction(e -> logOut());
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 		menu.getHome().setOnAction(e -> controller.buildHome());
-//		menu.getHelp().setOnAction(e -> game.builtAlertbox());
-//		inlogController.getHome().getHome().getGameTab().setOnAction(e ->game.builtGameStage());
+		menu.getStats().setOnAction(e -> showStats());
 
 	}
 

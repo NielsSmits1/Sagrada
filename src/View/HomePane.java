@@ -115,7 +115,6 @@ public class HomePane extends Pane{
 	private void setPanes(String text, ScrollPane scr) {
 		Label lb = new Label(text);
 		lb.setTextFill(Color.WHITE);
-		gametab = new Button("new game");
 		boxie = new VBox();
 		scr.setPrefSize(250, 400);
 		
@@ -125,7 +124,7 @@ public class HomePane extends Pane{
 		lb.setFont(f);
 		
 		boxie.getChildren().addAll(lb,scr);
-		this.getChildren().addAll(boxie,gametab);
+		this.getChildren().addAll(boxie);
 	}
 
 
