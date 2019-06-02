@@ -19,17 +19,12 @@ public class Menubar extends MenuBar {
 	private MenuItem help;
 	private MenuItem home;
 	private gameRules rules = new gameRules();
-	
-	
+
 	private ArrayList<Menu> gameList = new ArrayList<>();
 	private int x = 0;
-	
-	
-	
-	
+
 	public Menubar(MyScene main) {
-		//home = new HomeController(main, self.getPlayer());
-	
+		// home = new HomeController(main, self.getPlayer());
 
 		creatMenu();
 	}
@@ -39,17 +34,16 @@ public class Menubar extends MenuBar {
 		logout = new MenuItem("Log-out");
 		exit = new MenuItem("Afsluiten");
 		home = new MenuItem("ga terug naar home");
-//		exit.setOnAction(E -> exit());
-
+		// exit.setOnAction(E -> exit());
 
 		help = new MenuItem("spelregels");
 		stats = new MenuItem("Statistieken");
-//		stats.setOnAction(E -> showStats());
-		
-		//menu.getExit().setOnAction(e -> model.Exit());
-		//menu.getLogout().setOnAction(e -> model.logout());
-		
-		options.getItems().addAll(logout, stats,home,help, exit);
+		// stats.setOnAction(E -> showStats());
+
+		// menu.getExit().setOnAction(e -> model.Exit());
+		// menu.getLogout().setOnAction(e -> model.logout());
+
+		options.getItems().addAll(logout, stats, home, help, exit);
 		this.getMenus().add(options);
 	}
 
@@ -61,11 +55,10 @@ public class Menubar extends MenuBar {
 		return logout;
 	}
 
-	
 	public MenuItem getStats() {
 		return stats;
 	}
-	
+
 	public MenuItem getHelp() {
 		return help;
 	}
@@ -74,12 +67,12 @@ public class Menubar extends MenuBar {
 		return rules;
 	}
 
-	//done
+	// done
 	public void creatNewTabs() {
 		Menu gamex = new Menu("game" + x);
 		this.getMenus().add(gamex);
 		gameList.add(gamex);
-		x ++;
+		x++;
 	}
 
 	public void addGameItem(Menu m) {
@@ -91,10 +84,5 @@ public class Menubar extends MenuBar {
 	public MenuItem getHome() {
 		return home;
 	}
-	
-	
 
-	
-	
-	
 }

@@ -248,6 +248,7 @@ public class GamePane extends BorderPane {
 		allKeyCards.setPadding(new Insets(0, 0, 0, 10));
 		
 		allKeyCards.setSpacing(5);
+		allKeyCards.setAlignment(Pos.CENTER);
 		bottom.setCenter(allKeyCards);
 	}
 

@@ -3,6 +3,7 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 public class ChallengesPlayerLinePane extends HBox {
 	
@@ -14,6 +15,7 @@ public class ChallengesPlayerLinePane extends HBox {
 	private Label playerStatus;
 	private Label extraText = new Label(" zijn spelerstatus is: ");
 	private Label gameId;
+	
 //	private ChallengesPane cp;
 //	private ChallengesController cc = new ChallengesController(); 
 
@@ -24,7 +26,6 @@ public class ChallengesPlayerLinePane extends HBox {
 		accept = new Button("Accepteer");
 		decline= new Button("Weiger");
 		this.playerName = name;
-		
 		this.setPrefSize(300, 30);
 		differentPlayer.setText(playerName);
 		differentPlayer.setPrefSize(100, 30);
@@ -43,6 +44,7 @@ public class ChallengesPlayerLinePane extends HBox {
 		gameId = new Label();
 		this.setPrefSize(300, 30);
 		playerLabel.setText(name);
+		
 		gameId.setText(Integer.toString(i) + ": ");
 		playerStatus.setText(status);
 		
@@ -50,6 +52,7 @@ public class ChallengesPlayerLinePane extends HBox {
 	}
 	public ChallengesPlayerLinePane (String name, String status ) {
 		playerLabel = new Label();
+		
 		playerStatus = new Label();
 		this.setPrefSize(300, 30);
 		playerLabel.setText(name);
@@ -81,21 +84,5 @@ public class ChallengesPlayerLinePane extends HBox {
 	public void setDecline(Button decline) {
 		this.decline = decline;
 	}
-
-
-//	private void declineChallengeLine() {
-//		cc.declineChallenge(playerName);
-//		cp.declineChallenge(playerName);
-//		
-//		
-//		
-//		
-//	}
-//
-//	private void acceptChallengeLine() {
-//		cc.acceptChallenge(playerName);
-//		cp.acceptChallenge(playerName);
-//	
-//	}
 
 }
