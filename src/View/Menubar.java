@@ -88,6 +88,12 @@ public class Menubar extends MenuBar {
 
 	}
 
+	public MenuItem getHome() {
+		return home;
+	}
+	
+	
+
 	
 	
 	

@@ -42,6 +42,7 @@ public class MenubarController {
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
+		menu.getHome().setOnAction(e -> controller.buildHome());
 //		menu.getHelp().setOnAction(e -> game.builtAlertbox());
 //		inlogController.getHome().getHome().getGameTab().setOnAction(e ->game.builtGameStage());
 
@@ -130,5 +131,9 @@ public class MenubarController {
 	public void showWait() {
 		alert.setHeaderText("Er worden nog patroonkaarten gekozen");
 		alert.showAndWait();
+	}
+	
+	public void goHome() {
+		
 	}
 }
