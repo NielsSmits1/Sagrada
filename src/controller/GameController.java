@@ -31,7 +31,7 @@ public class GameController {
 	private MyScene scene;
 	private PatterncardSelect option;
 	private GamePane gamePane;
-	private ChatBoxController chatBox = new ChatBoxController();
+	private ChatBoxController chatBox;
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
 	private Round round;
@@ -46,10 +46,9 @@ public class GameController {
 	public GameController(MyScene s) {
 
 		scene = s;
-
 		game = new Game();
 		game.setPlayableDices();
-
+		
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
 		game.setGameId(609);
@@ -78,6 +77,7 @@ public class GameController {
 		}
 
 		gamePane = new GamePane(this);
+		
 
 	}
 
@@ -311,9 +311,7 @@ public class GameController {
 		return boardcontroller.getBoards();
 	}
 
-	public ChatBoxController getChatBox() {
-		return chatBox;
-	}
+	
 
 	public void getOwnPlayerId() {
 		if(game.getSelf().checkSelf() == true) {
@@ -343,7 +341,18 @@ public class GameController {
 			}
 		}
 	}
-		
+
+	public GamePane getGamePane() {
+		return gamePane;
+	}
+
+	public void setGamePane(GamePane gamePane) {
+		this.gamePane = gamePane;
+	}
 	
+	public ChatBoxController getChatBox() {
+		return chatBox;
+	}
+
 
 }

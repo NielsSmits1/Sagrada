@@ -58,6 +58,8 @@ public class GamePane extends BorderPane {
 	/// the screen.
 	/// **
 
+
+
 	public GamePane(GameController gameController) {
 		this.controller = gameController;
 		r = new Random();
@@ -236,9 +238,7 @@ public class GamePane extends BorderPane {
 		HBox allKeyCards = new HBox(alignObjectiveCardWithHeaderText, alignPrivateObjectiveCardWithHeaderText,
 				alignToolCardWithHeaderText);
 		allKeyCards.setPadding(new Insets(0, 0, 0, 10));
-		// , new VBox(controller.getChatBox().getScreen(), close
-		// uit de bovenstaande hbox gehaald, gaf nullpointer.
-
+		
 		allKeyCards.setSpacing(5);
 		bottom.setCenter(allKeyCards);
 
@@ -456,5 +456,8 @@ public class GamePane extends BorderPane {
 	public void handle() {
 		controller.endTurn();
 	}
+	
+	
+	
 
 }

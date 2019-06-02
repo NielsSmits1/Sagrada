@@ -550,6 +550,7 @@ public class Game {
 	public long getHighestSeNumber() {
 		return (long)database.Select("select max(seqnr) + 1 from player where game_idgame = " + this.idgame).get(0).get(0);
 	}
+
 	
 }
 	
