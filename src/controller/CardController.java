@@ -30,6 +30,10 @@ public class CardController {
 	public void setToolcardSixActive() {
 		gamecontroller.setToolcardSixActive();
 	}
+	
+	public void setToolcardSevenActive() {
+		gamecontroller.setToolcardSevenActive();
+	}
 
 	public void setToolcardTenActive() {
 		gamecontroller.setToolcardTenActive();
@@ -43,6 +47,7 @@ public class CardController {
 	public void updatePriceTag() {
 		for(ToolCardPane tcp : toolcardpanes) {
 			tcp.setPrice();
+			tcp.setAmountPlaced();
 		}
 	}
 
@@ -77,14 +82,14 @@ public class CardController {
 					if(p.getSeqnr() > gamecontroller.getGame().getPlayers().size() && !gamecontroller.getOwnBoard().getPlaced()) {
 						p.setTokenAmount(p.getTokenAmount() - boughtCard.getPricetag());
 						gamecontroller.setTokenAmount(boughtCard.getPricetag(), boughtCard.getToolCardId());
-						boughtCard.changePrice("2");
+						updatePriceTag();
 						disableToolCards();
 						toolcardClicked(boughtCard.getToolCardId());
 					}
 				}else {
 					p.setTokenAmount(p.getTokenAmount() - boughtCard.getPricetag());
 					gamecontroller.setTokenAmount(boughtCard.getPricetag(), boughtCard.getToolCardId());
-					boughtCard.changePrice("2");
+					updatePriceTag();
 					disableToolCards();
 					toolcardClicked(boughtCard.getToolCardId());
 				}
@@ -127,6 +132,10 @@ public class CardController {
 	public void insertCards() {
 		toolcard.insertToolcards();
 		objectiveCard.insertObjectivecard();
+	}
+	
+	public int getAmountPlaced(int id) {
+		return (int)toolcard.getTokensPlaced(id);
 	}
 	
 	public int getIdGame() {

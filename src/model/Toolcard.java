@@ -91,7 +91,7 @@ public class Toolcard {
 
 			break;
 		case 7:
-
+			activateToolCardSeven();
 			break;
 		case 8:
 
@@ -147,7 +147,7 @@ public class Toolcard {
 
 	private void activateToolCardSeven() {
 		// TODO Auto-generated method stub
-
+		cardController.setToolcardSevenActive();
 	}
 
 	private void activateToolCardEight() {
@@ -173,6 +173,11 @@ public class Toolcard {
 	private void activateToolCardTwelve() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public long getTokensPlaced(int id) {
+		int gametoolcard =  (int)database.Select("SELECT gametoolcard.gametoolcard FROM gametoolcard  WHERE gametoolcard.idgame = " + cardController.getIdGame() +" AND idtoolcard = " + id +"").get(0).get(0);
+		return (long)database.Select("select count(*) from gamefavortoken where idgame = " + cardController.getIdGame() + " AND gametoolcard = " + gametoolcard + "").get(0).get(0);
 	}
 
 	public int getCardOneId() {

@@ -199,7 +199,7 @@ public class GamePane extends BorderPane {
 	/// **
 	
 	public void refreshToolcards() {
-		toolcards = controller.getToolCards();
+		
 	}
 
 	private void setCards() {

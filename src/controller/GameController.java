@@ -250,6 +250,10 @@ public class GameController {
 	public void setToolcardSixActive() {
 		gamePane.setToolCardSixActive();
 	}
+	
+	public void setToolcardSevenActive() {
+		game.reDraw();
+	}
 
 	public void setToolcardTenActive() {
 		gamePane.setToolCardTenActive();

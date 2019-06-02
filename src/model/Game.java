@@ -312,6 +312,14 @@ public class Game {
 		database.CUD("Update gamedie SET ROUND = null WHERE dienumber = " + dienumber +" AND diecolor = '"+color+"' AND idgame = " + idgame +""); 
 		database.CUD("update gamedie SET Round = " + roundNumber +" WHERE eyes = " + chosenvalue+" AND idgame = " + idgame+" AND ROUND IS NULL ORDER BY RAND() LIMIT 1");
 	}
+	
+	public void reDraw() {
+		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT g.dienumber, g.diecolor, g.eyes FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = " + idgame +" AND g.roundtrack IS NULL AND g.round = " + roundNumber +" AND player_idplayer IS NULL;");
+		int amountToBeDrawed = leftoverDices.size();
+		database.CUD("Update gamedie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor SET ROUND = null WHERE g.idgame = " + idgame +" AND g.roundtrack IS NULL AND g.round = " + roundNumber +" AND player_idplayer IS NULL;"); 
+		database.CUD("Update gamedie set round = " + roundNumber + " where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + amountToBeDrawed +"");
+	}
+	
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
 		System.out.println("r: " +roundNumber);
