@@ -5,13 +5,15 @@ import java.util.HashMap;
 import View.Menubar;
 import View.MyScene;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import model.Game;
 import model.Player;
 
@@ -23,9 +25,10 @@ public class MenubarController {
 	private InlogController inlog;
 	private Player self;
 	private Alert alert = new Alert(AlertType.INFORMATION);
-	private ChatBoxController chat;
 	private GameController gc;
-
+	private Stage stageChat = new Stage();
+	private Scene sceneChat;
+	private ChatBoxController chat;
 	private HashMap<RadioMenuItem, GameController> gamepanes = new HashMap<>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
@@ -39,6 +42,7 @@ public class MenubarController {
 		menu.getExit().setOnAction(e -> exit());
 		menu.getLogout().setOnAction(e -> logOut());
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
+		menu.getHome().setOnAction(e -> controller.buildHome());
 //		menu.getHelp().setOnAction(e -> game.builtAlertbox());
 //		inlogController.getHome().getHome().getGameTab().setOnAction(e ->game.builtGameStage());
 
@@ -72,16 +76,27 @@ public class MenubarController {
 	}
 
 	public void addGame(Game g) {
-		gc = new GameController(g); 
+		gc = new GameController(g);
+		chat = gc.getChatBox();
 		g.buildRounds();
 		g.buildTurns();
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
+
+		MenuItem c = new MenuItem("chatbox");
 		RadioMenuItem mi = new RadioMenuItem("open game");
-		m.getItems().add(mi);
+		m.getItems().addAll(mi, c);
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
 		mi.setOnAction(e -> setRoot(mi));
-		
+		c.setOnAction(e -> builtChatBox());
+
+	}
+
+	public void builtChatBox() {
+		sceneChat = new Scene(new Pane());
+		sceneChat.setRoot(gc.getChatBox().getScreen());
+		stageChat.setScene(sceneChat);
+		stageChat.show();
 
 	}
 
@@ -93,28 +108,32 @@ public class MenubarController {
 					this.showWait();
 				} else {
 					// Set selectPatterncardpane
-					scene.setRoot(gc.buildPatterncardoptions());
+					scene.setRoot(new VBox(this.getMenubar(), gc.buildPatterncardoptions()));
 				}
 			} else {
 				gc.buildGame();
 				scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamepane()));
-				for(RadioMenuItem r : gamepanes.keySet()) {
+				for (RadioMenuItem r : gamepanes.keySet()) {
 					r.setDisable(false);
 					System.out.println("hoi");
 				}
 				mi.setDisable(true);
 				System.out.println("hallo");
-				
-			
-		}else {
+
+			}
+		else {
 			gc.buildGame();
-			scene.setRoot(new VBox(this.getMenubar(),gamepanes.get(mi).getGamepane()));
-			
+			scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamepane()));
+
 		}
 	}
 
 	public void showWait() {
 		alert.setHeaderText("Er worden nog patroonkaarten gekozen");
 		alert.showAndWait();
+	}
+	
+	public void goHome() {
+		
 	}
 }

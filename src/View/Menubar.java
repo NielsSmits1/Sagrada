@@ -17,6 +17,7 @@ public class Menubar extends MenuBar {
 	private MenuItem exit;
 	private MenuItem stats;
 	private MenuItem help;
+	private MenuItem home;
 	private gameRules rules = new gameRules();
 	
 	
@@ -37,6 +38,7 @@ public class Menubar extends MenuBar {
 		options = new Menu("opties");
 		logout = new MenuItem("Log-out");
 		exit = new MenuItem("Afsluiten");
+		home = new MenuItem("ga terug naar home");
 //		exit.setOnAction(E -> exit());
 
 
@@ -47,7 +49,7 @@ public class Menubar extends MenuBar {
 		//menu.getExit().setOnAction(e -> model.Exit());
 		//menu.getLogout().setOnAction(e -> model.logout());
 		
-		options.getItems().addAll(logout, stats,help, exit);
+		options.getItems().addAll(logout, stats,home,help, exit);
 		this.getMenus().add(options);
 	}
 
@@ -85,6 +87,12 @@ public class Menubar extends MenuBar {
 		this.getMenus().add(m);
 
 	}
+
+	public MenuItem getHome() {
+		return home;
+	}
+	
+	
 
 	
 	

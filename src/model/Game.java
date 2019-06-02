@@ -570,12 +570,14 @@ public class Game {
 	public long getHighestSeNumber() {
 		return (long)database.Select("select max(seqnr) + 1 from player where game_idgame = " + this.idgame).get(0).get(0);
 	}
+
 	
 
 	public void setController(GameController controller) {
 		
 		this.controller = controller;
 	}
+	
 	public ArrayList<ArrayList<Dice>> getLeftovers(){
 		ArrayList<ArrayList<Dice>> dicePerRound = new ArrayList<>();
 		
@@ -590,10 +592,12 @@ public class Game {
 //	 System.out.println(dicePerRound);
 	 return dicePerRound;
 	}
+	
 	public ArrayList<ArrayList<Object>> getRoundDice(int j) {
         return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
 
     }
+	
 
 }
 	

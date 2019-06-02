@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Optional;
 
 import View.BoardPane;
@@ -11,6 +10,7 @@ import View.MyScene;
 import View.ObjectiveCardPane;
 import View.PatterncardSelect;
 import View.RoundPane;
+import View.RoundTrack;
 import View.ToolCardPane;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,11 +35,12 @@ public class GameController {
 	private MyScene scene;
 	private PatterncardSelect option;
 	private GamePane gamePane;
-	private ChatBoxController chatBox = new ChatBoxController();
+	private ChatBoxController chatBox;
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
 	private RoundPane rp;
 	private Round round;
+	private RoundTrack roundTrack;
 
 	private Button cancel;
 	private Alert cancelGame;
@@ -47,6 +48,44 @@ public class GameController {
 	private Opponent[] opponents;
 	private double playerScore;
 	private Stage gameStage;
+
+	public GameController(MyScene s) {
+
+		scene = s;
+		game = new Game();
+		game.setPlayableDices();
+		
+		boardcontroller = new BoardController(this);
+		cardcontroller = new CardController(this);
+		game.setGameId(609);
+		ArrayList<Player> players = new ArrayList<Player>();
+		for (int i = 0; i < 4; i++) {
+			Player p = new Player("Speler " + i);
+			p.setId(i + 991);
+			p.setPatternCardId(p.getPatternIdFromDB());
+			p.setPc();
+			players.add(p);
+//			getOwnPlayerId();
+//			getOwnGameIdSelf();
+
+		}
+		game.insertPlayers(players);
+		// }
+		players.get(3).setSelf(true);
+		for (Player p : game.getPlayers()) {
+			// look elke speler in spel
+			if (p.getSelf()) {
+				boardcontroller.addBoard(p.getPc(), p);
+			} else {
+				boardcontroller.addBoard(p.getPc(), p);
+			}
+
+		}
+
+		gamePane = new GamePane(this);
+		
+
+	}
 
 	public GameController(Game g) {
 		
@@ -322,13 +361,15 @@ public class GameController {
 		return game.getChosenIds();
 	}
 
+	public RoundTrack getRoundTrack() {
+		return roundTrack;
+	}
+
 	public ArrayList<BoardPane> getBoards() {
 		return boardcontroller.getBoards();
 	}
 
-	public ChatBoxController getChatBox() {
-		return chatBox;
-	}
+	
 
 	public void getOwnPlayerId() {
 		if(game.getSelf().checkSelf() == true) {
@@ -361,12 +402,27 @@ public class GameController {
 			}
 		}
 	}
-		
-	public void setDicesTrack() {
-		gamePane.setRoundTrack(game.getLeftovers());
+
+	public GamePane getGamePane() {
+		return gamePane;
+	}
+
+	public void setGamePane(GamePane gamePane) {
+		this.gamePane = gamePane;
+	}
+	
+	public ChatBoxController getChatBox() {
+		return chatBox;
 	}
 	
 	public BoardPane getOwnBoard() {
 		return boardcontroller.getOwnBoard();
 	}
+	
+	public void setDicesTrack() {
+		gamePane.setRoundTrack(game.getLeftovers());
+		
+	}
+
+
 }

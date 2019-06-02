@@ -25,7 +25,6 @@ public class HomeController {
 	private ChallengesController cp;
 	private LeaderboardController lc;
 	private MyScene scene;
-	private ChatBoxController chat;
 
 	private MenubarController mbc;
 

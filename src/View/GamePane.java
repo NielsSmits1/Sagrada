@@ -56,6 +56,7 @@ public class GamePane extends BorderPane {
 	private Button endTurn;
 	private VBox userClickables;
 	private Label currentInfo;
+	
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -63,6 +64,8 @@ public class GamePane extends BorderPane {
 	// This constructor also adds some boards, dices and all of the diverse cards to
 	/// the screen.
 	/// **
+
+
 
 	public GamePane(GameController gameController) {
 
@@ -86,8 +89,8 @@ public class GamePane extends BorderPane {
 		diceRow2.setSpacing(20);
 		diceRow3.setSpacing(20);
 
-		endTurn = new Button("Beëindig beurt.");
-		track = new RoundTrack();
+		endTurn = new Button("Beï¿½indig beurt.");
+		track = new RoundTrack(gameController, gameController.getGame(), gameController.getGame().getLeftovers());
 
 		setBoard();
 		addTrack();
@@ -247,10 +250,7 @@ public class GamePane extends BorderPane {
 		HBox allKeyCards = new HBox(alignObjectiveCardWithHeaderText, alignPrivateObjectiveCardWithHeaderText,
 				alignToolCardWithHeaderText);
 		allKeyCards.setPadding(new Insets(0, 0, 0, 10));
-		allKeyCards.setAlignment(Pos.CENTER);
-		// , new VBox(controller.getChatBox().getScreen(), close
-		// uit de bovenstaande hbox gehaald, gaf nullpointer.
-
+		
 		allKeyCards.setSpacing(5);
 		bottom.setCenter(allKeyCards);
 	}
@@ -493,7 +493,11 @@ public class GamePane extends BorderPane {
 	}
 
 	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
+		
 		track.setRoundTrack(d);
 	}
+	
+	
+	
 
 }
