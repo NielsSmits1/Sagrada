@@ -10,6 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class SearchPlayerPane extends VBox  {
@@ -19,12 +20,8 @@ public class SearchPlayerPane extends VBox  {
 	private Label user = new Label();
 	private Button search = new Button("Zoeken");
 	private Button stats = new Button("Statistieken");
-	private Alert alert = new Alert(AlertType.ERROR);
-
-	
+	private Alert alert = new Alert(AlertType.ERROR);	
 	private String username;
-	
-
 
 	public SearchPlayerPane(){		
 		
@@ -81,6 +78,7 @@ public class SearchPlayerPane extends VBox  {
 		boxie.setLayoutY(30);
 		boxie.setMinWidth(300);
 		user.setFont(Font.font(20));
+		user.setTextFill(Color.WHITE);
 		user.setText(username);
 //		stats.setOnAction(E-> showPlayerStats(username));
 //		challenge.setOnAction(E -> challengePlayer(username));

@@ -197,6 +197,10 @@ public class GamePane extends BorderPane {
 	/// *
 	// Sets all cards, also adds the labels above the cards.
 	/// **
+	
+	public void refreshToolcards() {
+		toolcards = controller.getToolCards();
+	}
 
 	private void setCards() {
 		// Creates new cards
@@ -248,6 +252,7 @@ public class GamePane extends BorderPane {
 		allKeyCards.setPadding(new Insets(0, 0, 0, 10));
 		
 		allKeyCards.setSpacing(5);
+		allKeyCards.setAlignment(Pos.CENTER);
 		bottom.setCenter(allKeyCards);
 	}
 
