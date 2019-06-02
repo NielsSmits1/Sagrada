@@ -45,7 +45,7 @@ public class Game {
 		token = new ArrayList<Gamefavortoken>();
 		database = new db();
 		
-
+	
 	}
 	
 	public void startGame() {
@@ -73,6 +73,12 @@ public class Game {
 		roundNumber = getLastRound();
 		
 	}
+	public void refreshCurrentPlayer() {
+		roundNumber = getLastRound();
+		turnNumber = getTurnNumber();
+		turnPlayer = setWhoseTurnItIs();
+		
+	}
 	public Player setWhoseTurnItIs() {
 		String turnplayer = (String)database.Select("select username from player where isCurrentPlayer = 1 and game_idgame = " +this.idgame).get(0).get(0);
 		for(Player p: players) {
@@ -87,6 +93,13 @@ public class Game {
 		database.CUD("update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame + " and username = '" + turnPlayer.getUsername() + "'");
 	}
 	
+	private void addToTrack() {
+		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT g.dienumber, g.diecolor FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = " + idgame +" AND g.roundtrack IS NULL AND g.round = " + roundNumber +" AND player_idplayer IS NULL;");
+		for (int i = 0; i < leftoverDices.size(); i++) {
+			database.CUD("UPDATE gameDie g SET roundtrack = " + roundNumber + " WHERE g.dienumber = " + leftoverDices.get(i).get(0) +" AND g.diecolor = '" + leftoverDices.get(i).get(1) + "' AND idgame = " + idgame +";");
+		}
+	}
+	
 	public void setNewCurrentPlayer() {
 		int numberOfPlayers = players.size();
 		if(turnNumber == numberOfPlayers ) {// 2-3-4
@@ -96,7 +109,11 @@ public class Game {
 			
 		}else if(turnNumber == numberOfPlayers * 2) {// 4-6-8
 			// dan is een ronde voorbij
+			
+//			controller.setDicesTrack();
+			addToTrack();
 			newRound();
+			
 		}else {
 			setNewCurrentPlayerDB();
 		}
@@ -124,7 +141,6 @@ public class Game {
 	private void setNewCurrentPlayerDB() {
 		updateCurrentPlayer();
 		database.CUD("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = " + this.idgame);
-		System.out.println("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = " + this.idgame);
 		
 	}
 	private void newRound() {
@@ -135,7 +151,7 @@ public class Game {
 		if(roundNumber>9) {
 			
 		}else {
-			this.roundNumber +=1;
+			this.roundNumber=getLastRound();
 		}
 	}
 	
@@ -278,7 +294,6 @@ public class Game {
 	}
 
 	public void updateEyes(int eyes, int dienumber, String color) {
-
 		database.CUD("UPDATE gamedie SET eyes = " + eyes + " WHERE idgame = " + idgame + " AND dienumber = " + dienumber
 				+ " AND diecolor = '" + color + "';");
 	}
@@ -288,39 +303,32 @@ public class Game {
 		return playableDices;
 	}
 
-	public void getDiceWithChosenValue(int dienumber, String color, int value, int chosenvalue) {
-		diceArray.add(new Dice(dienumber, color, value));
+	public void getDiceWithChosenValue(int dienumber, String color,int chosenvalue) {
 		for (int i = 0; i < playableDices.size(); i++) {
 			if (playableDices.get(i).getDieNumber() == dienumber && playableDices.get(i).getDieColor().equals(color)) {
 				playableDices.remove(i);
 			}
 		}
-		int index = r.nextInt(diceArray.size());
-		Dice newDice = diceArray.get(index);
-		while (newDice.getEyes() != chosenvalue) {
-			index = r.nextInt(diceArray.size());
-			newDice = diceArray.get(index);
-		}
-		diceArray.remove(index);
-		playableDices.add(newDice);
+		database.CUD("Update gamedie SET ROUND = null WHERE dienumber = " + dienumber +" AND diecolor = '"+color+"' AND idgame = " + idgame +""); 
+		database.CUD("update gamedie SET Round = " + roundNumber +" WHERE eyes = " + chosenvalue+" AND idgame = " + idgame+" AND ROUND IS NULL ORDER BY RAND() LIMIT 1");
 	}
-
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
-		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT gamedie.dienumber, gamedie.diecolor, gamedie.eyes FROM gamedie LEFT JOIN playerframefield ON gamedie.dienumber != playerframefield.dienumber AND gamedie.diecolor != playerframefield.diecolor AND gamedie.idgame = playerframefield.idgame WHERE round = 1 AND roundtrack IS NULL AND gamedie.idgame = " + idgame +";");
+		System.out.println("r: " +roundNumber);
+		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT g.dienumber, g.diecolor, g.eyes FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = " + idgame +" AND g.roundtrack IS NULL AND g.round = " + roundNumber +" AND player_idplayer IS NULL;");
 		if(!leftoverDices.isEmpty()) {
 			for (int i = 0; i < leftoverDices.size(); i++) {
 				playableDices.add(new Dice((int)leftoverDices.get(i).get(0), (String)leftoverDices.get(i).get(1), (int)leftoverDices.get(i).get(2)));
 			}
-			return;
 		}
-				ArrayList<ArrayList<Object>> randomDice = database.Select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size()*2)+1) +"");
-				for (int i = 0; i < randomDice.size(); i++) {
-					playableDices.add(new Dice((int)randomDice.get(i).get(0), (String)randomDice.get(i).get(1), (int)randomDice.get(i).get(2)));
-					database.CUD("UPDATE gamedie SET round = 1 WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieColor() +"'");
-				}
-
+		else {
+		ArrayList<ArrayList<Object>> randomDice = database.Select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size()*2)+1) +"");
+		for (int i = 0; i < randomDice.size(); i++) {
+			playableDices.add(new Dice((int)randomDice.get(i).get(0), (String)randomDice.get(i).get(1), (int)randomDice.get(i).get(2)));
+			database.CUD("UPDATE gamedie SET round = " + roundNumber + " WHERE idgame = " + idgame + " AND dienumber = " +  playableDices.get(i).getDieNumber() + " AND diecolor = '" + playableDices.get(i).getDieColor() +"'");
 		}
+		}
+	}
 
 	public int getIdGame() {
 		return idgame;
@@ -379,7 +387,6 @@ public class Game {
 	}
 
 	public void fillTokenArrayList() {
-		System.out.println(idgame);
 		for (int i = 1; i < 25; i++) {
 			token.add(new Gamefavortoken(i));
 			database.CUD("INSERT INTO gamefavortoken (idfavortoken, idgame) VALUES (" + i + "," + idgame + ")");
@@ -405,10 +412,8 @@ public class Game {
 		
 	}
 	
-	public void addTokensToGametoolcard(int amount, int toolcardid) {
-		if(getLeftoverTokens() >= amount) {
-			database.CUD("UPDATE gamefavortoken SET gametoolcard = " + getGametoolcard(toolcardid) + " WHERE idgame = " + idgame +"");
-		}
+	public void addTokensToGametoolcard(int tokensGone, int toolcardid, int playerid) {
+			database.CUD("UPDATE gamefavortoken SET gametoolcard = " + getGametoolcard(toolcardid) + ", round = " + roundNumber + " WHERE idgame = " + idgame +" AND idplayer = " + playerid +" AND gametoolcard is null LIMIT " + tokensGone +"");
 	}
 	
 	public int getLeftoverTokens() {
@@ -537,6 +542,21 @@ public class Game {
 		
 	}
 	
+	public void insertChosenID() {
+		for (Player p : players) {
+			if(p.getSelf()) {
+				p.setPatternCardId(getHighestId());
+				p.setPc();
+				database.CUD("UPDATE player SET patterncard_idpatterncard = " + getHighestId() + " WHERE idplayer = " + p.getPlayerId() +";");
+			}
+		}
+		
+	}
+	
+	private int getHighestId() {
+		return (int) database.Select("SELECT idpatterncard FROM patterncard order by idpatterncard DESC LIMIT 1;").get(0).get(0);
+	}
+	
 	public int getOwnPatternId() {
 		for (Player p : players) {
 			if(p.getSelf()) {
@@ -552,6 +572,33 @@ public class Game {
 	}
 
 	
+
+	public void setController(GameController controller) {
+		
+		this.controller = controller;
+	}
+	
+	public ArrayList<ArrayList<Dice>> getLeftovers(){
+		ArrayList<ArrayList<Dice>> dicePerRound = new ArrayList<>();
+		
+	 for (int j = 1; j<11;j++) {
+		 getRoundDice(j);
+		 ArrayList<Dice> dices= new ArrayList<Dice>();
+		 for (int i = 0; i < getRoundDice(j).size(); i++) {
+		 dices.add(new Dice((int)getRoundDice(j).get(i).get(0), (String)getRoundDice(j).get(i).get(1), (int)getRoundDice(j).get(i).get(2)));
+		 }
+		 dicePerRound.add(dices);
+	 }
+//	 System.out.println(dicePerRound);
+	 return dicePerRound;
+	}
+	
+	public ArrayList<ArrayList<Object>> getRoundDice(int j) {
+        return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
+
+    }
+	
+
 }
 	
 	

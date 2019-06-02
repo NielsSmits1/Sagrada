@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import View.ObjectiveCardPane;
 import View.ToolCardPane;
 import model.ObjectiveCard;
+import model.Player;
 import model.Toolcard;
 
 public class CardController {
@@ -38,6 +39,12 @@ public class CardController {
 		gamecontroller.setToolcardElevenActive();
 
 	}
+	
+	public void updatePriceTag() {
+		for(ToolCardPane tcp : toolcardpanes) {
+			tcp.setPrice();
+		}
+	}
 
 	public void enableDiceMovement(int i) {
 		gamecontroller.enableDiceMovement(i);
@@ -63,17 +70,52 @@ public class CardController {
 		return objectiveCards;
 	}
 
+	public void buyToolCard(ToolCardPane boughtCard) {
+		for(Player p : gamecontroller.getGame().getPlayers()) {
+			if(p.getSelf() && gamecontroller.getGame().getTurnPlayer().getSelf() && p.getTokenAmount() >= boughtCard.getPricetag()) {
+				if(boughtCard.getToolCardId() == 7) {
+					if(p.getSeqnr() > gamecontroller.getGame().getPlayers().size() && !gamecontroller.getOwnBoard().getPlaced()) {
+						p.setTokenAmount(p.getTokenAmount() - boughtCard.getPricetag());
+						gamecontroller.setTokenAmount(boughtCard.getPricetag(), boughtCard.getToolCardId());
+						boughtCard.changePrice("2");
+						disableToolCards();
+						toolcardClicked(boughtCard.getToolCardId());
+					}
+				}else {
+					p.setTokenAmount(p.getTokenAmount() - boughtCard.getPricetag());
+					gamecontroller.setTokenAmount(boughtCard.getPricetag(), boughtCard.getToolCardId());
+					boughtCard.changePrice("2");
+					disableToolCards();
+					toolcardClicked(boughtCard.getToolCardId());
+				}
+				
+			}
+		}
+		
+	}
 
 	public void toolcardClicked(int id) {
 		toolcard.activateToolcard(id);
 	}
-
-	public void setPlayerTokens(int minus) {
-		gamecontroller.setPlayerTokens(minus);
+	
+	public void enableToolCards() {
+		for(ToolCardPane tcp : toolcardpanes) {
+			tcp.setButtonEnabled();
+		}
 	}
 	
+	public void disableToolCards() {
+		for(ToolCardPane tcp : toolcardpanes) {
+			tcp.setButtonDisabled();
+		}
+	}
+
 	public ArrayList<Integer> getToolcards(){
 		return toolcard.getToolCards();
+	}
+	
+	public int getPrice(int idtoolcard) {
+		return toolcard.alreadyBought(gamecontroller.getIdGame(), idtoolcard);
 	}
 	
 //	public void setGameCards() {

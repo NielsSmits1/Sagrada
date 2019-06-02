@@ -1,7 +1,7 @@
 package View;
 
 import java.util.ArrayList;
-
+import java.util.Random;
 
 import controller.BoardController;
 import javafx.scene.control.Label;
@@ -31,8 +31,9 @@ public class BoardPane extends Pane {
 	private Label username;
 	private Label score;
 	private boolean self;
-	private boolean placed;
-	
+	private boolean placed = false;
+	private boolean toolCardActive = false;
+	private Random random;
 
 	/// *
 	// This constructor requires a rootPane to return the selected DicePane. It also
@@ -40,7 +41,7 @@ public class BoardPane extends Pane {
 	/// for the number of the windowPattern.
 	/// **
 	public BoardPane(BoardController bc, PatternCard pc, Player p) {
-		placed = false;
+		random = new Random();
 		allowsMovement = false;
 		controller = bc;
 		chosenCard = pc;
@@ -53,39 +54,18 @@ public class BoardPane extends Pane {
 		setShape();
 		setGrid();
 		getChildren().addAll(top, square, tokenPlaceholder, tokenAmount, this.username, score);
-//		setLabelValue(controller.getDifficulty());
 		setBoard();
 		addPlacedDice(p.getDiceField());
+		
 	}
-	
-//	public BoardPane(BoardController bc, PatternCard pc) {
-//		allowsMovement = false;
-//		controller = bc;
-//		chosenCard = pc;
-//		setShape();
-//		setGrid();
-//		getChildren().addAll(top, square, tokenPlaceholder, tokenAmount);
-////		setLabelValue(controller.getDifficulty());
-//		setBoard();
-//	}
 	
 	public void setChosenCard(PatternCard chosenCard) {
 		this.chosenCard = chosenCard;
 	}
 
-//	public BoardPane(ArrayList<Space> opponentBoard) {
-//		setShape();
-//		setGrid();
-//		getChildren().addAll(top, square, tokenPlaceholder, label);
-//	}
-
 	/// *
 	// Sets the patternId.
 	/// **
-
-	public BoardPane() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public void setPatternId(int i) {
 		patternid = i;
@@ -110,7 +90,12 @@ public class BoardPane extends Pane {
 		tokenAmount.setLayoutY(40);
 		score.setLayoutX(205);
 		score.setLayoutY(40);
-		top = new QuadCurve(0, 100, 200, -100, 300, 100);
+		top = new QuadCurve(0, 100, 150, -100, 300, 100);
+		top.setFill(generateRandomColor());
+		top.setOpacity(50);
+		if(self) {
+			top.setFill(Color.LIGHTBLUE);
+		}
 		tokenPlaceholder = new Circle();
 		tokenPlaceholder.setRadius(25);
 		tokenPlaceholder.setCenterX(150);
@@ -126,7 +111,6 @@ public class BoardPane extends Pane {
 		square.setFill(Color.WHITE);
 		square.setStroke(Color.BLACK);
 		top.setStroke(Color.BLACK);
-		top.setFill(Color.CHARTREUSE);
 		top.setStrokeWidth(0.5);
 	}
 
@@ -169,9 +153,11 @@ public class BoardPane extends Pane {
 	/// out of the DB.
 	/// **
 
-	private void setBoard() {
+	public void setBoard() {
 		int counter = 0;
 		board = new ArrayList<>();
+        this.getChildren().remove(field);
+		field.getChildren().clear();
 		for (int c = 1; c <= 5; c++) {
 			for (int i = 0; i < 4; i++) {
 				board.add(new PatternPane(this,
@@ -187,7 +173,7 @@ public class BoardPane extends Pane {
 		// System.out.println("Should have worked");
 	}
 	
-	private void addPlacedDice(ArrayList<PlacedDice> diceField) {
+	public void addPlacedDice(ArrayList<PlacedDice> diceField) {
 		for(PlacedDice pd : diceField) {
 			for(int i = 0;i<board.size(); i++) {
 				if(board.get(i).getX() == pd.getXpos() && board.get(i).getY() == pd.getYpos()) {
@@ -230,7 +216,7 @@ public class BoardPane extends Pane {
 	}
 
 	public void giveCords(int x, int y) {
-		if(!placed) {
+		if(!placed && !toolCardActive) {
 			controller.validateMove(x, y);
 		}
 	}
@@ -258,10 +244,12 @@ public class BoardPane extends Pane {
 
 	public void allowMovement() {
 		allowsMovement = true;
+		toolCardActive = true;
 	}
 
 	public void disableMovement(int x, int y) {
 		allowsMovement = false;
+		toolCardActive = false;
 		disableDiceMovement(x, y);
 	}
 
@@ -288,6 +276,10 @@ public class BoardPane extends Pane {
 				}
 			}
 		}
+		}
+	
+	public boolean getPlaced() {
+		return placed;
 	}
 
 	public void setSelectedToNull() {
@@ -298,16 +290,32 @@ public class BoardPane extends Pane {
 		tokenAmount.setText("" + value);
 	}
 	
-	public void decreaseLabelValue(int minus) {
-		tokenAmount.setText("" + (Integer.parseInt(tokenAmount.getText()) - minus));
+	public void changeTokenAmount(int value) {
+		tokenAmount.setText("" + value);
 	}
 	
 	public boolean getSelf() {
 		return self;
 	}
 	
+	public void setToolcardActiveFalse() {
+		toolCardActive = false;
+	}
+	
+	public void setToolcardActiveTrue() {
+		toolCardActive = true;
+	}
+	
 	public void resetPlaced() {
 		placed = false;
+	}
+	
+	private Color generateRandomColor() {
+		int r = random.nextInt(255);
+		int g = random.nextInt(255);
+		int b = random.nextInt(255);
+		
+		return Color.rgb(r, g, b);
 	}
 
 }

@@ -78,7 +78,7 @@ public class MenubarController {
 		gc = new GameController(g);
 		chat = gc.getChatBox();
 		g.buildRounds();
-//		g.buildTurns();
+		g.buildTurns();
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
 
 		MenuItem c = new MenuItem("chatbox");

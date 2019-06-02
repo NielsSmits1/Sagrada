@@ -79,15 +79,13 @@ public class ToolCardPane extends Pane {
 	}
 
 	public void handleButton() {
-		setPlayerTokens();
-		if (price.getText().equals("1")) {
-			changePrice("2");
-		}
-		controller.toolcardClicked(toolCardId);
+		controller.buyToolCard(this);
 	}
 
-	private void setPrice() {
-		price = new Label("1");
+	public void setPrice() {
+		price = new Label();
+		price.setTextFill(Color.WHITE);
+		price.setText("" + controller.getPrice(toolCardId));
 
 	}
 
@@ -95,14 +93,21 @@ public class ToolCardPane extends Pane {
 		price.setText(value);
 
 	}
+	
+	public int getToolCardId() {
+		return toolCardId;
+	}
+	
+	public void setButtonDisabled() {
+		button.setDisable(true);
+	}
+	
+	public void setButtonEnabled() {
+		button.setDisable(false);
+	}
 
 	public int getPricetag() {
 		int value = Integer.parseInt(price.getText());
-		System.out.println(value);
 		return value;
-	}
-
-	public void setPlayerTokens() {
-		controller.setPlayerTokens(getPricetag());
 	}
 }

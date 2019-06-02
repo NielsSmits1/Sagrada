@@ -58,6 +58,13 @@ public class Toolcard {
 		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card3 + "," + cardController.getIdGame() + ");");
 
 	}
+	
+	public int alreadyBought(int idgame, int idtoolcard) {
+		if(database.Select("SELECT gametoolcard.gametoolcard FROM gametoolcard LEFT JOIN gamefavortoken ON gametoolcard.gametoolcard = gamefavortoken.gametoolcard WHERE gametoolcard.idgame = " + idgame +" AND idtoolcard = " + idtoolcard +" AND gamefavortoken.gametoolcard is NOT NULL;").isEmpty()) {
+			return 1;
+		}
+		return 2;
+	}
 
 	public void activateToolcard(int id) {
 		switch (id) {

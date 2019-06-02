@@ -16,6 +16,7 @@ public class DecisionPane extends BorderPane{
 	private GamePane gamepane;
 	private HBox buttons;
 	private int chosenNumber;
+	
 	public DecisionPane(GamePane gamepane) {
 		this.gamepane = gamepane;
 		chosenNumber = 1;
@@ -46,6 +47,7 @@ public class DecisionPane extends BorderPane{
 	
 	public void showInfoBoxToolcardOne() {	
 		buttons.getChildren().clear();
+		buttonOption.clear();
 		buttonOption.add(new Button("één omlaag"));
 		buttonOption.get(0).setOnAction(e -> minus());
 		buttonOption.add(new Button("niks aan doen!"));

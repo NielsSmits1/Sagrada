@@ -37,7 +37,11 @@ public class Player {
 	}
 	
 	public void setTokenAmount() {
-		tokenAmount = pc.getDifficulty();
+		tokenAmount = (int) getTokens();
+	}
+	
+	public long getTokens() {
+		return (long)database.Select("SELECT COUNT(*) FROM gamefavortoken WHERE idplayer = " + idplayer +" AND gametoolcard is null;").get(0).get(0);
 	}
 	
 	public int getTokenAmount() {
@@ -76,7 +80,6 @@ public class Player {
 	public String getStatus() {
 		return this.status;
 	}
-
 
 	// selects and returns the username and password.
 	public ArrayList<ArrayList<Object>> getSelect() {
@@ -337,7 +340,6 @@ public class Player {
 	public ArrayList<Game> getOpenGames() {
 		ArrayList<Game> games = new ArrayList<Game>();
 		for (ArrayList<Object> a : this.getPlayedGames()) {
-			System.out.println(a.get(0) + " " + countPlayersGame((int) a.get(1)));
 			if ((long) a.get(0) == (countPlayersGame((int) a.get(1)) - 1)) {
 				setChallengerToAccepted((int) a.get(1));
 
