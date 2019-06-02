@@ -413,6 +413,11 @@ public class GameController {
 	public ChatBoxController getChatBox() {
 		return chatBox;
 	}
+	
+	public void setDicesTrack() {
+		gamePane.setRoundTrack(game.getLeftovers());
+		
+	}
 
 
 }
