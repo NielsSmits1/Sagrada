@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import View.GamePane;
 import View.Menubar;
@@ -24,7 +27,8 @@ public class MenubarController {
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private ChatBoxController chat;
 	private GameController gc;
-
+	private ArrayList<Integer> ListOfGames = new ArrayList<Integer>();
+	private int gameId;
 	private HashMap<Menu, GamePane> gamepanes = new HashMap<>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
@@ -69,10 +73,24 @@ public class MenubarController {
 	public void logOut() {
 		scene.setRoot(inlog.getInlog());
 	}
+	public void startGame(Game g) {
+		gc = new GameController(g);
+		gameId = gc.getIdGame();
+		Set<Integer> gamesList = new HashSet<>(ListOfGames);
+		ListOfGames.clear();
+		ListOfGames.addAll(gamesList);
+		if(ListOfGames.contains(gameId)) {
+			}else {
+				addGame(g);
+				ListOfGames.add(gameId);
+			}
+	}
 
 	public void addGame(Game g) {
+
 		gc = new GameController(g);
-		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
+		gameId = gc.getIdGame();
+		Menu m = new Menu("Gamenummer : " + gameId);
 		MenuItem mi = new MenuItem("open");
 		m.getItems().add(mi);
 		menu.addGameItem(m);

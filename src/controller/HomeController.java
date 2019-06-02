@@ -69,20 +69,29 @@ public class HomeController {
 	private void startTimeline() {
 		Timeline timeline = new Timeline();
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e -> refresh()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(20000), e -> refresh()));
 		timeline.play();
 	}
 
 	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
-		
+		startGames();
 	}
 
 	private Game openGames() {
 		// open the games that are being played, or are ready to be played
 		for (Game g : self.getOpenGames()) {
-			mbc.addGame(g);
+			mbc.startGame(g);
+			game = g;
+			
+		}
+		return game;
+	}
+	private Game startGames() {
+		// open the games that are being played, or are ready to be played
+		for (Game g : self.getOpenGames()) {
+			mbc.startGame(g);
 			game = g;
 			
 		}
