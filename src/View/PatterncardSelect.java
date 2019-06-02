@@ -32,15 +32,7 @@ import model.PatternCard;
 public class PatterncardSelect extends Pane {
 	private ArrayList<PatternPane> board;
 	private Button randomButton;
-
 	private Alert alert = new Alert(AlertType.INFORMATION);
-
-	// private double textX = 175;
-	// private int fontSize = 20;
-	// private int heightPosition = 375;
-	// private int paneHeight = 403;
-	// private int paneWidth = 324;
-
 	private ArrayList<Integer> id;
 	private int patternId;
 	private ArrayList<GridPane> choice;
