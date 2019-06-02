@@ -416,6 +416,9 @@ public class GameController {
 	
 	public BoardPane getOwnBoard() {
 		return boardcontroller.getOwnBoard();
+	public void setDicesTrack() {
+		gamePane.setRoundTrack(game.getLeftovers());
+		
 	}
 
 
