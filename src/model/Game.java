@@ -596,6 +596,7 @@ public class Game {
         return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
 
     }
+	
 
 }
 	

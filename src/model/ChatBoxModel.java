@@ -31,8 +31,4 @@ public class ChatBoxModel {
 	public void setPlayerId(int playerId) {
 		this.playerId = playerId;
 	}
-	
-	
-
-	
 }
