@@ -41,14 +41,16 @@ public class Player {
 		this.score = -20;
 		this.score += tokenAmount;
 		this.score += (int)calculateAmountOfSpacesFilled();
-		//Private objective card
-		if(self) {
-			this.score += (int)calculatePrivateCardScore();
-		}
 		//Score for public objective cards
 		for (int i = 0; i < 3; i++) {
 			calculateObjectiveCard((int)getObjectiveCards(idgame).get(i).get(0));
 		}
+		//Private objective card
+				if(self) {
+					this.score += (int)calculatePrivateCardScore();
+					database.cud("update player set score = " + score +" WHERE idplayer = " + idplayer +"");
+				}
+		
 		return this.score;
 	}
 	

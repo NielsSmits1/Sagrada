@@ -115,6 +115,7 @@ public class GameController {
             game.getPlayers().get(i).setTokenAmount();
 			boardcontroller.getBoards().get(i).changeTokenAmount(game.getPlayers().get(i).getTokenAmount());
 		}
+		
 	}
 	
 	public String shoutCurrentPlayer() {

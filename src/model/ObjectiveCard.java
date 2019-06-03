@@ -63,7 +63,7 @@ public class ObjectiveCard {
 		while(card2 == card1) {
 			card2 = random.nextInt(10) + 1;
 		}
-		while(card3 == card1) {
+		while(card3 == card1 || card3 == card2) {
 			card3 = random.nextInt(10) + 1;
 		}
 	}
