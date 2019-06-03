@@ -2,9 +2,9 @@ package Database;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class db {
+public class Db {
 	private Connection con;
-	public db() {
+	public Db() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://databases.aii.avans.nl:3306/tjpmsalt_db2","bverheij4","Ab12345");
@@ -22,7 +22,7 @@ public class db {
 	 * @param De query die je wilt uitvoeren
 	 * @return Geeft een 2D-ArrayList van type Object terug
 	 */
-	public ArrayList<ArrayList<Object>> Select(String Query) {
+	public ArrayList<ArrayList<Object>> select(String Query) {
 		Statement stmt = null;
 		try {
 			stmt = con.createStatement();
@@ -50,7 +50,7 @@ public class db {
 	 * @return Geen return waarde
 	 */
 	
-	public void CUD(String Query) {
+	public void cud(String Query) {
 		try {
 			PreparedStatement prdstmt = con.prepareStatement(Query);
 			prdstmt.execute();

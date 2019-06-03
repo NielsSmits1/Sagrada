@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Database.db;
+import Database.Db;
 import controller.CardController;
 
 public class Toolcard {
@@ -11,13 +11,13 @@ public class Toolcard {
 	private int card1;
 	private int card2;
 	private int card3;
-	private db database;
+	private Db database;
 	private CardController cardController;
 
 	public Toolcard(CardController cc) {
 		this.cardController = cc;
 		random = new Random();
-		database = new db();
+		database = new Db();
 		
 	}
 	
@@ -28,13 +28,13 @@ public class Toolcard {
 	public ArrayList<ArrayList<Object>> getToolcardsFromDatabase() {
 		String query = ("SELECT idtoolcard, description FROM toolcard WHERE idtoolcard = " + card1
 				+ " OR idtoolcard = " + card2 + " OR idtoolcard = " + card3 + "");
-		return database.Select(query);
+		return database.select(query);
 	}
 	
 	public ArrayList<Integer> getIds(){
 		ArrayList<Integer> Ids = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
-			Ids.add((int)database.Select("SELECT idtoolcard FROM gametoolcard WHERE idgame = " + cardController.getIdGame() + "").get(i).get(0));
+			Ids.add((int)database.select("SELECT idtoolcard FROM gametoolcard WHERE idgame = " + cardController.getIdGame() + "").get(i).get(0));
 		}
 		return Ids;
 		
@@ -53,14 +53,14 @@ public class Toolcard {
 			card3 = random.nextInt(12) + 1;
 		}
 		
-		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card1 + "," + cardController.getIdGame() + ");");
-		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card2 + "," + cardController.getIdGame() + ");");
-		database.CUD("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card3 + "," + cardController.getIdGame() + ");");
+		database.cud("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card1 + "," + cardController.getIdGame() + ");");
+		database.cud("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card2 + "," + cardController.getIdGame() + ");");
+		database.cud("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card3 + "," + cardController.getIdGame() + ");");
 
 	}
 	
 	public int alreadyBought(int idgame, int idtoolcard) {
-		if(database.Select("SELECT gametoolcard.gametoolcard FROM gametoolcard LEFT JOIN gamefavortoken ON gametoolcard.gametoolcard = gamefavortoken.gametoolcard WHERE gametoolcard.idgame = " + idgame +" AND idtoolcard = " + idtoolcard +" AND gamefavortoken.gametoolcard is NOT NULL;").isEmpty()) {
+		if(database.select("SELECT gametoolcard.gametoolcard FROM gametoolcard LEFT JOIN gamefavortoken ON gametoolcard.gametoolcard = gamefavortoken.gametoolcard WHERE gametoolcard.idgame = " + idgame +" AND idtoolcard = " + idtoolcard +" AND gamefavortoken.gametoolcard is NOT NULL;").isEmpty()) {
 			return 1;
 		}
 		return 2;
@@ -176,8 +176,8 @@ public class Toolcard {
 	}
 	
 	public long getTokensPlaced(int id) {
-		int gametoolcard =  (int)database.Select("SELECT gametoolcard.gametoolcard FROM gametoolcard  WHERE gametoolcard.idgame = " + cardController.getIdGame() +" AND idtoolcard = " + id +"").get(0).get(0);
-		return (long)database.Select("select count(*) from gamefavortoken where idgame = " + cardController.getIdGame() + " AND gametoolcard = " + gametoolcard + "").get(0).get(0);
+		int gametoolcard =  (int)database.select("SELECT gametoolcard.gametoolcard FROM gametoolcard  WHERE gametoolcard.idgame = " + cardController.getIdGame() +" AND idtoolcard = " + id +"").get(0).get(0);
+		return (long)database.select("select count(*) from gamefavortoken where idgame = " + cardController.getIdGame() + " AND gametoolcard = " + gametoolcard + "").get(0).get(0);
 	}
 
 	public int getCardOneId() {

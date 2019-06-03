@@ -2,19 +2,19 @@ package model;
 
 import java.util.ArrayList;
 
-import Database.db;
+import Database.Db;
 
 public class Opponent {
 	private int gamemode;
 	private ArrayList<ArrayList<Space>> opponents;
 	private ArrayList<ArrayList<Object>> p;
 	private ArrayList<Integer> idOpponent;
-	private db database;
+	private Db database;
 	private int idgame;
 	private int yourself;
 
 	public Opponent(int idgame, int ownId) {
-		database = new db();
+		database = new Db();
 		this.idgame = idgame;
 		yourself = ownId;
 		idOpponent = new ArrayList<>();
@@ -31,11 +31,11 @@ public class Opponent {
 	// TODO MAKE THIS AUTOMATIC, CURRENTLY THIS IS HARD CODED FOR TESTING SCENARIOS
 	private void setOpponents() {
 		for (int i = 0; i < 3; i++) {
-			ArrayList<ArrayList<Object>> opponent = database.Select(
+			ArrayList<ArrayList<Object>> opponent = database.select(
 					"SELECT (idplayer+1) AS newPlayerId FROM tjpmsalt_db2.player ORDER BY idplayer DESC LIMIT 1;");
 			long id = (long) opponent.get(0).get(0);
 			idOpponent.add((int) id);
-			database.CUD(
+			database.cud(
 					"INSERT INTO tjpmsalt_db2.player (idplayer, username, game_idgame, playstatus_playstatus, isCurrentPlayer, private_objectivecard_color, patterncard_idpatterncard) "
 							+ "VALUES(" + opponent.get(0).get(0) + ",'niels'," + idgame
 							+ ", 'geaccepteerd', 0, 'blauw', 5)");
@@ -44,13 +44,13 @@ public class Opponent {
 	}
 
 	public void setGamemode() {
-		ArrayList<ArrayList<Object>> opponents = database.Select(
+		ArrayList<ArrayList<Object>> opponents = database.select(
 				"SELECT idplayer FROM player WHERE idplayer != " + yourself + " AND game_idgame = " + idgame + ";");
 		gamemode = opponents.size();
 	}
 
 	public ArrayList<ArrayList<Object>> getSelect() {
-		return database.Select("SELECT * FROM patterncardfield WHERE patterncard_idpatterncard = " + 5 + ";");
+		return database.select("SELECT * FROM patterncardfield WHERE patterncard_idpatterncard = " + 5 + ";");
 	}
 
 	public void addCard() {
@@ -62,7 +62,7 @@ public class Opponent {
 	}
 
 	public void addChosenCard(int xPos, int yPos, int currentOpponent) {
-		database.CUD(
+		database.cud(
 				"insert into tjpmsalt_db2.playerframefield (player_idplayer, position_x,position_y, idgame) VALUES ("
 						+ currentOpponent + "," + xPos + "," + yPos + "," + idgame + ");");
 	}

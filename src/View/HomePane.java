@@ -108,8 +108,16 @@ public class HomePane extends Pane{
 		players = new Button("Spelers");
 		playersPlayed = new Button("Aantal gespeeld");
 		playersWins = new Button("Aantal gewonnen");
+		allGames = new Button("Alle spellen");
+		allGamesDate = new Button("Spellen op datum");
+		
+		players.setPrefSize(150, 30);
+		playersPlayed.setPrefSize(150, 30);
+		playersWins.setPrefSize(150, 30);
+		allGames.setPrefSize(150, 30);
+		allGamesDate.setPrefSize(150, 30);
 
-		boxie.getChildren().addAll(lb, players, playersPlayed, playersWins);
+		boxie.getChildren().addAll(lb, players, playersPlayed, playersWins, allGames, allGamesDate);
 		this.getChildren().add(boxie);
 	}
 	

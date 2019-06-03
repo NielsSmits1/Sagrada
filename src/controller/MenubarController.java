@@ -130,10 +130,8 @@ public class MenubarController {
 				scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamePane()));
 				for (RadioMenuItem r : gamepanes.keySet()) {
 					r.setDisable(false);
-					System.out.println("hoi");
 				}
 				mi.setDisable(true);
-				System.out.println("hallo");
 
 			}
 		else {

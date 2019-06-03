@@ -5,30 +5,30 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import Database.db;
+import Database.Db;
 import View.ChallengesPane;
 import View.LeaderboardPane;
 
 public class Leaderboard {
 	private Player self;
-	private db database = new db();
+	private Db database = new Db();
 
 	public Leaderboard() {
 
 	}
 
 	public ArrayList<ArrayList<Object>> getListOfUsernames() {
-		return database.Select("Select * from account order by username ASC");
+		return database.select("Select * from account order by username ASC");
 	}
 
 	public ArrayList<ArrayList<Object>> getListOfUsernamesWithAmountOfGamesPlayed() {
 
-		return database.Select(
+		return database.select(
 				"select username, count(game_idgame) as played_games from player where playstatus_playstatus = 'Uitgespeeld' group by username");
 	}
 
 	public ArrayList<ArrayList<Object>> getListOfUsernamesWithAmountOfGamesWon() {
-		return database.Select(
+		return database.select(
 				"SELECT p1.username,count(p1.username) as games_won FROM player p1 LEFT JOIN player p2 ON p1.game_idgame = p2.game_idgame AND p1.score < p2.score where p2.score is null AND p1.playstatus_playstatus = 'Uitgespeeld' group by p1.username");
 
 	}
@@ -69,15 +69,15 @@ public class Leaderboard {
 	}
 
 	public ArrayList<ArrayList<Object>> getSelfGames() {
-		return database.Select("SELECT game_idgame FROM player WHERE username = '" + self.getUsername() + "'");
+		return database.select("SELECT game_idgame FROM player WHERE username = '" + self.getUsername() + "'");
 	}
 
 	public ArrayList<ArrayList<Object>> getAllGames() {
-		return database.Select("SELECT * FROM GAME");
+		return database.select("SELECT * FROM GAME");
 	}
 
 	public ArrayList<ArrayList<Object>> getAllGamesDate() {
-		return database.Select("SELECT * FROM GAME ORDER BY creationdate ASC");
+		return database.select("SELECT * FROM GAME ORDER BY creationdate ASC");
 	}
 
 	
