@@ -48,7 +48,10 @@ public class HomeController {
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
-
+		home.getAllGames().setOnAction(e -> lc.setGames1());
+		home.getAllGames().setOnAction(e -> lc.setGames2());
+		
+		
 		openGames();
 		startTimeline();
 
