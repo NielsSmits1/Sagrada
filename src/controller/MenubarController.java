@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import View.Menubar;
@@ -37,12 +38,29 @@ public class MenubarController {
 		this.self = player;
 		menu = new Menubar(scene);
 
-		menu.getExit().setOnAction(e -> exit());
-		menu.getLogout().setOnAction(e -> logOut());
+		menu.getExit().setOnAction(e -> {
+			exit();
+			try {
+				gc.getGame().getDatabase().getCon().close();
+			} catch (SQLException e1) {
+
+				e1.printStackTrace();
+			}
+		});
+
+		menu.getLogout().setOnAction(e -> {
+			logOut();
+			try {
+				gc.getGame().getDatabase().getCon().close();
+			} catch (SQLException e1) {
+
+				e1.printStackTrace();
+			}
+		});
+
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 		menu.getHome().setOnAction(e -> controller.buildHome());
 		menu.getStats().setOnAction(e -> showStats());
-		
 
 	}
 
@@ -80,7 +98,6 @@ public class MenubarController {
 		g.buildTurns();
 
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
-		
 
 		MenuItem c = new MenuItem("chatbox");
 		RadioMenuItem mi = new RadioMenuItem("open game");
@@ -94,21 +111,19 @@ public class MenubarController {
 			gc.getGamePane().setGameId(gc.getIdGame());
 			gc.getChatBox().getModel().setGameId(gc.getGamePane().getGameId());
 			gc.getChatBox().getModel().setPlayerId(gc.getOwnId());
-			System.out.println(gc.getGamePane().getGameId());
-			System.out.println(gc.getOwnId());
 			builtChatBox();
 
 		});
-		
+
 	}
 
 	public void builtChatBox() {
 		stageChat = new Stage();
 		sceneChat = new Scene(new Pane(gc.getChatBox().getScreen()));
 		builtScene();
-		
+
 	}
-	
+
 	public void builtScene() {
 		stageChat.setScene(sceneChat);
 		stageChat.show();

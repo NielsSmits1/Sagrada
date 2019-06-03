@@ -150,4 +150,10 @@ public class HomeController {
 		return scene;
 	}
 
+	public Game getGame() {
+		return game;
+	}
+	
+	
+
 }
