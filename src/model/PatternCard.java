@@ -31,7 +31,7 @@ public class PatternCard {
 		yourself = ownId;
 		random = new Random();
 		setPatternId(number);
-		p = getSelect();
+		p = getselect();
 		setpatternfield();
 		addCard();
 		// generateRandomPatternCard();
@@ -47,7 +47,7 @@ public class PatternCard {
 		patternfield = new ArrayList<>();
 		// TODO aanpassen naar de size van de list van beschikbare kaarten
 		setPatternId(number);
-		p = getSelect();
+		p = getselect();
 		setpatternfield();
 	}
 
@@ -60,7 +60,7 @@ public class PatternCard {
 		generateRandomPatternCard();
 		insertRandomPatternCardIntoDB();
 		setPatternId(getHighestPatternId());
-		p = getSelect();
+		p = getselect();
 		addCard();
 		hasColorExamption = false;
 		hasNumberExamption = false;
@@ -75,7 +75,7 @@ public class PatternCard {
 		setPatternId(patternid);
 		diceField = new ArrayList<>();
 		setPlacedDice();
-		p = getSelect();
+		p = getselect();
 		setpatternfield();
 		hasColorExamption = false;
 		hasNumberExamption = false;
@@ -88,15 +88,15 @@ public class PatternCard {
 		this.idgame = idgame;
 		controller = bc;
 		setPatternId(patternid);
-		p = getSelect();
+		p = getselect();
 		hasColorExamption = false;
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
 	}
 
-	public ArrayList<ArrayList<Object>> getSelect() {
+	public ArrayList<ArrayList<Object>> getselect() {
 		return database
-				.select("SELECT * FROM patterncardfield WHERE patterncard_idpatterncard = " + getPatternId() + ";");
+				.select("select * FROM patterncardfield WHERE patterncard_idpatterncard = " + getPatternId() + ";");
 	}
 
 	/// *
@@ -111,7 +111,7 @@ public class PatternCard {
 	
 	public void setPlacedDice() {
 		diceField.clear();
-		ArrayList<ArrayList<Object>> placed = database.select("SELECT position_x, position_y, playerframefield.dienumber, playerframefield.diecolor, gamedie.eyes FROM playerframefield RIGHT JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE player_idplayer = " + yourself + " AND playerframefield.dienumber IS NOT NULL;");
+		ArrayList<ArrayList<Object>> placed = database.select("select position_x, position_y, playerframefield.dienumber, playerframefield.diecolor, gamedie.eyes FROM playerframefield RIGHT JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE player_idplayer = " + yourself + " AND playerframefield.dienumber IS NOT NULL;");
 		for (int i = 0; i < placed.size(); i++) {
 			diceField.add(new PlacedDice((int)placed.get(i).get(0), (int)placed.get(i).get(1), (int)placed.get(i).get(2), (String)placed.get(i).get(3), (int)placed.get(i).get(4)));
 		}
@@ -154,7 +154,7 @@ public class PatternCard {
 
 	public void changeField() {
 		patternfield.clear();
-		p = getSelect();
+		p = getselect();
 		setpatternfield();
 	}
 
@@ -171,7 +171,7 @@ public class PatternCard {
 
 	private boolean checkFirstMove() {
 		ArrayList<ArrayList<Object>> getQuery = database
-				.select("SELECT dienumber FROM playerframefield WHERE idgame = " + idgame
+				.select("select dienumber FROM playerframefield WHERE idgame = " + idgame
 						+ " AND player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
 		if (getQuery.get(0).get(0) == null) {
 			return true;
@@ -188,7 +188,7 @@ public class PatternCard {
 	}
 	
 	public ArrayList<ArrayList<Object>> getPlayerframeField(int idplayer, int idgame){
-		return database.select("SELECT * FROM playerframefield WHERE player_idplayer = " + idplayer + ", idgame = " + idgame + "");
+		return database.select("select * FROM playerframefield WHERE player_idplayer = " + idplayer + ", idgame = " + idgame + "");
 	}
 
 	public void moveDie(int dienumber, String diecolor, int xPos, int yPos) {
@@ -268,7 +268,7 @@ public class PatternCard {
 			return true;
 		}
 		ArrayList<ArrayList<Object>> getQuery = database
-				.select("SELECT color FROM patterncardfield WHERE patterncard_idpatterncard = " + patternId
+				.select("select color FROM patterncardfield WHERE patterncard_idpatterncard = " + patternId
 						+ " && position_x = " + x + " && position_y = " + y);
 		if (getQuery.get(0).get(0) == null) {
 			return true;
@@ -286,9 +286,9 @@ public class PatternCard {
 			return true;
 		}
 		ArrayList<ArrayList<Object>> getQuery = database
-				.select("SELECT value FROM patterncardfield WHERE patterncard_idpatterncard = " + patternId
+				.select("select value FROM patterncardfield WHERE patterncard_idpatterncard = " + patternId
 						+ " && position_x = " + x + " && position_y = " + y);
-		ArrayList<ArrayList<Object>> dieEyes = database.select("SELECT eyes FROM gamedie WHERE idgame = "
+		ArrayList<ArrayList<Object>> dieEyes = database.select("select eyes FROM gamedie WHERE idgame = "
 				+ idgame + " && dienumber = " + dienumber + " && diecolor = '" + diecolor + "' ;");
 		if (getQuery.get(0).get(0) == null) {
 			return true;
@@ -306,13 +306,13 @@ public class PatternCard {
 		if (y - 1 > 0) {
 			while (isEmpty == false) {
 				ArrayList<ArrayList<Object>> color = database
-						.select("SELECT diecolor FROM playerframefield WHERE player_idplayer = " + yourself
+						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
 								+ " && position_x = " + x + " && position_y = " + y + " && idgame = " + idgame + ";");
 				ArrayList<ArrayList<Object>> eyes = database
-						.select("SELECT eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
+						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ dienumber + " && diecolor = '" + diecolor + "' ;");
 				ArrayList<ArrayList<Object>> upPosition = database
-						.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = "
+						.select("select dienumber FROM playerframefield WHERE player_idplayer = "
 								+ yourself + " && position_x = " + x + " && position_y = " + (y - 1) + " && idgame = "
 								+ idgame + ";");
 				if (upPosition.get(0).get(0) == null) {
@@ -320,11 +320,11 @@ public class PatternCard {
 					continue;
 				}
 				ArrayList<ArrayList<Object>> upColor = database
-						.select("SELECT diecolor FROM playerframefield WHERE player_idplayer = " + yourself
+						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
 								+ " && position_x = " + x + " && position_y = " + (y - 1) + " && idgame = " + idgame
 								+ ";");
 				ArrayList<ArrayList<Object>> upEyes = database
-						.select("SELECT eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
+						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ (int) upPosition.get(0).get(0) + " && diecolor = '" + (String) upColor.get(0).get(0)
 								+ "'");
 				String currentColor = diecolor;
@@ -341,13 +341,13 @@ public class PatternCard {
 		if (y + 1 < 5) {
 			while (isEmpty == false) {
 				ArrayList<ArrayList<Object>> color = database
-						.select("SELECT diecolor FROM playerframefield WHERE player_idplayer = " + yourself
+						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
 								+ " && position_x = " + x + " && position_y = " + y + " && idgame = " + idgame + ";");
 				ArrayList<ArrayList<Object>> eyes = database
-						.select("SELECT eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
+						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ dienumber + " && diecolor = '" + diecolor + "' ;");
 				ArrayList<ArrayList<Object>> downPosition = database
-						.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = "
+						.select("select dienumber FROM playerframefield WHERE player_idplayer = "
 								+ yourself + " && position_x = " + x + " && position_y = " + (y + 1) + " && idgame = "
 								+ idgame + ";");
 				if (downPosition.get(0).get(0) == null) {
@@ -355,11 +355,11 @@ public class PatternCard {
 					continue;
 				}
 				ArrayList<ArrayList<Object>> downColor = database
-						.select("SELECT diecolor FROM playerframefield WHERE player_idplayer = " + yourself
+						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
 								+ " && position_x = " + x + " && position_y = " + (y + 1) + " && idgame = " + idgame
 								+ ";");
 				ArrayList<ArrayList<Object>> downEyes = database
-						.select("SELECT eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
+						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ (int) downPosition.get(0).get(0) + " && diecolor = '"
 								+ (String) downColor.get(0).get(0) + "'");
 				String currentColor = diecolor;
@@ -376,13 +376,13 @@ public class PatternCard {
 		if (x + 1 < 6) {
 			while (isEmpty == false) {
 				ArrayList<ArrayList<Object>> color = database
-						.select("SELECT diecolor FROM playerframefield WHERE player_idplayer = " + yourself
+						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
 								+ " && position_x = " + x + " && position_y = " + y + " && idgame = " + idgame + ";");
 				ArrayList<ArrayList<Object>> eyes = database
-						.select("SELECT eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
+						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ dienumber + " && diecolor = '" + diecolor + "' ;");
 				ArrayList<ArrayList<Object>> rightPosition = database
-						.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = "
+						.select("select dienumber FROM playerframefield WHERE player_idplayer = "
 								+ yourself + " && position_x = " + (x + 1) + " && position_y = " + y + " && idgame = "
 								+ idgame + ";");
 				if (rightPosition.get(0).get(0) == null) {
@@ -390,11 +390,11 @@ public class PatternCard {
 					continue;
 				}
 				ArrayList<ArrayList<Object>> rightColor = database
-						.select("SELECT diecolor FROM playerframefield WHERE player_idplayer = " + yourself
+						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
 								+ " && position_x = " + (x + 1) + " && position_y = " + y + " && idgame = " + idgame
 								+ ";");
 				ArrayList<ArrayList<Object>> rightEyes = database
-						.select("SELECT eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
+						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ (int) rightPosition.get(0).get(0) + " && diecolor = '"
 								+ (String) rightColor.get(0).get(0) + "'");
 				String currentColor = diecolor;
@@ -411,13 +411,13 @@ public class PatternCard {
 		if (x - 1 > 0) {
 			while (isEmpty == false) {
 				ArrayList<ArrayList<Object>> color = database
-						.select("SELECT diecolor FROM playerframefield WHERE player_idplayer = " + yourself
+						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
 								+ " && position_x = " + x + " && position_y = " + y + " && idgame = " + idgame + ";");
 				ArrayList<ArrayList<Object>> eyes = database
-						.select("SELECT eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
+						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ dienumber + " && diecolor = '" + diecolor + "' ;");
 				ArrayList<ArrayList<Object>> leftPosition = database
-						.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = "
+						.select("select dienumber FROM playerframefield WHERE player_idplayer = "
 								+ yourself + " && position_x = " + (x - 1) + " && position_y = " + y + " && idgame = "
 								+ idgame + ";");
 				if (leftPosition.get(0).get(0) == null) {
@@ -425,11 +425,11 @@ public class PatternCard {
 					continue;
 				}
 				ArrayList<ArrayList<Object>> leftColor = database
-						.select("SELECT diecolor FROM playerframefield WHERE player_idplayer = " + yourself
+						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
 								+ " && position_x = " + (x - 1) + " && position_y = " + y + " && idgame = " + idgame
 								+ ";");
 				ArrayList<ArrayList<Object>> leftEyes = database
-						.select("SELECT eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
+						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ (int) leftPosition.get(0).get(0) + " && diecolor = '"
 								+ (String) leftColor.get(0).get(0) + "'");
 				String currentColor = diecolor;
@@ -453,7 +453,7 @@ public class PatternCard {
 		}
 		if (y - 1 > 0) {
 			ArrayList<ArrayList<Object>> upPosition = database
-					.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = " + yourself
+					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
 							+ " && position_x = " + x + " && position_y = " + (y - 1) + " && idgame = " + idgame + ";");
 			if (upPosition.get(0).get(0) == null) {
 			} else {
@@ -463,7 +463,7 @@ public class PatternCard {
 		// up right
 		if (y - 1 > 0 && x + 1 < 6) {
 			ArrayList<ArrayList<Object>> upRightPosition = database
-					.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = " + yourself
+					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
 							+ " && position_x = " + (x + 1) + " && position_y = " + (y - 1) + " && idgame = " + idgame
 							+ ";");
 			if (upRightPosition.get(0).get(0) == null) {
@@ -475,7 +475,7 @@ public class PatternCard {
 		// right
 		if (x + 1 < 6) {
 			ArrayList<ArrayList<Object>> rightPosition = database
-					.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = " + yourself
+					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
 							+ " && position_x = " + (x + 1) + " && position_y = " + y + " && idgame = " + idgame + ";");
 			if (rightPosition.get(0).get(0) == null) {
 			} else {
@@ -485,7 +485,7 @@ public class PatternCard {
 		// down right
 		if (y + 1 < 5 && x + 1 < 6) {
 			ArrayList<ArrayList<Object>> downRightPosition = database
-					.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = " + yourself
+					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
 							+ " && position_x = " + (x + 1) + " && position_y = " + (y + 1) + " && idgame = " + idgame
 							+ ";");
 			if (downRightPosition.get(0).get(0) == null) {
@@ -497,7 +497,7 @@ public class PatternCard {
 		// bottom
 		if (y + 1 < 5) {
 			ArrayList<ArrayList<Object>> downPosition = database
-					.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = " + yourself
+					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
 							+ " && position_x = " + x + " && position_y = " + (y + 1) + " && idgame = " + idgame + ";");
 			if (downPosition.get(0).get(0) == null) {
 			} else {
@@ -508,7 +508,7 @@ public class PatternCard {
 		// down left
 		if (x - 1 > 0 && y + 1 < 5) {
 			ArrayList<ArrayList<Object>> downLeftPosition = database
-					.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = " + yourself
+					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
 							+ " && position_x = " + (x - 1) + " && position_y = " + (y + 1) + " && idgame = " + idgame
 							+ ";");
 			if (downLeftPosition.get(0).get(0) == null) {
@@ -520,7 +520,7 @@ public class PatternCard {
 		// left
 		if (x - 1 > 0) {
 			ArrayList<ArrayList<Object>> leftPosition = database
-					.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = " + yourself
+					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
 							+ " && position_x = " + (x - 1) + " && position_y = " + y + " && idgame = " + idgame + ";");
 			if (leftPosition.get(0).get(0) == null) {
 			} else {
@@ -531,7 +531,7 @@ public class PatternCard {
 		// top left
 		if (x - 1 > 0 && y - 1 > 0) {
 			ArrayList<ArrayList<Object>> topLeftPosition = database
-					.select("SELECT dienumber FROM playerframefield WHERE player_idplayer = " + yourself
+					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
 							+ " && position_x = " + (x - 1) + " && position_y = " + (y - 1) + " && idgame = " + idgame
 							+ ";");
 			if (topLeftPosition.get(0).get(0) == null) {
@@ -545,7 +545,7 @@ public class PatternCard {
 
 	private boolean isEmptyPlace(int x, int y) {
 		if (database
-				.select("SELECT dienumber FROM playerframefield WHERE position_x = " + x
+				.select("select dienumber FROM playerframefield WHERE position_x = " + x
 						+ "&& position_y = " + y + " && player_idplayer = " + yourself + " && idgame = " + idgame)
 				.get(0).get(0) == null) {
 			return true;
@@ -569,7 +569,7 @@ public class PatternCard {
 	}
 
 	private ArrayList<ArrayList<Object>> getPosition(int dienumber, String diecolor) {
-		return database.select("SELECT position_x, position_y FROM playerframefield WHERE idgame = "
+		return database.select("select position_x, position_y FROM playerframefield WHERE idgame = "
 				+ idgame + " AND player_idplayer = " + yourself + " AND dienumber = " + dienumber + " AND diecolor = '"
 				+ diecolor + "';");
 	}
@@ -706,13 +706,13 @@ public class PatternCard {
 
 	public long getNewPatternId() {
 		return (long) database
-				.select("SELECT idpatterncard+1 FROM patterncard ORDER BY idpatterncard DESC LIMIT 1")
+				.select("select idpatterncard+1 FROM patterncard ORDER BY idpatterncard DESC LIMIT 1")
 				.get(0).get(0);
 	}
 
 	public int getHighestPatternId() {
 		return (int) database
-				.select("SELECT idpatterncard FROM patterncard ORDER BY idpatterncard DESC LIMIT 1").get(0)
+				.select("select idpatterncard FROM patterncard ORDER BY idpatterncard DESC LIMIT 1").get(0)
 				.get(0);
 	}
 
@@ -722,7 +722,7 @@ public class PatternCard {
 	}
 
 	public int getDifficulty() {
-		return (int) database.select("SELECT difficulty FROM patterncard WHERE idpatterncard = " + getPatternId() + ";")
+		return (int) database.select("select difficulty FROM patterncard WHERE idpatterncard = " + getPatternId() + ";")
 				.get(0).get(0);
 	}
 	
@@ -758,6 +758,390 @@ public class PatternCard {
 		}
 		return 0;
 		
+	}
+	
+	public int getObjectiveCardTwo() {
+		int[] number = new int[2];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getEyes()) {
+			case 3: number[0] += number[0] + 1;
+			break;
+			case 4: number[1] += number[1] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<number.length;i++) {
+				if(number[i] > counter) {
+					
+				}else {
+					return counter*2;
+				}
+			}
+			counter++;
+		}
+		return 0;
+	}
+	
+	public int getObjectiveCardThree(int idplayer) {
+		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
+		int counter = 0;
+		for(int i = 1; i <= 5; i++) {
+			Column = database.select("select DISTINCT p.position_x, p.position_y, d.eyes from playerframefield p join gamedie d on p.idgame = d.idgame and p.dienumber = d.dienumber and p.diecolor = d.diecolor where p.player_idplayer = " + idplayer +" AND position_x = " + i +";");
+			if(Column.size() == 4) {
+				counter++;
+			}
+		}
+		return counter*4;
+	}
+	
+	public int getObjectiveCardFour(int idplayer) {
+		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
+		int counter = 0;
+		for(int i = 1; i <= 5; i++) {
+			Column = database.select("select DISTINCT p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +" AND position_x = " + i +" AND diecolor is not null;");
+			if(Column.size() == 4) {
+				counter++;
+			}
+		}
+		return counter*4;
+	}
+	
+	public int getObjectiveCardFive() {
+		int[] number = new int[2];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getEyes()) {
+			case 5: number[0] += number[0] + 1;
+			break;
+			case 6: number[1] += number[1] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<number.length;i++) {
+				if(number[i] > counter) {
+					
+				}else {
+					return counter*2;
+				}
+			}
+			counter++;
+		}
+		return 0;
+	}
+	
+	public int getObjectiveCardSix() {
+		int[] color = new int[5];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getDieColor()) {
+			case "blauw": color[0] += color[0] + 1;
+			break;
+			case "geel": color[1] += color[1] + 1;
+			break;
+			case "groen": color[2] += color[2] + 1;
+			break;
+			case "paars": color[3] += color[3] + 1;
+			break;
+			case "rood": color[4] += color[4] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<color.length;i++) {
+				if(color[i] > counter) {
+					
+				}else {
+					return counter*4;
+				}
+			}
+			counter++;
+		}
+		return 0;
+	}
+	
+	public int getObjectiveCardSeven(int idplayer) {
+		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
+		int counter = 0;
+		for(int i = 1; i <= 4; i++) {
+			Column = database.select("select DISTINCT p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +" AND position_y = " + i +" AND diecolor is not null;");
+			if(Column.size() == 5) {
+				counter++;
+			}
+		}
+		return counter*6;
+	}
+	
+	public int getObjectiveCardEight(int idplayer) {
+		ArrayList<ArrayList<Object>> diagonal = database.select("select p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +";");
+		int counter = 0;
+		int pointTotal = 0;
+		String currentColor = new String("null");
+		for (int x = 1; x <= 2; x++) {
+			for (int y = 2; y >= 1; y--) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+			}
+		}
+		counter = 0;
+		currentColor = new String("null");
+		// 2
+		for (int x = 1; x <= 3; x++) {
+			for (int y = 3; y >= 1; y--) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+			}
+		}
+		counter = 0;
+		currentColor = new String("null");
+		// 3
+		for (int x = 1; x <= 5; x++) {
+			for (int y = 4; y >= 1; y--) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+			}
+		}
+		
+		counter = 0;
+		currentColor = new String("null");
+		// 4
+		for (int x = 2; x <= 5; x++) {
+			for (int y = 4; y >= 1; y--) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+			}
+		}
+		
+		counter = 0;
+		currentColor = new String("null");
+		// 5
+		for (int x = 3; x <= 5; x++) {
+			for (int y = 4; y >= 2; y--) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+			}
+		}
+		counter = 0;
+		currentColor = new String("null");
+		// 6
+				for (int x = 4; x <= 5; x++) {
+					for (int y = 4; y >= 3; y--) {
+						if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+							if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+								currentColor = (String)diagonal.get(counter).get(2);
+							}
+							if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+								pointTotal++;
+							}else{
+								currentColor = (String)diagonal.get(counter).get(2);
+							}
+						}
+							counter++;
+					}
+				} 
+
+		counter = 0;
+		currentColor = new String("null");
+		// 7
+		for (int x = 1; x <= 2; x++) {
+			for (int y = 3; y <= 4; y++) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+					}
+				}
+		
+		counter = 0;
+		currentColor = new String("null");
+		// 8
+		for (int x = 1; x <= 3; x++) {
+			for (int y = 2; y <= 4; y++) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+					}
+				}
+		
+		counter = 0;
+		currentColor = new String("null");
+		// 9
+		for (int x = 1; x <= 4; x++) {
+			for (int y = 1; y <= 4; y++) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+					}
+				}
+		
+		counter = 0;
+		currentColor = new String("null");
+		// 10
+		for (int x = 2; x <= 5; x++) {
+			for (int y = 1; y <= 4; y++) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+					}
+				}
+		
+		counter = 0;
+		currentColor = new String("null");
+		// 11
+		for (int x = 3; x <= 5; x++) {
+			for (int y = 1; y <= 3; y++) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+					}
+				}
+		
+		counter = 0;
+		currentColor = new String("null");
+		// 12
+		for (int x = 4; x <= 5; x++) {
+			for (int y = 1; y <= 2; y++) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else{
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+				}
+					counter++;
+					}
+				}
+		
+		return 0;
+	}
+	
+	public int getObjectiveCardNine() {
+		int[] number = new int[2];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getEyes()) {
+			case 1: number[0] += number[0] + 1;
+			break;
+			case 2: number[1] += number[1] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<number.length;i++) {
+				if(number[i] > counter) {
+					
+				}else {
+					return counter*2;
+				}
+			}
+			counter++;
+		}
+		return 0;
+	}
+	
+	public int getObjectiveCardTen(int idplayer) {
+		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
+		int counter = 0;
+		for(int i = 1; i <= 4; i++) {
+			Column = database.select("select DISTINCT p.position_x, p.position_y, d.eyes from playerframefield p join gamedie d on p.idgame = d.idgame and p.dienumber = d.dienumber and p.diecolor = d.diecolor where p.player_idplayer = " + idplayer +" AND position_y = " + i +";");
+			if(Column.size() == 5) {
+				counter++;
+			}
+		}
+		return counter*5;
 	}
 	
 	

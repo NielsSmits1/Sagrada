@@ -48,6 +48,7 @@ public class GameController {
 	private Opponent[] opponents;
 	private double playerScore;
 	private Stage gameStage;
+	private Timeline timeline;
 
 	public GameController(MyScene s) {
 
@@ -96,8 +97,7 @@ public class GameController {
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
 		game.setController(this);
-		
-		
+		timeline = new Timeline();
 	}
 
 	public void buildGame() {
@@ -115,11 +115,13 @@ public class GameController {
 		startTimeline();
 	}
 
-	private void startTimeline() {
-		Timeline timeline = new Timeline();
+	public void startTimeline() {
 		timeline.setCycleCount(timeline.INDEFINITE);
 		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(3000), e -> refreshGame()));
 		timeline.play();
+	}
+	public void stopTimeline() {
+		this.timeline.stop();
 	}
 
 	private void refreshGame() {
@@ -136,7 +138,7 @@ public class GameController {
 		cardcontroller.updatePriceTag();
 		game.setPlayableDices();
 		gamePane.addDice();
-//		setDicesTrack(); // shows current RoundTrack
+		setDicesTrack(); // shows current RoundTrack
 		
 	}
 
@@ -426,6 +428,10 @@ public class GameController {
 	public void setDicesTrack() {
 		gamePane.setRoundTrack(game.getLeftovers());
 		
+	}
+	
+	public void showWinnerScreen(ArrayList<ArrayList<Object>> data) {
+		gamePane.showWinnerScreen(data);
 	}
 
 
