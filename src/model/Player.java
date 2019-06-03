@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Database.db;
+import Database.Db;
 
 public class Player {
 	private int idplayer;
 	private String username;
 	private String password;
-	private db database = new db();
+	private Db database = new Db();
 	private PatternCard board;
 	private int score;
 	private int seqnr;
@@ -44,11 +44,11 @@ public class Player {
 	}
 	
 	public long calculatePrivateCardScore() {
-		return (long)database.Select("SELECT count(*) FROM playerframefield pf LEFT JOIN player p ON p.idplayer = pf.player_idplayer WHERE diecolor = private_objectivecard_color AND player_idplayer = " + idplayer +";").get(0).get(0);
+		return (long)database.select("SELECT count(*) FROM playerframefield pf LEFT JOIN player p ON p.idplayer = pf.player_idplayer WHERE diecolor = private_objectivecard_color AND player_idplayer = " + idplayer +";").get(0).get(0);
 	}
 	
 	public long calculateAmountOfSpacesFilled() {
-		return (long)database.Select("SELECT count(*) FROM playerframefield pf LEFT JOIN player p ON p.idplayer = pf.player_idplayer WHERE player_idplayer = " + idplayer +" AND dienumber is not null;").get(0).get(0);
+		return (long)database.select("SELECT count(*) FROM playerframefield pf LEFT JOIN player p ON p.idplayer = pf.player_idplayer WHERE player_idplayer = " + idplayer +" AND dienumber is not null;").get(0).get(0);
 	}
 	
 	public void setTokenAmount(int amount) {
@@ -60,7 +60,7 @@ public class Player {
 	}
 	
 	public long getTokens() {
-		return (long)database.Select("SELECT COUNT(*) FROM gamefavortoken WHERE idplayer = " + idplayer +" AND gametoolcard is null;").get(0).get(0);
+		return (long)database.select("SELECT COUNT(*) FROM gamefavortoken WHERE idplayer = " + idplayer +" AND gametoolcard is null;").get(0).get(0);
 	}
 	
 	public int getTokenAmount() {
@@ -103,68 +103,68 @@ public class Player {
 	// selects and returns the username and password.
 	public ArrayList<ArrayList<Object>> getSelect() {
 		return database
-				.Select("SELECT * FROM account WHERE username = '" + username + "' AND password = '" + password + "';");
+				.select("SELECT * FROM account WHERE username = '" + username + "' AND password = '" + password + "';");
 	}
 
 	public ArrayList<ArrayList<Object>> checkUsername() {
-		return database.Select("Select * from account where username = '" + username + "'");
+		return database.select("Select * from account where username = '" + username + "'");
 	}
 
 	// selects and returns arraylist of usernames.
 	public ArrayList<ArrayList<Object>> checkPlayerInGame() {
-		return database.Select(
+		return database.select(
 				"select username from player where game_idgame in (select game_idgame from player where username ='"
 						+ username + "') ");
 	}
 
 	public ArrayList<ArrayList<Object>> playerWonList() {
-		return database.Select(
+		return database.select(
 				"SELECT p1.username,count(p1.username) as games_won FROM player p1 LEFT JOIN player p2 ON p1.game_idgame = p2.game_idgame AND p1.score < p2.score where p2.score is null AND p1.playstatus_playstatus = 'Uitgespeeld' group by p1.username");
 	}
 
 	public ArrayList<ArrayList<Object>> playerPlayedList() {
-		return database.Select(
+		return database.select(
 				"select username, count(game_idgame) as played_games from player where playstatus_playstatus = 'uitgespeeld' group by username");
 	}
 
 	public ArrayList<ArrayList<Object>> maxPlayerScore() {
-		return database.Select("select username , max(score) as max from player group by username having max is not null");
+		return database.select("select username , max(score) as max from player group by username having max is not null");
 	}
 
 	public ArrayList<ArrayList<Object>> maxColor() {
-		return database.Select(
+		return database.select(
 				"select username, diecolor , count(diecolor) as amount_color from player join playerframefield on player.idplayer = playerframefield.player_idplayer where username = '"
 						+ username + "' group by username,diecolor order by amount_color DESC limit 1");
 	}
 	public ArrayList<ArrayList<Object>> maxDieNumber() {
-		return database.Select("SELECT username, COUNT(g.eyes) amount_eyes, g.eyes FROM player p JOIN playerframefield pf ON p.idplayer = pf.player_idplayer JOIN (SELECT eyes, dienumber FROM gamedie WHERE round is not null) as g ON g.dienumber = pf.dienumber WHERE username = '"+ username +"' GROUP BY p.username, g.eyes ORDER BY amount_eyes desc LIMIT 1");
+		return database.select("SELECT username, COUNT(g.eyes) amount_eyes, g.eyes FROM player p JOIN playerframefield pf ON p.idplayer = pf.player_idplayer JOIN (SELECT eyes, dienumber FROM gamedie WHERE round is not null) as g ON g.dienumber = pf.dienumber WHERE username = '"+ username +"' GROUP BY p.username, g.eyes ORDER BY amount_eyes desc LIMIT 1");
 
 	}
 	
 
 	public ArrayList<ArrayList<Object>> maxPlayedAgainst() {
-		return database.Select(
+		return database.select(
 				"select username, diecolor , count(diecolor) as amount_color from player join playerframefield on player.idplayer = playerframefield.player_idplayer where username = '"
 						+ username + "' group by username,diecolor order by amount_color DESC limit 1");
 	}
 
 	public ArrayList<ArrayList<Object>> maxUniquePlayersPlayed() {
-		return database.Select(
+		return database.select(
 				"select *, count(distinct(username)) as amount_played_against from player where game_idgame in (select game_idgame from player where username = '"
 						+ username + "') and username != '" + username
 						+ "' and playstatus_playstatus = 'Uitgespeeld' or 'Afgebroken' group by username");
 	}
 
 	public ArrayList<ArrayList<Object>> lastGameMade() {
-		return database.Select("select max(idgame)from game");
+		return database.select("select max(idgame)from game");
 	}
 
 	public ArrayList<ArrayList<Object>> lastGamePlayers() {
-		return database.Select("SELECT username FROM player where game_idgame = '" + getLastGame() + "'");
+		return database.select("SELECT username FROM player where game_idgame = '" + getLastGame() + "'");
 	}
 
 	public ArrayList<ArrayList<Object>> getPlayedGames() {
-		return database.Select(
+		return database.select(
 				"SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '"
 						+ this.username + "') GROUP BY p1.game_idgame");
 		
@@ -172,7 +172,7 @@ public class Player {
 
 	// adds new user to the database.
 	public void addUser() {
-		database.CUD("INSERT INTO account (username, password) VALUES ('" + username + "', '" + password + "');");
+		database.cud("INSERT INTO account (username, password) VALUES ('" + username + "', '" + password + "');");
 	}
 
 	public boolean checkLogin() {
@@ -344,7 +344,7 @@ public class Player {
 	}
 
 	private void updateSeqNr() {
-		database.Select("update player set seqnr = " + this.seqnr + " where idplayer = " + this.idplayer);
+		database.select("update player set seqnr = " + this.seqnr + " where idplayer = " + this.idplayer);
 	}
 
 	public boolean checkIfGame(String username) {
@@ -417,7 +417,7 @@ public class Player {
 	}
 
 	private long countPlayersGame(int gameId) {
-		return (long) database.Select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
+		return (long) database.select("select count(username) from player where game_idgame = " + gameId).get(0).get(0);
 	}
 	
 	public int getScore() {
@@ -425,7 +425,7 @@ public class Player {
 	}
 
 	public void setChallengerToAccepted(int idgame) {
-		database.CUD(
+		database.cud(
 				"UPDATE player set playstatus_playstatus = 'geaccepteerd' WHERE playstatus_playstatus = 'uitdager' and game_idgame = '"+idgame +"'"); // idplayer
 																																																		// needs
 																																																		// to
@@ -453,7 +453,7 @@ public class Player {
 	}
 	
 	public int getPatternIdFromDB() {
-		return (int) database.Select("SELECT patterncard_idpatterncard FROM player WHERE idplayer = " + idplayer + ";").get(0).get(0);
+		return (int) database.select("SELECT patterncard_idpatterncard FROM player WHERE idplayer = " + idplayer + ";").get(0).get(0);
 	}
 	
 	public int getPatternId() {

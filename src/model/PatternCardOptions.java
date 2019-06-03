@@ -2,19 +2,19 @@ package model;
 
 import java.util.ArrayList;
 
-import Database.db;
+import Database.Db;
 
 public class PatternCardOptions {
-	private db database;
+	private Db database;
 	private ArrayList<Integer> idpatterncards;
 	
 	public PatternCardOptions() {
-		database = new db();
+		database = new Db();
 		idpatterncards = new ArrayList<>();
 	}
 	
 	public void getAllPatternCards(int amount) {
-		ArrayList<ArrayList<Object>> ids = database.Select("SELECT idpatterncard FROM patterncard ORDER BY RAND() LIMIT "+ amount);
+		ArrayList<ArrayList<Object>> ids = database.select("SELECT idpatterncard FROM patterncard ORDER BY RAND() LIMIT "+ amount);
 		for (int i = 0; i < ids.size(); i++) {
 			idpatterncards.add((int) ids.get(i).get(0));
 		}
