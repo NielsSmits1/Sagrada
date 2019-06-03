@@ -7,10 +7,12 @@ import javafx.scene.shape.Rectangle;
 public class PrivateCardPane extends Pane {
 	private Rectangle card;
 	private DicePane diceColor;
+	private boolean isPrivateCard;
+	
 	public PrivateCardPane() {
+		isPrivateCard = true;
 		setCard();
-		setDice();
-		getChildren().addAll(card, diceColor);
+		getChildren().addAll(card);
 	}
 	private void setCard() {
 		card = new Rectangle(0,0, 200, 275);
@@ -18,11 +20,12 @@ public class PrivateCardPane extends Pane {
 		card.setFill(Color.DARKSLATEGREY);
 	}
 	
-	private void setDice() {
-		diceColor = new DicePane();
-		diceColor.setColor("blauw");
-		diceColor.setLayoutX(65);
-		diceColor.setLayoutY(93.5);
+	public void setDice(String color) {
+		diceColor = new DicePane(isPrivateCard);
+		diceColor.setColor(color);
+		diceColor.setLayoutX(50);
+		diceColor.setLayoutY(87.5);
+		getChildren().add(diceColor);
 	}
 
 }

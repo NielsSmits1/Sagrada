@@ -1,31 +1,132 @@
 package View;
 
+import java.util.ArrayList;
+
+import controller.GameController;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import model.Dice;
+import model.Game;
+
 
 public class RoundTrack extends Pane {
 	private ImageView roundTrack;
-	
 	private Image track;
-	private HBox diceTrack;
-	private Rectangle dice;
-
+	private Button nextDice1;
+	private Button nextDice2;
+	private Button nextDice3;
+	private Button nextDice4;
+	private Button nextDice5;
+	private Button nextDice6;
+	private Button nextDice7;
+	private Button nextDice8;
+	private Button nextDice9;
+	private Button nextDice10;
 	
-	public RoundTrack() {
-		track = new Image("/Resources/sagradaRonde.jpg");
-		diceTrack = new HBox();
+	private ArrayList<ArrayList<Dice>> d;
+	private Pane pane;
+	private Pane imagePane;
+	private RoundPane round;
+	private HBox roundBox;
+	private HBox buttonBox;
+	private VBox totalBox;
+	
+	private GameController game;
+	private Game gameModel;
+	private int x;
+	
+	public RoundTrack(GameController game, Game gameModel, ArrayList<ArrayList<Dice>> d) {
+		this.game = game;
+		this.gameModel = gameModel;
+		this.d = d;
+		pane = new Pane();
+		imagePane = new Pane();
+		round = new RoundPane();
+		roundBox = new HBox();
+		roundBox.setSpacing(20);
+		buttonBox = new HBox();
+		totalBox = new VBox();
 		
-		roundTrack = new ImageView();
-		this.getChildren().addAll(roundTrack);
+		buildTrack();
+		buildButtons(d);
+		setRoundTrack(d);
 		
+		pane.getChildren().addAll(round);
 		
+		roundBox.getChildren().addAll(pane);
+		buttonBox.getChildren().addAll(nextDice1, nextDice2, nextDice3, nextDice4, nextDice5,
+				nextDice6, nextDice7, nextDice8, nextDice9, nextDice10);
 		
-		
-		
-//		dice = new Rectangle(0, 0, 70, 70);
-//		dice.setStroke(Color.BLACK);
+		this.getChildren().addAll(roundBox);
 	}
+	
+	public void buildButtons(ArrayList<ArrayList<Dice>> d) {
+		
+		nextDice1 = new Button("  Volg   ");
+		
+		nextDice1.setOnAction(e -> round.getNextDice(0, d.get(0)));
+		
+		nextDice2 = new Button("  Volg   ");
+		
+		nextDice2.setOnAction(e -> round.getNextDice(1, d.get(1)));
+		
+		nextDice3 = new Button("   Volg   ");
+		
+		nextDice3.setOnAction(e -> round.getNextDice(2 ,d.get(2)));
+		
+		nextDice4 = new Button("  Volg   ");
+		
+		nextDice4.setOnAction(e -> round.getNextDice(3, d.get(3)));
+		
+		nextDice5 = new Button("  Volg   ");
+		
+		nextDice5.setOnAction(e -> round.getNextDice(4, d.get(4)));
+		
+		nextDice6 = new Button("   Volg   ");
+		
+		nextDice6.setOnAction(e -> round.getNextDice(5, d.get(5)));
+		
+		nextDice7 = new Button("  Volg   ");
+		
+		nextDice7.setOnAction(e -> round.getNextDice(6, d.get(6)));
+		
+		nextDice8 = new Button("  Volg   ");
+		
+		nextDice8.setOnAction(e -> round.getNextDice(7, d.get(7)));
+		
+		nextDice9 = new Button("   Volg   ");
+		
+		nextDice9.setOnAction(e -> round.getNextDice(8, d.get(8)));
+		
+		nextDice10 = new Button("  Volg   ");
+		
+		nextDice10.setOnAction(e -> round.getNextDice(9, d.get(9)));
+		
+	}
+	
+	public void buildTrack() {
+		track = new Image("/Resources/RondeTrack.jpg");
+		
+		roundTrack = new ImageView(track);
+		roundTrack.setFitHeight(50);
+		roundTrack.setFitWidth(580);
+		pane.setMinSize(580, 100);
+		pane.getChildren().addAll(new VBox(roundTrack, buttonBox));
+		
+	}
+	
+	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
+		this.d = d;
+		round.setRoundTrack(d);
+		buildButtons(d);
+	}
+	
+	
 }

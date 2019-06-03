@@ -151,6 +151,7 @@ public class PatternPane extends StackPane{
 		}
 //		boardPane.setSelectedToNull();
 		giveCords();
+		System.out.println("geef cords");
 	}
 	
 	public void setDiceNull() {

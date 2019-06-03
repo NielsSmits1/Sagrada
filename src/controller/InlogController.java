@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import View.InlogPane;
 import View.MyScene;
 import javafx.event.ActionEvent;
@@ -55,6 +52,7 @@ public class InlogController {
 		} else {
 			player = new Player(inlog.getUsernameText(), inlog.getPasswordText());
 			if (player.checkLogin()) {
+				inlog.acceptedLogin();
 				buildHome();
 			} else {
 				inlog.giveErrorBox();

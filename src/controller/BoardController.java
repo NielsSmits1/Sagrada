@@ -7,14 +7,14 @@ import View.DicePane;
 import model.Opponent;
 import model.PatternCard;
 import model.PatternCardOptions;
+import model.Player;
 import model.Space;
 
 public class BoardController {
 	private ArrayList<PatternCard> patternCardOptions;
 	private PatternCard finalCard;
+	private PatternCard checkPlacement;
 	private Opponent opponent;
-	private BoardPane boardpane = new BoardPane();
-	private ArrayList<BoardPane> opponentBoard;
 	private GameController gameController;
 	private PatternCardOptions allOptions;
 	private ArrayList<BoardPane> boards;
@@ -22,34 +22,44 @@ public class BoardController {
 	public BoardController(GameController gameController) {
 		this.gameController = gameController;
 		boards = new ArrayList<>();
-//		allOptions = new PatternCardOptions();
-//		setOptions();
-//		this.gameController.addOptions(allOptions.getOptions());
-		opponentBoard = new ArrayList<>();
-//		patternCardOptions = new ArrayList<>();
-//		for (int i = 0; i < this.gameController.getOwnOptions().size(); i++) {
-//			patternCardOptions.add(new PatternCard(this.gameController.getOwnOptions().get(i)));
-//		}
-
+		checkPlacement = new PatternCard(this, this.gameController.getOwnId(), this.gameController.getIdGame(), this.gameController.getOwnPatternId());
 	}
 	/// *
 	// Asks for the ArrayList of spaces.
 	/// **
+	
+	public void setOwnOptions() {
+		patternCardOptions = new ArrayList<>();
+		for (int i = 0; i < 4; i++) {
+			patternCardOptions.add(new PatternCard(this.gameController.getOwnOptions().get(i)));
+		}
+	}
+	
+	public ArrayList<PatternCard> getOptions(){
+		return patternCardOptions;
+	}
 
 	public int getIdGame() {
 		return gameController.getIdGame();
 	}
 
 	public void validateMove(int x, int y) {
-		if (getSelected() != null
-				&& finalCard.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor())) {
-			boardpane.setSelected(getSelected(), x, y);
-		}
+		if (gameController.getTurnPlayer().getSelf() && getSelected() != null && checkPlacement.validateMove(x, y, getSelected().getDieNumber(), getSelected().getColor())) {
+				for(BoardPane bp : boards) {
+					if(bp.getSelf()) {
+						bp.setSelected(getSelected(), x, y);
+					}
+				}	
+			}
 	}
 
 	public void validateToolcardTwo(int dieNumber, String color, int xPos, int yPos) {
-		if (finalCard.validateMove(xPos, yPos, dieNumber, color)) {
-			boardpane.moveDiceAccepted(dieNumber, color, xPos, yPos);
+		if (checkPlacement.validateMove(xPos, yPos, dieNumber, color)) {
+			for(BoardPane bp : boards) {
+				if(bp.getSelf()) {
+					bp.moveDiceAccepted(dieNumber, color, xPos, yPos);
+				}
+			}
 		}
 	}
 
@@ -57,32 +67,29 @@ public class BoardController {
 		return gameController.getSelected();
 	}
 
-	public void setBoard() {
-//		players.add(new BoardPane(this, finalCard));
-		for (int i = 0; i < getGamemode(); i++) {
-			boards.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
-		}
-	}
+//	public void setBoard() {
+////		players.add(new BoardPane(this, finalCard));
+//		for (int i = 0; i < getGamemode(); i++) {
+//			boards.add(new BoardPane(this, new PatternCard(gameController.getChosenIds().get(i))));
+//		}
+//	}
 
-	public BoardPane returnBoardPane() {
-		return boardpane;
-	}
 
 	public ArrayList<PatternCard> getPatternCardOptions() {
 		return patternCardOptions;
 	}
+	
+	public int getOwnPatternId() {
+		return gameController.getOwnPatternId();
+	}
 
 	public void setPatternCard(int id) {
-//		finalCard = new PatternCard(id, getIdGame(), getOwnId(), this);
-		setBoard();
+		finalCard = new PatternCard(id, getIdGame(), getOwnId(), this);
 		//gameController.setRootpane();
 	}
 
 	public void setRandomCard() {
 		finalCard = new PatternCard(getOwnId(), getIdGame(), this);
-		setBoard();
-		updateToken();
-		//gameController.setRootpane();
 	}
 
 	public ArrayList<Space> getPatternCard() {
@@ -90,7 +97,7 @@ public class BoardController {
 	}
 
 	public void getTurns() {
-		gameController.getTurns();
+//		gameController.getTurns();
 	}
 
 	public int getOwnId() {
@@ -101,43 +108,51 @@ public class BoardController {
 		return opponent.getOpponents();
 	}
 
-	public ArrayList<BoardPane> getOpponentBoard() {
-		return opponentBoard;
-	}
-
 	public void setAllowsMovement(int i) {
-		boardpane.enableDiceMovement();
-		boardpane.allowMovement();
+		for(BoardPane bp : boards) {
+			if(bp.getSelf()) {
+				bp.enableDiceMovement();
+				bp.allowMovement();
+			}
+		}
+		
 		if (i == 2) {
-			finalCard.setColorExamption();
+			checkPlacement.setColorExamption();
 		}
 		if (i == 3) {
-			finalCard.setNumberExamption();
+			checkPlacement.setNumberExamption();
 		}
 		if (i == 9) {
-			finalCard.setNextToDiceExamption();
+			checkPlacement.setNextToDiceExamption();
 		}
+	}
+	
+	public BoardPane getOwnBoard() {
+		for (BoardPane bp : boards) {
+			if(bp.getSelf()) {
+				return bp;
+			}
+		}
+		return null;
 	}
 
 	public void disableMovement(int x, int y) {
-		boardpane.disableMovement(x, y);
+		for(BoardPane bp : boards) {
+			if(bp.getSelf()) {
+				bp.disableMovement(x, y);
+			}
+		}
 	}
 
 
 	public int getDifficulty() {
 		return finalCard.getDifficulty();
 	}
-
-	public void updateToken() {
-		gameController.updateTokens(getDifficulty());
-	}
-	
-	public void setPlayerTokens(int minus) {
-		boardpane.decreaseLabelValue(minus);
-	}
 	
 	public void setOptions() {
+		allOptions = new PatternCardOptions();
 		allOptions.getAllPatternCards(getGamemode()*4);
+		this.gameController.addOptions(allOptions.getOptions());
 	}
 	
 	public int getGamemode() {
@@ -148,8 +163,11 @@ public class BoardController {
 		return boards;
 	}
 	
-	public void addBoard(PatternCard pc, String username, boolean f) {
-		boards.add(new BoardPane(this, pc, username, f));
+	public void addBoard(PatternCard pc, Player p) {
+		boards.add(new BoardPane(this, pc, p));
+	}
+	public void emptyBoards() {
+		this.boards = new ArrayList<BoardPane>();
 	}
 
 }

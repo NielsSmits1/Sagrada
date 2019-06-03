@@ -1,6 +1,6 @@
 package View;
 
-import controller.ToolcardController;
+import controller.CardController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,24 +10,30 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 public class ToolCardPane extends Pane {
-	private Rectangle card;
 	private Label price;
 	private int toolCardId;
 	private Button button;
 	private VBox cardPropertiesAlignment;
-	private ToolcardController toolcardController;
+	private CardController controller;
 	private ImageView toolcards;
 	private HBox BuyAlignment;
+	private Circle tokenPlaceHolder;
+	private Label amountOfTokensPlaced;
 
 	private Image toolcard;
 
-	public ToolCardPane(int id, String description, ToolcardController toolcardController) {
-		this.toolcardController = toolcardController;
+	public ToolCardPane(int id, CardController cc) {
+		this.controller = cc;
 		this.toolCardId = id;
-		// toolCardId = 3;
+		tokenPlaceHolder = new Circle(30, 28, 10);
+		price = new Label();
+		amountOfTokensPlaced = new Label();
+		
 		switch (id) {
 		case 1:
 			toolcard = new Image("/Resources/toolcard_1.png");
@@ -68,35 +74,37 @@ public class ToolCardPane extends Pane {
 		}
 		BuyAlignment = new HBox();
 		cardPropertiesAlignment = new VBox();
+		Pane image = new Pane();
 		button = new Button("Koop");
 		button.setOnAction(e -> handleButton());
-		setCard();
 		setPrice();
+		setAmountPlaced();
+		amountOfTokensPlaced.setLayoutX(26);
+		amountOfTokensPlaced.setLayoutY(20);
+		amountOfTokensPlaced.setTextFill(Color.WHITE);
 		toolcards = new ImageView(toolcard);
 		BuyAlignment.getChildren().addAll(button, price);
 		BuyAlignment.setSpacing(50);
-		cardPropertiesAlignment.getChildren().addAll(toolcards, BuyAlignment);
+		image.getChildren().addAll(toolcards, tokenPlaceHolder, amountOfTokensPlaced);
+		cardPropertiesAlignment.getChildren().addAll(image, BuyAlignment);
 		cardPropertiesAlignment.setAlignment(Pos.CENTER);
 		getChildren().addAll(cardPropertiesAlignment);
 
 	}
 
 	public void handleButton() {
-		setPlayerTokens();
-		if (price.getText().equals("1")) {
-			changePrice("2");
-		}
-		toolcardController.toolcardClicked(toolCardId);
+		controller.buyToolCard(this);
+	}
+	
+	public void setAmountPlaced() {
+		
+		amountOfTokensPlaced.setText("" + controller.getAmountPlaced(toolCardId));
 	}
 
-	private void setCard() {
-		card = new Rectangle(0, 0, 200, 275);
-		card.setStroke(Color.BLACK);
-		card.setFill(Color.GOLD);
-	}
-
-	private void setPrice() {
-		price = new Label("1");
+	public void setPrice() {
+		
+		price.setTextFill(Color.WHITE);
+		price.setText("" + controller.getPrice(toolCardId));
 
 	}
 
@@ -104,14 +112,21 @@ public class ToolCardPane extends Pane {
 		price.setText(value);
 
 	}
+	
+	public int getToolCardId() {
+		return toolCardId;
+	}
+	
+	public void setButtonDisabled() {
+		button.setDisable(true);
+	}
+	
+	public void setButtonEnabled() {
+		button.setDisable(false);
+	}
 
 	public int getPricetag() {
 		int value = Integer.parseInt(price.getText());
-		System.out.println(value);
 		return value;
-	}
-	
-	public void setPlayerTokens() {
-		toolcardController.setPlayerTokens(getPricetag());
 	}
 }

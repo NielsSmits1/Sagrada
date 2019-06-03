@@ -7,14 +7,20 @@ import View.BoardPane;
 import View.DicePane;
 import View.GamePane;
 import View.MyScene;
+import View.ObjectiveCardPane;
 import View.PatterncardSelect;
+import View.RoundPane;
+import View.RoundTrack;
 import View.ToolCardPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Dice;
 import model.Game;
 import model.Opponent;
@@ -29,11 +35,13 @@ public class GameController {
 	private MyScene scene;
 	private PatterncardSelect option;
 	private GamePane gamePane;
+	private ChatBoxController chatBox;
 	private BoardController boardcontroller;
-	private ToolcardController toolcardcontroller;
+	private CardController cardcontroller;
+	private RoundPane rp;
 	private Round round;
-	
-	
+	private RoundTrack roundTrack;
+
 	private Button cancel;
 	private Alert cancelGame;
 	private String cancelText = "Sorry iemand heeft geweigerd, het spel kan dus niet doorgaan.";
@@ -44,109 +52,213 @@ public class GameController {
 	public GameController(MyScene s) {
 
 		scene = s;
-
 		game = new Game();
 		game.setPlayableDices();
 		
 		boardcontroller = new BoardController(this);
-		toolcardcontroller = new ToolcardController(this);
+		cardcontroller = new CardController(this);
 		game.setGameId(609);
 		ArrayList<Player> players = new ArrayList<Player>();
-		for(int i = 0; i < 4; i++) {
-			Player p = new Player("Speler " + i );
+		for (int i = 0; i < 4; i++) {
+			Player p = new Player("Speler " + i);
 			p.setId(i + 991);
 			p.setPatternCardId(p.getPatternIdFromDB());
 			p.setPc();
 			players.add(p);
+//			getOwnPlayerId();
+//			getOwnGameIdSelf();
+
 		}
 		game.insertPlayers(players);
-//		}
+		// }
 		players.get(3).setSelf(true);
-		for(Player p : game.getPlayers()) {
+		for (Player p : game.getPlayers()) {
 			// look elke speler in spel
-			if(p.getSelf()) {
-				boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
-			}else {
-				boardcontroller.addBoard(p.getPc(), p.getUsername(), false);
+			if (p.getSelf()) {
+				boardcontroller.addBoard(p.getPc(), p);
+			} else {
+				boardcontroller.addBoard(p.getPc(), p);
 			}
-			
+
 		}
-		
+
 		gamePane = new GamePane(this);
+		
 
 	}
+
 	public GameController(Game g) {
+		
 		this.game = g;
-		game.setPlayableDices();
 		boardcontroller = new BoardController(this);
-		toolcardcontroller = new ToolcardController(this);
+		cardcontroller = new CardController(this);
+		game.setController(this);
 		
 	}
+
+	public void buildGame() {
+		for (Player p : game.getPlayers()) {
+			p.setPc();
+			p.setTokenAmount();
+			boardcontroller.addBoard(p.getPc(), p);
+
+		}
+		cardcontroller.setToolcards();
+		cardcontroller.setObjectiveCards();
+		game.setPlayableDices();
+		gamePane = new GamePane(this);
+		gamePane.getTurnSave().setOnAction(E -> endTurn());
+		startTimeline();
+	}
+
+	private void startTimeline() {
+		Timeline timeline = new Timeline();
+		timeline.setCycleCount(timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(3000), e -> refreshGame()));
+		timeline.play();
+	}
+
+	private void refreshGame() {
+		//refresh alles uit den game
+		/*
+		 * Beurt/rondes
+		 * Boards
+		 * Dices
+		 * Score
+		 */
+		game.refreshCurrentPlayer();
+		gamePane.changeInfo(this.shoutCurrentPlayer());
+		this.refreshBoards();
+		cardcontroller.updatePriceTag();
+		game.setPlayableDices();
+		gamePane.addDice();
+		setDicesTrack(); // shows current RoundTrack
+		
+	}
+
+	private void refreshBoards() {
+		for (int i = 0; i < game.getPlayers().size(); i++) {
+            boardcontroller.getBoards().get(i).setBoard();
+            game.getPlayers().get(i).getPc().setPlacedDice();
+            boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
+            game.getPlayers().get(i).setTokenAmount();
+			boardcontroller.getBoards().get(i).changeTokenAmount(game.getPlayers().get(i).getTokenAmount());
+//			boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore());
+		}
+	}
 	
+	public String shoutCurrentPlayer() {
+		return "ronde: " + game.getRoundNumber() + " - beurt: " + game.getTurn() + " - speler: " + game.getTurnPlayer().getUsername();
+
+	}
+
+	public PatterncardSelect buildPatterncardoptions() {
+		if(!game.checkIfFilled()) {
+			game.startGame();
+			boardcontroller.setOptions();
+			cardcontroller.insertCards();
+		}
+		boardcontroller.setOwnOptions();
+		option = new PatterncardSelect(this);
+		return option;
+	}
+
+	public Game getGame() {
+		return this.game;
+	}
 	
+	public String getPrivateCardColor() {
+		for(Player p : game.getPlayers()) {
+			if(p.getSelf()) {
+				return p.getPrivateCardColor();
+			}
+		}
+		return null;
+	}
+
 	public void addOpponets(Opponent op) {
-		for(int x = 0; x<opponents.length; x++) {
-			if(opponents[x] == null) {
+		for (int x = 0; x < opponents.length; x++) {
+			if (opponents[x] == null) {
 				opponents[x] = op;
-			}else {
+			} else {
 				// alert spel is al vol;
 			}
 		}
 	}
-	
+
 	public double updateScore() {
 		return playerScore;
 	}
-	
-	
+
 	public void cancelGame() {
-		
+
 	}
-	
+
 	public void builtAlerBox() {
 		cancelGame = new Alert(AlertType.CONFIRMATION, cancelText, ButtonType.OK);
 		cancelGame.setHeaderText("");
 		cancelGame.setTitle("Sorry!");
 		Optional<ButtonType> action = cancelGame.showAndWait();
-		if(action.get() == ButtonType.OK) {
-//			closeGame();
+		if (action.get() == ButtonType.OK) {
+			// closeGame();
 		}
 	}
-	
+
 	public void closeGame() {
-//		this.gameStage.close();
+		// this.gameStage.close();
 	}
-	
-	
+
 	public void builtGameStage() {
 		scene = new MyScene();
-		//scene.builtNewGame();
-		
+		// scene.builtNewGame();
+
 		gameStage = new Stage();
 		gameStage.setTitle("Sagrada");
 		gameStage.setScene(scene);
 		gameStage.setFullScreen(true);
 		gameStage.show();
 	}
-	
+
 	public MyScene getScene() {
 		builtGameStage();
 		return scene;
+	}
+
+	public ArrayList<ObjectiveCardPane> getObjectiveCardPanes() {
+		return cardcontroller.getObjectiveCards();
+	}
+	
+	public void setTokenAmount(int price, int toolcardid) {
+		for(Player p : game.getPlayers()) {
+			if(p.getSelf()) {
+				for(BoardPane bp : boardcontroller.getBoards()) {
+					if(bp.getSelf()) {
+						bp.setToolcardActiveTrue();
+						bp.changeTokenAmount(p.getTokenAmount());
+						game.addTokensToGametoolcard(price, toolcardid, p.getPlayerId());
+					}
+				}
+			}
+		}
 	}
 
 	public void setToolcardOneActive() {
 		gamePane.setToolCardOneActive();
 
 	}
-	
+
 	public void setToolcardSixActive() {
 		gamePane.setToolCardSixActive();
 	}
 	
+	public void setToolcardSevenActive() {
+		game.reDraw();
+	}
+
 	public void setToolcardTenActive() {
 		gamePane.setToolCardTenActive();
 	}
-	
+
 	public void setToolcardElevenActive() {
 		gamePane.setToolCardElevenActive();
 	}
@@ -175,43 +287,26 @@ public class GameController {
 		return game.getIdGame();
 	}
 
-	public int getTurns() {
-		return round.calculateTurns(getIdGame());
-	}
-
 	public ArrayList<Space> getPatternCard() {
 		return boardcontroller.getPatternCard();
 	}
 
 	public void setPatternCard(int id) {
+		game.insertChosenID(id);
+		game.assignTokensToPlayer();
 		boardcontroller.setPatternCard(id);
 	}
-
-	public void buildGame() {
-//		if(game.hasChosen()) {
-			gamePane = new GamePane(this);
-//		}
-		for(Player p : game.getPlayers()) {
-			// look elke speler in spel
-			p.getPc().getPatternField();
-			boardcontroller.addBoard(p.getPc(), p.getUsername(), p.getSelf());
-		}
-		
-//		scene.setRoot(rootpane);
-		//this.scene.setRoot(gamePane);
-
+	
+	public void setRandomCard() {
+		boardcontroller.setRandomCard();
+		game.insertChosenID();
+		game.assignTokensToPlayer();
 	}
 
-	public BoardPane returnBoardPane() {
-		return boardcontroller.returnBoardPane();
-	}
+	
 
 	public int getOwnId() {
 		return game.getOwnId();
-	}
-
-	public ArrayList<BoardPane> getOpponentBoard() {
-		return boardcontroller.getOpponentBoard();
 	}
 
 	public GamePane getGamepane() {
@@ -219,67 +314,119 @@ public class GameController {
 	}
 
 	public ArrayList<ToolCardPane> getToolCards() {
-		return toolcardcontroller.getToolCards();
+		return cardcontroller.getToolCards();
 	}
 
 	public void updateEyes(int eyes, int dienumber, String color) {
 		game.updateEyes(eyes, dienumber, color);
 	}
-	
+
 	public void enableDiceMovement(int i) {
 		boardcontroller.setAllowsMovement(i);
 	}
-	
-	public void swapDice(int dienumber, String color, int value, int chosenvalue) {
-		game.getDiceWithChosenValue(dienumber, color, value, chosenvalue);
-		gamePane.addDice();
+
+	public void swapDice(int dienumber, String color, int chosenvalue) {
+		game.getDiceWithChosenValue(dienumber, color, chosenvalue);
 	}
-	
+
 	public int returnAmountOfOpponents() {
 		return opponents.length;
 	}
-	
-	public void setRandomCard() {
-		boardcontroller.setRandomCard();
-	}
 
 	
+
 	public int getGamemode() {
 		return game.getGamemode();
 	}
-	
-//	public int getDifficulty() {
-//		return boardcontroller.getDifficulty();
-//	}
-	
+
+	// public int getDifficulty() {
+	// return boardcontroller.getDifficulty();
+	// }
+
 	public void updateTokens(int difficulty) {
 		game.updateTokenArrayList(difficulty);
 	}
 
-	public void setPlayerTokens(int minus) {
-		boardcontroller.setPlayerTokens(minus);
-	}
-	
-	public void setGameCard(int id) {
-		game.addGametoolcard(id);
-	}
-	
-	public void addOptions(ArrayList<Integer> randomIDS){
+
+
+//	public void setGameCard(int id) {
+//		game.addGametoolcard(id);
+//	}
+
+	public void addOptions(ArrayList<Integer> randomIDS) {
 		game.addOptionsToDB(randomIDS);
 	}
-	
-	public ArrayList<Integer> getOwnOptions(){
+
+	public ArrayList<Integer> getOwnOptions() {
 		return game.getOwnOptions();
 	}
-	
-	public ArrayList<Integer> getChosenIds(){
+
+	public ArrayList<Integer> getChosenIds() {
 		return game.getChosenIds();
 	}
-	
-	public ArrayList<BoardPane> getBoards(){
+
+	public RoundTrack getRoundTrack() {
+		return roundTrack;
+	}
+
+	public ArrayList<BoardPane> getBoards() {
 		return boardcontroller.getBoards();
 	}
+
 	
+
+	public void getOwnPlayerId() {
+		if(game.getSelf().checkSelf() == true) {
+			chatBox.getModel().setPlayerId(game.getSelf().getPlayerId());
+		}
+	}
+	public void getOwnGameIdSelf() {
+		if(game.getSelf().checkSelf() == true) {
+			chatBox.getModel().setGameId(game.getSelf().getGameId());
+		}
+	}
 	
+	public int getOwnPatternId() {
+		return game.getOwnPatternId();
+	}
+	
+	public Player getTurnPlayer() {
+		return game.getTurnPlayer();
+	}
+	
+	public void endTurn() {
+		if(getTurnPlayer().getSelf()) {
+			for(BoardPane bp : boardcontroller.getBoards()) {
+				if(bp.getSelf()) {
+					bp.resetPlaced();
+					game.setNewCurrentPlayer();
+					game.buildTurns();
+					cardcontroller.enableToolCards();
+				}
+			}
+		}
+	}
+
+	public GamePane getGamePane() {
+		return gamePane;
+	}
+
+	public void setGamePane(GamePane gamePane) {
+		this.gamePane = gamePane;
+	}
+	
+	public ChatBoxController getChatBox() {
+		return chatBox;
+	}
+	
+	public BoardPane getOwnBoard() {
+		return boardcontroller.getOwnBoard();
+	}
+	
+	public void setDicesTrack() {
+		gamePane.setRoundTrack(game.getLeftovers());
+		
+	}
+
 
 }

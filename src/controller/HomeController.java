@@ -25,7 +25,6 @@ public class HomeController {
 	private ChallengesController cp;
 	private LeaderboardController lc;
 	private MyScene scene;
-	private ChatBoxController chat;
 
 	private MenubarController mbc;
 
@@ -49,17 +48,6 @@ public class HomeController {
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
-		home.getAllGames().setOnAction(e -> lc.setGames1());
-		home.getAllGamesDate().setOnAction(e -> lc.setGames2());
-		
-		home.getGameTab().setOnAction(e -> {
-			Stage stage = new Stage();
-			Scene scene = new Scene(new Pane());
-			ChatBoxController chat = new ChatBoxController();
-			scene.setRoot(chat.getScreen());
-			stage.setScene(scene);
-			stage.show();
-		});
 
 		openGames();
 		startTimeline();
@@ -69,7 +57,8 @@ public class HomeController {
 	private void startTimeline() {
 		Timeline timeline = new Timeline();
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(20000), e -> refresh()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e -> refresh()));
+
 		timeline.play();
 	}
 
