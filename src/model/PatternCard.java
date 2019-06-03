@@ -761,6 +761,184 @@ public class PatternCard {
 		
 	}
 	
+	public int getObjectiveCardTwo() {
+		int[] number = new int[2];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getEyes()) {
+			case 3: number[0] += number[0] + 1;
+			break;
+			case 4: number[1] += number[1] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<number.length;i++) {
+				if(number[i] > counter) {
+					
+				}else {
+					return counter*2;
+				}
+			}
+			counter++;
+		}
+		return 0;
+	}
+	
+	public int getObjectiveCardThree(int idplayer) {
+		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
+		int counter = 0;
+		for(int i = 1; i <= 5; i++) {
+			Column = database.Select("select DISTINCT p.position_x, p.position_y, d.eyes from playerframefield p join gamedie d on p.idgame = d.idgame and p.dienumber = d.dienumber and p.diecolor = d.diecolor where p.player_idplayer = " + idplayer +" AND position_x = " + i +";");
+			if(Column.size() == 4) {
+				counter++;
+			}
+		}
+		return counter*4;
+	}
+	
+	public int getObjectiveCardFour(int idplayer) {
+		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
+		int counter = 0;
+		for(int i = 1; i <= 5; i++) {
+			Column = database.Select("select DISTINCT p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +" AND position_x = " + i +" AND diecolor is not null;");
+			if(Column.size() == 4) {
+				counter++;
+			}
+		}
+		return counter*4;
+	}
+	
+	public int getObjectiveCardFive() {
+		int[] number = new int[2];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getEyes()) {
+			case 5: number[0] += number[0] + 1;
+			break;
+			case 6: number[1] += number[1] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<number.length;i++) {
+				if(number[i] > counter) {
+					
+				}else {
+					return counter*2;
+				}
+			}
+			counter++;
+		}
+		return 0;
+	}
+	
+	public int getObjectiveCardSix() {
+		int[] color = new int[5];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getDieColor()) {
+			case "blauw": color[0] += color[0] + 1;
+			break;
+			case "geel": color[1] += color[1] + 1;
+			break;
+			case "groen": color[2] += color[2] + 1;
+			break;
+			case "paars": color[3] += color[3] + 1;
+			break;
+			case "rood": color[4] += color[4] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<color.length;i++) {
+				if(color[i] > counter) {
+					
+				}else {
+					return counter*4;
+				}
+			}
+			counter++;
+		}
+		return 0;
+	}
+	
+	public int getObjectiveCardSeven(int idplayer) {
+		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
+		int counter = 0;
+		for(int i = 1; i <= 4; i++) {
+			Column = database.Select("select DISTINCT p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +" AND position_y = " + i +" AND diecolor is not null;");
+			if(Column.size() == 5) {
+				counter++;
+			}
+		}
+		return counter*6;
+	}
+	
+	public int getObjectiveCardEight(int idplayer) {
+		ArrayList<ArrayList<Object>> diagonal = database.Select("select p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +";");
+		int counter = 0;
+		int pointTotal = 0;
+		String currentColor = new String("null");
+		for (int x = 1; x <= 5; x++) {
+			for (int y = 4; y >= 1; y--) {
+				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
+					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+						currentColor = (String)diagonal.get(counter).get(2);
+					}
+					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						pointTotal++;
+					}else if(diagonal.get(counter).get(2).equals("null")){
+						
+					}
+				}
+					counter++;
+			}
+		}
+		
+		return 0;
+	}
+	
+	public int getObjectiveCardNine() {
+		int[] number = new int[2];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getEyes()) {
+			case 1: number[0] += number[0] + 1;
+			break;
+			case 2: number[1] += number[1] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<number.length;i++) {
+				if(number[i] > counter) {
+					
+				}else {
+					return counter*2;
+				}
+			}
+			counter++;
+		}
+		return 0;
+	}
+	
+	public int getObjectiveCardTen(int idplayer) {
+		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
+		int counter = 0;
+		for(int i = 1; i <= 4; i++) {
+			Column = database.Select("select DISTINCT p.position_x, p.position_y, d.eyes from playerframefield p join gamedie d on p.idgame = d.idgame and p.dienumber = d.dienumber and p.diecolor = d.diecolor where p.player_idplayer = " + idplayer +" AND position_y = " + i +";");
+			if(Column.size() == 5) {
+				counter++;
+			}
+		}
+		return counter*5;
+	}
+	
 	
 	
 

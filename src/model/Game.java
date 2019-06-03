@@ -83,7 +83,7 @@ public class Game {
 		String turnplayer = (String)database.Select("select username from player where isCurrentPlayer = 1 and game_idgame = " +this.idgame).get(0).get(0);
 		for(Player p: players) {
 			if(p.getUsername().equals(turnplayer)) {
-//				this.addTurnPlayer(p);
+				this.addTurnPlayer(p);
 				return p;
 			}
 		}
@@ -113,6 +113,7 @@ public class Game {
 			
 //			controller.setDicesTrack();
 			addToTrack();
+			
 			newRound();
 			
 		}else {
