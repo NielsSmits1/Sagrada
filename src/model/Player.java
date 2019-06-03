@@ -36,7 +36,10 @@ public class Player {
 		this.score = -20;
 		this.score += tokenAmount;
 		this.score += (int)calculateAmountOfSpacesFilled();
-		this.score += (int)calculatePrivateCardScore();
+		this.score += pc.getObjectiveCardOne();
+		if(self) {
+			this.score += (int)calculatePrivateCardScore();
+		}
 		return this.score;
 	}
 	
@@ -462,4 +465,5 @@ public class Player {
 	public ArrayList<PlacedDice> getDiceField(){
 		return pc.getDiceField();
 	}
+
 }

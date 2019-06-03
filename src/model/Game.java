@@ -172,6 +172,7 @@ public class Game {
 			// hoezo opent hij dit scherm
 			return 10;
 		}else {
+			getLeftovers();
 			return (int)round.get(0).get(0) + 1;
 			// anders + 1 is de ronde waar ze in zitten
 		}
@@ -605,12 +606,10 @@ public class Game {
         return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
 
     }
+	public void addTurnPlayer(Player self2) {
+		this.database.CUD("update game set turn_idplayer = (select idplayer from player where username = '" + self2.getUsername() +"' and game_idgame = " + this.idgame +") where idgame = " + this.idgame);
 
-//	public void addTurnPlayer(Player self2) {
-//		database.CUD("update game set turn_idplayer = " + self.getPlayerId());
-//		
-//	}
-	
+	}
 
 }
 	
