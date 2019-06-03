@@ -45,6 +45,8 @@ public class ChatBox extends ScrollPane {
 	public Button getSend() {
 		return send;
 	}
+
+	
 	
 	
 }

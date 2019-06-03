@@ -59,6 +59,7 @@ public class GamePane extends BorderPane {
 	private VBox userClickables;
 	private Label currentInfo;
 	private int x;
+	private int gameId;
 	
 
 	/// *
@@ -504,6 +505,16 @@ public class GamePane extends BorderPane {
 	public void setX(int x) {
 		this.x = x;
 	}
+
+	public int getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+	
+	
 	
 	public void showWinnerScreen(ArrayList<ArrayList<Object>> data) {
 		Alert alert = new Alert(AlertType.INFORMATION);
