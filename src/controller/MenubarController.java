@@ -114,11 +114,13 @@ public class MenubarController {
 				}
 			} else {
 				gc.buildGame();
+				gc.stopTimeline();
 				scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamePane()));
 				for (RadioMenuItem r : gamepanes.keySet()) {
 					r.setDisable(false);
 				}
 				mi.setDisable(true);
+				gc.startTimeline();
 
 			}
 		else {
