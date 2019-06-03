@@ -727,6 +727,40 @@ public class PatternCard {
 				.get(0).get(0);
 	}
 	
+	public int getObjectiveCardOne() {
+		int[] number = new int[6];
+		for(PlacedDice pd : diceField) {
+			switch(pd.getEyes()) {
+			case 1: number[0] += number[0] + 1;
+			break;
+			case 2: number[1] += number[1] + 1;
+			break;
+			case 3: number[2] += number[2] + 1;
+			break;
+			case 4: number[3] += number[3] + 1;
+			break;
+			case 5: number[4] += number[4] + 1;
+			break;
+			case 6: number[5] += number[5] + 1;
+			break;
+			default: break;
+			}
+		}
+		int counter = 0;
+		while(counter != 100) {
+			for(int i = 0;i<number.length;i++) {
+				if(number[i] > counter) {
+					
+				}else {
+					return counter*5;
+				}
+			}
+			counter++;
+		}
+		return 0;
+		
+	}
+	
 	
 	
 
