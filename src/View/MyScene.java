@@ -8,8 +8,8 @@ import javafx.scene.layout.Pane;
 
 public class MyScene extends Scene {
 	private InlogController inlog = new InlogController(this);
-	private GameController game = new GameController(this);
-	private ChatBoxController chat = new ChatBoxController();
+//	private GameController game = new GameController(this);
+//	private ChatBoxController chat = new ChatBoxController();
 
 	public MyScene() {
 		super(new Pane());
@@ -21,15 +21,15 @@ public class MyScene extends Scene {
 
 	}
 
-	public void builtNewGame() {
-
-		setRoot(game.showOptions());
-
-	}
-
-	public GameController getGame() {
-		return game;
-	}
+//	public void builtNewGame() {
+//
+//		setRoot(game.showOptions());
+//
+//	}
+//
+//	public GameController getGame() {
+//		return game;
+//	}
 
 	public void closeThis() {
 

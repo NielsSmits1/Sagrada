@@ -76,27 +76,19 @@ public class HomeController {
 	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
-		startGames();
+
 	}
 
 	private Game openGames() {
 		// open the games that are being played, or are ready to be played
 		for (Game g : self.getOpenGames()) {
-			mbc.startGame(g);
+			mbc.addGame(g);
 			game = g;
 			
 		}
 		return game;
 	}
-	private Game startGames() {
-		// open the games that are being played, or are ready to be played
-		for (Game g : self.getOpenGames()) {
-			mbc.startGame(g);
-			game = g;
-			
-		}
-		return game;
-	}
+	
 
 	public String getUsername() {
 		return self.getUsername();

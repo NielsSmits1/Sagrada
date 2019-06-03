@@ -21,7 +21,7 @@ public class Player {
 	private String objective_color;
 	private int patternCardId = 1;
 	private PatternCard pc;
-	ArrayList<Game> games2 = new ArrayList<Game>();
+
 
 	// private String differendPlayer;
 
