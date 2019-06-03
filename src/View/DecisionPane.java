@@ -27,6 +27,7 @@ public class DecisionPane extends BorderPane{
 		setTop(informativeText);
 		setCenter(buttons);
 		setBottom(errortext);
+
 	}
 
 	public void minus() {

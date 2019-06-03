@@ -4,12 +4,18 @@ import java.util.ArrayList;
 
 import controller.GameController;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -20,20 +26,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import model.PatternCard;
 
 public class PatterncardSelect extends Pane {
 	private ArrayList<PatternPane> board;
 	private Button randomButton;
-
 	private Alert alert = new Alert(AlertType.INFORMATION);
-
-	// private double textX = 175;
-	// private int fontSize = 20;
-	// private int heightPosition = 375;
-	// private int paneHeight = 403;
-	// private int paneWidth = 324;
-
 	private ArrayList<Integer> id;
 	private int patternId;
 	private ArrayList<GridPane> choice;
@@ -48,19 +47,29 @@ public class PatterncardSelect extends Pane {
 		controller = gc;
 		id = new ArrayList<>();
 		setGrid();
-		button = new Button("Pick This one!");
+		button = new Button("Ik kies deze patroonkaart");
 		button.setFont(Font.font(null, 17));
 		button.setOnAction(e -> {
 			handle();
 		});
 		button.setDisable(true);
 		this.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, null, null)));
-		randomButton = new Button("Random kaarten");
+		randomButton = new Button("Genereer een willekeurige patroonkaart voor mij.");
 		randomButton.setFont(Font.font(null, 17));
 		randomButton.setOnAction(e -> handleRandomCard());
 
 		setBoard();
+		
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
+		// set boundaries to visible bounds of the main screen
+		this.setPrefWidth(primaryScreenBounds.getWidth());
+		this.setPrefHeight(primaryScreenBounds.getHeight() * 1.1);
+
+		// sets background_image
+		this.setBackground(new Background(new BackgroundImage(new Image("/Resources/gameBackground.jpg"),
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+				new BackgroundSize(0, 0, false, false, false, true))));
 	}
 
 	/// *
@@ -68,6 +77,8 @@ public class PatterncardSelect extends Pane {
 	/// **
 
 	private void handleRandomCard() {
+		randomButton.setDisable(true);
+		button.setDisable(true);
 		controller.setRandomCard();
 		alert.setHeaderText("U heeft een patroonkaarten gekozen");
 		alert.showAndWait();
@@ -189,6 +200,8 @@ public class PatterncardSelect extends Pane {
 	}
 
 	public void handle() {
+		randomButton.setDisable(true);
+		button.setDisable(true);
 		controller.setPatternCard(getChosenId());
 	}
 

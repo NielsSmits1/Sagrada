@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import View.Menubar;
 import View.MyScene;
@@ -73,7 +76,7 @@ public class MenubarController {
 	public void logOut() {
 		scene.setRoot(inlog.getInlog());
 	}
-
+	
 	public void addGame(Game g) {
 		int x = 0;
 		gc = new GameController(g);

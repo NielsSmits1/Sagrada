@@ -10,7 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 public class ToolCardPane extends Pane {
 	private Label price;
@@ -20,12 +22,18 @@ public class ToolCardPane extends Pane {
 	private CardController controller;
 	private ImageView toolcards;
 	private HBox BuyAlignment;
+	private Circle tokenPlaceHolder;
+	private Label amountOfTokensPlaced;
 
 	private Image toolcard;
 
 	public ToolCardPane(int id, CardController cc) {
 		this.controller = cc;
 		this.toolCardId = id;
+		tokenPlaceHolder = new Circle(30, 28, 10);
+		price = new Label();
+		amountOfTokensPlaced = new Label();
+		
 		switch (id) {
 		case 1:
 			toolcard = new Image("/Resources/toolcard_1.png");
@@ -66,13 +74,19 @@ public class ToolCardPane extends Pane {
 		}
 		BuyAlignment = new HBox();
 		cardPropertiesAlignment = new VBox();
+		Pane image = new Pane();
 		button = new Button("Koop");
 		button.setOnAction(e -> handleButton());
 		setPrice();
+		setAmountPlaced();
+		amountOfTokensPlaced.setLayoutX(26);
+		amountOfTokensPlaced.setLayoutY(20);
+		amountOfTokensPlaced.setTextFill(Color.WHITE);
 		toolcards = new ImageView(toolcard);
 		BuyAlignment.getChildren().addAll(button, price);
 		BuyAlignment.setSpacing(50);
-		cardPropertiesAlignment.getChildren().addAll(toolcards, BuyAlignment);
+		image.getChildren().addAll(toolcards, tokenPlaceHolder, amountOfTokensPlaced);
+		cardPropertiesAlignment.getChildren().addAll(image, BuyAlignment);
 		cardPropertiesAlignment.setAlignment(Pos.CENTER);
 		getChildren().addAll(cardPropertiesAlignment);
 
@@ -81,9 +95,14 @@ public class ToolCardPane extends Pane {
 	public void handleButton() {
 		controller.buyToolCard(this);
 	}
+	
+	public void setAmountPlaced() {
+		
+		amountOfTokensPlaced.setText("" + controller.getAmountPlaced(toolCardId));
+	}
 
 	public void setPrice() {
-		price = new Label();
+		
 		price.setTextFill(Color.WHITE);
 		price.setText("" + controller.getPrice(toolCardId));
 

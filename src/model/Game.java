@@ -83,6 +83,7 @@ public class Game {
 		String turnplayer = (String)database.Select("select username from player where isCurrentPlayer = 1 and game_idgame = " +this.idgame).get(0).get(0);
 		for(Player p: players) {
 			if(p.getUsername().equals(turnplayer)) {
+//				this.addTurnPlayer(p);
 				return p;
 			}
 		}
@@ -132,7 +133,6 @@ public class Game {
 		int maxNumber = turnNumber;
 		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame + " order by idplayer desc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
 			database.CUD("update player set seqnr = " + (maxNumber + 1) + " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
-			System.out.println(a.get(0) + " " + maxNumber);
 			maxNumber+=1;
 		}
 		setNewCurrentPlayerDB();
@@ -312,6 +312,14 @@ public class Game {
 		database.CUD("Update gamedie SET ROUND = null WHERE dienumber = " + dienumber +" AND diecolor = '"+color+"' AND idgame = " + idgame +""); 
 		database.CUD("update gamedie SET Round = " + roundNumber +" WHERE eyes = " + chosenvalue+" AND idgame = " + idgame+" AND ROUND IS NULL ORDER BY RAND() LIMIT 1");
 	}
+	
+	public void reDraw() {
+		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT g.dienumber, g.diecolor, g.eyes FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = " + idgame +" AND g.roundtrack IS NULL AND g.round = " + roundNumber +" AND player_idplayer IS NULL;");
+		int amountToBeDrawed = leftoverDices.size();
+		database.CUD("Update gamedie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor SET ROUND = null WHERE g.idgame = " + idgame +" AND g.roundtrack IS NULL AND g.round = " + roundNumber +" AND player_idplayer IS NULL;"); 
+		database.CUD("Update gamedie set round = " + roundNumber + " where idgame = " + idgame + " AND round IS NULL ORDER BY RAND() LIMIT " + amountToBeDrawed +"");
+	}
+	
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
 		System.out.println("r: " +roundNumber);
@@ -597,6 +605,11 @@ public class Game {
         return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
 
     }
+
+//	public void addTurnPlayer(Player self2) {
+//		database.CUD("update game set turn_idplayer = " + self.getPlayerId());
+//		
+//	}
 	
 
 }
