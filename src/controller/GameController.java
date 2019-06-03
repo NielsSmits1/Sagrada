@@ -39,9 +39,8 @@ public class GameController {
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
 	private RoundPane rp;
-	private Round round;
 	private RoundTrack roundTrack;
-
+	private int round;
 	private Button cancel;
 	private Alert cancelGame;
 	private String cancelText = "Sorry iemand heeft geweigerd, het spel kan dus niet doorgaan.";
@@ -50,48 +49,7 @@ public class GameController {
 	private Stage gameStage;
 	private Timeline timeline;
 
-	public GameController(MyScene s) {
-
-		scene = s;
-		game = new Game();
-		
-		game.setPlayableDices();
-		
-		boardcontroller = new BoardController(this);
-		cardcontroller = new CardController(this);
-		game.setGameId(609);
-		ArrayList<Player> players = new ArrayList<Player>();
-		for (int i = 0; i < 4; i++) {
-			Player p = new Player("Speler " + i);
-			p.setId(i + 991);
-			p.setPatternCardId(p.getPatternIdFromDB());
-			p.setPc();
-			players.add(p);
-//			getOwnPlayerId();
-//			getOwnGameIdSelf();
-
-		}
-		game.insertPlayers(players);
-		
-		// }
-		players.get(3).setSelf(true);
-		for (Player p : game.getPlayers()) {
-			// look elke speler in spel
-			if (p.getSelf()) {
-				boardcontroller.addBoard(p.getPc(), p);
-			} else {
-				boardcontroller.addBoard(p.getPc(), p);
-			}
-
-		}
-
-		gamePane = new GamePane(this);
-		
-
-	}
-
 	public GameController(Game g) {
-		
 		this.game = g;
 		chatBox = new ChatBoxController(0,0);
 		boardcontroller = new BoardController(this);
@@ -109,6 +67,7 @@ public class GameController {
 		}
 		cardcontroller.setToolcards();
 		cardcontroller.setObjectiveCards();
+		round = 0;
 		game.setPlayableDices();
 		gamePane = new GamePane(this);
 		gamePane.getTurnSave().setOnAction(E -> endTurn());
@@ -117,7 +76,7 @@ public class GameController {
 
 	public void startTimeline() {
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(3000), e -> refreshGame()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5999), e -> refreshGame()));
 		timeline.play();
 	}
 	public void stopTimeline() {
@@ -132,14 +91,20 @@ public class GameController {
 		 * Dices
 		 * Score
 		 */
+	
 		game.refreshCurrentPlayer();
 		gamePane.changeInfo(this.shoutCurrentPlayer());
 		this.refreshBoards();
 		cardcontroller.updatePriceTag();
 		game.setPlayableDices();
 		gamePane.addDice();
-		setDicesTrack(); // shows current RoundTrack
-		
+		if(round != game.getRoundNumber()) {
+			round = game.getRoundNumber();
+			setDicesTrack(); // shows current RoundTrack
+			for(int i = 0; i<game.getPlayers().size(); i++) {
+				boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore(game.getIdGame()));
+			}
+		}
 	}
 
 	private void refreshBoards() {
@@ -149,7 +114,6 @@ public class GameController {
             boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
             game.getPlayers().get(i).setTokenAmount();
 			boardcontroller.getBoards().get(i).changeTokenAmount(game.getPlayers().get(i).getTokenAmount());
-			boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore());
 		}
 	}
 	

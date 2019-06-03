@@ -32,15 +32,49 @@ public class Player {
 		this.password = p;
 	}
 	
-	public int calculateScore() {
+	private ArrayList<ArrayList<Object>> getObjectiveCards(int idgame){
+		return database.select("select idpublic_objectivecard from sharedpublic_objectivecard WHERE idgame = " + idgame +"");
+	}
+	
+	public int calculateScore(int idgame) {
+		//Standard calculations
 		this.score = -20;
 		this.score += tokenAmount;
 		this.score += (int)calculateAmountOfSpacesFilled();
-		this.score += pc.getObjectiveCardOne();
+		//Private objective card
 		if(self) {
 			this.score += (int)calculatePrivateCardScore();
 		}
+		//Score for public objective cards
+		for (int i = 0; i < 3; i++) {
+			calculateObjectiveCard((int)getObjectiveCards(idgame).get(i).get(0));
+		}
 		return this.score;
+	}
+	
+	public void calculateObjectiveCard(int cardId) {
+		switch(cardId) {
+		case 1: score += pc.getObjectiveCardOne();
+		break;
+		case 2: score += pc.getObjectiveCardTwo();
+		break;
+		case 3: score += pc.getObjectiveCardThree(idplayer);
+		break;
+		case 4: score += pc.getObjectiveCardFour(idplayer);
+		break;
+		case 5: score += pc.getObjectiveCardFive();
+		break;
+		case 6: score += pc.getObjectiveCardSix();
+		break;
+		case 7: score += pc.getObjectiveCardSeven(idplayer);
+		break;
+		case 8: score += pc.getObjectiveCardEight(idplayer);
+		break;
+		case 9: score += pc.getObjectiveCardNine();
+		break;
+		case 10: score += pc.getObjectiveCardTen(idplayer);
+		break;
+		}
 	}
 	
 	public long calculatePrivateCardScore() {

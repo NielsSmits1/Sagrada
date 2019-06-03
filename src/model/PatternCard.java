@@ -885,9 +885,9 @@ public class PatternCard {
 		for (int x = 1; x <= 2; x++) {
 			for (int y = 2; y >= 1; y--) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -903,9 +903,9 @@ public class PatternCard {
 		for (int x = 1; x <= 3; x++) {
 			for (int y = 3; y >= 1; y--) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -921,9 +921,9 @@ public class PatternCard {
 		for (int x = 1; x <= 5; x++) {
 			for (int y = 4; y >= 1; y--) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -940,9 +940,9 @@ public class PatternCard {
 		for (int x = 2; x <= 5; x++) {
 			for (int y = 4; y >= 1; y--) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -959,9 +959,9 @@ public class PatternCard {
 		for (int x = 3; x <= 5; x++) {
 			for (int y = 4; y >= 2; y--) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -977,9 +977,9 @@ public class PatternCard {
 				for (int x = 4; x <= 5; x++) {
 					for (int y = 4; y >= 3; y--) {
 						if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-							if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-								currentColor = (String)diagonal.get(counter).get(2);
-							}
+//							if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//								currentColor = (String)diagonal.get(counter).get(2);
+//							}
 							if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 								pointTotal++;
 							}else{
@@ -996,9 +996,9 @@ public class PatternCard {
 		for (int x = 1; x <= 2; x++) {
 			for (int y = 3; y <= 4; y++) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -1015,9 +1015,9 @@ public class PatternCard {
 		for (int x = 1; x <= 3; x++) {
 			for (int y = 2; y <= 4; y++) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -1034,9 +1034,9 @@ public class PatternCard {
 		for (int x = 1; x <= 4; x++) {
 			for (int y = 1; y <= 4; y++) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -1053,9 +1053,9 @@ public class PatternCard {
 		for (int x = 2; x <= 5; x++) {
 			for (int y = 1; y <= 4; y++) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -1072,9 +1072,9 @@ public class PatternCard {
 		for (int x = 3; x <= 5; x++) {
 			for (int y = 1; y <= 3; y++) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{
@@ -1091,9 +1091,9 @@ public class PatternCard {
 		for (int x = 4; x <= 5; x++) {
 			for (int y = 1; y <= 2; y++) {
 				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-						currentColor = (String)diagonal.get(counter).get(2);
-					}
+//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
+//						currentColor = (String)diagonal.get(counter).get(2);
+//					}
 					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
 						pointTotal++;
 					}else{

@@ -217,7 +217,6 @@ public class Game {
 			showWinnerScreen();
 			return 10;
 		} else {
-			getLeftovers();
 			return (int) round.get(0).get(0) + 1;
 			// anders + 1 is de ronde waar ze in zitten
 		}
