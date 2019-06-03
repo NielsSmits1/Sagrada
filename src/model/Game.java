@@ -83,6 +83,7 @@ public class Game {
 		String turnplayer = (String)database.Select("select username from player where isCurrentPlayer = 1 and game_idgame = " +this.idgame).get(0).get(0);
 		for(Player p: players) {
 			if(p.getUsername().equals(turnplayer)) {
+				this.addTurnPlayer(p);
 				return p;
 			}
 		}
@@ -132,7 +133,6 @@ public class Game {
 		int maxNumber = turnNumber;
 		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame + " order by idplayer desc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
 			database.CUD("update player set seqnr = " + (maxNumber + 1) + " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
-			System.out.println(a.get(0) + " " + maxNumber);
 			maxNumber+=1;
 		}
 		setNewCurrentPlayerDB();
@@ -605,6 +605,11 @@ public class Game {
         return database.Select("Select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
 
     }
+
+	public void addTurnPlayer(Player self2) {
+		database.CUD("update game set turn_idplayer = " + self.getPlayerId());
+		
+	}
 	
 
 }
