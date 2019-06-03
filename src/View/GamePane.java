@@ -56,6 +56,7 @@ public class GamePane extends BorderPane {
 	private Button endTurn;
 	private VBox userClickables;
 	private Label currentInfo;
+	private int x;
 	
 
 	/// *
@@ -493,6 +494,16 @@ public class GamePane extends BorderPane {
 		
 		track.setRoundTrack(d);
 	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	
 	
 	
 	
