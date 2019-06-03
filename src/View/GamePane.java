@@ -60,7 +60,6 @@ public class GamePane extends BorderPane {
 	private Label currentInfo;
 	private int x;
 	private int gameId;
-	
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -68,8 +67,6 @@ public class GamePane extends BorderPane {
 	// This constructor also adds some boards, dices and all of the diverse cards to
 	/// the screen.
 	/// **
-
-
 
 	public GamePane(GameController gameController) {
 
@@ -250,7 +247,7 @@ public class GamePane extends BorderPane {
 		HBox allKeyCards = new HBox(alignObjectiveCardWithHeaderText, alignPrivateObjectiveCardWithHeaderText,
 				alignToolCardWithHeaderText);
 		allKeyCards.setPadding(new Insets(0, 0, 0, 10));
-		
+
 		allKeyCards.setSpacing(5);
 		allKeyCards.setAlignment(Pos.CENTER);
 		bottom.setCenter(allKeyCards);
@@ -494,7 +491,7 @@ public class GamePane extends BorderPane {
 	}
 
 	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
-		
+
 		track.setRoundTrack(d);
 	}
 
@@ -513,27 +510,20 @@ public class GamePane extends BorderPane {
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
 	}
-	
-	
-	
+
 	public void showWinnerScreen(ArrayList<ArrayList<Object>> data) {
+		String winner = "";
+		for (ArrayList<Object> a : data) {
+			winner = winner + a.get(0) + " : " + a.get(1) + "/n";
+		}
+
+		String winners = "";
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Scorebord");
 		alert.setHeaderText(null);
-		try {
-			alert.setContentText((String) data.get(0).get(0));
-			alert.setContentText((String) data.get(1).get(1));
-			alert.setContentText((String) data.get(2).get(2));
-			alert.setContentText((String) data.get(3).get(3));
-		} catch (Exception e) {
-			
-		}
+		alert.setContentText(winner);
 		alert.showAndWait();
 	}
-	
-	
-	
-	
-	
 
 }
