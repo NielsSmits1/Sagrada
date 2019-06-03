@@ -30,7 +30,21 @@ public class Player {
 	public Player(String u, String p) {
 		this.username = u;
 		this.password = p;
-		
+	}
+	
+	public void calculateScore() {
+		this.score = -20;
+		this.score += tokenAmount;
+		this.score += calculateAmountOfSpacesFilled();
+		this.score += calculatePrivateCardScore();
+	}
+	
+	public int calculatePrivateCardScore() {
+		return (int)database.Select("SELECT count(*) FROM playerframefield pf LEFT JOIN player p ON p.idplayer = pf.player_idplayer WHERE diecolor = private_objectivecard_color AND player_idplayer = " + idplayer +";").get(0).get(0);
+	}
+	
+	public int calculateAmountOfSpacesFilled() {
+		return (int)database.Select("SELECT count(*) FROM playerframefield pf LEFT JOIN player p ON p.idplayer = pf.player_idplayer WHERE player_idplayer = " + idplayer +" AND dienumber is not null;").get(0).get(0);
 	}
 	
 	public void setTokenAmount(int amount) {

@@ -132,6 +132,9 @@ public class GameController {
 		cardcontroller.updatePriceTag();
 		game.setPlayableDices();
 		gamePane.addDice();
+		for(Player p : game.getPlayers()) {
+			p.calculateScore();
+		}
 		setDicesTrack(); // shows current RoundTrack
 		
 	}
