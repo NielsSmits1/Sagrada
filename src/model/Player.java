@@ -32,11 +32,11 @@ public class Player {
 		this.password = p;
 	}
 	
-	private ArrayList<ArrayList<Object>> getObjectiveCards(){
-		return database.select("select idpublic_objectivecard from sharedpublic_objectivecard WHERE idgame = " + gameId +"");
+	private ArrayList<ArrayList<Object>> getObjectiveCards(int idgame){
+		return database.select("select idpublic_objectivecard from sharedpublic_objectivecard WHERE idgame = " + idgame +"");
 	}
 	
-	public int calculateScore() {
+	public int calculateScore(int idgame) {
 		//Standard calculations
 		this.score = -20;
 		this.score += tokenAmount;
@@ -47,7 +47,7 @@ public class Player {
 		}
 		//Score for public objective cards
 		for (int i = 0; i < 3; i++) {
-			calculateObjectiveCard((int)getObjectiveCards().get(i).get(0));
+			calculateObjectiveCard((int)getObjectiveCards(idgame).get(i).get(0));
 		}
 		return this.score;
 	}
