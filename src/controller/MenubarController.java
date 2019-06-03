@@ -1,9 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import View.Menubar;
 import View.MyScene;
@@ -76,7 +73,7 @@ public class MenubarController {
 	public void logOut() {
 		scene.setRoot(inlog.getInlog());
 	}
-	
+
 	public void addGame(Game g) {
 		int x = 0;
 		gc = new GameController(g);
@@ -84,27 +81,24 @@ public class MenubarController {
 		g.buildRounds();
 		g.buildTurns();
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
-		
-		
-		
+
 		MenuItem c = new MenuItem("chatbox");
 		RadioMenuItem mi = new RadioMenuItem("open game");
 		m.getItems().addAll(mi, c);
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
-//		gc.getGamePane().setX(x);
-//		gameid.put(x, gc.getIdGame());
-//		x++;
+
 		mi.setOnAction(e -> setRoot(mi));
-		c.setOnAction(e -> {builtChatBox(); });
+		c.setOnAction(e -> {
+			sceneChat = new Scene(new Pane());
+			sceneChat.setRoot(gc.getChatBox().getScreen());
+			stageChat.setScene(sceneChat);
+			stageChat.show();
+		});
 
 	}
 
 	public void builtChatBox() {
-		sceneChat = new Scene(new Pane());
-		sceneChat.setRoot(gc.getChatBox().getScreen());
-		stageChat.setScene(sceneChat);
-		stageChat.show();
 
 	}
 
@@ -140,8 +134,8 @@ public class MenubarController {
 		alert.setHeaderText("Er worden nog patroonkaarten gekozen");
 		alert.showAndWait();
 	}
-	
+
 	public void goHome() {
-		
+
 	}
 }
