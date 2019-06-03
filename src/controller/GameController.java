@@ -305,10 +305,6 @@ public class GameController {
 		return game.getOwnId();
 	}
 
-	public GamePane getGamepane() {
-		return gamePane;
-	}
-
 	public ArrayList<ToolCardPane> getToolCards() {
 		return cardcontroller.getToolCards();
 	}

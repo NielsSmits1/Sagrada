@@ -20,7 +20,6 @@ import model.Player;
 public class MenubarController {
 
 	private Menubar menu;
-	private Pane pane;
 	private MyScene scene;
 	private InlogController inlog;
 	private Player self;
@@ -30,6 +29,7 @@ public class MenubarController {
 	private Scene sceneChat;
 	private ChatBoxController chat;
 	private HashMap<RadioMenuItem, GameController> gamepanes = new HashMap<>();
+	private HashMap<Integer, Integer> gameid = new HashMap<Integer, Integer>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
@@ -75,19 +75,25 @@ public class MenubarController {
 	}
 
 	public void addGame(Game g) {
+		int x = 0;
 		gc = new GameController(g);
 		chat = gc.getChatBox();
 		g.buildRounds();
 		g.buildTurns();
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
-
+		
+		
+		
 		MenuItem c = new MenuItem("chatbox");
 		RadioMenuItem mi = new RadioMenuItem("open game");
 		m.getItems().addAll(mi, c);
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
+//		gc.getGamePane().setX(x);
+//		gameid.put(x, gc.getIdGame());
+//		x++;
 		mi.setOnAction(e -> setRoot(mi));
-		c.setOnAction(e -> builtChatBox());
+		c.setOnAction(e -> {builtChatBox(); });
 
 	}
 
@@ -111,7 +117,7 @@ public class MenubarController {
 				}
 			} else {
 				gc.buildGame();
-				scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamepane()));
+				scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamePane()));
 				for (RadioMenuItem r : gamepanes.keySet()) {
 					r.setDisable(false);
 					System.out.println("hoi");
@@ -122,7 +128,7 @@ public class MenubarController {
 			}
 		else {
 			gc.buildGame();
-			scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamepane()));
+			scene.setRoot(new VBox(this.getMenubar(), gamepanes.get(mi).getGamePane()));
 
 		}
 	}
