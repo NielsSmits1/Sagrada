@@ -83,7 +83,7 @@ public class Game {
 		String turnplayer = (String)database.Select("select username from player where isCurrentPlayer = 1 and game_idgame = " +this.idgame).get(0).get(0);
 		for(Player p: players) {
 			if(p.getUsername().equals(turnplayer)) {
-//				this.addTurnPlayer(p);
+                this.addTurnPlayer(p);
 				return p;
 			}
 		}
@@ -121,17 +121,25 @@ public class Game {
 	}
 	private void forwardSeqNr() {
 		int maxNumber = 1;
-		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame)) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
-			database.CUD("update player set seqnr = " + maxNumber+ " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
-			maxNumber+=1;
+		for(ArrayList<Object> a : database.Select("select username, seqnr from player where game_idgame = " + this.idgame + " order by seqnr desc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
+			if((int)a.get(1)==players.size() * 2) {
+				database.CUD("update player set seqnr = " + players.size()+ " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
+			}else {	
+				database.CUD("update player set seqnr = " + maxNumber + " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
+				maxNumber+=1;
+			}
 		}
+		//update player set senr = 1 where senr = 7
+		//updte player set senr = 2 where senr = 6
+		//updt pl set se nr = 3 whe sen = 5
+		//updt pl set se = 4 where se 8
 		database.CUD("update player set isCurrentPlayer = 1 where game_idgame = " + this.idgame + " and seqnr = 1");
 	}
 
 	private void backwartsSeqNr() {
 		
 		int maxNumber = turnNumber;
-		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame + " order by idplayer desc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
+		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame + " order by seqnr asc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
 			database.CUD("update player set seqnr = " + (maxNumber + 1) + " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
 			maxNumber+=1;
 		}
@@ -141,7 +149,7 @@ public class Game {
 	private void setNewCurrentPlayerDB() {
 		updateCurrentPlayer();
 		database.CUD("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = " + this.idgame);
-		
+		turnPlayer = setWhoseTurnItIs();
 	}
 	private void newRound() {
 		// doe iets met de overgebleven dice(s)
