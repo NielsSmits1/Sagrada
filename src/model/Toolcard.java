@@ -146,7 +146,6 @@ public class Toolcard {
 	}
 
 	private void activateToolCardSeven() {
-		// TODO Auto-generated method stub
 		cardController.setToolcardSevenActive();
 	}
 
