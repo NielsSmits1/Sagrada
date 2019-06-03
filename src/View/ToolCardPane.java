@@ -31,6 +31,9 @@ public class ToolCardPane extends Pane {
 		this.controller = cc;
 		this.toolCardId = id;
 		tokenPlaceHolder = new Circle(30, 28, 10);
+		price = new Label();
+		amountOfTokensPlaced = new Label();
+		
 		switch (id) {
 		case 1:
 			toolcard = new Image("/Resources/toolcard_1.png");
@@ -94,12 +97,12 @@ public class ToolCardPane extends Pane {
 	}
 	
 	public void setAmountPlaced() {
-		amountOfTokensPlaced = new Label();
+		
 		amountOfTokensPlaced.setText("" + controller.getAmountPlaced(toolCardId));
 	}
 
 	public void setPrice() {
-		price = new Label();
+		
 		price.setTextFill(Color.WHITE);
 		price.setText("" + controller.getPrice(toolCardId));
 

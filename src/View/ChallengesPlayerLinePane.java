@@ -38,6 +38,7 @@ public class ChallengesPlayerLinePane extends HBox {
 //		decline.setOnAction(e -> cp.declineChallenge(playerName));
 	
 	}
+
 	public ChallengesPlayerLinePane (String name,String status,int i) {
 		playerLabel = new Label();
 		playerStatus = new Label();
