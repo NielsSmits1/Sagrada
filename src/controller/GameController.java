@@ -423,6 +423,10 @@ public class GameController {
 		gamePane.setRoundTrack(game.getLeftovers());
 		
 	}
+	
+	public void showWinnerScreen(ArrayList<ArrayList<Object>> data) {
+		gamePane.showWinnerScreen(data);
+	}
 
 
 }

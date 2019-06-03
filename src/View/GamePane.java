@@ -7,6 +7,8 @@ import controller.GameController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -501,6 +503,21 @@ public class GamePane extends BorderPane {
 
 	public void setX(int x) {
 		this.x = x;
+	}
+	
+	public void showWinnerScreen(ArrayList<ArrayList<Object>> data) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Scorebord");
+		alert.setHeaderText(null);
+		try {
+			alert.setContentText((String) data.get(0).get(0));
+			alert.setContentText((String) data.get(1).get(1));
+			alert.setContentText((String) data.get(2).get(2));
+			alert.setContentText((String) data.get(3).get(3));
+		} catch (Exception e) {
+			
+		}
+		alert.showAndWait();
 	}
 	
 	
