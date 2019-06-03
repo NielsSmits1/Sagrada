@@ -197,10 +197,6 @@ public class GamePane extends BorderPane {
 	/// *
 	// Sets all cards, also adds the labels above the cards.
 	/// **
-	
-	public void refreshToolcards() {
-		
-	}
 
 	private void setCards() {
 		// Creates new cards
