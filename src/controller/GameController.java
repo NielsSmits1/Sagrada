@@ -138,7 +138,7 @@ public class GameController {
 		cardcontroller.updatePriceTag();
 		game.setPlayableDices();
 		gamePane.addDice();
-//		setDicesTrack(); // shows current RoundTrack
+		setDicesTrack(); // shows current RoundTrack
 		
 	}
 
@@ -428,6 +428,10 @@ public class GameController {
 	public void setDicesTrack() {
 		gamePane.setRoundTrack(game.getLeftovers());
 		
+	}
+	
+	public void showWinnerScreen(ArrayList<ArrayList<Object>> data) {
+		gamePane.showWinnerScreen(data);
 	}
 
 

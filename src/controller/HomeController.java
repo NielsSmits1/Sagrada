@@ -33,6 +33,7 @@ public class HomeController {
 
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private Game game;
+	private Game lastg;
 
 	public HomeController(Player self, MenubarController mbc) {
 		this.mbc = mbc;
@@ -68,14 +69,20 @@ public class HomeController {
 	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
-
+		addNewGame();
 	}
-
+	private void addNewGame() {
+		for(Game g : self.getNewGames(lastg)) {
+			mbc.addGame(g);
+			this.lastg = g;
+		}
+	}
 	private Game openGames() {
 		// open the games that are being played, or are ready to be played
 		for (Game g : self.getOpenGames()) {
 			mbc.addGame(g);
 			game = g;
+			this.lastg = g;
 			
 		}
 		return game;
