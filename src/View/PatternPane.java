@@ -17,7 +17,6 @@ public class PatternPane extends StackPane{
 		boardPane = p;
 		xPos = x;
 		yPos = y;
-//		System.out.println("" + xPos + " " + yPos);
 		///*
 		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
 		//Dice will be 'pasted' on the template.
@@ -30,7 +29,6 @@ public class PatternPane extends StackPane{
 	public PatternPane(BoardPane p, DicePane d) {
 		template = d;
 		boardPane = p;
-//		System.out.println("" + xPos + " " + yPos);
 		///*
 		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
 		//Dice will be 'pasted' on the template.
@@ -132,8 +130,6 @@ public class PatternPane extends StackPane{
 	}
 	
 //	public void moveDiceAccepted(DicePane selected) {
-//		System.out.println(dienumber + diecolor);
-//		System.out.println(boardPane.getSelected().getEyes());
 //		dice = new DicePane(boardPane.getSelected().getEyes(), diecolor, dienumber);
 //		getChildren().add(dice);
 //	}
@@ -151,7 +147,6 @@ public class PatternPane extends StackPane{
 		}
 //		boardPane.setSelectedToNull();
 		giveCords();
-		System.out.println("geef cords");
 	}
 	
 	public void setDiceNull() {

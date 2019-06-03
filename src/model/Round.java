@@ -3,10 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import Database.db;
+import Database.Db;
 
 public class Round {
-	private db database = new db();
+	private Db database = new Db();
 	private ArrayList<Turn> turnes = new ArrayList();
 	private int turnNumber;
 	/*
@@ -22,7 +22,7 @@ public class Round {
 	}
 	
 	public void buildTurnes(Player self, int gameId) {
-		ArrayList<ArrayList<Object>> playersInGame = database.Select("select idplayer, username , seqnr, score from player where game_idgame = " + gameId + " order by seqnr asc");
+		ArrayList<ArrayList<Object>> playersInGame = database.select("select idplayer, username , seqnr, score from player where game_idgame = " + gameId + " order by seqnr asc");
 		for(ArrayList<Object> p : playersInGame) {
 			Turn t = new Turn();
 			t.buildTurnPlayer((int)p.get(0), (String)p.get(1), (int)p.get(2), (int)p.get(3));
@@ -45,11 +45,11 @@ public class Round {
 	}
 
 	public ArrayList<ArrayList<Object>> GetPlayerWithChallengedStatus(int gameId) {
-		return database.Select("select count(username) from player where game_idgame = "+ gameId); //Change "Johan" To self.username 
+		return database.select("select count(username) from player where game_idgame = "+ gameId); //Change "Johan" To self.username 
 	}	
 		
 	public ArrayList<ArrayList<Object>> GetPlayerWithChallengeeStatus(int gameId) {
-		return database.Select("select * from player where game_idgame = "+ gameId +" AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
+		return database.select("select * from player where game_idgame = "+ gameId +" AND playstatus_playstatus = 'Uitgedaagde'"); //Change "Teun" To self.username 
 	}
 
 
@@ -59,7 +59,7 @@ public class Round {
 //	}
 
 	public ArrayList<ArrayList<Object>> getRemaines() {
-		return database.Select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd " + 
+		return database.select("SELECT MAX(gd.round), p.username, p.seqnr FROM gamedie AS gd " + 
 				"LEFT JOIN playerframefield AS pff ON gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor LEFT JOIN player AS "+
 				"p ON pff.player_idplayer = p.idplayer " + 
 				"WHERE gd.idgame = 2 AND p.isCurrentPlayer = 1");

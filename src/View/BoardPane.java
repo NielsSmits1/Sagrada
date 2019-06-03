@@ -170,7 +170,6 @@ public class BoardPane extends Pane {
 			}
 		}
 		getChildren().add(field);
-		// System.out.println("Should have worked");
 	}
 	
 	public void addPlacedDice(ArrayList<PlacedDice> diceField) {
