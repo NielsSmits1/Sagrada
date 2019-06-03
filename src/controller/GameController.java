@@ -53,6 +53,7 @@ public class GameController {
 
 		scene = s;
 		game = new Game();
+		
 		game.setPlayableDices();
 		
 		boardcontroller = new BoardController(this);
@@ -70,6 +71,7 @@ public class GameController {
 
 		}
 		game.insertPlayers(players);
+		
 		// }
 		players.get(3).setSelf(true);
 		for (Player p : game.getPlayers()) {
@@ -90,9 +92,11 @@ public class GameController {
 	public GameController(Game g) {
 		
 		this.game = g;
+		chatBox = new ChatBoxController(0,0);
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
 		game.setController(this);
+		
 		
 	}
 

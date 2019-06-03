@@ -25,18 +25,16 @@ public class MenubarController {
 	private Player self;
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private GameController gc;
-	private Stage stageChat = new Stage();
+	private Stage stageChat;
 	private Scene sceneChat;
 	private ChatBoxController chat;
 	private HashMap<RadioMenuItem, GameController> gamepanes = new HashMap<>();
-	private HashMap<Integer, Integer> gameid = new HashMap<Integer, Integer>();
 
 	public MenubarController(MyScene scene, InlogController controller, Player player) {
 
 		this.scene = scene;
 		this.inlog = controller;
 		this.self = player;
-//		game = new GameController(scene);
 		menu = new Menubar(scene);
 
 		menu.getExit().setOnAction(e -> exit());
@@ -44,6 +42,7 @@ public class MenubarController {
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 		menu.getHome().setOnAction(e -> controller.buildHome());
 		menu.getStats().setOnAction(e -> showStats());
+		
 
 	}
 
@@ -75,31 +74,45 @@ public class MenubarController {
 	}
 
 	public void addGame(Game g) {
-		int x = 0;
 		gc = new GameController(g);
 		chat = gc.getChatBox();
 		g.buildRounds();
 		g.buildTurns();
+
 		Menu m = new Menu("Gamenummer : " + gc.getIdGame());
+		
 
 		MenuItem c = new MenuItem("chatbox");
 		RadioMenuItem mi = new RadioMenuItem("open game");
+
 		m.getItems().addAll(mi, c);
 		menu.addGameItem(m);
 		gamepanes.put(mi, gc);
 
 		mi.setOnAction(e -> setRoot(mi));
 		c.setOnAction(e -> {
-			sceneChat = new Scene(new Pane());
-			sceneChat.setRoot(gc.getChatBox().getScreen());
-			stageChat.setScene(sceneChat);
-			stageChat.show();
-		});
+			gc.getGamePane().setGameId(gc.getIdGame());
+			gc.getChatBox().getModel().setGameId(gc.getGamePane().getGameId());
+			gc.getChatBox().getModel().setPlayerId(gc.getOwnId());
+			System.out.println(gc.getGamePane().getGameId());
+			System.out.println(gc.getOwnId());
+			builtChatBox();
 
+		});
+		
 	}
 
 	public void builtChatBox() {
-
+		stageChat = new Stage();
+		sceneChat = new Scene(new Pane(gc.getChatBox().getScreen()));
+		builtScene();
+		
+	}
+	
+	public void builtScene() {
+		stageChat.setScene(sceneChat);
+		stageChat.show();
+		stageChat.show();
 	}
 
 	public void setRoot(RadioMenuItem mi) {

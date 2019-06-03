@@ -22,6 +22,7 @@ public class ChatBoxController {
 		chat = new ChatBox();
 		getChat();
 		chat.getSend().setOnAction(e -> sendMessages());
+		
 
 	}
 
@@ -51,12 +52,14 @@ public class ChatBoxController {
 	}
 
 	public void sendMessages() {
+		System.out.println("ik pas");
 		String input = "";
 		input = chat.getInPut().getText();
 		model.sendCUD(input);
 		chat.getInPut().clear();
 		getChat();// dit is de refresh
 	}
+	
 
 	public void refresh() {
 		getChat();
@@ -65,5 +68,7 @@ public class ChatBoxController {
 	public ChatBoxModel getModel() {
 		return model;
 	}
+	
+	
 
 }
