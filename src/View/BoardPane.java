@@ -317,5 +317,9 @@ public class BoardPane extends Pane {
 		
 		return Color.rgb(r, g, b);
 	}
+	
+	public void setScore(int score) {
+		this.score.setText("" + score);
+	}
 
 }
