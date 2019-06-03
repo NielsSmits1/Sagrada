@@ -37,6 +37,7 @@ public class PatterncardSelect extends Pane {
 	private int patternId;
 	private ArrayList<GridPane> choice;
 	private Button button;
+	private Boolean choosen = false;
 	private GameController controller;
 	private Border peru = new Border(
 			new BorderStroke(Color.PERU, BorderStrokeStyle.SOLID, null, new BorderWidths(10.0)));
@@ -77,11 +78,14 @@ public class PatterncardSelect extends Pane {
 	/// **
 
 	private void handleRandomCard() {
-		randomButton.setDisable(true);
-		button.setDisable(true);
-		controller.setRandomCard();
-		alert.setHeaderText("U heeft een patroonkaarten gekozen");
-		alert.showAndWait();
+		if(!choosen) {
+			randomButton.setDisable(true);
+			button.setDisable(true);
+			controller.setRandomCard();
+			alert.setHeaderText("U heeft een patroonkaarten gekozen");
+			alert.showAndWait();
+			choosen = true;
+		}
 	}
 
 	private void setGrid() {
@@ -200,9 +204,13 @@ public class PatterncardSelect extends Pane {
 	}
 
 	public void handle() {
-		randomButton.setDisable(true);
-		button.setDisable(true);
-		controller.setPatternCard(getChosenId());
+		if(!choosen) {
+			controller.setPatternCard(getChosenId());
+			choosen = true;
+			randomButton.setDisable(true);
+			button.setDisable(true);
+		}
+		
 	}
 
 	public ArrayList<PatternCard> getPatternCard() {

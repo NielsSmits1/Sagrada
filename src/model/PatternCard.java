@@ -789,7 +789,7 @@ public class PatternCard {
 		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
 		int counter = 0;
 		for(int i = 1; i <= 5; i++) {
-			Column = database.Select("select DISTINCT p.position_x, p.position_y, d.eyes from playerframefield p join gamedie d on p.idgame = d.idgame and p.dienumber = d.dienumber and p.diecolor = d.diecolor where p.player_idplayer = " + idplayer +" AND position_x = " + i +";");
+			Column = database.select("select DISTINCT p.position_x, p.position_y, d.eyes from playerframefield p join gamedie d on p.idgame = d.idgame and p.dienumber = d.dienumber and p.diecolor = d.diecolor where p.player_idplayer = " + idplayer +" AND position_x = " + i +";");
 			if(Column.size() == 4) {
 				counter++;
 			}
@@ -801,7 +801,7 @@ public class PatternCard {
 		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
 		int counter = 0;
 		for(int i = 1; i <= 5; i++) {
-			Column = database.Select("select DISTINCT p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +" AND position_x = " + i +" AND diecolor is not null;");
+			Column = database.select("select DISTINCT p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +" AND position_x = " + i +" AND diecolor is not null;");
 			if(Column.size() == 4) {
 				counter++;
 			}
@@ -869,7 +869,7 @@ public class PatternCard {
 		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
 		int counter = 0;
 		for(int i = 1; i <= 4; i++) {
-			Column = database.Select("select DISTINCT p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +" AND position_y = " + i +" AND diecolor is not null;");
+			Column = database.select("select DISTINCT p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +" AND position_y = " + i +" AND diecolor is not null;");
 			if(Column.size() == 5) {
 				counter++;
 			}
@@ -878,7 +878,7 @@ public class PatternCard {
 	}
 	
 	public int getObjectiveCardEight(int idplayer) {
-		ArrayList<ArrayList<Object>> diagonal = database.Select("select p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +";");
+		ArrayList<ArrayList<Object>> diagonal = database.select("select p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +";");
 		int counter = 0;
 		int pointTotal = 0;
 		String currentColor = new String("null");
@@ -930,7 +930,7 @@ public class PatternCard {
 		ArrayList<ArrayList<Object>> Column = new ArrayList<>();
 		int counter = 0;
 		for(int i = 1; i <= 4; i++) {
-			Column = database.Select("select DISTINCT p.position_x, p.position_y, d.eyes from playerframefield p join gamedie d on p.idgame = d.idgame and p.dienumber = d.dienumber and p.diecolor = d.diecolor where p.player_idplayer = " + idplayer +" AND position_y = " + i +";");
+			Column = database.select("select DISTINCT p.position_x, p.position_y, d.eyes from playerframefield p join gamedie d on p.idgame = d.idgame and p.dienumber = d.dienumber and p.diecolor = d.diecolor where p.player_idplayer = " + idplayer +" AND position_y = " + i +";");
 			if(Column.size() == 5) {
 				counter++;
 			}
