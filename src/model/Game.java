@@ -607,10 +607,10 @@ public class Game {
     }
 
 	public void addTurnPlayer(Player self2) {
-		database.CUD("update game set turn_idplayer = " + self.getPlayerId());
-		
+		System.out.println(self2.getUsername());
+		this.database.CUD("update game set turn_idplayer = (select idplayer from player where username = '" + self2.getUsername() +"' and game_idgame = " + this.idgame +") where idgame = " + this.idgame);
+
 	}
-	
 
 }
 	
