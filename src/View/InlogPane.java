@@ -27,6 +27,7 @@ import javafx.scene.text.TextAlignment;
 public class InlogPane extends BorderPane {
 	private Button loginButton;
 	private Button registerButton;
+	private Button close;
 	private VBox layout;
 	private TextField usernameField;
 	private TextField passwordField;
@@ -69,9 +70,15 @@ public class InlogPane extends BorderPane {
 		registerButton.setPrefHeight(50);
 		registerButton.setPrefWidth(100);
 
+		//Close Button
+		close = new Button("sluiten");
+		close.setTextAlignment(TextAlignment.CENTER);
+		close.setPrefHeight(50);
+		close.setPrefWidth(100);
+		
 		// Button alignment
 		buttonAlignment = new HBox();
-		buttonAlignment.getChildren().addAll(loginButton, registerButton);
+		buttonAlignment.getChildren().addAll(loginButton, registerButton, close);
 		buttonAlignment.setSpacing(20);
 		buttonAlignment.setAlignment(Pos.CENTER);
 		
@@ -123,6 +130,10 @@ public class InlogPane extends BorderPane {
 
 	public Button getRegisterButton() {
 		return registerButton;
+	}
+	
+	public Button getClose() {
+		return close;
 	}
 	
 	

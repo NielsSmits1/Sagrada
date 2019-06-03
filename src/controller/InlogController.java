@@ -2,6 +2,7 @@ package controller;
 
 import View.InlogPane;
 import View.MyScene;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
@@ -32,6 +33,7 @@ public class InlogController {
 		inlog = new InlogPane();
 		inlog.getLoginButton().setOnAction(e -> login());
 		inlog.getRegisterButton().setOnAction(e -> register());
+		inlog.getClose().setOnAction(e -> Platform.exit());
 		return inlog;
 	}
 

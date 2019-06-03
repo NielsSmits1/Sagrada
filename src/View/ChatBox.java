@@ -12,9 +12,9 @@ import javafx.scene.paint.Color;
 
 public class ChatBox extends ScrollPane {
 	private TextField inPut;
-	private Button send;
+	private Button send = new Button("verstuur");
 	private ArrayList<ChatLine> chatline;
-	
+
 	private static final int WIDTH = 300;
 	private static final int HEIGHT = 300;
 
@@ -27,7 +27,7 @@ public class ChatBox extends ScrollPane {
 		VBox box = new VBox();
 		VBox chat = new VBox();
 		inPut = new TextField();
-		send = new Button("verstuur");
+
 		chat.setPrefSize(WIDTH, HEIGHT);
 		chat.setBackground(new Background(new BackgroundFill(Color.HOTPINK, null, null)));
 
@@ -46,7 +46,4 @@ public class ChatBox extends ScrollPane {
 		return send;
 	}
 
-	
-	
-	
 }

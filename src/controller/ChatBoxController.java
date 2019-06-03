@@ -18,7 +18,6 @@ public class ChatBoxController {
 		model.setGameId(gameID);
 		
 		model.setPlayerId(OwnId);
-		System.out.println("gameid + ownid" + gameID	+ OwnId );
 		chat = new ChatBox();
 		getChat();
 		chat.getSend().setOnAction(e -> sendMessages());
@@ -52,7 +51,6 @@ public class ChatBoxController {
 	}
 
 	public void sendMessages() {
-		System.out.println("ik pas");
 		String input = "";
 		input = chat.getInPut().getText();
 		model.sendCUD(input);

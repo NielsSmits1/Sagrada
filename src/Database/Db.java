@@ -60,6 +60,12 @@ public class Db {
 		}
 		
 	}
+
+	public Connection getCon() {
+		return con;
+	}
+	
+	
 	
 
 }

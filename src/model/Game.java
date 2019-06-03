@@ -619,6 +619,12 @@ public class Game {
 
 	}
 
+	public Db getDatabase() {
+		return database;
+	}
+	
+	
+
 }
 	
 	
