@@ -17,8 +17,6 @@ public class ChatBoxModel {
 	}
 	
 	public ArrayList<ArrayList<Object>> playerUserName(){
-		System.out.println(gameId);
-		System.out.println(playerId);
     	return database.Select("select username, chatline.message, chatline.time from player left join chatline on player.idplayer = chatline.player_idplayer where message is not null and game_idgame = "+gameId+";");
     }
 	

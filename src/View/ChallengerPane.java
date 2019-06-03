@@ -19,7 +19,6 @@ public class ChallengerPane extends ScrollPane{
 	}
 	public void addStatusLine(String name, String status) {
 		playerLine.add(new ChallengesPlayerLinePane(name, status));
-		System.out.println(name + status);
 	}
 	public void setLayout() {
 		playerColumn.getChildren().setAll(playerLine);

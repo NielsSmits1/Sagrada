@@ -114,6 +114,8 @@ public class Game {
 //			controller.setDicesTrack();
 			addToTrack();
 			newRound();
+
+			turnNumber = getTurnNumber();
 			
 		}else {
 			setNewCurrentPlayerDB();
@@ -121,6 +123,7 @@ public class Game {
 	}
 	private void forwardSeqNr() {
 		int maxNumber = 1;
+		database.CUD("Update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame);
 		for(ArrayList<Object> a : database.Select("select username, seqnr from player where game_idgame = " + this.idgame + " order by seqnr desc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
 			if((int)a.get(1)==players.size() * 2) {
 				database.CUD("update player set seqnr = " + players.size()+ " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
@@ -139,7 +142,7 @@ public class Game {
 	private void backwartsSeqNr() {
 		
 		int maxNumber = turnNumber;
-		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame + " order by seqnr asc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
+		for(ArrayList<Object> a : database.Select("select username from player where game_idgame = " + this.idgame + " order by seqnr desc")) {// get players in game, DEZE QUERY BESTAAT AL IN GAME 
 			database.CUD("update player set seqnr = " + (maxNumber + 1) + " where game_idgame = " + this.idgame + " and username = '" + (String)a.get(0) + "'");
 			maxNumber+=1;
 		}
@@ -331,7 +334,6 @@ public class Game {
 	
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
-		System.out.println("r: " +roundNumber);
 		ArrayList<ArrayList<Object>> leftoverDices = database.Select("SELECT g.dienumber, g.diecolor, g.eyes FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = " + idgame +" AND g.roundtrack IS NULL AND g.round = " + roundNumber +" AND player_idplayer IS NULL;");
 		if(!leftoverDices.isEmpty()) {
 			for (int i = 0; i < leftoverDices.size(); i++) {
@@ -457,12 +459,10 @@ public class Game {
 					continue;
 				}
 				if(i >= 4) {
-					System.out.println("Speler 2");
 					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(1).getPlayerId() + ")");
 					continue;
 				}
 				if(i >= 0) {
-					System.out.println("Speler 1");
 					database.CUD("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + randomIDS.get(i) + ", " + players.get(0).getPlayerId() + ")");
 					continue;
 				}

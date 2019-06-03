@@ -164,8 +164,6 @@ public class Player {
 	}
 
 	public ArrayList<ArrayList<Object>> getPlayedGames() {
-		System.out.println("SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '"
-				+ this.username + "') GROUP BY p1.game_idgame");
 		return database.Select(
 				"SELECT COUNT(p1.playstatus_playstatus), p1.game_idgame FROM player as p1 WHERE p1.playstatus_playstatus = 'Geaccepteerd' and p1.game_idgame IN (SELECT game_idgame FROM player WHERE  username = '"
 						+ this.username + "') GROUP BY p1.game_idgame");

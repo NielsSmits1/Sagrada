@@ -239,7 +239,6 @@ public class PatternCard {
 				if (hasColorExamption || hasNumberExamption || hasNextToDiceExamption) {
 					controller.disableMovement(old_x, old_y);
 				}
-				System.out.println("Eerste move");
 				return true;
 			}
 		} else {

@@ -31,7 +31,6 @@ public class Challenge {
 	
 	public void changePlayerStatusToAccepted() {
 		database.CUD("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
-		System.out.println("test");
 	
 	}
 

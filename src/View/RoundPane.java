@@ -207,8 +207,6 @@ public class RoundPane extends Pane {
 		
 		dices.clear();
 		
-		System.out.println(dices.size());
-		
 		if (g < d.size()) {
 			g++;
 			for (int j = 0; j < d.size(); j++) {
@@ -220,43 +218,33 @@ public class RoundPane extends Pane {
 			}
 			if (b == 0 && g < dices.size()) {
 				template0.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 1 && g < dices.size()) {
 				template1.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 2 && g < dices.size()) {
 				template2.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 3 && g < dices.size()) {
 				template3.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 4 && g < dices.size()) {
 				template4.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 5 && g < dices.size()) {
 				template5.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 6 && g < dices.size()) {
 				template6.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 7 && g < dices.size()) {
 				template7.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 8 && g < dices.size()) {
 				template8.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			} else
 			if (b == 9 && g < dices.size()) {
 				template9.getChildren().addAll(dices.get(g));
-				System.out.println(dices.size());
 			}
 		} else {
 			g = -1;
