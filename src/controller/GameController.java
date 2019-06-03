@@ -132,9 +132,6 @@ public class GameController {
 		cardcontroller.updatePriceTag();
 		game.setPlayableDices();
 		gamePane.addDice();
-		for(Player p : game.getPlayers()) {
-			p.calculateScore();
-		}
 		setDicesTrack(); // shows current RoundTrack
 		
 	}
@@ -145,7 +142,8 @@ public class GameController {
             game.getPlayers().get(i).getPc().setPlacedDice();
             boardcontroller.getBoards().get(i).addPlacedDice(game.getPlayers().get(i).getDiceField());;
             game.getPlayers().get(i).setTokenAmount();
-			boardcontroller.getBoards().get(i).changeTokenAmount(game.getPlayers().get(i).getTokenAmount());	
+			boardcontroller.getBoards().get(i).changeTokenAmount(game.getPlayers().get(i).getTokenAmount());
+//			boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore());
 		}
 	}
 	
