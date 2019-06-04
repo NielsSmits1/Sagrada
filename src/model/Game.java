@@ -117,8 +117,6 @@ public class Game {
 
 			// controller.setDicesTrack();
 
-
-			setNewCurrentPlayerDB();
 			setNewCurrentRoundBeginner();
 			newRound();
 			
@@ -235,7 +233,7 @@ public class Game {
 		// en ook iets met roundtrack
 		// this.addRoundTrack(gamePane.getRemainingDices());
 		//forwardSeqNr();
-		if (roundNumber > 9) {
+		if (roundNumber > 10) {
 			showWinnerScreen();
 		} else {
 			addToTrack();
