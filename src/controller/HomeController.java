@@ -68,7 +68,7 @@ public class HomeController {
 	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
-		addNewGame();
+		//addNewGame();
 	}
 	private void addNewGame() {
 		for(Game g : self.getNewGames(lastg)) {

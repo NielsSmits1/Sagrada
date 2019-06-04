@@ -12,7 +12,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		//Db.setConn();
+		 Db.setConn();
 		 MyScene scene = new MyScene();
 	     stage.setScene(scene);
 	     stage.setFullScreen(true);
