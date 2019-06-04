@@ -873,7 +873,7 @@ public class PatternCard {
 				if(diagonal.get(counter).get(2) == null) {
 					twisted.add(new Space((int)diagonal.get(counter).get(0), (int)diagonal.get(counter).get(1),""));
 				}else {
-					twisted.add(new Space((int)diagonal.get(counter).get(0), (int)diagonal.get(counter).get(1),(String)diagonal.get(counter).get(3)));
+					twisted.add(new Space((int)diagonal.get(counter).get(0), (int)diagonal.get(counter).get(1),(String)diagonal.get(counter).get(2)));
 				}
 				counter++;
 			}
