@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-
 import View.SearchPlayerPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -18,7 +17,6 @@ public class SearchPlayerController {
 	private ChallengerController cp;
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private Game game = new Game();
-
 	public SearchPlayerController(HomeController hc, ChallengerController cp) {
 		this.cp = cp;
 		this.hc = hc;
@@ -64,10 +62,13 @@ public class SearchPlayerController {
 			}
 			if(!g.alreadyInGame(self)) {
 				g.addPlayer(self, "Uitdager", g.getRandomColor(), 1,1);
-//				g.addTurnPlayer(self);
+				g.startGame();
+				ch.generateRandomToolcards(g.getIdGame());
+				ch.generateRandomObjectcard(g.getIdGame());
+				ch.addOptions(self.getPlayerId(), g.getIdGame());
 			}
 			g.addPlayer(player, "Uitgedaagde", g.getRandomColor(), g.getHighestSeNumber() , 0);
-			//games.add(g);
+			ch.addOptions(player.getPlayerId(), g.getIdGame());
 			cp.refresh();
 			RefreshChoiceBox();
 		}
@@ -118,5 +119,7 @@ public class SearchPlayerController {
 		SearchPlayerPane spp = this.spp;
 		return spp;
 	}
+	
+	
 
 }
