@@ -50,7 +50,7 @@ public class SearchPlayerController {
 		String[] choice = spp.getChoice().split("Voeg toe aan spel nummer: ");
 		Challenge challenge = new Challenge();
 		if(self.checkIfGame(player.getUsername())) {
-			spp.alert("U sit al in een game met dese persoon");
+			spp.alert("U zit al in een game met deze persoon");
 			spp.getAlert();
 		}else {
 			Game g = new Game();
