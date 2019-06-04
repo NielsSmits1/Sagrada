@@ -48,7 +48,7 @@ public class SearchPlayerController {
 
 	private void challengePlayer() {
 		String[] choice = spp.getChoice().split("Voeg toe aan spel nummer: ");
-		 
+		Challenge challenge = new Challenge();
 		if(self.checkIfGame(player.getUsername())) {
 			spp.alert("U sit al in een game met dese persoon");
 			spp.getAlert();
@@ -61,14 +61,16 @@ public class SearchPlayerController {
 				g.setGameId(c);
 			}
 			if(!g.alreadyInGame(self)) {
+				self.setStandardScore();
 				g.addPlayer(self, "Uitdager", g.getRandomColor(), 1,1);
 				g.startGame();
-				ch.generateRandomToolcards(g.getIdGame());
-				ch.generateRandomObjectcard(g.getIdGame());
-				ch.addOptions(self.getPlayerId(), g.getIdGame());
+				challenge.generateRandomToolcards(g.getIdGame());
+				challenge.generateRandomObjectcard(g.getIdGame());
+				challenge.addOptions(self.getPlayerId(), g.getIdGame());
 			}
+			player.setStandardScore();
 			g.addPlayer(player, "Uitgedaagde", g.getRandomColor(), g.getHighestSeNumber() , 0);
-			ch.addOptions(player.getPlayerId(), g.getIdGame());
+			challenge.addOptions(player.getPlayerId(), g.getIdGame());
 			cp.refresh();
 			RefreshChoiceBox();
 		}

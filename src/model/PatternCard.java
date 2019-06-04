@@ -170,8 +170,7 @@ public class PatternCard {
 
 	private boolean checkFirstMove() {
 		ArrayList<ArrayList<Object>> getQuery = Db
-				.select("select dienumber FROM playerframefield WHERE idgame = " + idgame
-						+ " AND player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
+				.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
 		if (getQuery.get(0).get(0) == null) {
 			return true;
 		}
@@ -190,7 +189,7 @@ public class PatternCard {
 	}
 
 	public void moveDie(int dienumber, String diecolor, int xPos, int yPos) {
-		Db.cud("UPDATE playerframefield SET diecolor = '" + diecolor + "', dienumber = " + dienumber + " "
+		Db.cud("UPDATE playerframefield SET idgame = "+ idgame +", diecolor = '" + diecolor + "', dienumber = " + dienumber + " "
 				+ "WHERE position_x = " + xPos + " AND position_y = " + yPos + " AND player_idplayer = " + yourself
 				+ " AND idgame = " + idgame + ";");
 
@@ -305,22 +304,20 @@ public class PatternCard {
 			while (isEmpty == false) {
 				ArrayList<ArrayList<Object>> color = Db
 						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
-								+ " && position_x = " + x + " && position_y = " + y + " && idgame = " + idgame + ";");
+								+ " && position_x = " + x + " && position_y = " + y);
 				ArrayList<ArrayList<Object>> eyes = Db
 						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ dienumber + " && diecolor = '" + diecolor + "' ;");
 				ArrayList<ArrayList<Object>> upPosition = Db
 						.select("select dienumber FROM playerframefield WHERE player_idplayer = "
-								+ yourself + " && position_x = " + x + " && position_y = " + (y - 1) + " && idgame = "
-								+ idgame + ";");
+								+ yourself + " && position_x = " + x + " && position_y = " + (y - 1));
 				if (upPosition.get(0).get(0) == null) {
 					isEmpty = true;
 					continue;
 				}
 				ArrayList<ArrayList<Object>> upColor = Db
 						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
-								+ " && position_x = " + x + " && position_y = " + (y - 1) + " && idgame = " + idgame
-								+ ";");
+								+ " && position_x = " + x + " && position_y = " + (y - 1));
 				ArrayList<ArrayList<Object>> upEyes = Db
 						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ (int) upPosition.get(0).get(0) + " && diecolor = '" + (String) upColor.get(0).get(0)
@@ -340,22 +337,20 @@ public class PatternCard {
 			while (isEmpty == false) {
 				ArrayList<ArrayList<Object>> color = Db
 						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
-								+ " && position_x = " + x + " && position_y = " + y + " && idgame = " + idgame + ";");
+								+ " && position_x = " + x + " && position_y = " + y);
 				ArrayList<ArrayList<Object>> eyes = Db
 						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ dienumber + " && diecolor = '" + diecolor + "' ;");
 				ArrayList<ArrayList<Object>> downPosition = Db
 						.select("select dienumber FROM playerframefield WHERE player_idplayer = "
-								+ yourself + " && position_x = " + x + " && position_y = " + (y + 1) + " && idgame = "
-								+ idgame + ";");
+								+ yourself + " && position_x = " + x + " && position_y = " + (y + 1));
 				if (downPosition.get(0).get(0) == null) {
 					isEmpty = true;
 					continue;
 				}
 				ArrayList<ArrayList<Object>> downColor = Db
 						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
-								+ " && position_x = " + x + " && position_y = " + (y + 1) + " && idgame = " + idgame
-								+ ";");
+								+ " && position_x = " + x + " && position_y = " + (y + 1));
 				ArrayList<ArrayList<Object>> downEyes = Db
 						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ (int) downPosition.get(0).get(0) + " && diecolor = '"
@@ -375,22 +370,20 @@ public class PatternCard {
 			while (isEmpty == false) {
 				ArrayList<ArrayList<Object>> color = Db
 						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
-								+ " && position_x = " + x + " && position_y = " + y + " && idgame = " + idgame + ";");
+								+ " && position_x = " + x + " && position_y = " + y);
 				ArrayList<ArrayList<Object>> eyes = Db
 						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ dienumber + " && diecolor = '" + diecolor + "' ;");
 				ArrayList<ArrayList<Object>> rightPosition = Db
 						.select("select dienumber FROM playerframefield WHERE player_idplayer = "
-								+ yourself + " && position_x = " + (x + 1) + " && position_y = " + y + " && idgame = "
-								+ idgame + ";");
+								+ yourself + " && position_x = " + (x + 1) + " && position_y = " + y);
 				if (rightPosition.get(0).get(0) == null) {
 					isEmpty = true;
 					continue;
 				}
 				ArrayList<ArrayList<Object>> rightColor = Db
 						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
-								+ " && position_x = " + (x + 1) + " && position_y = " + y + " && idgame = " + idgame
-								+ ";");
+								+ " && position_x = " + (x + 1) + " && position_y = " + y);
 				ArrayList<ArrayList<Object>> rightEyes = Db
 						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ (int) rightPosition.get(0).get(0) + " && diecolor = '"
@@ -410,22 +403,20 @@ public class PatternCard {
 			while (isEmpty == false) {
 				ArrayList<ArrayList<Object>> color = Db
 						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
-								+ " && position_x = " + x + " && position_y = " + y + " && idgame = " + idgame + ";");
+								+ " && position_x = " + x + " && position_y = " + y);
 				ArrayList<ArrayList<Object>> eyes = Db
 						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ dienumber + " && diecolor = '" + diecolor + "' ;");
 				ArrayList<ArrayList<Object>> leftPosition = Db
 						.select("select dienumber FROM playerframefield WHERE player_idplayer = "
-								+ yourself + " && position_x = " + (x - 1) + " && position_y = " + y + " && idgame = "
-								+ idgame + ";");
+								+ yourself + " && position_x = " + (x - 1) + " && position_y = " + y);
 				if (leftPosition.get(0).get(0) == null) {
 					isEmpty = true;
 					continue;
 				}
 				ArrayList<ArrayList<Object>> leftColor = Db
 						.select("select diecolor FROM playerframefield WHERE player_idplayer = " + yourself
-								+ " && position_x = " + (x - 1) + " && position_y = " + y + " && idgame = " + idgame
-								+ ";");
+								+ " && position_x = " + (x - 1) + " && position_y = " + y);
 				ArrayList<ArrayList<Object>> leftEyes = Db
 						.select("select eyes FROM gamedie WHERE idgame = " + idgame + " && dienumber = "
 								+ (int) leftPosition.get(0).get(0) + " && diecolor = '"
@@ -452,7 +443,7 @@ public class PatternCard {
 		if (y - 1 > 0) {
 			ArrayList<ArrayList<Object>> upPosition = Db
 					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
-							+ " && position_x = " + x + " && position_y = " + (y - 1) + " && idgame = " + idgame + ";");
+							+ " && position_x = " + x + " && position_y = " + (y - 1));
 			if (upPosition.get(0).get(0) == null) {
 			} else {
 				return true;
@@ -462,8 +453,7 @@ public class PatternCard {
 		if (y - 1 > 0 && x + 1 < 6) {
 			ArrayList<ArrayList<Object>> upRightPosition = Db
 					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
-							+ " && position_x = " + (x + 1) + " && position_y = " + (y - 1) + " && idgame = " + idgame
-							+ ";");
+							+ " && position_x = " + (x + 1) + " && position_y = " + (y - 1));
 			if (upRightPosition.get(0).get(0) == null) {
 			} else {
 				return true;
@@ -474,7 +464,7 @@ public class PatternCard {
 		if (x + 1 < 6) {
 			ArrayList<ArrayList<Object>> rightPosition = Db
 					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
-							+ " && position_x = " + (x + 1) + " && position_y = " + y + " && idgame = " + idgame + ";");
+							+ " && position_x = " + (x + 1) + " && position_y = " + y);
 			if (rightPosition.get(0).get(0) == null) {
 			} else {
 				return true;
@@ -496,7 +486,7 @@ public class PatternCard {
 		if (y + 1 < 5) {
 			ArrayList<ArrayList<Object>> downPosition = Db
 					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
-							+ " && position_x = " + x + " && position_y = " + (y + 1) + " && idgame = " + idgame + ";");
+							+ " && position_x = " + x + " && position_y = " + (y + 1));
 			if (downPosition.get(0).get(0) == null) {
 			} else {
 				return true;
@@ -507,8 +497,7 @@ public class PatternCard {
 		if (x - 1 > 0 && y + 1 < 5) {
 			ArrayList<ArrayList<Object>> downLeftPosition = Db
 					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
-							+ " && position_x = " + (x - 1) + " && position_y = " + (y + 1) + " && idgame = " + idgame
-							+ ";");
+							+ " && position_x = " + (x - 1) + " && position_y = " + (y + 1));
 			if (downLeftPosition.get(0).get(0) == null) {
 			} else {
 				return true;
@@ -519,7 +508,7 @@ public class PatternCard {
 		if (x - 1 > 0) {
 			ArrayList<ArrayList<Object>> leftPosition = Db
 					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
-							+ " && position_x = " + (x - 1) + " && position_y = " + y + " && idgame = " + idgame + ";");
+							+ " && position_x = " + (x - 1) + " && position_y = " + y );
 			if (leftPosition.get(0).get(0) == null) {
 			} else {
 				return true;
@@ -530,8 +519,7 @@ public class PatternCard {
 		if (x - 1 > 0 && y - 1 > 0) {
 			ArrayList<ArrayList<Object>> topLeftPosition = Db
 					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
-							+ " && position_x = " + (x - 1) + " && position_y = " + (y - 1) + " && idgame = " + idgame
-							+ ";");
+							+ " && position_x = " + (x - 1) + " && position_y = " + (y - 1));
 			if (topLeftPosition.get(0).get(0) == null) {
 			} else {
 				return true;
@@ -544,7 +532,7 @@ public class PatternCard {
 	private boolean isEmptyPlace(int x, int y) {
 		if (Db
 				.select("select dienumber FROM playerframefield WHERE position_x = " + x
-						+ "&& position_y = " + y + " && player_idplayer = " + yourself + " && idgame = " + idgame)
+						+ "&& position_y = " + y + " && player_idplayer = " + yourself )
 				.get(0).get(0) == null) {
 			return true;
 
@@ -561,14 +549,12 @@ public class PatternCard {
 	}
 
 	private void addDiceToField(int x, int y, int dienumber, String color) {
-		Db.cud("UPDATE playerframefield SET dienumber = " + dienumber + ", diecolor = '" + color
-				+ "' WHERE player_idplayer = " + yourself + " AND position_x = " + x + " AND position_y = " + y
-				+ " AND idgame = " + idgame + ";");
+		Db.cud("UPDATE playerframefield SET idgame = " + idgame + ", dienumber = " + dienumber + ", diecolor = '" + color
+				+ "' WHERE player_idplayer = " + yourself + " AND position_x = " + x + " AND position_y = " + y);
 	}
 
 	private ArrayList<ArrayList<Object>> getPosition(int dienumber, String diecolor) {
-		return Db.select("select position_x, position_y FROM playerframefield WHERE idgame = "
-				+ idgame + " AND player_idplayer = " + yourself + " AND dienumber = " + dienumber + " AND diecolor = '"
+		return Db.select("select position_x, position_y FROM playerframefield AND player_idplayer = " + yourself + " AND dienumber = " + dienumber + " AND diecolor = '"
 				+ diecolor + "';");
 	}
 
