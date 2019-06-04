@@ -111,7 +111,7 @@ public class GameController {
 				boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore(game.getIdGame()));
 			}
 		}
-		if(game.getRoundNumber()==10) {
+		if(game.getRoundNumber()==11) {
 			stopGame();
 		}
 	}
