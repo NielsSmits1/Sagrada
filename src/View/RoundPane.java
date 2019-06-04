@@ -38,7 +38,7 @@ public class RoundPane extends Pane {
 		int z;
 		String y;
 		int x;
-		
+		trackSpaces.getChildren().clear();
 		trackSpaces.setSpacing(8);
 //		this.getChildren().addAll(trackSpaces); 
 
