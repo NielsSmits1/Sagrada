@@ -23,11 +23,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Dice;
 import model.Game;
-import model.Opponent;
 import model.PatternCard;
 import model.Player;
-//import model.Round;
-import model.Round;
 import model.Space;
 
 public class GameController {
@@ -44,7 +41,6 @@ public class GameController {
 	private Button cancel;
 	private Alert cancelGame;
 	private String cancelText = "Sorry iemand heeft geweigerd, het spel kan dus niet doorgaan.";
-	private Opponent[] opponents;
 	private double playerScore;
 	private Stage gameStage;
 	private Timeline timeline;
@@ -145,16 +141,6 @@ public class GameController {
 			}
 		}
 		return null;
-	}
-
-	public void addOpponets(Opponent op) {
-		for (int x = 0; x < opponents.length; x++) {
-			if (opponents[x] == null) {
-				opponents[x] = op;
-			} else {
-				// alert spel is al vol;
-			}
-		}
 	}
 
 	public double updateScore() {
@@ -295,12 +281,6 @@ public class GameController {
 	public void swapDice(int dienumber, String color, int chosenvalue) {
 		game.getDiceWithChosenValue(dienumber, color, chosenvalue);
 	}
-
-	public int returnAmountOfOpponents() {
-		return opponents.length;
-	}
-
-	
 
 	public int getGamemode() {
 		return game.getGamemode();
