@@ -116,9 +116,6 @@ public class Game {
 			// dan is een ronde voorbij
 
 			// controller.setDicesTrack();
-
-
-			setNewCurrentPlayerDB();
 			setNewCurrentRoundBeginner();
 			newRound();
 			
