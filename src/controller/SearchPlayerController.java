@@ -36,12 +36,17 @@ public class SearchPlayerController {
 		spp.setUsername(spp.getOnline().getText());
 		player = new Player(spp.getUsername());
 		if (!spp.getUsername().equals("")) {
-			if (player.checkUsernameExists()) {
-				spp.showPlayer(player.getUsername());
+			if(spp.getUsername().equals(self.getUsername())){
+				spp.alert("Je kan jezelf niet uitdagen");
+			}
+			else {
+				if (player.checkUsernameExists()) {
+					spp.showPlayer(player.getUsername());
 
-			} else {
-				spp.alert("Niemand gevonden met deze gebruikersnaam");
-				spp.getAlert();
+				} else {
+					spp.alert("Niemand gevonden met deze gebruikersnaam");
+					spp.getAlert();
+				}
 			}
 		}
 	}
