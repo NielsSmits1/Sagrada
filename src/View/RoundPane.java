@@ -40,7 +40,7 @@ public class RoundPane extends Pane {
 		int x;
 		
 		trackSpaces.setSpacing(8);
-		this.getChildren().addAll(trackSpaces); 
+//		this.getChildren().addAll(trackSpaces); 
 
 //		dices.clear();
 
