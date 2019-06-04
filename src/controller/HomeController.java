@@ -49,7 +49,7 @@ public class HomeController {
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
 		home.getAllGames().setOnAction(e -> lc.setGames1());
-		home.getAllGames().setOnAction(e -> lc.setGames2());
+		home.getAllGamesDate().setOnAction(e -> lc.setGames2());
 		home.getRefreshMenu().setOnAction(e -> this.addNewGame());
 		
 		
@@ -73,7 +73,6 @@ public class HomeController {
 
 	}
 	private void addNewGame() {
-
 		for(Game g : self.getNewGames(lastg)) {
 			mbc.addGame(g);
 			this.lastg = g;
