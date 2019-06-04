@@ -47,7 +47,11 @@ public class GameController {
 
 	public GameController(Game g) {
 		this.game = g;
-		chatBox = new ChatBoxController(1,1);
+		for(Player p : game.getPlayers()) {
+			if(p.getSelf()) {
+				chatBox = new ChatBoxController(game.getIdGame(),p.getPlayerId());
+			}
+		}
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
 		game.setController(this);
