@@ -93,6 +93,7 @@ public class GameController {
 		 * Dices
 		 * Score
 		 */
+		try {
 		setDicesTrack();
 		game.refreshCurrentPlayer();
 		gamePane.changeInfo(this.shoutCurrentPlayer());
@@ -110,6 +111,11 @@ public class GameController {
 		if(game.getRoundNumber()==11) {
 			stopGame();
 		}
+		}
+		catch(Exception e) {
+			
+		}
+	
 	}
 	private void stopGame() {
 		timeline.stop();

@@ -69,9 +69,13 @@ public class HomeController {
 	}
 
 	private void refresh() {
+		try {
 		cpp.refresh();
 		cp.refresh();
-		self.checkChallenger();
+		self.checkChallenger();}
+		catch(Exception e) {
+			
+		}
 
 	}
 	private void addNewGame() {
