@@ -870,10 +870,10 @@ public class PatternCard {
 		
 		for(int x = 1; x<=5;x++) {
 			for (int y = 1; y <= 4; y++) {
-				if(diagonal.get(counter).get(3) == null) {
+				if(diagonal.get(counter).get(2) == null) {
 					twisted.add(new Space((int)diagonal.get(counter).get(0), (int)diagonal.get(counter).get(1),""));
 				}else {
-					twisted.add(new Space((int)diagonal.get(counter).get(0), (int)diagonal.get(counter).get(1),(String)diagonal.get(counter).get(3)));
+					twisted.add(new Space((int)diagonal.get(counter).get(0), (int)diagonal.get(counter).get(1),(String)diagonal.get(counter).get(2)));
 				}
 				counter++;
 			}
@@ -883,7 +883,7 @@ public class PatternCard {
 		}
 		
 		//Vertical
-		
+		counter = 0;
 		
 		for (int x = 1; x <= 2; x++) {
 			for (int y = 2; y >= 1; y--) {

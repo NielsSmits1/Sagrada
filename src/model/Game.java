@@ -116,17 +116,22 @@ public class Game {
 			// dan is een ronde voorbij
 
 			// controller.setDicesTrack();
-			
-
+			setNewCurrentRoundBeginner();
 			newRound();
 			
 			turnNumber = getTurnNumber();
-
 		} else {
-			updateSeNumber();
 			setNewCurrentPlayerDB();
 		}
 	}
+	private void setNewCurrentRoundBeginner() {
+		updateSeNumber();
+		updateCurrentPlayer();
+		Db.cud("update player set isCurrentPlayer = 1 where seqnr = 1 and game_idgame = "
+				+ this.idgame);
+		turnPlayer = setWhoseTurnItIs();
+	}
+
 	private void updateSe(int num) {
 		Db.cud("update player set seqnr = " + num + " where game_idgame = " + this.idgame + " and username = '" + this.turnPlayer.getUsername() + "'");
 	}
@@ -136,7 +141,6 @@ public class Game {
 		case 1: 
 			updateSe(players.size() * 2);
 			break;
-		
 		case 2: 
 			if(players.size() == 2) {
 				updateSe(3);
@@ -156,9 +160,9 @@ public class Game {
 			break;
 		case 4: 
 			if(players.size() == 4) {
-				updateSe(2);
-			}else {
 				updateSe(5);
+			}else {
+				updateSe(2);
 			}
 			break;
 		case 5: 
@@ -216,6 +220,7 @@ public class Game {
 	}
 
 	private void setNewCurrentPlayerDB() {
+		updateSeNumber();
 		updateCurrentPlayer();
 		Db.cud("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = "
 				+ this.idgame);
