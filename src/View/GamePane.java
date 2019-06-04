@@ -514,7 +514,7 @@ public class GamePane extends BorderPane {
 	public void showWinnerScreen(ArrayList<ArrayList<Object>> data) {
 		String winner = "";
 		for (ArrayList<Object> a : data) {
-			winner = winner + a.get(0) + " : " + a.get(1) + "/n";
+			winner = winner + a.get(0) + " : " + a.get(1) + "\n";
 		}
 
 		Alert alert = new Alert(AlertType.INFORMATION);
