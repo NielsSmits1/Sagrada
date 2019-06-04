@@ -2,12 +2,14 @@ package Database;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class db {
-	private Connection con;
-	public db() {
+public class Db {
+	public static Connection con;
+	public static void setConn() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://databases.aii.avans.nl:3306/tjpmsalt_db2","ngasmits","Ab12345");
+			con = DriverManager.getConnection("jdbc:mysql://databases.aii.avans.nl:3306/tjpmsalt_db2","tjpmsalt","Ab12345");
+		//	con = DriverManager.getConnection("jdbc:mysql://databases.aii.avans.nl:3306/2019_soprj4_sagrada_ghijkl","42IN04SOg","gastvrijheid");
+
 			
 		} catch (Exception e){
 			System.out.println("error"+ e);
@@ -22,7 +24,7 @@ public class db {
 	 * @param De query die je wilt uitvoeren
 	 * @return Geeft een 2D-ArrayList van type Object terug
 	 */
-	public ArrayList<ArrayList<Object>> Select(String Query) {
+	public static ArrayList<ArrayList<Object>> select(String Query) {
 		Statement stmt = null;
 		try {
 			stmt = con.createStatement();
@@ -50,7 +52,7 @@ public class db {
 	 * @return Geen return waarde
 	 */
 	
-	public void CUD(String Query) {
+	public static void cud(String Query) {
 		try {
 			PreparedStatement prdstmt = con.prepareStatement(Query);
 			prdstmt.execute();
@@ -60,7 +62,14 @@ public class db {
 		}
 		
 	}
-	
+	public static void closeCon() {
+		try {
+			con.close();
+		} catch (SQLException e1) {
+
+			e1.printStackTrace();
+		}
+	}
 
 }
 

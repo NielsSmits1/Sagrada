@@ -3,28 +3,39 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Database.db;
-import controller.ToolcardController;
+import Database.Db;
+import controller.CardController;
 
 public class Toolcard {
 	private Random random;
 	private int card1;
 	private int card2;
 	private int card3;
-	private db database;
-	private ToolcardController toolcardController;
+	private CardController cardController;
 
-	public Toolcard(ToolcardController toolcardController) {
-		this.toolcardController = toolcardController;
+	public Toolcard(CardController cc) {
+		this.cardController = cc;
 		random = new Random();
-		database = new db();
+		
+	}
+	
+	public void insertToolcards() {
 		generateRandomInts();
 	}
 
 	public ArrayList<ArrayList<Object>> getToolcardsFromDatabase() {
-		String query = ("SELECT idtoolcard, description FROM tjpmsalt_db2.toolcard WHERE idtoolcard = " + card1
+		String query = ("SELECT idtoolcard, description FROM toolcard WHERE idtoolcard = " + card1
 				+ " OR idtoolcard = " + card2 + " OR idtoolcard = " + card3 + "");
-		return database.Select(query);
+		return Db.select(query);
+	}
+	
+	public ArrayList<Integer> getIds(){
+		ArrayList<Integer> Ids = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			Ids.add((int)Db.select("SELECT idtoolcard FROM gametoolcard WHERE idgame = " + cardController.getIdGame() + "").get(i).get(0));
+		}
+		return Ids;
+		
 	}
 
 	private void generateRandomInts() {
@@ -39,46 +50,62 @@ public class Toolcard {
 		while (card3 == card1 || card3 == card2) {
 			card3 = random.nextInt(12) + 1;
 		}
+		
+		Db.cud("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card1 + "," + cardController.getIdGame() + ");");
+		Db.cud("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card2 + "," + cardController.getIdGame() + ");");
+		Db.cud("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + card3 + "," + cardController.getIdGame() + ");");
 
 	}
 	
+	public int alreadyBought(int idgame, int idtoolcard) {
+		if(Db.select("SELECT gametoolcard.gametoolcard FROM gametoolcard LEFT JOIN gamefavortoken ON gametoolcard.gametoolcard = gamefavortoken.gametoolcard WHERE gametoolcard.idgame = " + idgame +" AND idtoolcard = " + idtoolcard +" AND gamefavortoken.gametoolcard is NOT NULL;").isEmpty()) {
+			return 1;
+		}
+		return 2;
+	}
+
 	public void activateToolcard(int id) {
 		switch (id) {
-		case 1: activateToolCardOne();
-			
+		case 1:
+			activateToolCardOne();
+
 			break;
-		case 2: activateToolCardTwo();
-			
+		case 2:
+			activateToolCardTwo();
+
 			break;
 		case 3:
-			
+			activateToolCardThree();
+
 			break;
 		case 4:
-			
+
 			break;
 		case 5:
-			
+
 			break;
 		case 6:
-			
+			activateToolCardSix();
+
 			break;
 		case 7:
-			
+			activateToolCardSeven();
 			break;
 		case 8:
-			
+
 			break;
 		case 9:
-			
+			activateToolCardNine();
 			break;
 		case 10:
-			
+			activateToolCardTen();
 			break;
 		case 11:
-			
+			activateToolCardEleven();
+
 			break;
 		case 12:
-			
+
 			break;
 
 		default:
@@ -87,64 +114,62 @@ public class Toolcard {
 	}
 
 	private void activateToolCardOne() {
-		toolcardController.setToolcardActive();
-		
+		cardController.setToolcardOneActive();
+
 	}
-	
+
 	private void activateToolCardTwo() {
-		toolcardController.enableDiceMovement();
-		
-		
+		cardController.enableDiceMovement(2);
+
 	}
-	
+
 	private void activateToolCardThree() {
-		// TODO Auto-generated method stub
-		
+		cardController.enableDiceMovement(3);
+
 	}
-	
+
 	private void activateToolCardFour() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void activateToolCardFive() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void activateToolCardSix() {
-		// TODO Auto-generated method stub
-		
+		cardController.setToolcardSixActive();
+
 	}
-	
+
 	private void activateToolCardSeven() {
-		// TODO Auto-generated method stub
-		
+		cardController.setToolcardSevenActive();
 	}
-	
+
 	private void activateToolCardEight() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void activateToolCardNine() {
 		// TODO Auto-generated method stub
-		
+		cardController.enableDiceMovement(9);
 	}
-	
+
 	private void activateToolCardTen() {
-		// TODO Auto-generated method stub
-		
+		cardController.setToolcardTenActive();
+
 	}
-	
+
 	private void activateToolCardEleven() {
-		// TODO Auto-generated method stub
-		
+		cardController.setToolcardElevenActive();
+
 	}
 	
-	private void activateToolCardTwelve() {
-		// TODO Auto-generated method stub
-		
+	public long getTokensPlaced(int id) {
+		int gametoolcard =  (int)Db.select("SELECT gametoolcard.gametoolcard FROM gametoolcard  WHERE gametoolcard.idgame = " + cardController.getIdGame() +" AND idtoolcard = " + id +"").get(0).get(0);
+		return (long)Db.select("select count(*) from gamefavortoken where idgame = " + cardController.getIdGame() + " AND gametoolcard = " + gametoolcard + "").get(0).get(0);
 	}
 
 	public int getCardOneId() {
@@ -169,5 +194,13 @@ public class Toolcard {
 
 	public String getCardThreeDescription() {
 		return (String) getToolcardsFromDatabase().get(2).get(1);
+	}
+	
+	public ArrayList<Integer> getToolCards(){
+		ArrayList<Integer> toolcards = new ArrayList<>();
+		toolcards.add(card1);
+		toolcards.add(card2);
+		toolcards.add(card3);
+		return toolcards;
 	}
 }

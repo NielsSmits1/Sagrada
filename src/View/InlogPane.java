@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -26,31 +27,34 @@ import javafx.scene.text.TextAlignment;
 public class InlogPane extends BorderPane {
 	private Button loginButton;
 	private Button registerButton;
+	private Button close;
 	private VBox layout;
-	private TextArea usernameField;
-	private TextArea passwordField;
+	private TextField usernameField;
+	private TextField passwordField;
 	private HBox buttonAlignment;
 	private Label gameTitle;
 	private BorderPane textAlignment;
 
 
-	public InlogPane(MyScene scene) {
+	public InlogPane() {
 
 		//sets background_image
-		this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
+		this.setBackground(new Background(new BackgroundImage(new Image("Resources/loginWallpaper.jpg"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
 				new BackgroundSize(0, 0, false, false, false, true))));
 
-		usernameField = new TextArea();
-		usernameField.setPromptText("Username...");
+		usernameField = new TextField();
+		usernameField.setPromptText("Gebruikersnaam...");
 		usernameField.setPrefHeight(50);
+		usernameField.setMaxWidth(400);
 		usernameField.setBorder(
 				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 
 		
-		passwordField = new TextArea();
-		passwordField.setPromptText("Password...");
+		passwordField = new TextField();
+		passwordField.setPromptText("Wachtwoord...");
 		passwordField.setPrefHeight(50);
+		passwordField.setMaxWidth(400);
 		passwordField.setBorder(
 				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 
@@ -61,14 +65,20 @@ public class InlogPane extends BorderPane {
 		loginButton.setPrefWidth(100);
 
 		// Register Button
-		registerButton = new Button("Register");
+		registerButton = new Button("Registreren");
 		registerButton.setTextAlignment(TextAlignment.CENTER);
 		registerButton.setPrefHeight(50);
 		registerButton.setPrefWidth(100);
 
+		//Close Button
+		close = new Button("sluiten");
+		close.setTextAlignment(TextAlignment.CENTER);
+		close.setPrefHeight(50);
+		close.setPrefWidth(100);
+		
 		// Button alignment
 		buttonAlignment = new HBox();
-		buttonAlignment.getChildren().addAll(loginButton, registerButton);
+		buttonAlignment.getChildren().addAll(loginButton, registerButton, close);
 		buttonAlignment.setSpacing(20);
 		buttonAlignment.setAlignment(Pos.CENTER);
 		
@@ -92,12 +102,6 @@ public class InlogPane extends BorderPane {
 		setTop(textAlignment);
 	}
 
-//	public InlogPane(EventHandler<ActionEvent> login, EventHandler<ActionEvent> register) {
-//		loginButton.setOnAction(login);
-//		registerButton.setOnAction(register);
-//	}
-
-
 	public String getUsernameText() {
 		return this.usernameField.getText();
 	}
@@ -112,6 +116,13 @@ public class InlogPane extends BorderPane {
 		passwordField.setBorder(
 				new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 	}
+	
+	public void acceptedLogin() {
+		usernameField.setBorder(
+				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+		passwordField.setBorder(
+				new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
+	}
 
 	public Button getLoginButton() {
 		return loginButton;
@@ -119,6 +130,10 @@ public class InlogPane extends BorderPane {
 
 	public Button getRegisterButton() {
 		return registerButton;
+	}
+	
+	public Button getClose() {
+		return close;
 	}
 	
 	

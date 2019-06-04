@@ -2,6 +2,7 @@ package controller;
 import View.MyScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 public class Main extends Application {
 
 	public static void main(String[] args) {
@@ -13,7 +14,8 @@ public class Main extends Application {
 		 MyScene scene = new MyScene();
 	     stage.setScene(scene);
 	     stage.setFullScreen(true);
-	     stage.setTitle("Sagrada login and register");
+	     stage.setTitle("Sagrada groep G - 2019");
+	     stage.initStyle(StageStyle.UNDECORATED);
 	     stage.show();
 	}
 

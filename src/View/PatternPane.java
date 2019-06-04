@@ -17,7 +17,6 @@ public class PatternPane extends StackPane{
 		boardPane = p;
 		xPos = x;
 		yPos = y;
-//		System.out.println("" + xPos + " " + yPos);
 		///*
 		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
 		//Dice will be 'pasted' on the template.
@@ -30,7 +29,6 @@ public class PatternPane extends StackPane{
 	public PatternPane(BoardPane p, DicePane d) {
 		template = d;
 		boardPane = p;
-//		System.out.println("" + xPos + " " + yPos);
 		///*
 		//If selected is not null, the dice will become the selected DicePane. Dice can't be clicked again when this happens, the selected DicePane will be set to null and dice will be added to the stackPane.
 		//Dice will be 'pasted' on the template.
@@ -59,40 +57,16 @@ public class PatternPane extends StackPane{
 	public void setWhite() {
 		template.setWhite();
 	}
-	
-	
-//	public void setDice(DicePane p) {
-//		dice = p;
-//	}
-	
-//	public void getClicked() {
-//		boardPane.getClicked(this);
-//	}
-	
-	///*
-		//get and delete the selected DicePane in rootPane.
-		///**
-//	public DicePane getSelected() {
-//		return boardPane.getSelected();
-//	}
-	
 	public void giveCords() {
 		boardPane.giveCords(xPos, yPos);
 	}
 	
-//	public void deleteSelected() {
-//		boardPane.deleteSelected();
-//	}
 	public int getDiceNumber() {
 		return dice.getDieNumber();
 	}
 	public String getDiceColor() {
 		return dice.getColor();
 	}
-	
-//	public int getNumber() {
-//		return number;
-//	}
 	
 	public String getColor() {
 		return dice.getColor();
@@ -119,6 +93,9 @@ public class PatternPane extends StackPane{
 	}
 	
 	public void setDice(DicePane selected) {
+		if(getChildren().size() > 1) {
+			getChildren().remove(1);
+		}
 		dice = selected;
 		dice.setMouseTransparent(true);
 		getChildren().add(dice);
@@ -129,13 +106,14 @@ public class PatternPane extends StackPane{
 	}
 	
 //	public void moveDiceAccepted(DicePane selected) {
-//		System.out.println(dienumber + diecolor);
-//		System.out.println(boardPane.getSelected().getEyes());
 //		dice = new DicePane(boardPane.getSelected().getEyes(), diecolor, dienumber);
 //		getChildren().add(dice);
 //	}
 	
 	public void handle() {
+		System.out.println(boardPane.getAllowsMovement());
+		System.out.println(boardPane.getSelected());
+ 
 		if(boardPane.getAllowsMovement()) {
 			if(boardPane.getSelected() == null) {
 				boardPane.setSelectedPatternPane(this);

@@ -17,6 +17,12 @@ public class Dice {
 		dieColor = "";
 		setEyes();
 	}
+	
+	public Dice(int dienumber, String color, int eyes) {
+		dieNumber = dienumber;
+		dieColor = color;
+		this.eyes = eyes;
+	}
 
 	public int getDieNumber() {
 		return dieNumber;
@@ -41,5 +47,9 @@ public class Dice {
 	public void setEyes() {
 		eyes = r.nextInt((6))+1;
 //		return eyes;
+	}
+	
+	public void setEyes(int eyes) {
+		this.eyes = eyes;
 	}
 }

@@ -1,8 +1,10 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import View.LeaderboardPane;
+import View.LeaderboardPlayerLinePane;
 import model.Leaderboard;
 
 public class LeaderboardController {
@@ -10,104 +12,85 @@ public class LeaderboardController {
 	private Leaderboard leaderboard;
 	private HomeController home;
 	private LeaderboardPane leaderboardPane;
+	private ArrayList<LeaderboardPlayerLinePane> lplp;
 
 	public LeaderboardController(HomeController home) {
 		this.home = home;
-//		System.out.println(home.getUsername());
 		leaderboard = new Leaderboard();
+		leaderboard.setSelf(home.getSelf());
 		leaderboardPane = new LeaderboardPane();
 		this.setPlayers1();
 
 	}
-
-//	public ArrayList<String> getPlayers() {
-//		ArrayList<String> playerNames = new ArrayList<String>();
-//		String u;
-//
-//		for (ArrayList<Object> a : leaderboard.getListOfUsernames()) {
-//			u = (String) a.get(0);
-//			playerNames.add(u);
-//		
-//			} 
-//		return playerNames;
-//	}
 	public void setPlayers3() {
-		leaderboardPane.setPlayersName();
+		lplp = new ArrayList<LeaderboardPlayerLinePane>();
+		
 		for (Map.Entry playerGamesPlayedWon : leaderboard.getPlayersFilteredByAmountOfGamesWon().entrySet()) {
-			leaderboardPane.addPlayerNameLineWithAmountOfGamesWon(playerGamesPlayedWon.getKey().toString(),
-					(int) playerGamesPlayedWon.getValue());
-			
+			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane((String)playerGamesPlayedWon.getKey(),(Integer)playerGamesPlayedWon.getValue());
+			lplp.add(p);
 		}
-		leaderboardPane.setLayout();
+		leaderboardPane.setPlayersName(lplp);
+
 
 	}
 	public void setPlayers2() {
-		leaderboardPane.setPlayersName();
+		lplp = new ArrayList<LeaderboardPlayerLinePane>();
+		
 		for (Map.Entry<String, String> playerGamesPlayed : leaderboard.getPlayersFilteredByAmountOfGames().entrySet()) {
-			leaderboardPane.addPlayerNameLineWithAmountOfGamesPlayed(playerGamesPlayed.getKey().toString(),
-					playerGamesPlayed.getValue().toString());
+			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane((String)playerGamesPlayed.getKey(),(String)playerGamesPlayed.getValue());
+			lplp.add(p);
 		}
-//		leaderboardPane.setPlayersPlayed();
-		leaderboardPane.setLayout();
+		leaderboardPane.setPlayersName(lplp);
 		
 	}
 
 	public void setPlayers1() {
-		leaderboardPane.setPlayersName();
+		lplp = new ArrayList<LeaderboardPlayerLinePane>();
+		
 		for (String playerName : leaderboard.getPlayers()) {
-			leaderboardPane.addPlayerNameLine(playerName);
+			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane(playerName);
+			lplp.add(p);
 		}
-		leaderboardPane.setLayout();
-		System.out.println("at least this works");
+		leaderboardPane.setPlayersName(lplp);
+
+	}
+	public void setGames3() {
+		lplp = new ArrayList<LeaderboardPlayerLinePane>();
+		
+		for (Integer games : leaderboard.getGames()) {
+			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane(games);
+			lplp.add(p);
+			
+	//		leaderboardPane.addPlayerNameLine(games);
+		}
+		leaderboardPane.setPlayersName(lplp);
+	}
+	public void setGames1() {
+		lplp = new ArrayList<LeaderboardPlayerLinePane>();
+		
+		for (Map.Entry games : leaderboard.allGames().entrySet()) {
+			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane((int)games.getKey(),(boolean)games.getValue());
+			lplp.add(p);
+
+			
+//			leaderboardPane.addPlayerNameLine(games);
+		}
+		leaderboardPane.setPlayersName(lplp);
+	}
+	
+	public void setGames2() {
+		lplp = new ArrayList<LeaderboardPlayerLinePane>();
+		
+		for (Map.Entry games : leaderboard.allGamesDate().entrySet()) {
+			LeaderboardPlayerLinePane p = new LeaderboardPlayerLinePane((int)games.getKey(),(boolean)games.getValue());
+			lplp.add(p);
+			
+	//		leaderboardPane.addPlayerNameLine(games);
+		}
+		leaderboardPane.setPlayersName(lplp);
 	}
 	public LeaderboardPane getLeaderboardPane() {
 		LeaderboardPane lp = leaderboardPane;
 		return lp;
 	}
 }
-	
-	
-	
-	
-	
-//	public HashMap<String, String> getPlayersFilteredByWon() {
-//		HashMap<String, String> challengedPlayerNames = new HashMap<String, String>();
-//		String u;
-//		String s;
-//
-//		for (ArrayList<Object> a : challenge.GetPlayerWithChallengeeStatus()) {
-//			u = (String) a.get(1);
-//			s = (String) a.get(3);
-//			if (!home.getSelf().getUsername().equals(u)) {
-//				challengedPlayerNames.put(u, s);
-//			} 
-//		}
-//		return challengedPlayerNames;
-//	}
-//	public LinkedHashMap<String, String> getPlayersFilteredByAmountOfGames() {
-//		LinkedHashMap<String, String> PlayerNamesWithGames = new LinkedHashMap<String, String>();
-//		String u;
-//		String s;
-//
-//		for (ArrayList<Object> a : leaderboard.getListOfUsernamesWithAmountOfGamesPlayed()) {
-//			u = (String) a.get(0);
-//			s = String.valueOf(a.get(1));
-////			System.out.println(u + s); klopt
-//			PlayerNamesWithGames.put(u, s);
-//		}
-//		return PlayerNamesWithGames;
-//	}
-//	public LinkedHashMap<String, Integer> getPlayersFilteredByAmountOfGamesWon() {
-//		LinkedHashMap<String, Integer> PlayerNamesWithGamesWon = new LinkedHashMap<String, Integer>();
-//		String u;
-//		int s;
-//
-//		for (ArrayList<Object> a : leaderboard.getListOfUsernamesWithAmountOfGamesWon()) {
-//			u = (String) a.get(0);
-//			s = (int)a.get(1);
-//			s = ((Number)a.get(1)).intValue();
-//			PlayerNamesWithGamesWon.put(u, s);
-//		}
-//		return PlayerNamesWithGamesWon;
-//	}
-

@@ -4,9 +4,18 @@ import java.util.ArrayList;
 
 import View.HomePane;
 import View.MyScene;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import model.Game;
 import model.Player;
 
 public class HomeController {
@@ -15,36 +24,77 @@ public class HomeController {
 	private ChallengerController cpp;
 	private ChallengesController cp;
 	private LeaderboardController lc;
-	private PlayerController pc;
 	private MyScene scene;
 
+	private MenubarController mbc;
 
 	private Player player;
 	private Player self;
 
-	private Alert alert = new Alert(AlertType.INFORMATION);
+	private Game game;
+	private Game lastg;
 
-	public HomeController(MyScene scene, Player self) {
+	public HomeController(Player self, MenubarController mbc) {
+		
+		this.mbc = mbc;
 		this.self = self;
-		this.scene = scene;
-		pc = new PlayerController(self.getUsername());
-		sp = new SearchPlayerController(this);
 		cpp = new ChallengerController(this);
 		cp = new ChallengesController(this);
 		lc = new LeaderboardController(this);
-		
-		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(), lc.getLeaderboardPane());
+		sp = new SearchPlayerController(this, cpp);
+
+		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(),
+				lc.getLeaderboardPane());
 		
 		
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
+		home.getAllGames().setOnAction(e -> lc.setGames1());
+		home.getAllGamesDate().setOnAction(e -> lc.setGames2());
+		
+		
+		
+		openGames();
+		startTimeline();
 
 	}
 
-	public HomeController(PlayerController self2) {
-		// TODO Auto-generated constructor stub
+	private void startTimeline() {
+		Timeline timeline = new Timeline();
+		timeline.setCycleCount(timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(10000), e -> refresh()));
+
+		timeline.play();
 	}
+
+	private void refresh() {
+		try {
+		cpp.refresh();
+		cp.refresh();
+		self.checkChallenger();}
+		catch(Exception e) {
+			
+		}
+
+	}
+	private void addNewGame() {
+		for(Game g : self.getNewGames(lastg)) {
+			mbc.addGame(g);
+			this.lastg = g;
+		}
+	}
+	private Game openGames() {
+		// open the games that are being played, or are ready to be played
+		for (Game g : self.getOpenGames()) {
+			mbc.addGame(g);
+			game = g;
+			this.lastg = g;
+			
+		}
+		return game;
+	}
+	
 
 	public String getUsername() {
 		return self.getUsername();
@@ -58,19 +108,10 @@ public class HomeController {
 		player = new Player(u, pw);
 	}
 
-	public boolean usernameExist(String u) {
-		buildPlayer(u);
-		if (player.checkUsername().isEmpty()) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public boolean isInGame(String username, PlayerController self) {
+	public boolean isInGame(String username, Player self) {
 		String u;
 		this.player = new Player(username);
-		for (ArrayList<Object> a : self.getPlayer().checkPlayerInGame()) {
+		for (ArrayList<Object> a : self.checkPlayerInGame()) {
 			u = (String) a.get(0);
 			if (u.equals(username)) {
 				return true;
@@ -100,22 +141,6 @@ public class HomeController {
 		return stats;
 	}
 
-	public String getStatsPlayer() {
-//		player.setDifferendPlayer(username);
-		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWon() + " : " + player.getTimesLost()
-				+ "\nHoogst behaalde score: " + player.getHighScore() + "\nMeest geplaatste dobbelsteenkleur: "
-				+ player.getMostPlacedDiceColor() + "\nMeest geplaatste dobbelsteenwaarde: "
-				+ player.getMostPlacedDiceEyes() + "\nAantal verschillende tegenstanders waartegen gespeeld is: "
-				+ player.getAmountOfUniquePlayers();
-		return stats;
-	}
-
-	public void showStatsPlayer() {
-		alert.setHeaderText(getStatsPlayer());
-
-		alert.showAndWait();
-	}
-
 	public Parent showHome() {
 
 		return home;
@@ -126,6 +151,14 @@ public class HomeController {
 
 	public HomePane getHome() {
 		return home;
+	}
+
+	public MyScene getScene() {
+		return scene;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 	
 	

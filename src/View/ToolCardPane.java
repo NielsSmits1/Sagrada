@@ -1,75 +1,132 @@
 package View;
 
-import controller.ToolcardController;
-import javafx.geometry.Insets;
+import controller.CardController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 public class ToolCardPane extends Pane {
-	private Rectangle card;
 	private Label price;
-	private TextArea textArea;
 	private int toolCardId;
 	private Button button;
 	private VBox cardPropertiesAlignment;
-	private ToolcardController toolcardController;
+	private CardController controller;
+	private ImageView toolcards;
+	private HBox BuyAlignment;
+	private Circle tokenPlaceHolder;
+	private Label amountOfTokensPlaced;
 
-	public ToolCardPane(int id, String description, ToolcardController toolcardController) {
-		this.toolcardController = toolcardController;
-//		this.toolCardId = id;
-		toolCardId = 2;
+	private Image toolcard;
+
+	public ToolCardPane(int id, CardController cc) {
+		this.controller = cc;
+		this.toolCardId = id;
+		tokenPlaceHolder = new Circle(30, 28, 10);
+		price = new Label();
+		amountOfTokensPlaced = new Label();
+		
+		switch (id) {
+		case 1:
+			toolcard = new Image("/Resources/toolcard_1.png");
+			break;
+		case 2:
+			toolcard = new Image("/Resources/toolcard_2.png");
+			break;
+		case 3:
+			toolcard = new Image("/Resources/toolcard_3.png");
+			break;
+		case 4:
+			toolcard = new Image("/Resources/toolcard_4.png");
+			break;
+		case 5:
+			toolcard = new Image("/Resources/toolcard_5.png");
+			break;
+		case 6:
+			toolcard = new Image("/Resources/toolcard_6.png");
+			break;
+		case 7:
+			toolcard = new Image("/Resources/toolcard_7.png");
+			break;
+		case 8:
+			toolcard = new Image("/Resources/toolcard_8.png");
+			break;
+		case 9:
+			toolcard = new Image("/Resources/toolcard_9.png");
+			break;
+		case 10:
+			toolcard = new Image("/Resources/toolcard_10.png");
+			break;
+		case 11:
+			toolcard = new Image("/Resources/toolcard_11.png");
+			break;
+		case 12:
+			toolcard = new Image("/Resources/toolcard_12.png");
+			break;
+		}
+		BuyAlignment = new HBox();
 		cardPropertiesAlignment = new VBox();
+		Pane image = new Pane();
 		button = new Button("Koop");
 		button.setOnAction(e -> handleButton());
-		setCard();
 		setPrice();
-		setTextArea(description);
-		cardPropertiesAlignment.getChildren().addAll(textArea, button);
+		setAmountPlaced();
+		amountOfTokensPlaced.setLayoutX(26);
+		amountOfTokensPlaced.setLayoutY(20);
+		amountOfTokensPlaced.setTextFill(Color.WHITE);
+		toolcards = new ImageView(toolcard);
+		BuyAlignment.getChildren().addAll(button, price);
+		BuyAlignment.setSpacing(50);
+		image.getChildren().addAll(toolcards, tokenPlaceHolder, amountOfTokensPlaced);
+		cardPropertiesAlignment.getChildren().addAll(image, BuyAlignment);
 		cardPropertiesAlignment.setAlignment(Pos.CENTER);
-		cardPropertiesAlignment.setPadding(new Insets(50,0,0,10));
-		getChildren().addAll(card, price, cardPropertiesAlignment);
+		getChildren().addAll(cardPropertiesAlignment);
+
 	}
 
 	public void handleButton() {
-		if(price.getText().equals("1")) {
-			changePrice("2");
-		}
-		toolcardController.toolcardClicked(toolCardId);
+		controller.buyToolCard(this);
+	}
+	
+	public void setAmountPlaced() {
+		
+		amountOfTokensPlaced.setText("" + controller.getAmountPlaced(toolCardId));
 	}
 
-	private void setCard() {
-		card = new Rectangle(0, 0, 150, 200);
-		card.setStroke(Color.BLACK);
-		card.setFill(Color.GOLD);
-	}
+	public void setPrice() {
+		
+		price.setTextFill(Color.WHITE);
+		price.setText("" + controller.getPrice(toolCardId));
 
-	private void setPrice() {
-		price = new Label("1");
-		price.setLayoutX(10);
-		price.setLayoutY(10);
 	}
 
 	public void changePrice(String value) {
 		price.setText(value);
+
+	}
+	
+	public int getToolCardId() {
+		return toolCardId;
+	}
+	
+	public void setButtonDisabled() {
+		button.setDisable(true);
+	}
+	
+	public void setButtonEnabled() {
+		button.setDisable(false);
 	}
 
-	private void setTextArea(String description) {
-		textArea = new TextArea(description);
-		textArea.setEditable(false);
-		textArea.setWrapText(true);
-		textArea.setPrefSize(130, 100);
-		textArea.setLayoutX(10);
-		textArea.setLayoutY(80);
+	public int getPricetag() {
+		int value = Integer.parseInt(price.getText());
+		return value;
 	}
-
-	public void changeText(String text) {
-		textArea.setText(text);
-	}
-
 }

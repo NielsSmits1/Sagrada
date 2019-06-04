@@ -1,14 +1,18 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import View.ChallengerPane;
+import View.ChallengesPlayerLinePane;
 import model.Challenge;
+import model.Player;
 
 
 public class ChallengerController {
 	private ChallengerPane challengerPane;
 	private Challenge challenge;
+	private ArrayList<ChallengesPlayerLinePane>challengesPL;
 	
 	public ChallengerController(HomeController homeController) {
 
@@ -21,11 +25,18 @@ public class ChallengerController {
 	
 	
 	public void setChallengers() {
-		for (Map.Entry<String, String> playerNameAndStatus : challenge.playersYouChallenged().entrySet()) {
-			challengerPane.addStatusLine(playerNameAndStatus.getKey().toString(),playerNameAndStatus.getValue().toString());
-			System.out.println(playerNameAndStatus.getKey().toString() + playerNameAndStatus.getValue().toString());
+        challengesPL = new ArrayList<ChallengesPlayerLinePane>();
+		
+		for (Player a: challenge.playersYouChallenged()) {
+			ChallengesPlayerLinePane p = new ChallengesPlayerLinePane(a.getUsername(), a.getStatus(),a.getGameId());
+			challengesPL.add(p);
 		}
-		challengerPane.setLayout();
+		challengerPane.setPlayerLines(challengesPL);
+		
+		
+	}
+	public void refresh() {
+		this.setChallengers();
 	}
 	
 	

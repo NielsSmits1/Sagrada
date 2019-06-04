@@ -16,6 +16,21 @@ public class Space {
 		color = "";
 	}
 	
+	public Space(int x, int y) {
+		xPos = x;
+		yPos = y;
+		eyes = 0;
+		color = "";
+	}
+	
+	public Space(int x, int y, String color) {
+		xPos = x;
+		yPos = y;
+		this.color = color;
+	}
+	
+	
+	
 	public void setXPOS(int i) {
 		xPos = i;
 		}
