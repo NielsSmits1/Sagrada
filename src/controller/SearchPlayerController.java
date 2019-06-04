@@ -1,8 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-
-import Database.Db;
 import View.SearchPlayerPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

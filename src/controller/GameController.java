@@ -120,9 +120,6 @@ public class GameController {
 	}
 
 	public PatterncardSelect buildPatterncardoptions() {
-		if(!game.checkIfFilled()) {
-			boardcontroller.setOptions();
-		}
 		boardcontroller.setOwnOptions();
 		option = new PatterncardSelect(this);
 		return option;
