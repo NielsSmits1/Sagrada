@@ -111,7 +111,7 @@ public class PatterncardSelect extends Pane {
 						choice.get(i).setBorder(null);
 					}
 				}
-				button.setDisable(false);
+				
 			}
 		});
 
@@ -127,7 +127,7 @@ public class PatterncardSelect extends Pane {
 						choice.get(i).setBorder(null);
 					}
 				}
-				button.setDisable(false);
+				
 			}
 
 		});
@@ -144,7 +144,7 @@ public class PatterncardSelect extends Pane {
 						choice.get(i).setBorder(null);
 					}
 				}
-				button.setDisable(false);
+				
 			}
 
 		});
@@ -160,7 +160,7 @@ public class PatterncardSelect extends Pane {
 						choice.get(i).setBorder(null);
 					}
 				}
-				button.setDisable(false);
+				
 			}
 
 		});

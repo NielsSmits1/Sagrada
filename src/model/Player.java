@@ -35,6 +35,10 @@ public class Player {
 		return Db.select("select idpublic_objectivecard from sharedpublic_objectivecard WHERE idgame = " + idgame +"");
 	}
 	
+	public void setStandardScore() {
+		Db.cud("update player set score = -20 where idplayer = " + idplayer +"");
+	}
+	
 	public int calculateScore(int idgame) {
 		//Standard calculations
 		this.score = -20;
@@ -404,22 +408,28 @@ public class Player {
 	public ArrayList<Game> getNewGames(Game ga) {
 		ArrayList<Game> games = new ArrayList<Game>();
 		for (ArrayList<Object> a : this.getCheckNewGame(ga.getIdGame())) {
-			if ((long) a.get(0) == (countPlayersGame((int) a.get(1)) - 1)) {
-				setChallengerToAccepted((int) a.get(1));
-			}
-			else if ((long) a.get(0) == countPlayersGame((int) a.get(1))) { // if all players accepted
 				Game g = new Game();
 				g.setGameId((int) a.get(1));
 				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
 				games.add(g);
 				
-			}
+			
 		}
+
 		return games;
 	}
 	private ArrayList<ArrayList<Object>> getCheckNewGame(int idGame) {
-		return Db.select("SELECT COUNT(playstatus_playstatus), game_idgame FROM player WHERE game_idgame IN (SELECT game_idgame FROM player  WHERE  username = '" + this.username + "'  AND playstatus_playstatus = 'geaccepteerd') HAVING game_idgame > " + idGame); 
+		return Db.select("SELECT COUNT(playstatus_playstatus), game_idgame FROM player WHERE game_idgame IN (SELECT game_idgame FROM player  WHERE  username = '" + this.username + "'  AND playstatus_playstatus = 'geaccepteerd') group by game_idgame HAVING game_idgame > " + idGame); 
 			    
+	}
+	
+	public void checkChallenger() {
+		for (ArrayList<Object> a : this.getPlayedGames()) {
+			if ((long) a.get(0) == (countPlayersGame((int) a.get(1)) - 1)) {
+				setChallengerToAccepted((int) a.get(1));
+			}
+		}
+
 	}
 	public ArrayList<Game> getOpenGames() {
 		ArrayList<Game> games = new ArrayList<Game>();

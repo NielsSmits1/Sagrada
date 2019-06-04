@@ -72,7 +72,7 @@ public class GameController {
 
 	public void startTimeline() {
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5999), e -> refreshGame()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(4000), e -> refreshGame()));
 		timeline.play();
 	}
 	public void stopTimeline() {
@@ -127,11 +127,6 @@ public class GameController {
 	}
 
 	public PatterncardSelect buildPatterncardoptions() {
-		if(!game.checkIfFilled()) {
-			game.startGame();
-			boardcontroller.setOptions();
-			cardcontroller.insertCards();
-		}
 		boardcontroller.setOwnOptions();
 		option = new PatterncardSelect(this);
 		return option;
@@ -378,6 +373,7 @@ public class GameController {
 	}
 	
 	public void setDicesTrack() {
+		
 		gamePane.setRoundTrack(game.getLeftovers());
 		
 	}

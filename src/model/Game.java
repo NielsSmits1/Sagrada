@@ -38,6 +38,10 @@ public class Game {
 		token = new ArrayList<Gamefavortoken>();
 
 	}
+	
+	public int getPlayerId(String username) {
+		return (int)Db.select("select idplayer from player where username = '" + username +"' AND game_idgame = " + idgame +"").get(0).get(0);
+	}
 
 	public void startGame() {
 		insertDicesIntoDatabase();
@@ -112,7 +116,7 @@ public class Game {
 			// dan is een ronde voorbij
 
 			// controller.setDicesTrack();
-			addToTrack();
+			
 
 			newRound();
 
@@ -687,9 +691,8 @@ public class Game {
 
 	public ArrayList<ArrayList<Dice>> getLeftovers() {
 		ArrayList<ArrayList<Dice>> dicePerRound = new ArrayList<>();
-
+		addToTrack();
 		for (int j = 1; j < 11; j++) {
-			getRoundDice(j);
 			ArrayList<Dice> dices = new ArrayList<Dice>();
 			for (int i = 0; i < getRoundDice(j).size(); i++) {
 				dices.add(new Dice((int) getRoundDice(j).get(i).get(0), (String) getRoundDice(j).get(i).get(1),
