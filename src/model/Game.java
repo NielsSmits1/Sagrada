@@ -116,11 +116,12 @@ public class Game {
 			// dan is een ronde voorbij
 
 			// controller.setDicesTrack();
-			
 
+			
 			newRound();
 			
 			turnNumber = getTurnNumber();
+
 
 		} else {
 			updateSeNumber();
@@ -156,9 +157,9 @@ public class Game {
 			break;
 		case 4: 
 			if(players.size() == 4) {
-				updateSe(2);
-			}else {
 				updateSe(5);
+			}else {
+				updateSe(2);
 			}
 			break;
 		case 5: 
@@ -216,6 +217,7 @@ public class Game {
 	}
 
 	private void setNewCurrentPlayerDB() {
+		updateSeNumber();
 		updateCurrentPlayer();
 		Db.cud("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = "
 				+ this.idgame);
