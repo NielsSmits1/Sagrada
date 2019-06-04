@@ -68,7 +68,6 @@ public class RoundTrack extends Pane {
 	}
 	
 	public void buildButtons(ArrayList<ArrayList<Dice>> d) {
-		pane.getChildren().clear();
 		nextDice1 = new Button("  Volg   ");
 		
 		nextDice1.setOnAction(e -> round.getNextDice(0, d.get(0)));
@@ -108,7 +107,6 @@ public class RoundTrack extends Pane {
 		nextDice10 = new Button("  Volg   ");
 		
 		nextDice10.setOnAction(e -> round.getNextDice(9, d.get(9)));
-		pane.getChildren().addAll(round);
 	}
 	
 	public void buildTrack() {
