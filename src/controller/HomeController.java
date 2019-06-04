@@ -31,7 +31,6 @@ public class HomeController {
 	private Player player;
 	private Player self;
 
-	private Alert alert = new Alert(AlertType.INFORMATION);
 	private Game game;
 	private Game lastg;
 
