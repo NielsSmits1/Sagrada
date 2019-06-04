@@ -35,6 +35,10 @@ public class Player {
 		return Db.select("select idpublic_objectivecard from sharedpublic_objectivecard WHERE idgame = " + idgame +"");
 	}
 	
+	public void setStandardScore() {
+		Db.cud("update player set score = -20 where idplayer = " + idplayer +"");
+	}
+	
 	public int calculateScore(int idgame) {
 		//Standard calculations
 		this.score = -20;
