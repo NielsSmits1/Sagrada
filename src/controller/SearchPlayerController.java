@@ -70,9 +70,9 @@ public class SearchPlayerController {
 				challenge.addOptions(self.getPlayerId(), g.getIdGame());
 				System.out.println(self.getPlayerId());
 			}
+			g.addPlayer(player, "Uitgedaagde", g.getRandomColor(), g.getHighestSeNumber() , 0);
 			player.setId(g.getPlayerId(player.getUsername()));
 			player.setStandardScore();
-			g.addPlayer(player, "Uitgedaagde", g.getRandomColor(), g.getHighestSeNumber() , 0);
 			challenge.addOptions(player.getPlayerId(), g.getIdGame());
 			cp.refresh();
 			RefreshChoiceBox();
