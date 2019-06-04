@@ -41,7 +41,7 @@ public class Challenge {
 
 	public ArrayList<ArrayList<Object>> getPlayerWithChallengeeStatus() {
 
-		return Db.select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() + "' and playstatus_playstatus = 'Uitgedaagde') AND playstatus_playstatus = 'Uitgedaagde'");
+		return Db.select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() + "' and playstatus_playstatus = 'Uitgedaagde') AND playstatus_playstatus = 'Uitdager'");
 	}	
 		//  returns :niels
 		//	         teun
