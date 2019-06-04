@@ -554,7 +554,7 @@ public class PatternCard {
 	}
 
 	private ArrayList<ArrayList<Object>> getPosition(int dienumber, String diecolor) {
-		return Db.select("select position_x, position_y FROM playerframefield AND player_idplayer = " + yourself + " AND dienumber = " + dienumber + " AND diecolor = '"
+		return Db.select("select position_x, position_y FROM playerframefield WHERE player_idplayer = " + yourself + " AND dienumber = " + dienumber + " AND diecolor = '"
 				+ diecolor + "';");
 	}
 
