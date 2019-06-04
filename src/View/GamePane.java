@@ -334,8 +334,8 @@ public class GamePane extends BorderPane {
 					temporarilyDice.addDiceEyes(temporarilyDice.getValue());
 					disableToolcard();
 					userClickables.getChildren().remove(userClickables.getChildren().size() - 1);
-					boards.getChildren().remove(boards.getChildren().size() - 1);
-					boards.getChildren().add(userClickables);
+//					boards.getChildren().remove(boards.getChildren().size() - 1);
+//					boards.getChildren().add(userClickables);
 					controller.updateEyes(temporarilyDice.getValue(), selected.getDieNumber(), selected.getColor());
 				}
 			}
@@ -361,8 +361,8 @@ public class GamePane extends BorderPane {
 					temporarilyDice.addDiceEyes(temporarilyDice.getValue());
 					disableToolcard();
 					userClickables.getChildren().remove(userClickables.getChildren().size() - 1);
-					boards.getChildren().remove(boards.getChildren().size() - 1);
-					boards.getChildren().add(userClickables);
+//					boards.getChildren().remove(boards.getChildren().size() - 1);
+//					boards.getChildren().add(userClickables);
 					controller.updateEyes(temporarilyDice.getValue(), selected.getDieNumber(), selected.getColor());
 				}
 
@@ -430,8 +430,8 @@ public class GamePane extends BorderPane {
 	public void SelectedStaysEqual() {
 		disableToolcard();
 		userClickables.getChildren().remove(userClickables.getChildren().size() - 1);
-		boards.getChildren().remove(boards.getChildren().size() - 1);
-		boards.getChildren().add(userClickables);
+//		boards.getChildren().remove(boards.getChildren().size() - 1);
+//		boards.getChildren().add(userClickables);
 	}
 
 	public void setToolCardOneActive() {
@@ -454,8 +454,8 @@ public class GamePane extends BorderPane {
 		controller.swapDice(selected.getDieNumber(), selected.getColor(), chosenEyes);
 		disableToolcard();
 		userClickables.getChildren().remove(userClickables.getChildren().size() - 1);
-		boards.getChildren().remove(boards.getChildren().size() - 1);
-		boards.getChildren().add(userClickables);
+//		boards.getChildren().remove(boards.getChildren().size() - 1);
+//		boards.getChildren().add(userClickables);
 	}
 
 	public void disableToolcard() {

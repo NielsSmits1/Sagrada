@@ -16,6 +16,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Game;
 import model.Player;
 
@@ -50,7 +51,7 @@ public class MenubarController {
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
 		menu.getHome().setOnAction(e -> controller.buildHome());
 		menu.getStats().setOnAction(e -> showStats());
-
+		
 	}
 
 	public Menubar getMenubar() {
@@ -103,13 +104,20 @@ public class MenubarController {
 			gc.getChatBox().getModel().setGameId(gc.getGamePane().getGameId());
 			gc.getChatBox().getModel().setPlayerId(gc.getOwnId());
 			builtChatBox();
+			gc.startTimelineChat();
 
+		});
+		gc.getChatBox().getScreen().getClosee().setOnAction(e -> {
+			stageChat.close();
+			gc.stopTimeline();
 		});
 
 	}
 
 	public void builtChatBox() {
 		stageChat = new Stage();
+		stageChat.setTitle("chatbox");
+		stageChat.initStyle(StageStyle.UTILITY);
 		sceneChat = new Scene(new Pane(gc.getChatBox().getScreen()));
 		builtScene();
 

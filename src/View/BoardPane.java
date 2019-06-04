@@ -211,6 +211,7 @@ public class BoardPane extends Pane {
 				board.get(i).setDice(selected);
 			}
 		}
+		allowsMovement = false;
 		placed = true;
 	}
 

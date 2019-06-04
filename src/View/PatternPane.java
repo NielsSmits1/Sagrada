@@ -113,7 +113,7 @@ public class PatternPane extends StackPane{
 	public void handle() {
 		System.out.println(boardPane.getAllowsMovement());
 		System.out.println(boardPane.getSelected());
-
+ 
 		if(boardPane.getAllowsMovement()) {
 			if(boardPane.getSelected() == null) {
 				boardPane.setSelectedPatternPane(this);
@@ -124,7 +124,6 @@ public class PatternPane extends StackPane{
 			}
 			
 		}
-//		boardPane.setSelectedToNull();
 		giveCords();
 	}
 	

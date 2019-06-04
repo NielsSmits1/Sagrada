@@ -8,54 +8,26 @@ import javafx.scene.layout.Pane;
 import model.Dice;
 
 public class RoundPane extends Pane {
-	private DicePane template0;
-	private DicePane template1;
-	private DicePane template2;
-	private DicePane template3;
-	private DicePane template4;
-	private DicePane template5;
-	private DicePane template6;
-	private DicePane template7;
-	private DicePane template8;
-	private DicePane template9;
+	private DicePane template0 = new DicePane();
+	private DicePane template1= new DicePane();
+	private DicePane template2= new DicePane();
+	private DicePane template3= new DicePane();
+	private DicePane template4= new DicePane();
+	private DicePane template5= new DicePane();
+	private DicePane template6= new DicePane();
+	private DicePane template7= new DicePane();
+	private DicePane template8= new DicePane();
+	private DicePane template9= new DicePane();
 
 	private ArrayList<DicePane> dices = new ArrayList<DicePane>();
-	private HBox trackSpaces;
+	private HBox trackSpaces = new HBox();
 
 	private int g = -1;
 
 	public RoundPane() {
 
-		addSpace();
 	}
 
-	public void addSpace() { // i = 1 box
-		trackSpaces = new HBox();
-		template0 = new DicePane();
-		template1 = new DicePane();
-		template2 = new DicePane();
-		template3 = new DicePane();
-		template4 = new DicePane();
-		template5 = new DicePane();
-		template6 = new DicePane();
-		template7 = new DicePane();
-		template8 = new DicePane();
-		template9 = new DicePane();
-		template0.setTransparent();
-		template1.setTransparent();
-		template2.setTransparent();
-		template3.setTransparent();
-		template4.setTransparent();
-		template5.setTransparent();
-		template6.setTransparent();
-		template7.setTransparent();
-		template8.setTransparent();
-		template9.setTransparent();
-		trackSpaces.setSpacing(8);
-		trackSpaces.getChildren().addAll(template0, template1, template2, template3, template4, template5, template6,
-				template7, template8, template9);
-
-	}
 
 	public void addDice(int eyes, String color, int number) {
 		dices.add(new DicePane(eyes, color, number));
@@ -66,11 +38,11 @@ public class RoundPane extends Pane {
 		int z;
 		String y;
 		int x;
-		this.getChildren().clear();
 		trackSpaces.getChildren().clear();
-		
+		trackSpaces.setSpacing(8);
+//		this.getChildren().addAll(trackSpaces); 
 
-		dices.clear();
+//		dices.clear();
 
 		for (int j = 0; j < d.get(0).size(); j++) { // gets all leftover dice from the round
 			z = (int) d.get(0).get(j).getEyes();
