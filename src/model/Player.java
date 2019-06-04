@@ -415,7 +415,6 @@ public class Player {
 				
 			
 		}
-
 		return games;
 	}
 	private ArrayList<ArrayList<Object>> getCheckNewGame(int idGame) {
