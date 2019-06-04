@@ -112,11 +112,7 @@ public class Game {
 
 	public void setNewCurrentPlayer() {
 		int numberOfPlayers = players.size();
-		if (turnNumber == numberOfPlayers * 2) {// 4-6-8
-			// dan is een ronde voorbij
-
-			// controller.setDicesTrack();
-
+		if (turnNumber == numberOfPlayers * 2) {
 			setNewCurrentRoundBeginner();
 			newRound();
 			

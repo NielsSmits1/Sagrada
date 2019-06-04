@@ -26,7 +26,6 @@ public class HomePane extends Pane{
 	private Button playersWins;
 	private Button allGames;
 	private Button allGamesDate;
-	private Button refreshMenu;
 	private Label lb;
 	private VBox boxie;
 	private Font f = new Font(20);
@@ -47,9 +46,7 @@ public class HomePane extends Pane{
 		this.setBackground(new Background(new BackgroundImage(new Image("/Resources/gameBackground.jpg"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
 				new BackgroundSize(0, 0, false, false, false, true))));
-		refreshMenu = new Button("Refresh open games");
-		this.getChildren().add(refreshMenu);
-		
+	
 		setPanes("Uw uitdagingen", challenges);
 		
 		x += 400;
@@ -196,11 +193,4 @@ public class HomePane extends Pane{
 	public Button getGameTab() {
 		return gametab;
 	}
-	public Button getRefreshMenu() {
-		return refreshMenu;
-	}
-
-	
-	
-
 }

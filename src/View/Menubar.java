@@ -33,7 +33,7 @@ public class Menubar extends MenuBar {
 		options = new Menu("opties");
 		logout = new MenuItem("Log-out");
 		exit = new MenuItem("Afsluiten");
-		home = new MenuItem("ga terug naar home");
+		home = new MenuItem("ga terug naar home / refresh home");
 		// exit.setOnAction(E -> exit());
 
 		help = new MenuItem("spelregels");
