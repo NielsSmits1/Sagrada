@@ -112,10 +112,7 @@ public class Game {
 
 	public void setNewCurrentPlayer() {
 		int numberOfPlayers = players.size();
-		if (turnNumber == numberOfPlayers * 2) {// 4-6-8
-			// dan is een ronde voorbij
-
-			// controller.setDicesTrack();
+		if (turnNumber == numberOfPlayers * 2) {
 			setNewCurrentRoundBeginner();
 			newRound();
 			
@@ -232,7 +229,7 @@ public class Game {
 		// en ook iets met roundtrack
 		// this.addRoundTrack(gamePane.getRemainingDices());
 		//forwardSeqNr();
-		if (roundNumber > 9) {
+		if (roundNumber > 10) {
 			showWinnerScreen();
 		} else {
 			addToTrack();
