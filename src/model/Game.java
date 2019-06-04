@@ -111,6 +111,8 @@ public class Game {
 	}
 
 	public void setNewCurrentPlayer() {
+		updateSeNumber();
+
 		int numberOfPlayers = players.size();
 		if (turnNumber == numberOfPlayers * 2) {// 4-6-8
 			// dan is een ronde voorbij
@@ -121,6 +123,7 @@ public class Game {
 			newRound();
 			
 			turnNumber = getTurnNumber();
+
 
 		} else {
 			updateSeNumber();
@@ -156,9 +159,9 @@ public class Game {
 			break;
 		case 4: 
 			if(players.size() == 4) {
-				updateSe(2);
-			}else {
 				updateSe(5);
+			}else {
+				updateSe(2);
 			}
 			break;
 		case 5: 
