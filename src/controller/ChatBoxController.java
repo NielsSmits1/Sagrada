@@ -19,40 +19,38 @@ public class ChatBoxController {
 
 	public ChatBoxController(int gameID, int OwnId) {
 		timeline = new Timeline();
-		
+
 		model = new ChatBoxModel();
 		model.setGameId(gameID);
-		
+
 		model.setPlayerId(OwnId);
 		chat = new ChatBox();
 		getChat();
 		chat.getSend().setOnAction(e -> sendMessages());
-		
-		
+
 	}
 
 	public void getChat() {
 		try {
-		DateFormat chatTime = new SimpleDateFormat("HH:mm:ss dd-MM-YYYY ");
+			DateFormat chatTime = new SimpleDateFormat("HH:mm:ss dd-MM-YYYY ");
 
-		ArrayList<ChatLine> chatbox = new ArrayList<>();
+			ArrayList<ChatLine> chatbox = new ArrayList<>();
 
-		for (ArrayList<Object> chat : model.playerUserName()) {
+			for (ArrayList<Object> chat : model.playerUserName()) {
 
-			ChatLine poekie = new ChatLine();
-			poekie.setUserName((String) chat.get(0));
-			poekie.setMessage((String) chat.get(1));
-			poekie.setTime(chatTime.format(chat.get(2)));
-			poekie.setLabels();
+				ChatLine poekie = new ChatLine();
+				poekie.setUserName((String) chat.get(0));
+				poekie.setMessage((String) chat.get(1));
+				poekie.setTime(chatTime.format(chat.get(2)));
+				poekie.setLabels();
 
-			chatbox.add(poekie);
+				chatbox.add(poekie);
 
-		}
+			}
 
-		chat.setChat(chatbox);
-		}
-		catch(Exception e) {
-			
+			chat.setChat(chatbox);
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -67,16 +65,17 @@ public class ChatBoxController {
 		chat.getInPut().clear();
 		getChat();// dit is de refresh
 	}
-	
+
 	public void startTimeline() {
 		timeline.setCycleCount(timeline.INDEFINITE);
 		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5999), e -> refresh()));
 		timeline.play();
 	}
+
 	public void stopTimeline() {
 		this.timeline.stop();
 	}
-	
+
 	public void refresh() {
 		getChat();
 	}
@@ -84,7 +83,5 @@ public class ChatBoxController {
 	public ChatBoxModel getModel() {
 		return model;
 	}
-	
-	
 
 }

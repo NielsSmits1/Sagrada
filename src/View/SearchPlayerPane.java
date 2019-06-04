@@ -2,7 +2,6 @@ package View;
 
 import java.util.ArrayList;
 
-
 import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,27 +13,28 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class SearchPlayerPane extends VBox  {
+public class SearchPlayerPane extends VBox {
 	private TextField online = new TextField();
 	private Button challenge = new Button("Uitdagen");
 	private ChoiceBox choice;
 	private Label user = new Label();
 	private Button search = new Button("Zoeken");
 	private Button stats = new Button("Statistieken");
-	private Alert alert = new Alert(AlertType.ERROR);	
+	private Alert alert = new Alert(AlertType.ERROR);
 	private String username;
 
-	public SearchPlayerPane(){		
+	public SearchPlayerPane() {
 		online.setFont(Font.font(14));
 		online.setMaxWidth(120);
-		this.getChildren().setAll(online,search);
+		this.getChildren().setAll(online, search);
 	}
-	
+
 	public void setChoiceBox(ArrayList<String> op) {
 		this.getChildren().remove(choice);
 		choice = new ChoiceBox(FXCollections.observableArrayList(op));
 		this.getChildren().add(choice);
 	}
+
 	public String getChoice() {
 		return choice.getValue().toString();
 	}
@@ -51,13 +51,12 @@ public class SearchPlayerPane extends VBox  {
 		user.setFont(Font.font(20));
 		user.setTextFill(Color.WHITE);
 		user.setText(username);
-		boxie.getChildren().addAll(user,stats, challenge);
-		
+		boxie.getChildren().addAll(user, stats, challenge);
+
 		this.getChildren().add(boxie);
-		
+
 	}
 
-	
 	public Button getStats() {
 		return stats;
 	}
@@ -69,16 +68,20 @@ public class SearchPlayerPane extends VBox  {
 	public String getUsername() {
 		return username;
 	}
+
 	public Button getChallenge() {
-		
+
 		return challenge;
 	}
+
 	public Alert getAlert() {
 		return alert;
 	}
+
 	public Button getSearch() {
 		return search;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -91,7 +94,6 @@ public class SearchPlayerPane extends VBox  {
 		this.alert = alert;
 	}
 
-
 	public void setOnline(TextField online) {
 		this.online = online;
 	}
@@ -103,12 +105,5 @@ public class SearchPlayerPane extends VBox  {
 	public void setStats(Button stats) {
 		this.stats = stats;
 	}
-	
-	
-	
-	
-	
-	
 
-	
 }

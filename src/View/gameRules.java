@@ -16,21 +16,17 @@ public class gameRules {
 
 	private Stage stage = new Stage();
 	private Scene scene;
-
 	private VBox boxie;
 	private HBox hoxie;
 	private HBox nextBox;
 	private HBox previousBox;
 	private HBox closeBox;
 	private HBox image;
-
 	private Button next = new Button("volgende pagina");
 	private Button previous = new Button("vorige pagina");
 	private Button close = new Button("sluiten");
-
 	private Image page = new Image("/Resources/uitleg_pagina_1.png");
 	private ImageView pages;
-	
 
 	public gameRules() {
 
@@ -39,15 +35,11 @@ public class gameRules {
 	}
 
 	public void createStage1() {
-		// pane plus image;
 		image = new HBox();
-		// images
-
 		pages = new ImageView(page);
 		image.getChildren().add(pages);
 		image.setAlignment(Pos.CENTER);
 
-		// buttons
 		previous.setVisible(false);
 		next.setVisible(true);
 		// next button layout

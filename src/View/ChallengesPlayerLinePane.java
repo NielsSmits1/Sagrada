@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 public class ChallengesPlayerLinePane extends HBox {
-	
+
 	private String playerName;
 	private Label differentPlayer;
 	private Button accept;
@@ -19,7 +19,7 @@ public class ChallengesPlayerLinePane extends HBox {
 	public ChallengesPlayerLinePane(String name) {
 		differentPlayer = new Label();
 		accept = new Button("Accepteer");
-		decline= new Button("Weiger");
+		decline = new Button("Weiger");
 		this.playerName = name;
 		this.setPrefSize(300, 30);
 		differentPlayer.setText(playerName);
@@ -27,32 +27,32 @@ public class ChallengesPlayerLinePane extends HBox {
 		accept.setPrefSize(100, 30);
 		decline.setPrefSize(100, 30);
 		this.getChildren().setAll(differentPlayer, accept, decline);
-	
 	}
 
-	public ChallengesPlayerLinePane (String name,String status,int i) {
+	public ChallengesPlayerLinePane(String name, String status, int i) {
 		playerLabel = new Label();
 		playerStatus = new Label();
 		gameId = new Label();
 		this.setPrefSize(300, 30);
 		playerLabel.setText(name);
-		
+
 		gameId.setText(Integer.toString(i) + ": ");
 		playerStatus.setText(status);
-		
+
 		this.getChildren().setAll(gameId, playerLabel, extraText, playerStatus);
 	}
-	public ChallengesPlayerLinePane (String name, String status ) {
+
+	public ChallengesPlayerLinePane(String name, String status) {
 		playerLabel = new Label();
-		
+
 		playerStatus = new Label();
 		this.setPrefSize(300, 30);
 		playerLabel.setText(name);
 		playerStatus.setText(status);
-		
+
 		this.getChildren().setAll(playerLabel, extraText, playerStatus);
 	}
-		
+
 	public String getPlayerName() {
 		return playerName;
 	}
