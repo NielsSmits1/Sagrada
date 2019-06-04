@@ -195,7 +195,7 @@ public class Game {
 		// this.addRoundTrack(gamePane.getRemainingDices());
 		forwardSeqNr();
 		if (roundNumber > 9) {
-
+			showWinnerScreen();
 		} else {
 			this.roundNumber = getLastRound();
 		}
@@ -214,7 +214,6 @@ public class Game {
 			// als null - geen rondes: begin bij ronde 1
 			return 1;
 		} else if ((int) round.get(0).get(0) == 10) {
-			showWinnerScreen();
 			return 10;
 		} else {
 			return (int) round.get(0).get(0) + 1;
@@ -223,6 +222,7 @@ public class Game {
 	}
 
 	public ArrayList<ArrayList<Object>> showWinnerScreen() {
+		database.cud("update player set playstatus_playstatus = 'Uitgespeeld' where game_idgame = " + this.idgame);
 		return database.select(
 				"select p.username, p.score from player p where game_idgame = " + idgame + " order by p.score desc");
 	}
