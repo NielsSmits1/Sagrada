@@ -52,7 +52,6 @@ public class Challenge {
 		// 			teun
 		//			niels
 	}
-	
 	public ArrayList<Player> playersChallengedYou() {
 		ArrayList<Player> challengedPlayerNames = new ArrayList<Player>();
 		String u;

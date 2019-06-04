@@ -57,40 +57,16 @@ public class PatternPane extends StackPane{
 	public void setWhite() {
 		template.setWhite();
 	}
-	
-	
-//	public void setDice(DicePane p) {
-//		dice = p;
-//	}
-	
-//	public void getClicked() {
-//		boardPane.getClicked(this);
-//	}
-	
-	///*
-		//get and delete the selected DicePane in rootPane.
-		///**
-//	public DicePane getSelected() {
-//		return boardPane.getSelected();
-//	}
-	
 	public void giveCords() {
 		boardPane.giveCords(xPos, yPos);
 	}
 	
-//	public void deleteSelected() {
-//		boardPane.deleteSelected();
-//	}
 	public int getDiceNumber() {
 		return dice.getDieNumber();
 	}
 	public String getDiceColor() {
 		return dice.getColor();
 	}
-	
-//	public int getNumber() {
-//		return number;
-//	}
 	
 	public String getColor() {
 		return dice.getColor();
@@ -135,6 +111,9 @@ public class PatternPane extends StackPane{
 //	}
 	
 	public void handle() {
+		System.out.println(boardPane.getAllowsMovement());
+		System.out.println(boardPane.getSelected());
+
 		if(boardPane.getAllowsMovement()) {
 			if(boardPane.getSelected() == null) {
 				boardPane.setSelectedPatternPane(this);
