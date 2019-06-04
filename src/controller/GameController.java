@@ -47,7 +47,11 @@ public class GameController {
 
 	public GameController(Game g) {
 		this.game = g;
-		chatBox = new ChatBoxController(1,1);
+		for(Player p : game.getPlayers()) {
+			if(p.getSelf()) {
+				chatBox = new ChatBoxController(game.getIdGame(),p.getPlayerId());
+			}
+		}
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
 		game.setController(this);
@@ -93,25 +97,29 @@ public class GameController {
 		 * Dices
 		 * Score
 		 */
-		
+		try {
 		game.refreshCurrentPlayer();
 		gamePane.changeInfo(this.shoutCurrentPlayer());
 		this.refreshBoards();
 		cardcontroller.updatePriceTag();
 		game.setPlayableDices();
 		gamePane.addDice();
-		setDicesTrack();
+		
 		if(round != game.getRoundNumber()) {
 			round = game.getRoundNumber();
-			 // shows current RoundTrack
+			 setDicesTrack();
 			for(int i = 0; i<game.getPlayers().size(); i++) {
 				boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore(game.getIdGame()));
 			}
 		}
-		if(game.getRoundNumber()==10) {
+		if(game.getRoundNumber()==11) {
 			stopGame();
 		}
-		
+		}
+		catch(Exception e) {
+			
+		}
+	
 	}
 	private void stopGame() {
 		timeline.stop();

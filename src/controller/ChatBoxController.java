@@ -32,7 +32,7 @@ public class ChatBoxController {
 	}
 
 	public void getChat() {
-
+		try {
 		DateFormat chatTime = new SimpleDateFormat("HH:mm:ss dd-MM-YYYY ");
 
 		ArrayList<ChatLine> chatbox = new ArrayList<>();
@@ -50,6 +50,10 @@ public class ChatBoxController {
 		}
 
 		chat.setChat(chatbox);
+		}
+		catch(Exception e) {
+			
+		}
 	}
 
 	public ChatBox getScreen() {

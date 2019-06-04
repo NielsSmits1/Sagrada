@@ -35,6 +35,7 @@ public class HomeController {
 	private Game lastg;
 
 	public HomeController(Player self, MenubarController mbc) {
+		
 		this.mbc = mbc;
 		this.self = self;
 		cpp = new ChallengerController(this);
@@ -44,13 +45,14 @@ public class HomeController {
 
 		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(),
 				lc.getLeaderboardPane());
-
+		
+		
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
 		home.getAllGames().setOnAction(e -> lc.setGames1());
 		home.getAllGamesDate().setOnAction(e -> lc.setGames2());
-		home.getRefreshMenu().setOnAction(e -> this.addNewGame());
+		
 		
 		
 		openGames();
@@ -67,9 +69,13 @@ public class HomeController {
 	}
 
 	private void refresh() {
+		try {
 		cpp.refresh();
 		cp.refresh();
-		self.checkChallenger();
+		self.checkChallenger();}
+		catch(Exception e) {
+			
+		}
 
 	}
 	private void addNewGame() {
