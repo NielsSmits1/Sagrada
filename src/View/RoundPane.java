@@ -184,7 +184,7 @@ public class RoundPane extends Pane {
 		template9.setTransparent();
 		//template9.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template9);
-		this.getChildren().addAll(trackSpaces);
+//		this.getChildren().addAll(trackSpaces);
 
 	}
 

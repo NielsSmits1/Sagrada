@@ -111,16 +111,19 @@ public class Game {
 	}
 
 	public void setNewCurrentPlayer() {
+		updateSeNumber();
+
 		int numberOfPlayers = players.size();
 		if (turnNumber == numberOfPlayers * 2) {// 4-6-8
 			// dan is een ronde voorbij
 
 			// controller.setDicesTrack();
+
 			
-
 			newRound();
-
+			
 			turnNumber = getTurnNumber();
+
 
 		} else {
 			updateSeNumber();
@@ -156,9 +159,9 @@ public class Game {
 			break;
 		case 4: 
 			if(players.size() == 4) {
-				updateSe(2);
-			}else {
 				updateSe(5);
+			}else {
+				updateSe(2);
 			}
 			break;
 		case 5: 
@@ -216,6 +219,7 @@ public class Game {
 	}
 
 	private void setNewCurrentPlayerDB() {
+		updateSeNumber();
 		updateCurrentPlayer();
 		Db.cud("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = "
 				+ this.idgame);
@@ -230,6 +234,7 @@ public class Game {
 		if (roundNumber > 9) {
 			showWinnerScreen();
 		} else {
+			addToTrack();
 			this.roundNumber = getLastRound();
 		}
 	}
@@ -325,7 +330,7 @@ public class Game {
 
 	// gets all die information where id game equals the new game.
 	public ArrayList<ArrayList<Object>> getselect() {
-		return Db.select("select * FROM tjpmsalt_db2.gamedie WHERE idgame =" + idgame + " ORDER BY dienumber;");
+		return Db.select("select * FROM gamedie WHERE idgame =" + idgame + " ORDER BY dienumber;");
 	}
 
 	// adds all dices to a dicearraylist.
@@ -691,7 +696,7 @@ public class Game {
 
 	public ArrayList<ArrayList<Dice>> getLeftovers() {
 		ArrayList<ArrayList<Dice>> dicePerRound = new ArrayList<>();
-		addToTrack();
+		
 		for (int j = 1; j < 11; j++) {
 			ArrayList<Dice> dices = new ArrayList<Dice>();
 			for (int i = 0; i < getRoundDice(j).size(); i++) {
