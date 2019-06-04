@@ -211,7 +211,6 @@ public class BoardPane extends Pane {
 				board.get(i).setDice(selected);
 			}
 		}
-		allowsMovement = false;
 		placed = true;
 	}
 
@@ -276,7 +275,9 @@ public class BoardPane extends Pane {
 				}
 			}
 		}
+		allowsMovement = false;
 		}
+	
 	
 	public boolean getPlaced() {
 		return placed;
