@@ -172,7 +172,7 @@ public class PatternCard {
 		ArrayList<ArrayList<Object>> getQuery = Db
 				.select("select dienumber FROM playerframefield WHERE idgame = " + idgame
 						+ " AND player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
-		if (getQuery.get(0).get(0) == null) {
+		if (getQuery.isEmpty()) {
 			return true;
 		}
 		return false;
@@ -879,230 +879,190 @@ public class PatternCard {
 		ArrayList<ArrayList<Object>> diagonal = Db.select("select p.position_x, p.position_y, p.diecolor from playerframefield p  where p.player_idplayer = " + idplayer +";");
 		int counter = 0;
 		int pointTotal = 0;
-		String currentColor = new String("null");
+		String currentColor = new String("");
+		
+		
+		//Vertical
+		
+		
 		for (int x = 1; x <= 2; x++) {
 			for (int y = 2; y >= 1; y--) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
 			}
 		}
 		counter = 0;
-		currentColor = new String("null");
+		currentColor = new String("");
 		// 2
 		for (int x = 1; x <= 3; x++) {
 			for (int y = 3; y >= 1; y--) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
 			}
 		}
 		counter = 0;
-		currentColor = new String("null");
+		currentColor = new String("");
 		// 3
 		for (int x = 1; x <= 5; x++) {
 			for (int y = 4; y >= 1; y--) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
 			}
 		}
-		
 		counter = 0;
-		currentColor = new String("null");
+		currentColor = new String("");
 		// 4
 		for (int x = 2; x <= 5; x++) {
 			for (int y = 4; y >= 1; y--) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
 			}
 		}
-		
 		counter = 0;
-		currentColor = new String("null");
-		// 5
+		currentColor = new String("");
+//		// 5
 		for (int x = 3; x <= 5; x++) {
 			for (int y = 4; y >= 2; y--) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
 			}
 		}
 		counter = 0;
-		currentColor = new String("null");
-		// 6
+		currentColor = new String("");
+//		// 6
 				for (int x = 4; x <= 5; x++) {
 					for (int y = 4; y >= 3; y--) {
-						if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//							if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//								currentColor = (String)diagonal.get(counter).get(2);
-//							}
-							if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+						if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+							if(currentColor.equals(patternfield.get(counter).getColor())) {
 								pointTotal++;
 							}else{
-								currentColor = (String)diagonal.get(counter).get(2);
+								currentColor = patternfield.get(counter).getColor();
 							}
 						}
 							counter++;
 					}
-				} 
-
-		counter = 0;
-		currentColor = new String("null");
-		// 7
+				}
+				counter = 0;
+				currentColor = new String("");
+//		// 7
 		for (int x = 1; x <= 2; x++) {
 			for (int y = 3; y <= 4; y++) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
-					}
-				}
-		
+			}
+		}
 		counter = 0;
-		currentColor = new String("null");
-		// 8
+		currentColor = new String("");
+//		// 8
 		for (int x = 1; x <= 3; x++) {
 			for (int y = 2; y <= 4; y++) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
-					}
-				}
-		
+			}
+		}
 		counter = 0;
-		currentColor = new String("null");
-		// 9
+		currentColor = new String("");
+//		// 9
 		for (int x = 1; x <= 4; x++) {
 			for (int y = 1; y <= 4; y++) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
-					}
-				}
-		
+			}
+		}
 		counter = 0;
-		currentColor = new String("null");
-		// 10
+		currentColor = new String("");
+//		// 10
 		for (int x = 2; x <= 5; x++) {
 			for (int y = 1; y <= 4; y++) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
-					}
-				}
-		
+			}
+		}
 		counter = 0;
-		currentColor = new String("null");
-		// 11
+		currentColor = new String("");
+//		// 11
 		for (int x = 3; x <= 5; x++) {
 			for (int y = 1; y <= 3; y++) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
-					}
-				}
-		
+			}
+		}
 		counter = 0;
-		currentColor = new String("null");
-		// 12
+		currentColor = new String("");
+//		// 12
 		for (int x = 4; x <= 5; x++) {
 			for (int y = 1; y <= 2; y++) {
-				if((int)diagonal.get(counter).get(0) == x && (int)diagonal.get(counter).get(1) == y) {
-//					if(currentColor.equals("null") && !diagonal.get(counter).get(2).equals("null")) {
-//						currentColor = (String)diagonal.get(counter).get(2);
-//					}
-					if(currentColor.equals((String)diagonal.get(counter).get(2))) {
+				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
+					if(currentColor.equals(patternfield.get(counter).getColor())) {
 						pointTotal++;
 					}else{
-						currentColor = (String)diagonal.get(counter).get(2);
+						currentColor = patternfield.get(counter).getColor();
 					}
 				}
 					counter++;
-					}
-				}
-		
-		return 0;
+			}
+		}
+		return pointTotal;
 	}
 	
 	public int getObjectiveCardNine() {

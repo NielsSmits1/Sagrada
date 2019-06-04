@@ -48,21 +48,25 @@ public class ObjectiveCard {
 		
 	}
 	
-	public void insertObjectivecard() {
-		generateRandomInts();
-		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card1 + "," + controller.getIdGame() + ");");
-		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card2 + "," + controller.getIdGame() + ");");
-		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card3 + "," + controller.getIdGame() + ");");
-	}
-	private void generateRandomInts() {
-		card1 = random.nextInt(10) + 1;
-		card2 = random.nextInt(10) + 1;
-		card3 = random.nextInt(10) + 1;
-		while(card2 == card1) {
-			card2 = random.nextInt(10) + 1;
-		}
-		while(card3 == card1 || card3 == card2) {
-			card3 = random.nextInt(10) + 1;
-		}
-	}
+//	public void insertObjectivecard() {
+//		generateRandomInts();
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card1 + "," + controller.getIdGame() + ");");
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card2 + "," + controller.getIdGame() + ");");
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card3 + "," + controller.getIdGame() + ");");
+//	}
+//	private void generateRandomInts() {
+//		card1 = random.nextInt(10) + 1;
+//		card2 = random.nextInt(10) + 1;
+//		card3 = random.nextInt(10) + 1;
+//		while(card2 == card1) {
+//			card2 = random.nextInt(10) + 1;
+//		}
+//		while(card3 == card1 || card3 == card2) {
+//			card3 = random.nextInt(10) + 1;
+//		}
+//		
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card1 + "," + controller.getIdGame() + ");");
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card2 + "," + controller.getIdGame() + ");");
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card3 + "," + controller.getIdGame() + ");");
+//	}
 }

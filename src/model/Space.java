@@ -23,6 +23,12 @@ public class Space {
 		color = "";
 	}
 	
+	public Space(int x, int y, String color) {
+		xPos = x;
+		yPos = y;
+		color = "";
+	}
+	
 	
 	
 	public void setXPOS(int i) {
