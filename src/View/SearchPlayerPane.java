@@ -25,13 +25,9 @@ public class SearchPlayerPane extends VBox  {
 	private String username;
 
 	public SearchPlayerPane(){		
-		
-//		search.setOnAction(E -> search());
 		online.setFont(Font.font(14));
 		online.setMaxWidth(120);
-		
 		this.getChildren().setAll(online,search);
-		
 	}
 	
 	public void setChoiceBox(ArrayList<String> op) {
@@ -48,32 +44,6 @@ public class SearchPlayerPane extends VBox  {
 		alert.showAndWait();
 	}
 
-//	private void search() {
-//		this.username = online.getText();
-//		if(!username.equals("")) {
-//			if(hc.usernameExist(username)) {
-//				showPlayer(username);
-//				
-//				
-//			}else {
-//				alert("Niemand gevonden met deze gebruikersnaam");
-//			}
-//		}
-
-		
-		/*
-		 * de tekst ophlen --------
-		 * Checken of username exists 
-		 *     
-		 * de tekst doorsturen naar de controller
-		 * controller mss even checken
-		 * model aanmaken
-		 * mss ook wat dingen doen
-		 * iets met db
-		 * en iets terug krijgen?
-		 */
-		
-//	}
 	public void showPlayer(String username) {
 		VBox boxie = new VBox();
 		boxie.setLayoutY(30);

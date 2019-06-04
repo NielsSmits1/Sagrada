@@ -15,13 +15,8 @@ public class ChallengesPlayerLinePane extends HBox {
 	private Label playerStatus;
 	private Label extraText = new Label(" zijn spelerstatus is: ");
 	private Label gameId;
-	
-//	private ChallengesPane cp;
-//	private ChallengesController cc = new ChallengesController(); 
 
 	public ChallengesPlayerLinePane(String name) {
-//		cp = new ChallengesPane();
-		
 		differentPlayer = new Label();
 		accept = new Button("Accepteer");
 		decline= new Button("Weiger");
@@ -32,10 +27,6 @@ public class ChallengesPlayerLinePane extends HBox {
 		accept.setPrefSize(100, 30);
 		decline.setPrefSize(100, 30);
 		this.getChildren().setAll(differentPlayer, accept, decline);
-//		accept.setOnAction(e -> this.acceptChallengeLine());
-//		decline.setOnAction(e -> this.declineChallengeLine());
-//		accept.setOnAction(e -> cp.acceptChallenge(playerName));
-//		decline.setOnAction(e -> cp.declineChallenge(playerName));
 	
 	}
 

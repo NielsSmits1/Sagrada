@@ -12,7 +12,6 @@ public class ChallengerPane extends ScrollPane{
 	
 	
 	public ChallengerPane() {
-		//cc = new ChallengesController(self);
 		playerLine = new ArrayList<ChallengesPlayerLinePane>();
 		
 		setLayout();

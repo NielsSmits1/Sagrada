@@ -19,7 +19,6 @@ public class ChallengesController{
 		challenge = new Challenge(home.getSelf());
 		challengesPane = new ChallengesPane();
 		refresh();
-
 	}
 
 	public ChallengesController() {
@@ -42,9 +41,6 @@ public class ChallengesController{
 			p.getDecline().setOnAction(e -> setPlayerStatusToDeclined(a));
 			challengesPL.add(p);
 		}
-//		challengesPane.setLayout();
-//		challengesPane.setPlayerLines(challenges);
-//		challengesPane.setLayout();
 	}
 	
 	

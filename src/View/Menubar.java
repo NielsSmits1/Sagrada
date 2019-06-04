@@ -2,7 +2,6 @@ package View;
 
 import java.util.ArrayList;
 
-
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -21,8 +20,6 @@ public class Menubar extends MenuBar {
 	private int x = 0;
 
 	public Menubar(MyScene main) {
-		// home = new HomeController(main, self.getPlayer());
-
 		creatMenu();
 	}
 
@@ -31,15 +28,8 @@ public class Menubar extends MenuBar {
 		logout = new MenuItem("Log-out");
 		exit = new MenuItem("Afsluiten");
 		home = new MenuItem("ga terug naar home / refresh home");
-		// exit.setOnAction(E -> exit());
-
 		help = new MenuItem("spelregels");
 		stats = new MenuItem("Statistieken");
-		// stats.setOnAction(E -> showStats());
-
-		// menu.getExit().setOnAction(e -> model.Exit());
-		// menu.getLogout().setOnAction(e -> model.logout());
-
 		options.getItems().addAll(logout, stats, home, help, exit);
 		this.getMenus().add(options);
 	}
@@ -64,7 +54,6 @@ public class Menubar extends MenuBar {
 		return rules;
 	}
 
-	// done
 	public void creatNewTabs() {
 		Menu gamex = new Menu("game" + x);
 		this.getMenus().add(gamex);
@@ -73,7 +62,6 @@ public class Menubar extends MenuBar {
 	}
 
 	public void addGameItem(Menu m) {
-
 		this.getMenus().add(m);
 
 	}

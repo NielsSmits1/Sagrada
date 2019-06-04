@@ -432,7 +432,6 @@ public class PatternCard {
 		return true;
 	}
 
-	// TODO niet in combinatie met checkfirstmove doen
 	private boolean validateNextToDice(int x, int y) {
 		// above
 		if (hasNextToDiceExamption) {

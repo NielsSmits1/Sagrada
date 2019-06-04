@@ -67,7 +67,6 @@ public class RoundPane extends Pane {
 		int x;
 		this.getChildren().clear();
 		trackSpaces.getChildren().clear();
-		
 
 		dices.clear();
 
@@ -79,7 +78,6 @@ public class RoundPane extends Pane {
 		}
 
 		template0.setTransparent();
-//		template0.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template0);
 
 		for (int j = 0; j < d.get(1).size(); j++) { // gets all leftover dice from the round
@@ -90,7 +88,6 @@ public class RoundPane extends Pane {
 		}
 
 		template1.setTransparent();
-//		template1.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template1);
 
 		for (int j = 0; j < d.get(2).size(); j++) { // gets all leftover dice from the round
@@ -101,7 +98,6 @@ public class RoundPane extends Pane {
 		}
 
 		template2.setTransparent();
-//		template2.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template2);
 
 		for (int j = 0; j < d.get(3).size(); j++) { // gets all leftover dice from the round
@@ -112,7 +108,6 @@ public class RoundPane extends Pane {
 		}
 
 		template3.setTransparent();
-//		template3.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template3);
 
 		for (int j = 0; j < d.get(4).size(); j++) { // gets all leftover dice from the round
@@ -123,7 +118,6 @@ public class RoundPane extends Pane {
 		}
 
 		template4.setTransparent();
-//		template4.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template4);
 
 		for (int j = 0; j < d.get(5).size(); j++) { // gets all leftover dice from the round
@@ -134,7 +128,6 @@ public class RoundPane extends Pane {
 		}
 
 		template5.setTransparent();
-//		template5.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template5);
 
 		for (int j = 0; j < d.get(6).size(); j++) { // gets all leftover dice from the round
@@ -145,7 +138,6 @@ public class RoundPane extends Pane {
 		}
 
 		template6.setTransparent();
-//		template6.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template6);
 
 		for (int j = 0; j < d.get(7).size(); j++) { // gets all leftover dice from the round
@@ -156,7 +148,6 @@ public class RoundPane extends Pane {
 		}
 
 		template7.setTransparent();
-//		template7.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template7);
 
 		for (int j = 0; j < d.get(8).size(); j++) { // gets all leftover dice from the round
@@ -167,7 +158,6 @@ public class RoundPane extends Pane {
 		}
 
 		template8.setTransparent();
-//		template8.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template8);
 
 		for (int j = 0; j < d.get(9).size(); j++) { // gets all leftover dice from the round
@@ -178,7 +168,6 @@ public class RoundPane extends Pane {
 		}
 
 		template9.setTransparent();
-		//template9.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template9);
 		this.getChildren().addAll(trackSpaces);
 
@@ -189,7 +178,7 @@ public class RoundPane extends Pane {
 		String y;
 		int x;
 		dices.clear();
-		
+
 		if (g < d.size()) {
 			g++;
 			for (int j = 0; j < d.size(); j++) {
@@ -201,39 +190,29 @@ public class RoundPane extends Pane {
 			}
 			if (b == 0 && g < dices.size()) {
 				template0.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 1 && g < dices.size()) {
+			} else if (b == 1 && g < dices.size()) {
 				template1.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 2 && g < dices.size()) {
+			} else if (b == 2 && g < dices.size()) {
 				template2.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 3 && g < dices.size()) {
+			} else if (b == 3 && g < dices.size()) {
 				template3.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 4 && g < dices.size()) {
+			} else if (b == 4 && g < dices.size()) {
 				template4.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 5 && g < dices.size()) {
+			} else if (b == 5 && g < dices.size()) {
 				template5.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 6 && g < dices.size()) {
+			} else if (b == 6 && g < dices.size()) {
 				template6.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 7 && g < dices.size()) {
+			} else if (b == 7 && g < dices.size()) {
 				template7.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 8 && g < dices.size()) {
+			} else if (b == 8 && g < dices.size()) {
 				template8.getChildren().addAll(dices.get(g));
-			} else
-			if (b == 9 && g < dices.size()) {
+			} else if (b == 9 && g < dices.size()) {
 				template9.getChildren().addAll(dices.get(g));
 			}
 		} else {
 			g = -1;
 		}
-		
-		
+
 	}
 
 	public DicePane getDicePane() {

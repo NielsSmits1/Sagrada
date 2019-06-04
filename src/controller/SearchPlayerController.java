@@ -27,7 +27,6 @@ public class SearchPlayerController {
 		self = this.hc.getSelf();
 		this.RefreshChoiceBox();
 
-//		player = new Player(username);
 	}
 
 
@@ -99,17 +98,7 @@ public class SearchPlayerController {
 		ch.addChallengee(player);
 	}
 
-//	public void showPlayerInformation() {
-//	
-//
-//		searchPlayerPane.getChallenge().setOnAction(e -> System.out.println("ch"));
-//		searchPlayerPane.getStats().setOnAction(e -> System.out.println("stats"));
-//		
-//
-//		
-//	}
 	public String getStatsPlayer() {
-//		player.setDifferendPlayer(username);
 		String stats = "Aantal gewonnen en verloren potjes: " + player.getTimesWon() + " : " + player.getTimesLost()
 				+ "\nHoogst behaalde score: " + player.getHighScore() + "\nMeest geplaatste dobbelsteenkleur: "
 				+ player.getMostPlacedDiceColor() + "\nMeest geplaatste dobbelsteenwaarde: "
@@ -120,7 +109,6 @@ public class SearchPlayerController {
 
 	private void showStats() {
 		alert.setHeaderText(getStatsPlayer());
-		// test
 		alert.showAndWait();
 	}
 

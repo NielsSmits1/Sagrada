@@ -123,12 +123,6 @@ public class CardController {
 		return toolcard.alreadyBought(gamecontroller.getIdGame(), idtoolcard);
 	}
 	
-//	public void setGameCards() {
-//		for (int i = 0; i < getToolcards().size(); i++) {
-//			gamecontroller.setGameCard(getToolcards().get(i));
-//		}
-//	}
-	
 	public int getAmountPlaced(int id) {
 		return (int)toolcard.getTokensPlaced(id);
 	}

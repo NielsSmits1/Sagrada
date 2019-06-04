@@ -229,10 +229,6 @@ public class Game {
 	}
 
 	private void newRound() {
-		// doe iets met de overgebleven dice(s)
-		// en ook iets met roundtrack
-		// this.addRoundTrack(gamePane.getRemainingDices());
-		//forwardSeqNr();
 		if (roundNumber > 10) {
 			showWinnerScreen();
 		} else {

@@ -2,7 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 
-
 import View.HomePane;
 import View.MyScene;
 import javafx.animation.KeyFrame;
@@ -29,7 +28,7 @@ public class HomeController {
 	private Game lastg;
 
 	public HomeController(Player self, MenubarController mbc) {
-		
+
 		this.mbc = mbc;
 		this.self = self;
 		cpp = new ChallengerController(this);
@@ -39,16 +38,13 @@ public class HomeController {
 
 		home = new HomePane(sp.getSearchPlayerPane(), cpp.getChallengerPane(), cp.getChallengesPane(),
 				lc.getLeaderboardPane());
-		
-		
+
 		home.getPlayers().setOnAction(e -> lc.setPlayers1());
 		home.getPlayersPlayed().setOnAction(e -> lc.setPlayers2());
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
 		home.getAllGames().setOnAction(e -> lc.setGames1());
 		home.getAllGamesDate().setOnAction(e -> lc.setGames2());
-		
-		
-		
+
 		openGames();
 		startTimeline();
 
@@ -64,26 +60,25 @@ public class HomeController {
 
 	private void refresh() {
 		try {
-		cpp.refresh();
-		cp.refresh();
-		self.checkChallenger();}
-		catch(Exception e) {
-			
+			cpp.refresh();
+			cp.refresh();
+			self.checkChallenger();
+		} catch (Exception e) {
+
 		}
 
 	}
-	
+
 	private Game openGames() {
 		// open the games that are being played, or are ready to be played
 		for (Game g : self.getOpenGames()) {
 			mbc.addGame(g);
 			game = g;
 			this.lastg = g;
-			
+
 		}
 		return game;
 	}
-	
 
 	public String getUsername() {
 		return self.getUsername();
@@ -134,9 +129,6 @@ public class HomeController {
 
 		return home;
 	}
-//	public void showHomePane() {
-//		home.createHomePane(pc, scene);
-//	}
 
 	public HomePane getHome() {
 		return home;
@@ -149,7 +141,5 @@ public class HomeController {
 	public Game getGame() {
 		return game;
 	}
-	
-	
 
 }

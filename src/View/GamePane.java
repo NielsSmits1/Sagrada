@@ -521,8 +521,6 @@ public class GamePane extends BorderPane {
 		alert.setTitle("Scorebord");
 		alert.setHeaderText(null);
 		alert.setContentText(winner);
-		//alert.setOnHidden(evt -> Platform.exit());
-
 	    alert.show();
 	}
 

@@ -46,7 +46,6 @@ public class Dice {
 
 	public void setEyes() {
 		eyes = r.nextInt((6))+1;
-//		return eyes;
 	}
 	
 	public void setEyes(int eyes) {
