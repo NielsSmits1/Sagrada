@@ -211,6 +211,7 @@ public class Player {
 	}
 
 	public boolean checkLogin() {
+		 Db.setConn();
 		if (getSelect().isEmpty()) {
 			return false;
 		} else {
