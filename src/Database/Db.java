@@ -25,7 +25,6 @@ public class Db {
 	public static ArrayList<ArrayList<Object>> select(String Query) {
 		Statement stmt = null;
 		try {
-			setConn();
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(Query);
 
