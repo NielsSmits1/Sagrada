@@ -160,7 +160,5 @@ public class Challenge {
 		
 	}
 	
-	public int getPlayerId(String username, int idgame) {
-		return (int)Db.select("select idplayer from player where username = '" + username +"' AND game_idgame = " + idgame +"").get(0).get(0);
-	}
+	
 }
