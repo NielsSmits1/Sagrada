@@ -14,7 +14,7 @@ public class Challenge {
 	private String playerStatus;
 	private Random random;
 	public Challenge() {
-		
+		random = new Random();
 	}
 	public Challenge(Player self) {
 		this.self = self;
@@ -158,5 +158,9 @@ public class Challenge {
 			Db.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES (" + (int)newlyGenerated.get(i).get(0) + ", " + idplayer +");");
 		}
 		
+	}
+	
+	public int getPlayerId(String username, int idgame) {
+		return (int)Db.select("select idplayer from player where username = '" + username +"' AND game_idgame = " + idgame +"").get(0).get(0);
 	}
 }

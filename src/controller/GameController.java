@@ -366,6 +366,7 @@ public class GameController {
 	}
 	
 	public void setDicesTrack() {
+		
 		gamePane.setRoundTrack(game.getLeftovers());
 		
 	}

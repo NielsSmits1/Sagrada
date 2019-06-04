@@ -55,8 +55,8 @@ public class RoundTrack extends Pane {
 		totalBox = new VBox();
 		
 		buildTrack();
-		buildButtons(d);
-		setRoundTrack(d);
+		buildButtons();
+		setRoundTrack(this.d);
 		
 		pane.getChildren().addAll(round);
 		
@@ -67,7 +67,7 @@ public class RoundTrack extends Pane {
 		this.getChildren().addAll(roundBox);
 	}
 	
-	public void buildButtons(ArrayList<ArrayList<Dice>> d) {
+	public void buildButtons() {
 		nextDice1 = new Button("  Volg 1  ");
 		
 		nextDice1.setOnAction(e -> round.getNextDice(0, d.get(0)));
@@ -122,8 +122,8 @@ public class RoundTrack extends Pane {
 	
 	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
 		this.d = d;
-		round.setRoundTrack(d);
-		buildButtons(d);
+		round.setRoundTrack(this.d);
+		buildButtons();
 	}
 	
 	

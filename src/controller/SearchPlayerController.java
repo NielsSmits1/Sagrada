@@ -61,13 +61,16 @@ public class SearchPlayerController {
 				g.setGameId(c);
 			}
 			if(!g.alreadyInGame(self)) {
-				self.setStandardScore();
 				g.addPlayer(self, "Uitdager", g.getRandomColor(), 1,1);
+				self.setId(g.getPlayerId(self.getUsername()));
+				self.setStandardScore();
 				g.startGame();
 				challenge.generateRandomToolcards(g.getIdGame());
 				challenge.generateRandomObjectcard(g.getIdGame());
 				challenge.addOptions(self.getPlayerId(), g.getIdGame());
+				System.out.println(self.getPlayerId());
 			}
+			player.setId(g.getPlayerId(self.getUsername()));
 			player.setStandardScore();
 			g.addPlayer(player, "Uitgedaagde", g.getRandomColor(), g.getHighestSeNumber() , 0);
 			challenge.addOptions(player.getPlayerId(), g.getIdGame());
@@ -121,6 +124,8 @@ public class SearchPlayerController {
 		SearchPlayerPane spp = this.spp;
 		return spp;
 	}
+	
+	
 	
 	
 
