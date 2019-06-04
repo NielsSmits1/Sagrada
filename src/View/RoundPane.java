@@ -153,6 +153,7 @@ public class RoundPane extends Pane {
 		template9.setTransparent();
 		//template9.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template9);
+		this.getChildren().addAll(trackSpaces);
 
 	}
 
@@ -160,9 +161,6 @@ public class RoundPane extends Pane {
 		int z;
 		String y;
 		int x;
-
-		trackSpaces = new HBox();
-		
 		dices.clear();
 		
 		if (g < d.size()) {

@@ -13,13 +13,11 @@ public class ObjectiveCard {
 	private int card1;
 	private int card2;
 	private int card3;
-	private Db database;
 	private CardController controller;
 	
 	//constructor
 	public ObjectiveCard(CardController tc) {
 		random = new Random();
-		database = new Db();
 		controller = tc;
 	}
 	
@@ -38,33 +36,37 @@ public class ObjectiveCard {
 	public ArrayList<ArrayList<Object>> getObjectivecardsFromDatabase() {
 		String query = ("SELECT idpublic_objectivecard FROM public_objectivecard WHERE idpublic_objectivecard = " + card1
 				+ " OR idpublic_objectivecard = " + card2 + " OR idpublic_objectivecard = " + card3+ ";");
-		return database.select(query);
+		return Db.select(query);
 	}
 	
 	public ArrayList<Integer> getIds(){
 		ArrayList<Integer> Ids = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
-			Ids.add((int)database.select("SELECT idpublic_objectivecard FROM sharedpublic_objectivecard WHERE idgame = " + controller.getIdGame() + "").get(i).get(0));
+			Ids.add((int)Db.select("SELECT idpublic_objectivecard FROM sharedpublic_objectivecard WHERE idgame = " + controller.getIdGame() + "").get(i).get(0));
 		}
 		return Ids;
 		
 	}
 	
-	public void insertObjectivecard() {
-		generateRandomInts();
-		database.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card1 + "," + controller.getIdGame() + ");");
-		database.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card2 + "," + controller.getIdGame() + ");");
-		database.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card3 + "," + controller.getIdGame() + ");");
-	}
-	private void generateRandomInts() {
-		card1 = random.nextInt(10) + 1;
-		card2 = random.nextInt(10) + 1;
-		card3 = random.nextInt(10) + 1;
-		while(card2 == card1) {
-			card2 = random.nextInt(10) + 1;
-		}
-		while(card3 == card1) {
-			card3 = random.nextInt(10) + 1;
-		}
-	}
+//	public void insertObjectivecard() {
+//		generateRandomInts();
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card1 + "," + controller.getIdGame() + ");");
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card2 + "," + controller.getIdGame() + ");");
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card3 + "," + controller.getIdGame() + ");");
+//	}
+//	private void generateRandomInts() {
+//		card1 = random.nextInt(10) + 1;
+//		card2 = random.nextInt(10) + 1;
+//		card3 = random.nextInt(10) + 1;
+//		while(card2 == card1) {
+//			card2 = random.nextInt(10) + 1;
+//		}
+//		while(card3 == card1 || card3 == card2) {
+//			card3 = random.nextInt(10) + 1;
+//		}
+//		
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card1 + "," + controller.getIdGame() + ");");
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card2 + "," + controller.getIdGame() + ");");
+//		Db.cud("INSERT INTO sharedpublic_objectivecard (idpublic_objectivecard, idgame) VALUES (" + card3 + "," + controller.getIdGame() + ");");
+//	}
 }

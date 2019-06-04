@@ -31,7 +31,6 @@ public class HomeController {
 	private Player player;
 	private Player self;
 
-	private Alert alert = new Alert(AlertType.INFORMATION);
 	private Game game;
 	private Game lastg;
 
@@ -51,6 +50,7 @@ public class HomeController {
 		home.getPlayersWins().setOnAction(e -> lc.setPlayers3());
 		home.getAllGames().setOnAction(e -> lc.setGames1());
 		home.getAllGames().setOnAction(e -> lc.setGames2());
+		home.getRefreshMenu().setOnAction(e -> this.addNewGame());
 		
 		
 		openGames();
@@ -69,9 +69,11 @@ public class HomeController {
 	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
-		addNewGame();
+		self.checkChallenger();
+
 	}
 	private void addNewGame() {
+
 		for(Game g : self.getNewGames(lastg)) {
 			mbc.addGame(g);
 			this.lastg = g;

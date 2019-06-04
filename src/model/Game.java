@@ -8,9 +8,7 @@ import Database.Db;
 import controller.GameController;
 
 public class Game {
-	private Db database = new Db();
 	private ArrayList<ArrayList<Object>> diceData;
-	private ArrayList<Round> rounds;
 	private ArrayList<Dice> diceArray;
 	private ArrayList<Dice> playableDices;
 	private ArrayList<Player> players = new ArrayList<Player>();
@@ -38,8 +36,11 @@ public class Game {
 		r = new Random();
 		diceArray = new ArrayList<>();
 		token = new ArrayList<Gamefavortoken>();
-		database = new Db();
 
+	}
+	
+	public int getPlayerId(String username) {
+		return (int)Db.select("select idplayer from player where username = '" + username +"' AND game_idgame = " + idgame +"").get(0).get(0);
 	}
 
 	public void startGame() {
@@ -80,7 +81,7 @@ public class Game {
 	}
 
 	public Player setWhoseTurnItIs() {
-		String turnplayer = (String) database
+		String turnplayer = (String) Db
 				.select("select username from player where isCurrentPlayer = 1 and game_idgame = " + this.idgame).get(0)
 				.get(0);
 		for (Player p : players) {
@@ -93,17 +94,17 @@ public class Game {
 	}
 
 	private void updateCurrentPlayer() {
-		database.cud("update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame + " and username = '"
+		Db.cud("update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame + " and username = '"
 				+ turnPlayer.getUsername() + "'");
 	}
 
 	private void addToTrack() {
-		ArrayList<ArrayList<Object>> leftoverDices = database.select(
+		ArrayList<ArrayList<Object>> leftoverDices = Db.select(
 				"select g.dienumber, g.diecolor FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = "
 						+ idgame + " AND g.roundtrack IS NULL AND g.round = " + roundNumber
 						+ " AND player_idplayer IS NULL;");
 		for (int i = 0; i < leftoverDices.size(); i++) {
-			database.cud("UPDATE gameDie g SET roundtrack = " + roundNumber + " WHERE g.dienumber = "
+			Db.cud("UPDATE gameDie g SET roundtrack = " + roundNumber + " WHERE g.dienumber = "
 					+ leftoverDices.get(i).get(0) + " AND g.diecolor = '" + leftoverDices.get(i).get(1)
 					+ "' AND idgame = " + idgame + ";");
 		}
@@ -111,45 +112,86 @@ public class Game {
 
 	public void setNewCurrentPlayer() {
 		int numberOfPlayers = players.size();
-		if (turnNumber == numberOfPlayers) {// 2-3-4
-			// dan is de eerste loop voorbij
-			backwartsSeqNr();
-			setNewCurrentPlayerDB();
-
-		} else if (turnNumber == numberOfPlayers * 2) {// 4-6-8
+		if (turnNumber == numberOfPlayers * 2) {// 4-6-8
 			// dan is een ronde voorbij
 
 			// controller.setDicesTrack();
-			addToTrack();
+			
 
 			newRound();
 
 			turnNumber = getTurnNumber();
 
 		} else {
+			updateSeNumber();
 			setNewCurrentPlayerDB();
 		}
 	}
-
+	private void updateSe(int num) {
+		Db.cud("update player set seqnr = " + num + " where game_idgame = " + this.idgame + " and username = '" + this.turnPlayer.getUsername() + "'");
+	}
+	private void updateSeNumber() {
+		int curn = (int)Db.select("select seqnr from player where game_idgame = " + this.idgame + " and username = '" + this.turnPlayer.getUsername() + "'").get(0).get(0);
+		switch(curn) {
+		case 1: 
+			updateSe(players.size() * 2);
+			break;
+		
+		case 2: 
+			if(players.size() == 2) {
+				updateSe(3);
+			}else if(players.size() == 3) {
+				updateSe(5);
+			}else {
+				updateSe(7);
+			}break;
+		case 3:
+			if(players.size() == 2) {
+				updateSe(1);
+			}else if(players.size() == 3) {
+				updateSe(4);
+			}else {
+				updateSe(6);
+			}
+			break;
+		case 4: 
+			if(players.size() == 4) {
+				updateSe(2);
+			}else {
+				updateSe(5);
+			}
+			break;
+		case 5: 
+			if(players.size() == 3) {
+				updateSe(1);
+			}else {
+				updateSe(3);
+			}
+			break;
+		case 6: 
+			if(players.size() == 3) {
+				updateSe(3);
+			}else {
+				updateSe(2);
+			}
+			break;
+		case 7: 
+			updateSe(1);
+			break;
+		case 8: 
+			updateSe(4);
+		}
+	}
 	private void forwardSeqNr() {
 		int maxNumber = 1;
-		database.cud("Update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame);
-		for (ArrayList<Object> a : database.select(
-				"select username, seqnr from player where game_idgame = " + this.idgame + " order by seqnr desc")) {// get
-																													// players
-																													// in
-																													// game,
-																													// DEZE
-																													// QUERY
-																													// BESTAAT
-																													// AL
-																													// IN
-																													// GAME
+		Db.cud("Update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame);
+		for (ArrayList<Object> a : Db.select(
+				"select username, seqnr from player where game_idgame = " + this.idgame + " order by seqnr desc")) {
 			if ((int) a.get(1) == players.size() * 2) {
-				database.cud("update player set seqnr = " + players.size() + " where game_idgame = " + this.idgame
+				Db.cud("update player set seqnr = " + players.size() + " where game_idgame = " + this.idgame
 						+ " and username = '" + (String) a.get(0) + "'");
 			} else {
-				database.cud("update player set seqnr = " + maxNumber + " where game_idgame = " + this.idgame
+				Db.cud("update player set seqnr = " + maxNumber + " where game_idgame = " + this.idgame
 						+ " and username = '" + (String) a.get(0) + "'");
 				maxNumber += 1;
 			}
@@ -158,24 +200,15 @@ public class Game {
 		// updte player set senr = 2 where senr = 6
 		// updt pl set se nr = 3 whe sen = 5
 		// updt pl set se = 4 where se 8
-		database.cud("update player set isCurrentPlayer = 1 where game_idgame = " + this.idgame + " and seqnr = 1");
+		Db.cud("update player set isCurrentPlayer = 1 where game_idgame = " + this.idgame + " and seqnr = 1");
 	}
 
 	private void backwartsSeqNr() {
 
 		int maxNumber = turnNumber;
-		for (ArrayList<Object> a : database
-				.select("select username from player where game_idgame = " + this.idgame + " order by seqnr desc")) {// get
-																														// players
-																														// in
-																														// game,
-																														// DEZE
-																														// QUERY
-																														// BESTAAT
-																														// AL
-																														// IN
-																														// GAME
-			database.cud("update player set seqnr = " + (maxNumber + 1) + " where game_idgame = " + this.idgame
+		for (ArrayList<Object> a : Db
+				.select("select username from player where game_idgame = " + this.idgame + " order by seqnr desc")) {
+			Db.cud("update player set seqnr = " + (maxNumber + 1) + " where game_idgame = " + this.idgame
 					+ " and username = '" + (String) a.get(0) + "'");
 			maxNumber += 1;
 		}
@@ -184,7 +217,7 @@ public class Game {
 
 	private void setNewCurrentPlayerDB() {
 		updateCurrentPlayer();
-		database.cud("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = "
+		Db.cud("update player set isCurrentPlayer = 1 where seqnr = " + (turnNumber + 1) + " and game_idgame = "
 				+ this.idgame);
 		turnPlayer = setWhoseTurnItIs();
 	}
@@ -193,28 +226,27 @@ public class Game {
 		// doe iets met de overgebleven dice(s)
 		// en ook iets met roundtrack
 		// this.addRoundTrack(gamePane.getRemainingDices());
-		forwardSeqNr();
+		//forwardSeqNr();
 		if (roundNumber > 9) {
-
+			showWinnerScreen();
 		} else {
 			this.roundNumber = getLastRound();
 		}
 	}
 
 	private int getTurnNumber() {
-		return (int) database
+		return (int) Db
 				.select("select seqnr from player where isCurrentPlayer = 1 and game_idgame = " + this.idgame).get(0)
 				.get(0);
 	}
 
 	private int getLastRound() {
-		ArrayList<ArrayList<Object>> round = database
+		ArrayList<ArrayList<Object>> round = Db
 				.select("select max(roundtrack) from gamedie where idgame = " + this.idgame);
 		if (round.get(0).get(0) == null) {
 			// als null - geen rondes: begin bij ronde 1
 			return 1;
 		} else if ((int) round.get(0).get(0) == 10) {
-			showWinnerScreen();
 			return 10;
 		} else {
 			return (int) round.get(0).get(0) + 1;
@@ -223,8 +255,9 @@ public class Game {
 	}
 
 	public ArrayList<ArrayList<Object>> showWinnerScreen() {
-		return database.select(
-				"select p.username, p.score from player p where game_idgame = " + idgame + " order by p.score desc");
+		Db.cud("update player set playstatus_playstatus = 'Uitgespeeld' where game_idgame = " + this.idgame);
+		return Db.select(
+				"select p.username, p.score, idplayer seqnr from player p where game_idgame = " + idgame + " order by p.score desc");
 	}
 
 	public ArrayList<Player> getPlayers() {
@@ -243,14 +276,14 @@ public class Game {
 	}
 
 	public void insertPlayer(Player p, String status, String color, long senr, int cplayer) {
-		database.cud(
+		Db.cud(
 				"INSERT INTO PLAYER(username,game_idgame,playstatus_playstatus,isCurrentPlayer,private_objectivecard_color, seqnr) VALUES ('"
 						+ p.getUsername() + "', " + this.idgame + " , '" + status + "', " + cplayer + ", '" + color
 						+ "', " + senr + ")");
 	}
 
 	public ArrayList<ArrayList<Object>> getColorsFromGame(int idgame) {
-		return database.select("select private_objectivecard_color FROM player WHERE game_idgame ='" + idgame + "'");
+		return Db.select("select private_objectivecard_color FROM player WHERE game_idgame ='" + idgame + "'");
 	}
 
 	public String getRandomColor() {
@@ -278,21 +311,21 @@ public class Game {
 	}
 
 	public ArrayList<ArrayList<Object>> getPlayersInGame() {
-		return database.select(
+		return Db.select(
 				"select idplayer, username, seqnr, private_objectivecard_color, score, patterncard_idpatterncard from player where game_idgame = "
 						+ this.idgame);
 
 	}
 
 	public long getNewId() {
-		return (long) database.select(
+		return (long) Db.select(
 				"select (idplayer+1) AS newPlayerId FROM tjpmsalt_db2.player ORDER BY game_idgame DESC LIMIT 1;").get(0)
 				.get(0);
 	}
 
 	// gets all die information where id game equals the new game.
 	public ArrayList<ArrayList<Object>> getselect() {
-		return database.select("select * FROM tjpmsalt_db2.gamedie WHERE idgame =" + idgame + " ORDER BY dienumber;");
+		return Db.select("select * FROM tjpmsalt_db2.gamedie WHERE idgame =" + idgame + " ORDER BY dienumber;");
 	}
 
 	// adds all dices to a dicearraylist.
@@ -329,12 +362,12 @@ public class Game {
 
 	// inserts standard values for dices for a new game.
 	public void insertDicesIntoDatabase() {
-		database.cud(
+		Db.cud(
 				"INSERT INTO gamedie (idgame, dienumber, diecolor) select " + idgame + ", number, color FROM die;");
 	}
 
 	public void updateEyes(int eyes, int dienumber, String color) {
-		database.cud("UPDATE gamedie SET eyes = " + eyes + " WHERE idgame = " + idgame + " AND dienumber = " + dienumber
+		Db.cud("UPDATE gamedie SET eyes = " + eyes + " WHERE idgame = " + idgame + " AND dienumber = " + dienumber
 				+ " AND diecolor = '" + color + "';");
 	}
 
@@ -349,29 +382,29 @@ public class Game {
 				playableDices.remove(i);
 			}
 		}
-		database.cud("Update gamedie SET ROUND = null WHERE dienumber = " + dienumber + " AND diecolor = '" + color
+		Db.cud("Update gamedie SET ROUND = null WHERE dienumber = " + dienumber + " AND diecolor = '" + color
 				+ "' AND idgame = " + idgame + "");
-		database.cud("update gamedie SET Round = " + roundNumber + " WHERE eyes = " + chosenvalue + " AND idgame = "
+		Db.cud("update gamedie SET Round = " + roundNumber + " WHERE eyes = " + chosenvalue + " AND idgame = "
 				+ idgame + " AND ROUND IS NULL ORDER BY RAND() LIMIT 1");
 	}
 
 	public void reDraw() {
-		ArrayList<ArrayList<Object>> leftoverDices = database.select(
+		ArrayList<ArrayList<Object>> leftoverDices = Db.select(
 				"select g.dienumber, g.diecolor, g.eyes FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = "
 						+ idgame + " AND g.roundtrack IS NULL AND g.round = " + roundNumber
 						+ " AND player_idplayer IS NULL;");
 		int amountToBeDrawed = leftoverDices.size();
-		database.cud(
+		Db.cud(
 				"Update gamedie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor SET ROUND = null WHERE g.idgame = "
 						+ idgame + " AND g.roundtrack IS NULL AND g.round = " + roundNumber
 						+ " AND player_idplayer IS NULL;");
-		database.cud("Update gamedie set round = " + roundNumber + " where idgame = " + idgame
+		Db.cud("Update gamedie set round = " + roundNumber + " where idgame = " + idgame
 				+ " AND round IS NULL ORDER BY RAND() LIMIT " + amountToBeDrawed + "");
 	}
 
 	public void setPlayableDices() {
 		playableDices = new ArrayList<>();
-		ArrayList<ArrayList<Object>> leftoverDices = database.select(
+		ArrayList<ArrayList<Object>> leftoverDices = Db.select(
 				"select g.dienumber, g.diecolor, g.eyes FROM gameDie g LEFT JOIN playerframefield p ON g.idgame = p.idgame AND g.dienumber = p.dienumber AND g.diecolor = p.diecolor WHERE g.idgame = "
 						+ idgame + " AND g.roundtrack IS NULL AND g.round = " + roundNumber
 						+ " AND player_idplayer IS NULL;");
@@ -381,13 +414,13 @@ public class Game {
 						(int) leftoverDices.get(i).get(2)));
 			}
 		} else {
-			ArrayList<ArrayList<Object>> randomDice = database
+			ArrayList<ArrayList<Object>> randomDice = Db
 					.select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame
 							+ " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size() * 2) + 1) + "");
 			for (int i = 0; i < randomDice.size(); i++) {
 				playableDices.add(new Dice((int) randomDice.get(i).get(0), (String) randomDice.get(i).get(1),
 						(int) randomDice.get(i).get(2)));
-				database.cud("UPDATE gamedie SET round = " + roundNumber + " WHERE idgame = " + idgame
+				Db.cud("UPDATE gamedie SET round = " + roundNumber + " WHERE idgame = " + idgame
 						+ " AND dienumber = " + playableDices.get(i).getDieNumber() + " AND diecolor = '"
 						+ playableDices.get(i).getDieColor() + "'");
 			}
@@ -409,14 +442,14 @@ public class Game {
 	}
 
 	public ArrayList<ArrayList<Object>> getAvailableGames(String u) {
-		return database.select(
+		return Db.select(
 				"select game_idgame, COUNT(game_idgame) AS amountPlayers FROM player WHERE game_idgame IN (select game_idgame FROM player where username = '"
 						+ u
 						+ "' AND playstatus_playstatus = 'Uitdager') GROUP BY game_idgame HAVING amountPlayers < 4");
 	}
 
 	public ArrayList<ArrayList<Object>> getRejectedGames(String u) {
-		return database.select(
+		return Db.select(
 				"select game_idgame FROM player WHERE game_idgame in (select game_idgame FROM player where username = '"
 						+ u + "' AND playstatus_playstatus = 'Uitdager') AND playstatus_playstatus = 'geweigerd'");
 	}
@@ -454,7 +487,7 @@ public class Game {
 	public void fillTokenArrayList() {
 		for (int i = 1; i < 25; i++) {
 			token.add(new Gamefavortoken(i));
-			database.cud("INSERT INTO gamefavortoken (idfavortoken, idgame) VALUES (" + i + "," + idgame + ")");
+			Db.cud("INSERT INTO gamefavortoken (idfavortoken, idgame) VALUES (" + i + "," + idgame + ")");
 		}
 	}
 
@@ -462,7 +495,7 @@ public class Game {
 		for (Player p : players) {
 			if (p.getSelf()) {
 				p.setTokenAmount(p.getPc().getDifficulty());
-				database.cud("UPDATE gamefavortoken SET idplayer = " + p.getPlayerId()
+				Db.cud("UPDATE gamefavortoken SET idplayer = " + p.getPlayerId()
 						+ " WHERE idplayer is null AND idgame = " + idgame + " LIMIT " + p.getPc().getDifficulty()
 						+ ";");
 			}
@@ -471,28 +504,24 @@ public class Game {
 
 	public void updateTokenArrayList(int difficulty) {
 		for (int i = 1; i <= difficulty; i++) {
-			database.cud("UPDATE gamefavortoken SET idplayer = " + yourself + " WHERE idFavortoken = " + i
+			Db.cud("UPDATE gamefavortoken SET idplayer = " + yourself + " WHERE idFavortoken = " + i
 					+ " AND idgame = " + idgame + ";");
 		}
 	}
 
-	public void updatePlayedTokens(int amountPlayed) {
-
-	}
-
 	public void addTokensToGametoolcard(int tokensGone, int toolcardid, int playerid) {
-		database.cud("UPDATE gamefavortoken SET gametoolcard = " + getGametoolcard(toolcardid) + ", round = "
+		Db.cud("UPDATE gamefavortoken SET gametoolcard = " + getGametoolcard(toolcardid) + ", round = "
 				+ roundNumber + " WHERE idgame = " + idgame + " AND idplayer = " + playerid
 				+ " AND gametoolcard is null LIMIT " + tokensGone + "");
 	}
 
 	public int getLeftoverTokens() {
-		return (int) database.select("select count(*) FROM gamefavortoken WHERE idgame = " + idgame + " AND idplayer = "
+		return (int) Db.select("select count(*) FROM gamefavortoken WHERE idgame = " + idgame + " AND idplayer = "
 				+ yourself + " AND round is null;").get(0).get(0);
 	}
 
 	public int getGametoolcard(int toolcardid) {
-		return (int) database.select("select gametoolcard from gametoolcard WHERE idgame = " + idgame
+		return (int) Db.select("select gametoolcard from gametoolcard WHERE idgame = " + idgame
 				+ " AND idtoolcard = " + toolcardid + "").get(0).get(0);
 	}
 
@@ -503,22 +532,22 @@ public class Game {
 	public void addOptionsToDB(ArrayList<Integer> randomIDS) {
 		for (int i = 0; i < randomIDS.size(); i++) {
 			if (i >= 12) {
-				database.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES ("
+				Db.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES ("
 						+ randomIDS.get(i) + ", " + players.get(3).getPlayerId() + ")");
 				continue;
 			}
 			if (i >= 8) {
-				database.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES ("
+				Db.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES ("
 						+ randomIDS.get(i) + ", " + players.get(2).getPlayerId() + ")");
 				continue;
 			}
 			if (i >= 4) {
-				database.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES ("
+				Db.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES ("
 						+ randomIDS.get(i) + ", " + players.get(1).getPlayerId() + ")");
 				continue;
 			}
 			if (i >= 0) {
-				database.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES ("
+				Db.cud("INSERT INTO patterncardoption (patterncard_idpatterncard, player_idplayer) VALUES ("
 						+ randomIDS.get(i) + ", " + players.get(0).getPlayerId() + ")");
 				continue;
 			}
@@ -543,7 +572,7 @@ public class Game {
 		for (Player p : players) {
 			if (p.getSelf()) {
 				for (int i = 0; i < 4; i++) {
-					ownOptions.add((int) database
+					ownOptions.add((int) Db
 							.select("select patterncard_idpatterncard FROM patterncardoption WHERE player_idplayer = "
 									+ p.getPlayerId() + ";")
 							.get(i).get(0));
@@ -566,7 +595,7 @@ public class Game {
 	public ArrayList<Integer> getChosenIds() {
 		ArrayList<Integer> chosenId = new ArrayList<Integer>();
 		for (int i = 0; i < players.size(); i++) {
-			chosenId.add((int) database
+			chosenId.add((int) Db
 					.select("select patterncard_idpatterncard FROM player WHERE game_idgame = " + idgame + ";").get(i)
 					.get(0));
 		}
@@ -596,7 +625,7 @@ public class Game {
 	}
 
 	public boolean checkIfFilled() {
-		if (database.select(
+		if (Db.select(
 				"select patterncardoption.patterncard_idpatterncard FROM patterncardoption LEFT JOIN player ON player_idplayer = idplayer WHERE game_idgame = "
 						+ idgame + ";")
 				.isEmpty()) {
@@ -606,8 +635,8 @@ public class Game {
 	}
 
 	public void createNewGame() {
-		database.cud("insert into game(creationdate) values (now())");
-		this.idgame = (int) database.select("select max(idgame) from game").get(0).get(0);
+		Db.cud("insert into game(creationdate) values (now())");
+		this.idgame = (int) Db.select("select max(idgame) from game").get(0).get(0);
 
 	}
 
@@ -616,7 +645,7 @@ public class Game {
 			if (p.getSelf()) {
 				p.setPatternCardId(id);
 				p.setPc();
-				database.cud("UPDATE player SET patterncard_idpatterncard = " + id + " WHERE idplayer = "
+				Db.cud("UPDATE player SET patterncard_idpatterncard = " + id + " WHERE idplayer = "
 						+ p.getPlayerId() + ";");
 			}
 		}
@@ -628,7 +657,7 @@ public class Game {
 			if (p.getSelf()) {
 				p.setPatternCardId(getHighestId());
 				p.setPc();
-				database.cud("UPDATE player SET patterncard_idpatterncard = " + getHighestId() + " WHERE idplayer = "
+				Db.cud("UPDATE player SET patterncard_idpatterncard = " + getHighestId() + " WHERE idplayer = "
 						+ p.getPlayerId() + ";");
 			}
 		}
@@ -636,7 +665,7 @@ public class Game {
 	}
 
 	private int getHighestId() {
-		return (int) database.select("select idpatterncard FROM patterncard order by idpatterncard DESC LIMIT 1;")
+		return (int) Db.select("select idpatterncard FROM patterncard order by idpatterncard DESC LIMIT 1;")
 				.get(0).get(0);
 	}
 
@@ -651,7 +680,7 @@ public class Game {
 	}
 
 	public long getHighestSeNumber() {
-		return (long) database.select("select max(seqnr) + 1 from player where game_idgame = " + this.idgame).get(0)
+		return (long) Db.select("select max(seqnr) + 1 from player where game_idgame = " + this.idgame).get(0)
 				.get(0);
 	}
 
@@ -662,9 +691,8 @@ public class Game {
 
 	public ArrayList<ArrayList<Dice>> getLeftovers() {
 		ArrayList<ArrayList<Dice>> dicePerRound = new ArrayList<>();
-
+		addToTrack();
 		for (int j = 1; j < 11; j++) {
-			getRoundDice(j);
 			ArrayList<Dice> dices = new ArrayList<Dice>();
 			for (int i = 0; i < getRoundDice(j).size(); i++) {
 				dices.add(new Dice((int) getRoundDice(j).get(i).get(0), (String) getRoundDice(j).get(i).get(1),
@@ -677,19 +705,13 @@ public class Game {
 	}
 
 	public ArrayList<ArrayList<Object>> getRoundDice(int j) {
-        return database.select("select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
+        return Db.select("select dienumber,diecolor,eyes from gamedie where idgame = "+ idgame +" and roundtrack = "+ j);
 	}
 
 	public void addTurnPlayer(Player self2) {
-		this.database.cud("update game set turn_idplayer = (select idplayer from player where username = '"
+		Db.cud("update game set turn_idplayer = (select idplayer from player where username = '"
 				+ self2.getUsername() + "' and game_idgame = " + this.idgame + ") where idgame = " + this.idgame);
 
 	}
-
-	public Db getDatabase() {
-		return database;
-	}
-	
-	
 
 }

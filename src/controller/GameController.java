@@ -23,11 +23,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Dice;
 import model.Game;
-import model.Opponent;
 import model.PatternCard;
 import model.Player;
-//import model.Round;
-import model.Round;
 import model.Space;
 
 public class GameController {
@@ -44,7 +41,6 @@ public class GameController {
 	private Button cancel;
 	private Alert cancelGame;
 	private String cancelText = "Sorry iemand heeft geweigerd, het spel kan dus niet doorgaan.";
-	private Opponent[] opponents;
 	private double playerScore;
 	private Stage gameStage;
 	private Timeline timeline;
@@ -76,7 +72,7 @@ public class GameController {
 
 	public void startTimeline() {
 		timeline.setCycleCount(timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5999), e -> refreshGame()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(4000), e -> refreshGame()));
 		timeline.play();
 	}
 	public void stopTimeline() {
@@ -111,8 +107,15 @@ public class GameController {
 				boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore(game.getIdGame()));
 			}
 		}
+		if(round==10) {
+			stopGame();
+		}
 	}
-
+	private void stopGame() {
+		timeline.stop();
+		
+		gamePane.showWinnerScreen(game.showWinnerScreen());
+	}
 	private void refreshBoards() {
 		for (int i = 0; i < game.getPlayers().size(); i++) {
             boardcontroller.getBoards().get(i).setBoard();
@@ -121,6 +124,7 @@ public class GameController {
             game.getPlayers().get(i).setTokenAmount();
 			boardcontroller.getBoards().get(i).changeTokenAmount(game.getPlayers().get(i).getTokenAmount());
 		}
+		
 	}
 	
 	public String shoutCurrentPlayer() {
@@ -129,11 +133,6 @@ public class GameController {
 	}
 
 	public PatterncardSelect buildPatterncardoptions() {
-		if(!game.checkIfFilled()) {
-			game.startGame();
-			boardcontroller.setOptions();
-			cardcontroller.insertCards();
-		}
 		boardcontroller.setOwnOptions();
 		option = new PatterncardSelect(this);
 		return option;
@@ -150,16 +149,6 @@ public class GameController {
 			}
 		}
 		return null;
-	}
-
-	public void addOpponets(Opponent op) {
-		for (int x = 0; x < opponents.length; x++) {
-			if (opponents[x] == null) {
-				opponents[x] = op;
-			} else {
-				// alert spel is al vol;
-			}
-		}
 	}
 
 	public double updateScore() {
@@ -301,12 +290,6 @@ public class GameController {
 		game.getDiceWithChosenValue(dienumber, color, chosenvalue);
 	}
 
-	public int returnAmountOfOpponents() {
-		return opponents.length;
-	}
-
-	
-
 	public int getGamemode() {
 		return game.getGamemode();
 	}
@@ -396,6 +379,7 @@ public class GameController {
 	}
 	
 	public void setDicesTrack() {
+		
 		gamePane.setRoundTrack(game.getLeftovers());
 		
 	}

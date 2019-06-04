@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-
 import View.SearchPlayerPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -18,7 +17,6 @@ public class SearchPlayerController {
 	private ChallengerController cp;
 	private Alert alert = new Alert(AlertType.INFORMATION);
 	private Game game = new Game();
-
 	public SearchPlayerController(HomeController hc, ChallengerController cp) {
 		this.cp = cp;
 		this.hc = hc;
@@ -38,21 +36,26 @@ public class SearchPlayerController {
 		spp.setUsername(spp.getOnline().getText());
 		player = new Player(spp.getUsername());
 		if (!spp.getUsername().equals("")) {
-			if (player.checkUsernameExists()) {
-				spp.showPlayer(player.getUsername());
+			if(spp.getUsername().equals(self.getUsername())){
+				spp.alert("Je kan jezelf niet uitdagen");
+			}
+			else {
+				if (player.checkUsernameExists()) {
+					spp.showPlayer(player.getUsername());
 
-			} else {
-				spp.alert("Niemand gevonden met deze gebruikersnaam");
-				spp.getAlert();
+				} else {
+					spp.alert("Niemand gevonden met deze gebruikersnaam");
+					spp.getAlert();
+				}
 			}
 		}
 	}
 
 	private void challengePlayer() {
 		String[] choice = spp.getChoice().split("Voeg toe aan spel nummer: ");
-		 
+		Challenge challenge = new Challenge();
 		if(self.checkIfGame(player.getUsername())) {
-			spp.alert("U sit al in een game met dese persoon");
+			spp.alert("U zit al in een game met deze persoon");
 			spp.getAlert();
 		}else {
 			Game g = new Game();
@@ -64,10 +67,17 @@ public class SearchPlayerController {
 			}
 			if(!g.alreadyInGame(self)) {
 				g.addPlayer(self, "Uitdager", g.getRandomColor(), 1,1);
-//				g.addTurnPlayer(self);
+				self.setId(g.getPlayerId(self.getUsername()));
+				self.setStandardScore();
+				g.startGame();
+				challenge.generateRandomToolcards(g.getIdGame());
+				challenge.generateRandomObjectcard(g.getIdGame());
+				challenge.addOptions(self.getPlayerId(), g.getIdGame());
 			}
 			g.addPlayer(player, "Uitgedaagde", g.getRandomColor(), g.getHighestSeNumber() , 0);
-			//games.add(g);
+			player.setId(g.getPlayerId(player.getUsername()));
+			player.setStandardScore();
+			challenge.addOptions(player.getPlayerId(), g.getIdGame());
 			cp.refresh();
 			RefreshChoiceBox();
 		}
@@ -118,5 +128,9 @@ public class SearchPlayerController {
 		SearchPlayerPane spp = this.spp;
 		return spp;
 	}
+	
+	
+	
+	
 
 }

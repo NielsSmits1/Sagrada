@@ -129,11 +129,6 @@ public class CardController {
 //		}
 //	}
 	
-	public void insertCards() {
-		toolcard.insertToolcards();
-		objectiveCard.insertObjectivecard();
-	}
-	
 	public int getAmountPlaced(int id) {
 		return (int)toolcard.getTokensPlaced(id);
 	}

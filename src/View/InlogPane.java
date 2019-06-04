@@ -39,7 +39,7 @@ public class InlogPane extends BorderPane {
 	public InlogPane() {
 
 		//sets background_image
-		this.setBackground(new Background(new BackgroundImage(new Image("file:images/loginWallpaper.jpg"),
+		this.setBackground(new Background(new BackgroundImage(new Image("Resources/loginWallpaper.jpg"),
 				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
 				new BackgroundSize(0, 0, false, false, false, true))));
 

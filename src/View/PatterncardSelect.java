@@ -53,7 +53,6 @@ public class PatterncardSelect extends Pane {
 		button.setOnAction(e -> {
 			handle();
 		});
-		button.setDisable(true);
 		this.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, null, null)));
 		randomButton = new Button("Genereer een willekeurige patroonkaart voor mij.");
 		randomButton.setFont(Font.font(null, 17));
@@ -111,7 +110,7 @@ public class PatterncardSelect extends Pane {
 						choice.get(i).setBorder(null);
 					}
 				}
-				button.setDisable(false);
+				
 			}
 		});
 
@@ -127,7 +126,7 @@ public class PatterncardSelect extends Pane {
 						choice.get(i).setBorder(null);
 					}
 				}
-				button.setDisable(false);
+				
 			}
 
 		});
@@ -144,7 +143,7 @@ public class PatterncardSelect extends Pane {
 						choice.get(i).setBorder(null);
 					}
 				}
-				button.setDisable(false);
+				
 			}
 
 		});
@@ -160,7 +159,7 @@ public class PatterncardSelect extends Pane {
 						choice.get(i).setBorder(null);
 					}
 				}
-				button.setDisable(false);
+				
 			}
 
 		});
