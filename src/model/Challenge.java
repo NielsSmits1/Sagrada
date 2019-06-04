@@ -11,7 +11,6 @@ public class Challenge {
 	private Player challenger;
 	private Game game;
 	private String playerStatus;
-	private Db database = new Db();
 
 	public Challenge() {
 		
@@ -30,24 +29,24 @@ public class Challenge {
 
 	
 	public void changePlayerStatusToAccepted() {
-		database.cud("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
+		Db.cud("UPDATE player SET playstatus_playstatus = 'Geaccepteerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
 	
 	}
 
 	public void changePlayerStatusToDeclined() {
-		database.cud("UPDATE player SET playstatus_playstatus = 'Geweigerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
+		Db.cud("UPDATE player SET playstatus_playstatus = 'Geweigerd' WHERE playstatus_playstatus = 'Uitgedaagde' and username = '" + self.getUsername() +"' and game_idgame in (select game_idgame from (select * FROM player) as playerr where username ='"+ challenger.getUsername() +"')"); // idplayer needs to be variabel
 
 	}
 
 	public ArrayList<ArrayList<Object>> getPlayerWithChallengeeStatus() {
 
-		return database.select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() + "' and playstatus_playstatus = 'Uitgedaagde') AND playstatus_playstatus = 'Uitdager'");
+		return Db.select("select * from player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() + "' and playstatus_playstatus = 'Uitgedaagde') AND playstatus_playstatus = 'Uitdager'");
 	}	
 		//  returns :niels
 		//	         teun
 	public ArrayList<ArrayList<Object>> getPlayerWithChallengedStatus() {
 	
-		return database.select("SELECT username, playstatus_playstatus, game_idgame FROM player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"' AND playstatus_playstatus = 'Uitdager')");
+		return Db.select("SELECT username, playstatus_playstatus, game_idgame FROM player where game_idgame in (select game_idgame from player where username = '" + self.getUsername() +"' AND playstatus_playstatus = 'Uitdager')");
 		// returns :johan
 		// 			teun
 		//			niels
@@ -102,12 +101,4 @@ public class Challenge {
 		this.challenger = challenger;
 		
 	}
-	
-	/*public void buildGame() {
-		game = new Game();
-		game.addPlayer(self,"Uitdager",game.getRandomColor());
-		game.addPlayer(challenger, "Uitgedaagde",game.getRandomColor());
-	}*/
-
-
 }

@@ -60,6 +60,7 @@ public class GamePane extends BorderPane {
 	private Label currentInfo;
 	private int x;
 	private int gameId;
+	private Alert alert = new Alert(AlertType.INFORMATION);
 
 	/// *
 	// RootPane creates the controller to communicate with the model that gets all
@@ -255,6 +256,11 @@ public class GamePane extends BorderPane {
 
 	public Button getTurnSave() {
 		return this.endTurn;
+	}
+	
+	public void showWinner(String text) {
+		alert.setHeaderText(text);
+		alert.showAndWait();
 	}
 
 	/// *

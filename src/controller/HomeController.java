@@ -31,7 +31,6 @@ public class HomeController {
 	private Player player;
 	private Player self;
 
-	private Alert alert = new Alert(AlertType.INFORMATION);
 	private Game game;
 	private Game lastg;
 
@@ -69,7 +68,7 @@ public class HomeController {
 	private void refresh() {
 		cpp.refresh();
 		cp.refresh();
-		addNewGame();
+		//addNewGame();
 	}
 	private void addNewGame() {
 		for(Game g : self.getNewGames(lastg)) {
