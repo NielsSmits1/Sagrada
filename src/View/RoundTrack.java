@@ -68,43 +68,43 @@ public class RoundTrack extends Pane {
 	}
 	
 	public void buildButtons(ArrayList<ArrayList<Dice>> d) {
-		nextDice1 = new Button("  Volg   ");
+		nextDice1 = new Button("  Volg 1  ");
 		
 		nextDice1.setOnAction(e -> round.getNextDice(0, d.get(0)));
 		
-		nextDice2 = new Button("  Volg   ");
+		nextDice2 = new Button("  Volg 2  ");
 		
 		nextDice2.setOnAction(e -> round.getNextDice(1, d.get(1)));
 		
-		nextDice3 = new Button("   Volg   ");
+		nextDice3 = new Button("   Volg 3  ");
 		
 		nextDice3.setOnAction(e -> round.getNextDice(2 ,d.get(2)));
 		
-		nextDice4 = new Button("  Volg   ");
+		nextDice4 = new Button("  Volg 4  ");
 		
 		nextDice4.setOnAction(e -> round.getNextDice(3, d.get(3)));
 		
-		nextDice5 = new Button("  Volg   ");
+		nextDice5 = new Button("  Volg 5  ");
 		
 		nextDice5.setOnAction(e -> round.getNextDice(4, d.get(4)));
 		
-		nextDice6 = new Button("   Volg   ");
+		nextDice6 = new Button("   Volg 6  ");
 		
 		nextDice6.setOnAction(e -> round.getNextDice(5, d.get(5)));
 		
-		nextDice7 = new Button("  Volg   ");
+		nextDice7 = new Button("  Volg 7  ");
 		
 		nextDice7.setOnAction(e -> round.getNextDice(6, d.get(6)));
 		
-		nextDice8 = new Button("  Volg   ");
+		nextDice8 = new Button("  Volg 8  ");
 		
 		nextDice8.setOnAction(e -> round.getNextDice(7, d.get(7)));
 		
-		nextDice9 = new Button("   Volg   ");
+		nextDice9 = new Button("   Volg 9  ");
 		
 		nextDice9.setOnAction(e -> round.getNextDice(8, d.get(8)));
 		
-		nextDice10 = new Button("  Volg   ");
+		nextDice10 = new Button("  Volg 10 ");
 		
 		nextDice10.setOnAction(e -> round.getNextDice(9, d.get(9)));
 	}
