@@ -18,13 +18,14 @@ public class RoundPane extends Pane {
 	private DicePane template7;
 	private DicePane template8;
 	private DicePane template9;
-	private HBox trackSpaces;
 
 	private ArrayList<DicePane> dices = new ArrayList<DicePane>();
+	private HBox trackSpaces;
 
 	private int g = -1;
 
 	public RoundPane() {
+
 		addSpace();
 	}
 
@@ -40,9 +41,6 @@ public class RoundPane extends Pane {
 		template7 = new DicePane();
 		template8 = new DicePane();
 		template9 = new DicePane();
-
-		dices = new ArrayList<>();
-		
 		template0.setTransparent();
 		template1.setTransparent();
 		template2.setTransparent();
@@ -53,7 +51,7 @@ public class RoundPane extends Pane {
 		template7.setTransparent();
 		template8.setTransparent();
 		template9.setTransparent();
-		
+		trackSpaces.setSpacing(8);
 		trackSpaces.getChildren().addAll(template0, template1, template2, template3, template4, template5, template6,
 				template7, template8, template9);
 
@@ -68,12 +66,11 @@ public class RoundPane extends Pane {
 		int z;
 		String y;
 		int x;
-		trackSpaces = new HBox();
+		this.getChildren().clear();
 		trackSpaces.getChildren().clear();
-		trackSpaces.setSpacing(8);
-//		this.getChildren().addAll(trackSpaces); 
+		
 
-//		dices.clear();
+		dices.clear();
 
 		for (int j = 0; j < d.get(0).size(); j++) { // gets all leftover dice from the round
 			z = (int) d.get(0).get(j).getEyes();
@@ -184,7 +181,7 @@ public class RoundPane extends Pane {
 		template9.setTransparent();
 		//template9.getChildren().addAll(dices);
 		trackSpaces.getChildren().addAll(template9);
-//		this.getChildren().addAll(trackSpaces);
+		this.getChildren().addAll(trackSpaces);
 
 	}
 

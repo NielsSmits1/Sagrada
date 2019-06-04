@@ -111,27 +111,25 @@ public class Game {
 	}
 
 	public void setNewCurrentPlayer() {
+		updateSeNumber();
+
 		int numberOfPlayers = players.size();
 		if (turnNumber == numberOfPlayers * 2) {// 4-6-8
 			// dan is een ronde voorbij
 
 			// controller.setDicesTrack();
-			setNewCurrentRoundBeginner();
+
+			
 			newRound();
 			
 			turnNumber = getTurnNumber();
+
+
 		} else {
+			updateSeNumber();
 			setNewCurrentPlayerDB();
 		}
 	}
-	private void setNewCurrentRoundBeginner() {
-		updateSeNumber();
-		updateCurrentPlayer();
-		Db.cud("update player set isCurrentPlayer = 1 where seqnr = 1 and game_idgame = "
-				+ this.idgame);
-		turnPlayer = setWhoseTurnItIs();
-	}
-
 	private void updateSe(int num) {
 		Db.cud("update player set seqnr = " + num + " where game_idgame = " + this.idgame + " and username = '" + this.turnPlayer.getUsername() + "'");
 	}
@@ -141,6 +139,7 @@ public class Game {
 		case 1: 
 			updateSe(players.size() * 2);
 			break;
+		
 		case 2: 
 			if(players.size() == 2) {
 				updateSe(3);
@@ -424,8 +423,7 @@ public class Game {
 					.select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame
 							+ " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size() * 2) + 1) + "");
 			for (int i = 0; i < randomDice.size(); i++) {
-				playableDices.add(new Dice((int) randomDice.get(i).get(0), (String) randomDice.get(i).get(1),
-						(int) randomDice.get(i).get(2)));
+				playableDices.add(new Dice((int) randomDice.get(i).get(0), (String) randomDice.get(i).get(1),(int) randomDice.get(i).get(2)));
 				Db.cud("UPDATE gamedie SET round = " + roundNumber + " WHERE idgame = " + idgame
 						+ " AND dienumber = " + playableDices.get(i).getDieNumber() + " AND diecolor = '"
 						+ playableDices.get(i).getDieColor() + "'");
@@ -706,8 +704,7 @@ public class Game {
 			}
 			dicePerRound.add(dices);
 		}
-		// System.out.println(dicePerRound);
-		return dicePerRound;
+		 return dicePerRound;
 	}
 
 	public ArrayList<ArrayList<Object>> getRoundDice(int j) {

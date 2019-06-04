@@ -93,13 +93,14 @@ public class GameController {
 		 * Dices
 		 * Score
 		 */
-		setDicesTrack();
+		
 		game.refreshCurrentPlayer();
 		gamePane.changeInfo(this.shoutCurrentPlayer());
 		this.refreshBoards();
 		cardcontroller.updatePriceTag();
 		game.setPlayableDices();
 		gamePane.addDice();
+		setDicesTrack();
 		if(round != game.getRoundNumber()) {
 			round = game.getRoundNumber();
 			 // shows current RoundTrack
@@ -110,6 +111,7 @@ public class GameController {
 		if(game.getRoundNumber()==10) {
 			stopGame();
 		}
+		
 	}
 	private void stopGame() {
 		timeline.stop();
@@ -379,7 +381,6 @@ public class GameController {
 	}
 	
 	public void setDicesTrack() {
-		
 		gamePane.setRoundTrack(game.getLeftovers());
 		
 	}
