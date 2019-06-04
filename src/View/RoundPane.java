@@ -29,7 +29,7 @@ public class RoundPane extends Pane {
 	}
 
 	public void addSpace() { // i = 1 box
-
+		trackSpaces = new HBox();
 		template0 = new DicePane();
 		template1 = new DicePane();
 		template2 = new DicePane();
