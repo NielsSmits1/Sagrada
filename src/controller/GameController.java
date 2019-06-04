@@ -51,7 +51,7 @@ public class GameController {
 
 	public GameController(Game g) {
 		this.game = g;
-		chatBox = new ChatBoxController(0,0);
+		chatBox = new ChatBoxController(1,1);
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
 		game.setController(this);
@@ -82,6 +82,12 @@ public class GameController {
 	public void stopTimeline() {
 		this.timeline.stop();
 	}
+	
+	public void startTimelineChat() {
+		timeline.setCycleCount(timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5999), e -> chatBox.getChat()));
+		timeline.play();
+	}
 
 	private void refreshGame() {
 		//refresh alles uit den game
@@ -91,7 +97,7 @@ public class GameController {
 		 * Dices
 		 * Score
 		 */
-	
+		setDicesTrack();
 		game.refreshCurrentPlayer();
 		gamePane.changeInfo(this.shoutCurrentPlayer());
 		this.refreshBoards();
@@ -100,7 +106,7 @@ public class GameController {
 		gamePane.addDice();
 		if(round != game.getRoundNumber()) {
 			round = game.getRoundNumber();
-			setDicesTrack(); // shows current RoundTrack
+			 // shows current RoundTrack
 			for(int i = 0; i<game.getPlayers().size(); i++) {
 				boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore(game.getIdGame()));
 			}

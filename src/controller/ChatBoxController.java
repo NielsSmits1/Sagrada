@@ -22,6 +22,7 @@ public class ChatBoxController {
 		getChat();
 		chat.getSend().setOnAction(e -> sendMessages());
 		
+		
 
 	}
 

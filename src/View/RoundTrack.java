@@ -124,8 +124,15 @@ public class RoundTrack extends Pane {
 	
 	public void setRoundTrack(ArrayList<ArrayList<Dice>> d) {
 		this.d = d;
-		round.setRoundTrack(d);
-		buildButtons(d);
+		boolean x = true;
+		if(x = true	) {
+			round.setRoundTrack(d);
+			buildButtons(d);
+			x = false;
+		}else {
+			
+		}
+		
 	}
 	
 	
