@@ -64,7 +64,6 @@ public class SearchPlayerController {
 			}
 			if(!g.alreadyInGame(self)) {
 				g.addPlayer(self, "Uitdager", g.getRandomColor(), 1,1);
-//				g.addTurnPlayer(self);
 			}
 			g.addPlayer(player, "Uitgedaagde", g.getRandomColor(), g.getHighestSeNumber() , 0);
 			//games.add(g);

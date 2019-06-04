@@ -257,12 +257,6 @@ public class GamePane extends BorderPane {
 	public Button getTurnSave() {
 		return this.endTurn;
 	}
-	
-	public void showWinner(String text) {
-		alert.setHeaderText(text);
-		alert.showAndWait();
-	}
-
 	/// *
 	// Gets all dices out of the DB. This means the size of the Array is 90.
 	/// **
@@ -523,13 +517,13 @@ public class GamePane extends BorderPane {
 			winner = winner + a.get(0) + " : " + a.get(1) + "/n";
 		}
 
-		String winners = "";
-
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Scorebord");
 		alert.setHeaderText(null);
 		alert.setContentText(winner);
-		alert.showAndWait();
+		//alert.setOnHidden(evt -> Platform.exit());
+
+	    alert.show();
 	}
 
 }
