@@ -172,7 +172,7 @@ public class PatternCard {
 		ArrayList<ArrayList<Object>> getQuery = Db
 				.select("select dienumber FROM playerframefield WHERE idgame = " + idgame
 						+ " AND player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
-		if (getQuery.get(0).get(0) == null) {
+		if (getQuery.isEmpty()) {
 			return true;
 		}
 		return false;
