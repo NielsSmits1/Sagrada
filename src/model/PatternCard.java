@@ -866,15 +866,29 @@ public class PatternCard {
 		int counter = 0;
 		int pointTotal = 0;
 		String currentColor = new String("");
+		ArrayList<Space> twisted = new ArrayList<>();
 		
+		for(int x = 1; x<=5;x++) {
+			for (int y = 1; y <= 4; y++) {
+				if(diagonal.get(counter).get(3) == null) {
+					twisted.add(new Space((int)diagonal.get(counter).get(0), (int)diagonal.get(counter).get(1),""));
+				}else {
+					twisted.add(new Space((int)diagonal.get(counter).get(0), (int)diagonal.get(counter).get(1),(String)diagonal.get(counter).get(3)));
+				}
+				counter++;
+			}
+			if(counter == 19) {
+				break;
+			}
+		}
 		
 		//Vertical
 		
 		
 		for (int x = 1; x <= 2; x++) {
 			for (int y = 2; y >= 1; y--) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -888,8 +902,8 @@ public class PatternCard {
 		// 2
 		for (int x = 1; x <= 3; x++) {
 			for (int y = 3; y >= 1; y--) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -903,8 +917,8 @@ public class PatternCard {
 		// 3
 		for (int x = 1; x <= 5; x++) {
 			for (int y = 4; y >= 1; y--) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -918,8 +932,8 @@ public class PatternCard {
 		// 4
 		for (int x = 2; x <= 5; x++) {
 			for (int y = 4; y >= 1; y--) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -933,8 +947,8 @@ public class PatternCard {
 //		// 5
 		for (int x = 3; x <= 5; x++) {
 			for (int y = 4; y >= 2; y--) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -948,8 +962,8 @@ public class PatternCard {
 //		// 6
 				for (int x = 4; x <= 5; x++) {
 					for (int y = 4; y >= 3; y--) {
-						if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-							if(currentColor.equals(patternfield.get(counter).getColor())) {
+						if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+							if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 								pointTotal++;
 							}else{
 								currentColor = patternfield.get(counter).getColor();
@@ -963,8 +977,8 @@ public class PatternCard {
 //		// 7
 		for (int x = 1; x <= 2; x++) {
 			for (int y = 3; y <= 4; y++) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -978,8 +992,8 @@ public class PatternCard {
 //		// 8
 		for (int x = 1; x <= 3; x++) {
 			for (int y = 2; y <= 4; y++) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -993,8 +1007,8 @@ public class PatternCard {
 //		// 9
 		for (int x = 1; x <= 4; x++) {
 			for (int y = 1; y <= 4; y++) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -1008,8 +1022,8 @@ public class PatternCard {
 //		// 10
 		for (int x = 2; x <= 5; x++) {
 			for (int y = 1; y <= 4; y++) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -1023,8 +1037,8 @@ public class PatternCard {
 //		// 11
 		for (int x = 3; x <= 5; x++) {
 			for (int y = 1; y <= 3; y++) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();
@@ -1038,8 +1052,8 @@ public class PatternCard {
 //		// 12
 		for (int x = 4; x <= 5; x++) {
 			for (int y = 1; y <= 2; y++) {
-				if(patternfield.get(counter).getXPos() == x && patternfield.get(counter).getYPos() == y) {
-					if(currentColor.equals(patternfield.get(counter).getColor())) {
+				if(twisted.get(counter).getXPos() == x && twisted.get(counter).getYPos() == y) {
+					if(!currentColor.equals("") && currentColor.equals(twisted.get(counter).getColor())) {
 						pointTotal++;
 					}else{
 						currentColor = patternfield.get(counter).getColor();

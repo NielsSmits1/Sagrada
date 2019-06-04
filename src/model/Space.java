@@ -26,7 +26,7 @@ public class Space {
 	public Space(int x, int y, String color) {
 		xPos = x;
 		yPos = y;
-		color = "";
+		this.color = color;
 	}
 	
 	
