@@ -40,22 +40,10 @@ public class MenubarController {
 
 		menu.getExit().setOnAction(e -> {
 			exit();
-			try {
-				gc.getGame().getDatabase().getCon().close();
-			} catch (SQLException e1) {
-
-				e1.printStackTrace();
-			}
 		});
 
 		menu.getLogout().setOnAction(e -> {
 			logOut();
-			try {
-				gc.getGame().getDatabase().getCon().close();
-			} catch (SQLException e1) {
-
-				e1.printStackTrace();
-			}
 		});
 
 		menu.getHelp().setOnAction(e -> menu.getRules().createStage1());
@@ -84,10 +72,23 @@ public class MenubarController {
 	}
 
 	public void exit() {
+		try {
+			gc.getGame().getDatabase().getCon().close();
+		} catch (SQLException e1) {
+
+			e1.printStackTrace();
+		}
 		Platform.exit();
 	}
 
 	public void logOut() {
+
+		try {
+			gc.getGame().getDatabase().getCon().close();
+		} catch (SQLException e1) {
+
+			e1.printStackTrace();
+		}
 		scene.setRoot(inlog.getInlog());
 	}
 
