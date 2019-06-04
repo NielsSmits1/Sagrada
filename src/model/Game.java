@@ -112,12 +112,7 @@ public class Game {
 
 	public void setNewCurrentPlayer() {
 		int numberOfPlayers = players.size();
-		if (turnNumber == numberOfPlayers) {// 2-3-4
-			// dan is de eerste loop voorbij
-			backwartsSeqNr();
-			setNewCurrentPlayerDB();
-
-		} else if (turnNumber == numberOfPlayers * 2) {// 4-6-8
+		if (turnNumber == numberOfPlayers * 2) {// 4-6-8
 			// dan is een ronde voorbij
 
 			// controller.setDicesTrack();
@@ -128,10 +123,65 @@ public class Game {
 			turnNumber = getTurnNumber();
 
 		} else {
+			updateSeNumber();
 			setNewCurrentPlayerDB();
 		}
 	}
-
+	private void updateSe(int num) {
+		Db.cud("update player set seqnr = " + num + " where game_idgame = " + this.idgame + " and username = '" + this.turnPlayer.getUsername() + "'");
+	}
+	private void updateSeNumber() {
+		int curn = (int)Db.select("select seqnr from player where game_idgame = " + this.idgame + " and username = '" + this.turnPlayer.getUsername() + "'").get(0).get(0);
+		switch(curn) {
+		case 1: 
+			updateSe(players.size() * 2);
+			break;
+		
+		case 2: 
+			if(players.size() == 2) {
+				updateSe(3);
+			}else if(players.size() == 3) {
+				updateSe(5);
+			}else {
+				updateSe(7);
+			}break;
+		case 3:
+			if(players.size() == 2) {
+				updateSe(1);
+			}else if(players.size() == 3) {
+				updateSe(4);
+			}else {
+				updateSe(6);
+			}
+			break;
+		case 4: 
+			if(players.size() == 4) {
+				updateSe(2);
+			}else {
+				updateSe(5);
+			}
+			break;
+		case 5: 
+			if(players.size() == 3) {
+				updateSe(1);
+			}else {
+				updateSe(3);
+			}
+			break;
+		case 6: 
+			if(players.size() == 3) {
+				updateSe(3);
+			}else {
+				updateSe(2);
+			}
+			break;
+		case 7: 
+			updateSe(1);
+			break;
+		case 8: 
+			updateSe(4);
+		}
+	}
 	private void forwardSeqNr() {
 		int maxNumber = 1;
 		Db.cud("Update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame);
@@ -176,7 +226,7 @@ public class Game {
 		// doe iets met de overgebleven dice(s)
 		// en ook iets met roundtrack
 		// this.addRoundTrack(gamePane.getRemainingDices());
-		forwardSeqNr();
+		//forwardSeqNr();
 		if (roundNumber > 9) {
 			showWinnerScreen();
 		} else {
@@ -207,7 +257,7 @@ public class Game {
 	public ArrayList<ArrayList<Object>> showWinnerScreen() {
 		Db.cud("update player set playstatus_playstatus = 'Uitgespeeld' where game_idgame = " + this.idgame);
 		return Db.select(
-				"select p.username, p.score from player p where game_idgame = " + idgame + " order by p.score desc");
+				"select p.username, p.score, idplayer seqnr from player p where game_idgame = " + idgame + " order by p.score desc");
 	}
 
 	public ArrayList<Player> getPlayers() {
@@ -663,7 +713,5 @@ public class Game {
 				+ self2.getUsername() + "' and game_idgame = " + this.idgame + ") where idgame = " + this.idgame);
 
 	}
-	
-	
 
 }
