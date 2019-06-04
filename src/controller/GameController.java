@@ -101,8 +101,15 @@ public class GameController {
 				boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore(game.getIdGame()));
 			}
 		}
+		if(round==10) {
+			stopGame();
+		}
 	}
-
+	private void stopGame() {
+		timeline.stop();
+		
+		gamePane.showWinnerScreen(game.showWinnerScreen());
+	}
 	private void refreshBoards() {
 		for (int i = 0; i < game.getPlayers().size(); i++) {
             boardcontroller.getBoards().get(i).setBoard();

@@ -1,5 +1,6 @@
 package controller;
 
+import Database.Db;
 import View.InlogPane;
 import View.MyScene;
 import javafx.application.Platform;
