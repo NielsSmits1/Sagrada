@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import View.BoardPane;
 import View.DicePane;
-import model.Opponent;
 import model.PatternCard;
 import model.PatternCardOptions;
 import model.Player;
@@ -14,7 +13,6 @@ public class BoardController {
 	private ArrayList<PatternCard> patternCardOptions;
 	private PatternCard finalCard;
 	private PatternCard checkPlacement;
-	private Opponent opponent;
 	private GameController gameController;
 	private PatternCardOptions allOptions;
 	private ArrayList<BoardPane> boards;
@@ -102,10 +100,6 @@ public class BoardController {
 
 	public int getOwnId() {
 		return gameController.getOwnId();
-	}
-
-	public ArrayList<ArrayList<Space>> getOpponentCords() {
-		return opponent.getOpponents();
 	}
 
 	public void setAllowsMovement(int i) {

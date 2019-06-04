@@ -3,11 +3,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Db {
-	private Connection con;
-	public Db() {
+	public static Connection con;
+	public static void setConn() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://databases.aii.avans.nl:3306/tjpmsalt_db2","kjhgerri","Ab12345");
+			con = DriverManager.getConnection("jdbc:mysql://databases.aii.avans.nl:3306/tjpmsalt_db2","rlbeauch","Ab12345");
 			
 		} catch (Exception e){
 			System.out.println("error"+ e);
@@ -22,7 +22,7 @@ public class Db {
 	 * @param De query die je wilt uitvoeren
 	 * @return Geeft een 2D-ArrayList van type Object terug
 	 */
-	public ArrayList<ArrayList<Object>> select(String Query) {
+	public static ArrayList<ArrayList<Object>> select(String Query) {
 		Statement stmt = null;
 		try {
 			stmt = con.createStatement();
@@ -50,7 +50,7 @@ public class Db {
 	 * @return Geen return waarde
 	 */
 	
-	public void cud(String Query) {
+	public static void cud(String Query) {
 		try {
 			PreparedStatement prdstmt = con.prepareStatement(Query);
 			prdstmt.execute();
@@ -60,13 +60,14 @@ public class Db {
 		}
 		
 	}
+	public static void closeCon() {
+		try {
+			con.close();
+		} catch (SQLException e1) {
 
-	public Connection getCon() {
-		return con;
+			e1.printStackTrace();
+		}
 	}
-	
-	
-	
 
 }
 

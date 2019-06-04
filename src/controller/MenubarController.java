@@ -3,6 +3,7 @@ package controller;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import Database.Db;
 import View.Menubar;
 import View.MyScene;
 import javafx.application.Platform;
@@ -72,23 +73,12 @@ public class MenubarController {
 	}
 
 	public void exit() {
-		try {
-			gc.getGame().getDatabase().getCon().close();
-		} catch (SQLException e1) {
-
-			e1.printStackTrace();
-		}
+		Db.closeCon();
 		Platform.exit();
 	}
 
 	public void logOut() {
-
-		try {
-			gc.getGame().getDatabase().getCon().close();
-		} catch (SQLException e1) {
-
-			e1.printStackTrace();
-		}
+		Db.closeCon();
 		scene.setRoot(inlog.getInlog());
 	}
 
