@@ -412,9 +412,8 @@ public class Player {
 				g.setGameId((int) a.get(1));
 				g.insertPlayers(buildPlayersForGame(g.getPlayersInGame()));
 				games.add(g);
-				
-			
-		}
+			}
+
 		return games;
 	}
 	private ArrayList<ArrayList<Object>> getCheckNewGame(int idGame) {
