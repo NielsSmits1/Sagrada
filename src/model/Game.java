@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Random;
 
 import Database.Db;
-import controller.GameController;
 
 public class Game {
 	private ArrayList<ArrayList<Object>> diceData;
@@ -17,7 +16,6 @@ public class Game {
 	private Random r;
 	private Player self;
 	private ArrayList<Gamefavortoken> token;
-	private GameController controller;
 	private int roundNumber;
 	private int turnNumber;
 	private Player turnPlayer;
@@ -108,6 +106,14 @@ public class Game {
 					+ leftoverDices.get(i).get(0) + " AND g.diecolor = '" + leftoverDices.get(i).get(1)
 					+ "' AND idgame = " + idgame + ";");
 		}
+	}
+	
+	private void setNewCurrentRoundBeginner() {
+		updateSeNumber();
+		updateCurrentPlayer();
+		Db.cud("update player set isCurrentPlayer = 1 where seqnr = 1 and game_idgame = "
+				+ this.idgame);
+		turnPlayer = setWhoseTurnItIs();
 	}
 
 	public void setNewCurrentPlayer() {
@@ -684,10 +690,6 @@ public class Game {
 				.get(0);
 	}
 
-	public void setController(GameController controller) {
-
-		this.controller = controller;
-	}
 
 	public ArrayList<ArrayList<Dice>> getLeftovers() {
 		ArrayList<ArrayList<Dice>> dicePerRound = new ArrayList<>();

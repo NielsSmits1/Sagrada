@@ -1,14 +1,11 @@
 package View;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import model.Game;
 
 public class Menubar extends MenuBar {
 

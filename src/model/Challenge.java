@@ -1,8 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Random;
 
 import Database.Db;
@@ -11,7 +9,6 @@ public class Challenge {
 	private Player self;
 	private Player challenger;
 	private Game game;
-	private String playerStatus;
 	private Random random;
 	public Challenge() {
 		random = new Random();

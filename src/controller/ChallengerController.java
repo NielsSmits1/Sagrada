@@ -1,8 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Map;
-
 import View.ChallengerPane;
 import View.ChallengesPlayerLinePane;
 import model.Challenge;

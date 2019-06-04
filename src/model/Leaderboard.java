@@ -1,13 +1,10 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+
 import java.util.LinkedHashMap;
 
 import Database.Db;
-import View.ChallengesPane;
-import View.LeaderboardPane;
 
 public class Leaderboard {
 	private Player self;

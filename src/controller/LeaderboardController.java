@@ -17,7 +17,7 @@ public class LeaderboardController {
 	public LeaderboardController(HomeController home) {
 		this.home = home;
 		leaderboard = new Leaderboard();
-		leaderboard.setSelf(home.getSelf());
+		leaderboard.setSelf(this.home.getSelf());
 		leaderboardPane = new LeaderboardPane();
 		this.setPlayers1();
 

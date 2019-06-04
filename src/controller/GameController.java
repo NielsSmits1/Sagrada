@@ -9,7 +9,6 @@ import View.GamePane;
 import View.MyScene;
 import View.ObjectiveCardPane;
 import View.PatterncardSelect;
-import View.RoundPane;
 import View.RoundTrack;
 import View.ToolCardPane;
 import javafx.animation.KeyFrame;
@@ -17,7 +16,6 @@ import javafx.animation.Timeline;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -35,10 +33,8 @@ public class GameController {
 	private ChatBoxController chatBox;
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
-	private RoundPane rp;
 	private RoundTrack roundTrack;
 	private int round;
-	private Button cancel;
 	private Alert cancelGame;
 	private String cancelText = "Sorry iemand heeft geweigerd, het spel kan dus niet doorgaan.";
 	private double playerScore;
@@ -54,7 +50,6 @@ public class GameController {
 		}
 		boardcontroller = new BoardController(this);
 		cardcontroller = new CardController(this);
-		game.setController(this);
 		timeline = new Timeline();
 	}
 

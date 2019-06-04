@@ -2,18 +2,12 @@ package controller;
 
 import java.util.ArrayList;
 
+
 import View.HomePane;
 import View.MyScene;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Game;
 import model.Player;
@@ -78,12 +72,7 @@ public class HomeController {
 		}
 
 	}
-	private void addNewGame() {
-		for(Game g : self.getNewGames(lastg)) {
-			mbc.addGame(g);
-			this.lastg = g;
-		}
-	}
+	
 	private Game openGames() {
 		// open the games that are being played, or are ready to be played
 		for (Game g : self.getOpenGames()) {

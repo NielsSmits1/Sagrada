@@ -1,8 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 import Database.Db;
 
@@ -10,7 +9,6 @@ public class Player {
 	private int idplayer;
 	private String username;
 	private String password;
-	private PatternCard board;
 	private int score;
 	private int seqnr;
 	private int lastgame;

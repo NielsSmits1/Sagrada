@@ -1,7 +1,6 @@
 package View;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;

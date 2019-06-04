@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import View.BoardPane;
 import View.DicePane;
 import model.PatternCard;
-import model.PatternCardOptions;
 import model.Player;
 import model.Space;
 
@@ -14,7 +13,6 @@ public class BoardController {
 	private PatternCard finalCard;
 	private PatternCard checkPlacement;
 	private GameController gameController;
-	private PatternCardOptions allOptions;
 	private ArrayList<BoardPane> boards;
 
 	public BoardController(GameController gameController) {
@@ -143,11 +141,6 @@ public class BoardController {
 		return finalCard.getDifficulty();
 	}
 	
-	public void setOptions() {
-		allOptions = new PatternCardOptions();
-		allOptions.getAllPatternCards(getGamemode()*4);
-		this.gameController.addOptions(allOptions.getOptions());
-	}
 	
 	public int getGamemode() {
 		return gameController.getGamemode();

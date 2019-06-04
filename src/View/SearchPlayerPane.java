@@ -2,6 +2,7 @@ package View;
 
 import java.util.ArrayList;
 
+
 import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -80,44 +81,13 @@ public class SearchPlayerPane extends VBox  {
 		user.setFont(Font.font(20));
 		user.setTextFill(Color.WHITE);
 		user.setText(username);
-//		stats.setOnAction(E-> showPlayerStats(username));
-//		challenge.setOnAction(E -> challengePlayer(username));
 		boxie.getChildren().addAll(user,stats, challenge);
 		
 		this.getChildren().add(boxie);
 		
 	}
 
-	private String showPlayerStats(String username) {
-		
-		return null;
-	}
-
-	private void challengePlayer(String u) {
-		/*
-		 * ik bouw eerst de juiste instantie homecontroller
-		 * hey controllertje
-		 *  kijk is even of ik in een spel met die andere
-		 *  hey klopt
-		 *  of niet
-		 *  doe ietsa anders
-		 *  
-		 */
-		/*if(pc.isInGame(u, self)) {
-			//user.setText(username);
-			//error.setText("Zit al in een game");
-			//this.getChildren().remove(challenge);
-			//this.getChildren().add(error);
-		}
-		else {
-			/*self.challenge(u){
-				// moet hij weer gegeven woirden in challenger box/pane
-			}
-			
-		}*/
-		
-	}
-
+	
 	public Button getStats() {
 		return stats;
 	}

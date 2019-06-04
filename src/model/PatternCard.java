@@ -2,10 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+
 import java.util.Random;
 import Database.Db;
-import View.DicePane;
-import View.PatternPane;
 import controller.BoardController;
 
 public class PatternCard {

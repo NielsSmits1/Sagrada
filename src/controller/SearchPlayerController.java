@@ -24,7 +24,7 @@ public class SearchPlayerController {
 		spp.getSearch().setOnAction(e -> this.search());
 		spp.getChallenge().setOnAction(e -> challengePlayer());
 		spp.getStats().setOnAction(e -> showStats());
-		self = hc.getSelf();
+		self = this.hc.getSelf();
 		this.RefreshChoiceBox();
 
 //		player = new Player(username);

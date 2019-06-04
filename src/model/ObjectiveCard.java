@@ -9,7 +9,6 @@ import controller.CardController;
 public class ObjectiveCard {
 
 	//instance variables
-	private Random random;
 	private int card1;
 	private int card2;
 	private int card3;
@@ -17,7 +16,6 @@ public class ObjectiveCard {
 	
 	//constructor
 	public ObjectiveCard(CardController tc) {
-		random = new Random();
 		controller = tc;
 	}
 	

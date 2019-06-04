@@ -2,14 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 
+
 import View.ChallengesPane;
 import View.ChallengesPlayerLinePane;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 import model.Challenge;
-import model.Game;
 import model.Player;
 
 public class ChallengesController{
