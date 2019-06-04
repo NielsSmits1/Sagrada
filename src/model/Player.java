@@ -211,7 +211,6 @@ public class Player {
 
 	// adds new user to the database.
 	public void addUser() {
-		Db.setConn();
 		Db.cud("INSERT INTO account (username, password) VALUES ('" + username + "', '" + password + "');");
 	}
 
@@ -225,6 +224,7 @@ public class Player {
 	}
 
 	public boolean checkUsernameExists() {
+		Db.setConn();
 		if (this.checkUsername().isEmpty()) {
 			return false;
 		} else {

@@ -7,7 +7,7 @@ public class Db {
 	public static void setConn() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://databases.aii.avans.nl:3306/tjpmsalt_db2","tjpmsalt","Ab12345");
+			con = DriverManager.getConnection("jdbc:mysql://databases.aii.avans.nl:3306/tjpmsalt_db2","kjhgerri","Ab12345");
 			
 		} catch (Exception e){
 			System.out.println("error"+ e);
