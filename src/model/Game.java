@@ -7,7 +7,6 @@ import java.util.Random;
 import Database.Db;
 
 public class Game {
-	private ArrayList<ArrayList<Object>> diceData;
 	private ArrayList<Dice> diceArray;
 	private ArrayList<Dice> playableDices;
 	private ArrayList<Player> players = new ArrayList<Player>();
@@ -43,8 +42,6 @@ public class Game {
 
 	public void startGame() {
 		insertDicesIntoDatabase();
-		diceData = getselect();
-		setDiceArray();
 		fillTokenArrayList();
 	}
 
@@ -330,31 +327,31 @@ public class Game {
 	}
 
 	// adds all dices to a dicearraylist.
-	private void setDiceArray() {
-		for (int i = 0; i < diceData.size(); i++) {
-			diceArray.add(new Dice());
-			diceArray.get(i).setDieNumber((int) diceData.get(i).get(1));
-			switch ((String) diceData.get(i).get(2)) {
-			case "blauw":
-				diceArray.get(i).setDieColor("blauw");
-				break;
-			case "rood":
-				diceArray.get(i).setDieColor("rood");
-				break;
-			case "geel":
-				diceArray.get(i).setDieColor("geel");
-				break;
-			case "groen":
-				diceArray.get(i).setDieColor("groen");
-				break;
-			case "paars":
-				diceArray.get(i).setDieColor("paars");
-				break;
-			}
-			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
-			// diceArray = null;
-		}
-	}
+//	private void setDiceArray() {
+//		for (int i = 0; i < diceData.size(); i++) {
+//			diceArray.add(new Dice());
+//			diceArray.get(i).setDieNumber((int) diceData.get(i).get(1));
+//			switch ((String) diceData.get(i).get(2)) {
+//			case "blauw":
+//				diceArray.get(i).setDieColor("blauw");
+//				break;
+//			case "rood":
+//				diceArray.get(i).setDieColor("rood");
+//				break;
+//			case "geel":
+//				diceArray.get(i).setDieColor("geel");
+//				break;
+//			case "groen":
+//				diceArray.get(i).setDieColor("groen");
+//				break;
+//			case "paars":
+//				diceArray.get(i).setDieColor("paars");
+//				break;
+//			}
+//			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
+//			// diceArray = null;
+//		}
+//	}
 
 	// returns the arraylist with dices.
 	public ArrayList<Dice> getDiceArray() {
@@ -416,11 +413,11 @@ public class Game {
 			}
 		} else {
 			ArrayList<ArrayList<Object>> randomDice = Db
-					.select("select dienumber, diecolor, eyes from gamedie where idgame = " + idgame
+					.select("select dienumber, diecolor from gamedie where idgame = " + idgame
 							+ " AND round IS NULL ORDER BY RAND() LIMIT " + ((players.size() * 2) + 1) + "");
 			for (int i = 0; i < randomDice.size(); i++) {
-				playableDices.add(new Dice((int) randomDice.get(i).get(0), (String) randomDice.get(i).get(1),(int) randomDice.get(i).get(2)));
-				Db.cud("UPDATE gamedie SET round = " + roundNumber + " WHERE idgame = " + idgame
+				playableDices.add(new Dice((int) randomDice.get(i).get(0), (String) randomDice.get(i).get(1)));
+				Db.cud("UPDATE gamedie SET round = " + roundNumber + ", eyes = " + playableDices.get(i).getEyes() +" WHERE idgame = " + idgame
 						+ " AND dienumber = " + playableDices.get(i).getDieNumber() + " AND diecolor = '"
 						+ playableDices.get(i).getDieColor() + "'");
 			}

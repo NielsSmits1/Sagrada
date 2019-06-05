@@ -472,8 +472,7 @@ public class PatternCard {
 		if (y + 1 < 5 && x + 1 < 6) {
 			ArrayList<ArrayList<Object>> downRightPosition = Db
 					.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself
-							+ " && position_x = " + (x + 1) + " && position_y = " + (y + 1) + " && idgame = " + idgame
-							+ ";");
+							+ " && position_x = " + (x + 1) + " && position_y = " + (y + 1));
 			if (downRightPosition.get(0).get(0) == null) {
 			} else {
 				return true;

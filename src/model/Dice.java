@@ -23,6 +23,13 @@ public class Dice {
 		dieColor = color;
 		this.eyes = eyes;
 	}
+	
+	public Dice(int dienumber, String color) {
+		r = new Random();
+		dieNumber = dienumber;
+		dieColor = color;
+		setEyes();
+	}
 
 	public int getDieNumber() {
 		return dieNumber;
