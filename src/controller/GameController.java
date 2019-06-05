@@ -35,6 +35,7 @@ public class GameController {
 	private CardController cardcontroller;
 	private RoundTrack roundTrack;
 	private int round;
+	private int turn;
 	private Alert cancelGame;
 	private String cancelText = "Sorry iemand heeft geweigerd, het spel kan dus niet doorgaan.";
 	private double playerScore;
@@ -63,6 +64,7 @@ public class GameController {
 		cardcontroller.setToolcards();
 		cardcontroller.setObjectiveCards();
 		round = 0;
+		turn = 0;
 		game.setPlayableDices();
 		gamePane = new GamePane(this);
 		gamePane.getTurnSave().setOnAction(E -> endTurn());
@@ -100,8 +102,8 @@ public class GameController {
 		game.setPlayableDices();
 		gamePane.addDice();
 		
-		if(round != game.getRoundNumber()) {
-			round = game.getRoundNumber();
+		if(turn != game.getTurn()) {
+			turn = game.getTurn();
 			 setDicesTrack();
 			for(int i = 0; i<game.getPlayers().size(); i++) {
 				boardcontroller.getBoards().get(i).setScore(game.getPlayers().get(i).calculateScore(game.getIdGame()));

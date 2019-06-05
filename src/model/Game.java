@@ -117,8 +117,6 @@ public class Game {
 	}
 
 	public void setNewCurrentPlayer() {
-		updateSeNumber();
-
 		int numberOfPlayers = players.size();
 		if (turnNumber == numberOfPlayers * 2) {
 			setNewCurrentRoundBeginner();

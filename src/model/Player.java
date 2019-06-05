@@ -502,7 +502,7 @@ public class Player {
 		return true;
 	}
 	 public boolean passwordIsAccepted() {
-	        if (password.toCharArray().length > 3) {
+	        if (password.toCharArray().length >= 3) {
 	            return false;
 	        } else {
 	            return true;
@@ -511,7 +511,7 @@ public class Player {
 
 	    //returns true is the username length is greather than 3.
 	    public boolean usernameIsAccepted() {
-	        if (username.toCharArray().length > 3) {
+	        if (username.toCharArray().length >= 3) {
 	            return false;
 	        } else {
 	            return true;
