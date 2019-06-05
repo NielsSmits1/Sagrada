@@ -126,7 +126,7 @@ public class Game {
 
 
 		} else {
-			updateSeNumber();
+			//updateSeNumber();
 			setNewCurrentPlayerDB();
 		}
 	}

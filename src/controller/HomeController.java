@@ -62,7 +62,6 @@ public class HomeController {
 		try {
 			cpp.refresh();
 			cp.refresh();
-			self.checkChallenger();
 		} catch (Exception e) {
 
 		}
