@@ -117,7 +117,7 @@ public class Game {
 	}
 
 	public void setNewCurrentPlayer() {
-		updateSeNumber();
+		//updateSeNumber();
 
 		int numberOfPlayers = players.size();
 		if (turnNumber == numberOfPlayers * 2) {
@@ -128,7 +128,7 @@ public class Game {
 
 
 		} else {
-			updateSeNumber();
+			//updateSeNumber();
 			setNewCurrentPlayerDB();
 		}
 	}
