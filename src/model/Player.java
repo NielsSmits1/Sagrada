@@ -81,7 +81,7 @@ public class Player {
 	}
 	
 	public long calculatePrivateCardScore() {
-		return (long)Db.select("SELECT count(*) FROM playerframefield pf LEFT JOIN player p ON p.idplayer = pf.player_idplayer WHERE diecolor = private_objectivecard_color AND player_idplayer = " + idplayer +";").get(0).get(0);
+		return (long)Db.select("SELECT SUM(eyes) FROM gamedie gd join playerframefield pf ON pf.idgame = gd.idgame AND gd.dienumber = pf.dienumber AND gd.diecolor = pf.diecolor LEFT JOIN player p ON p.idplayer = pf.player_idplayer  WHERE pf.diecolor = private_objectivecard_color AND player_idplayer = " + idplayer + ";").get(0).get(0);
 	}
 	
 	public long calculateAmountOfSpacesFilled() {
