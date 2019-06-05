@@ -2,7 +2,7 @@ package View;
 
 import java.util.ArrayList;
 
-import controller.GameController;
+
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Dice;
-import model.Game;
 
 
 public class RoundTrack extends Pane {
@@ -29,27 +28,18 @@ public class RoundTrack extends Pane {
 	
 	private ArrayList<ArrayList<Dice>> d;
 	private Pane pane;
-	private Pane imagePane;
 	private RoundPane round;
 	private HBox roundBox;
 	private HBox buttonBox;
-	private VBox totalBox;
 	
-	private GameController game;
-	private Game gameModel;
-	private int x;
 	
-	public RoundTrack(GameController game, Game gameModel, ArrayList<ArrayList<Dice>> d) {
-		this.game = game;
-		this.gameModel = gameModel;
+	public RoundTrack(ArrayList<ArrayList<Dice>> d) {
 		this.d = d;
 		pane = new Pane();
-		imagePane = new Pane();
 		round = new RoundPane();
 		roundBox = new HBox();
 		roundBox.setSpacing(20);
 		buttonBox = new HBox();
-		totalBox = new VBox();
 		
 		buildTrack();
 		buildButtons();

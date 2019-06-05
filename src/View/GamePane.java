@@ -92,7 +92,7 @@ public class GamePane extends BorderPane {
 		diceRow3.setSpacing(20);
 
 		endTurn = new Button("Beïndig beurt.");
-		track = new RoundTrack(gameController, gameController.getGame(), gameController.getGame().getLeftovers());
+		track = new RoundTrack(gameController.getGame().getLeftovers());
 
 		setBoard();
 		addTrack();

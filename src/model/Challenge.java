@@ -109,10 +109,6 @@ public class Challenge {
 
 	}
 
-	public void addChallenger(Player self2) {
-		this.self = self;
-
-	}
 
 	public void addChallengee(Player challenger) {
 		this.challenger = challenger;

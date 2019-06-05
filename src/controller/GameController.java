@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+
 import java.util.Optional;
 
 import View.BoardPane;
@@ -34,7 +35,6 @@ public class GameController {
 	private BoardController boardcontroller;
 	private CardController cardcontroller;
 	private RoundTrack roundTrack;
-	private int round;
 	private int turn;
 	private Alert cancelGame;
 	private String cancelText = "Sorry iemand heeft geweigerd, het spel kan dus niet doorgaan.";
@@ -63,7 +63,6 @@ public class GameController {
 		}
 		cardcontroller.setToolcards();
 		cardcontroller.setObjectiveCards();
-		round = 0;
 		turn = 0;
 		game.setPlayableDices();
 		gamePane = new GamePane(this);

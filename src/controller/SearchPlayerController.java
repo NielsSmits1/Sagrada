@@ -97,7 +97,6 @@ public class SearchPlayerController {
 
 	public void createChallenge() {
 		ch = new Challenge();
-		ch.addChallenger(self);
 		ch.addChallengee(player);
 	}
 

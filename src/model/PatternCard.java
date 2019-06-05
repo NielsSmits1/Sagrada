@@ -158,8 +158,6 @@ public class PatternCard {
 				+ "(patterncard_idpatterncard,player_idplayer) VALUES (" + patternId + "," + yourself + ");");
 	}
 
-	// TODO ADD THE CHOSEN PATTERNCARD TO PLAYERFRAMEFIELD
-
 	private boolean checkFirstMove() {
 		ArrayList<ArrayList<Object>> getQuery = Db
 				.select("select dienumber FROM playerframefield WHERE player_idplayer = " + yourself + " ORDER BY dienumber DESC LIMIT 1;");
@@ -283,7 +281,6 @@ public class PatternCard {
 		return false;
 	}
 
-	// TODO niet in combinatie met checkfirstmove doen
 	private boolean validateNearbyDice(int x, int y, int dienumber, String diecolor) {
 		boolean isEmpty = false;
 

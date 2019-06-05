@@ -1,8 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import Database.Db;
 import controller.CardController;
 

@@ -24,11 +24,6 @@ public class Game {
 
 	}
 
-	// public ArrayList<Player> getPlayers() {
-	// return this.players;
-	//
-	// }
-
 	public Game() {
 		r = new Random();
 		diceArray = new ArrayList<>();
@@ -182,38 +177,6 @@ public class Game {
 			updateSe(4);
 		}
 	}
-	private void forwardSeqNr() {
-		int maxNumber = 1;
-		Db.cud("Update player set isCurrentPlayer = 0 where game_idgame = " + this.idgame);
-		for (ArrayList<Object> a : Db.select(
-				"select username, seqnr from player where game_idgame = " + this.idgame + " order by seqnr desc")) {
-			if ((int) a.get(1) == players.size() * 2) {
-				Db.cud("update player set seqnr = " + players.size() + " where game_idgame = " + this.idgame
-						+ " and username = '" + (String) a.get(0) + "'");
-			} else {
-				Db.cud("update player set seqnr = " + maxNumber + " where game_idgame = " + this.idgame
-						+ " and username = '" + (String) a.get(0) + "'");
-				maxNumber += 1;
-			}
-		}
-		// update player set senr = 1 where senr = 7
-		// updte player set senr = 2 where senr = 6
-		// updt pl set se nr = 3 whe sen = 5
-		// updt pl set se = 4 where se 8
-		Db.cud("update player set isCurrentPlayer = 1 where game_idgame = " + this.idgame + " and seqnr = 1");
-	}
-
-	private void backwartsSeqNr() {
-
-		int maxNumber = turnNumber;
-		for (ArrayList<Object> a : Db
-				.select("select username from player where game_idgame = " + this.idgame + " order by seqnr desc")) {
-			Db.cud("update player set seqnr = " + (maxNumber + 1) + " where game_idgame = " + this.idgame
-					+ " and username = '" + (String) a.get(0) + "'");
-			maxNumber += 1;
-		}
-		setNewCurrentPlayerDB();
-	}
 
 	private void setNewCurrentPlayerDB() {
 		updateSeNumber();
@@ -325,33 +288,6 @@ public class Game {
 	public ArrayList<ArrayList<Object>> getselect() {
 		return Db.select("select * FROM gamedie WHERE idgame =" + idgame + " ORDER BY dienumber;");
 	}
-
-	// adds all dices to a dicearraylist.
-//	private void setDiceArray() {
-//		for (int i = 0; i < diceData.size(); i++) {
-//			diceArray.add(new Dice());
-//			diceArray.get(i).setDieNumber((int) diceData.get(i).get(1));
-//			switch ((String) diceData.get(i).get(2)) {
-//			case "blauw":
-//				diceArray.get(i).setDieColor("blauw");
-//				break;
-//			case "rood":
-//				diceArray.get(i).setDieColor("rood");
-//				break;
-//			case "geel":
-//				diceArray.get(i).setDieColor("geel");
-//				break;
-//			case "groen":
-//				diceArray.get(i).setDieColor("groen");
-//				break;
-//			case "paars":
-//				diceArray.get(i).setDieColor("paars");
-//				break;
-//			}
-//			updateEyes(diceArray.get(i).getEyes(), diceArray.get(i).getDieNumber(), diceArray.get(i).getDieColor());
-//			// diceArray = null;
-//		}
-//	}
 
 	// returns the arraylist with dices.
 	public ArrayList<Dice> getDiceArray() {
