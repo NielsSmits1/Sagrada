@@ -185,5 +185,19 @@ public class Challenge {
 		}
 
 	}
+	
+	public void addCard(int playerid, int idgame) {
+		for (int x = 1; x <= 5; x++) {
+			for (int y = 1; y <= 4; y++) {
+				addChosenCard(x, y, playerid, idgame);
+			}
+		}
+	}
+	
+	public void addChosenCard(int xPos, int yPos, int yourself, int idgame) {
+		Db.cud(
+				"insert into playerframefield (player_idplayer, position_x,position_y, idgame) VALUES ("
+						+ yourself + "," + xPos + "," + yPos + "," + idgame + ");");
+	}
 
 }

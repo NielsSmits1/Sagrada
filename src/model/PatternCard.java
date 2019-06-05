@@ -31,7 +31,6 @@ public class PatternCard {
 		setPatternId(number);
 		p = getselect();
 		setpatternfield();
-		addCard();
 		// generateRandomPatternCard();
 		// insertRandomPatternCardIntoDB();
 		hasColorExamption = false;
@@ -59,7 +58,6 @@ public class PatternCard {
 		insertRandomPatternCardIntoDB();
 		setPatternId(getHighestPatternId());
 		p = getselect();
-		addCard();
 		hasColorExamption = false;
 		hasNumberExamption = false;
 		hasNextToDiceExamption = false;
@@ -101,11 +99,6 @@ public class PatternCard {
 	// Fills the ArrayList that contains all of the spaces.
 	/// **
 
-	public void addCard() {
-		for (int i = 0; i < patternfield.size(); i++) {
-			addChosenCard(patternfield.get(i).getXPos(), patternfield.get(i).getYPos());
-		}
-	}
 	
 	public void setPlacedDice() {
 		diceField.clear();
@@ -177,11 +170,6 @@ public class PatternCard {
 
 	}
 
-	public void addChosenCard(int xPos, int yPos) {
-		Db.cud(
-				"insert into playerframefield (player_idplayer, position_x,position_y, idgame) VALUES ("
-						+ yourself + "," + xPos + "," + yPos + "," + idgame + ");");
-	}
 	
 	public ArrayList<ArrayList<Object>> getPlayerframeField(int idplayer, int idgame){
 		return Db.select("select * FROM playerframefield WHERE player_idplayer = " + idplayer + ", idgame = " + idgame + "");
