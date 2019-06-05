@@ -69,6 +69,7 @@ public class SearchPlayerController {
 				self.setId(g.getPlayerId(self.getUsername()));
 				self.setStandardScore();
 				g.startGame();
+				g.setIdPlayer(self);
 				challenge.generateRandomToolcards(g.getIdGame());
 				challenge.generateRandomObjectcard(g.getIdGame());
 				challenge.addOptions(self.getPlayerId(), g.getIdGame());

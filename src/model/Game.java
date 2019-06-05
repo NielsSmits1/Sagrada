@@ -711,4 +711,9 @@ public class Game {
 
 	}
 
+	public void setIdPlayer(Player self2) {
+		Db.cud("update game set turn_idplayer = (SELECT idplayer FROM player where game_idgame = " + this.idgame +" and username = '" + self2.getUsername() + "' ) where idgame = " + this.idgame);
+		
+	}
+
 }
