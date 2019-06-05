@@ -501,6 +501,22 @@ public class Player {
 		}
 		return true;
 	}
+	 public boolean passwordIsAccepted() {
+	        if (password.toCharArray().length > 3) {
+	            return false;
+	        } else {
+	            return true;
+	        }
+	    }
+
+	    //returns true is the username length is greather than 3.
+	    public boolean usernameIsAccepted() {
+	        if (username.toCharArray().length > 3) {
+	            return false;
+	        } else {
+	            return true;
+	        }
+	    }
 	
 	public int getPlayerId() {
 		return idplayer;

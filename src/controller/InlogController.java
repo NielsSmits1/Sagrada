@@ -40,7 +40,7 @@ public class InlogController {
 
 	public EventHandler<ActionEvent> register() {
 		player = new Player(inlog.getUsernameText(), inlog.getPasswordText());
-		if (inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("") || player.checkUsernameExists() || player.usedInvalidCharacters()) {
+		if (inlog.getUsernameText().equals("") || inlog.getPasswordText().equals("") || player.checkUsernameExists() || player.usedInvalidCharacters() || player.passwordIsAccepted() || player.usernameIsAccepted()) {
 			inlog.giveErrorBox();
 		} else {
 			player.addUser();
