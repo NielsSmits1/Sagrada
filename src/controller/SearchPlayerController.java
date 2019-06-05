@@ -79,6 +79,7 @@ public class SearchPlayerController {
 			player.setId(g.getPlayerId(player.getUsername()));
 			player.setStandardScore();
 			challenge.addOptions(player.getPlayerId(), g.getIdGame());
+			challenge.addCard(player.getPlayerId(), g.getIdGame());
 			cp.refresh();
 			RefreshChoiceBox();
 		}
